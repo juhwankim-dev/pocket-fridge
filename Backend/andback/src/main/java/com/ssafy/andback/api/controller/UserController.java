@@ -1,14 +1,8 @@
 package com.ssafy.andback.api.controller;
 
 import io.swagger.annotations.Api;
-import lombok.NoArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 /**
 *
