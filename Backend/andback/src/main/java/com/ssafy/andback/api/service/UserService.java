@@ -1,5 +1,7 @@
 package com.ssafy.andback.api.service;
 
+import com.ssafy.andback.api.dto.UserDto;
+
 /**
 *
 * UserService
@@ -11,4 +13,5 @@ package com.ssafy.andback.api.service;
 * 마지막 수정일 2022-04-19
 **/
 public interface UserService {
+    String insertUser(UserDto userDto);
 }
