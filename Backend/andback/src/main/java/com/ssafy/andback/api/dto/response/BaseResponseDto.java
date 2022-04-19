@@ -16,12 +16,12 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class BaseResponseEntity {
+public class BaseResponseDto {
     private int status;
     private String code;
     private String message;
 
-    public BaseResponseEntity(int status, String message) {
+    public BaseResponseDto(int status, String message) {
         this.status = status;
         this.message = message;
     }

@@ -36,7 +36,7 @@ spring:
 
   # 데이터 베이스 연결 설정
   datasource:
-    url: jdbc:mariadb://localhost:3306/#andback_test_v1?characterEncoding=utf-8&createDatabaseIfNotExist=true #데이터 베이스 이름 수정 필요
+    url: jdbc:mariadb://localhost:3306/andback_test_v1?characterEncoding=utf-8&createDatabaseIfNotExist=true #데이터 베이스 이름 수정 필요
     driver-class-name: org.mariadb.jdbc.Driver
     username: andback
     password: Ssafy6!
