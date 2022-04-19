@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Enumeration;
 
 @ControllerAdvice
-public class GrobalControllerAdvice {
+public class GlobalControllerAdvice {
     @Autowired
     private NotificationManager notificationManager;
 
