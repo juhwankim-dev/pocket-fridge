@@ -9,7 +9,7 @@
 **/
 package com.ssafy.andback.core.repository;
 
-import com.ssafy.andback.core.domain.foodingredient.FoodIngredient;
+import com.ssafy.andback.core.domain.FoodIngredient;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FoodIngredientRepository extends JpaRepository<FoodIngredient, Long> {

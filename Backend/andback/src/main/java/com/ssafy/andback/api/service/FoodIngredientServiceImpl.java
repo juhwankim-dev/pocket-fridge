@@ -10,7 +10,7 @@
 package com.ssafy.andback.api.service;
 
 import com.ssafy.andback.api.dto.FoodIngredientDto;
-import com.ssafy.andback.core.domain.foodingredient.FoodIngredient;
+import com.ssafy.andback.core.domain.FoodIngredient;
 import com.ssafy.andback.core.repository.FoodIngredientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
