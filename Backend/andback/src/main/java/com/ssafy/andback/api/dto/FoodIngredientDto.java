@@ -7,7 +7,7 @@
  * 생성일 2022/04/19
  * 마지막 수정일 2022/04/19
  **/
-package com.ssafy.andback.api.dto.response;
+package com.ssafy.andback.api.dto;
 
 import com.ssafy.andback.api.constant.WayStatus;
 import com.sun.istack.NotNull;

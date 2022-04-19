@@ -26,8 +26,8 @@ public class BaseResponseDto {
         this.message = message;
     }
 
-    public static BaseResponseEntity of(Integer status, String message) {
-        BaseResponseEntity body = new BaseResponseEntity();
+    public static BaseResponseDto of(Integer status, String message) {
+        BaseResponseDto body = new BaseResponseDto();
         body.message = message;
         body.status = status;
         return body;

@@ -16,23 +16,21 @@ import javax.persistence.*;
  **/
 
 @Entity
-@Getter
-@Setter
 @Table(name = "user")
 @NoArgsConstructor // 파라미터 없는 기본 생성자 자동 생성 (lombok 어노테이션)
-public class User {
+public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto increment
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "user_email", unique = true)
+    @Column(name = "user_email", unique = true, nullable = false)
     private String userEmail;
 
     @Column(name = "user_name", nullable = false)
     private String userName;
 
-    @Column(name = "user_nickname", unique = true)
+    @Column(name = "user_nickname", unique = true, nullable = false)
     private String userNickname;
 
     @Column(name = "user_password", nullable = false)
@@ -54,6 +52,7 @@ public class User {
         this.userLoginType = userLoginType;
     }
 
+    // 수정 필요
     public User update(String userNickname, String userPassword, String userPicture) {
         this.userNickname = userNickname;
         this.userPassword = userPassword;
