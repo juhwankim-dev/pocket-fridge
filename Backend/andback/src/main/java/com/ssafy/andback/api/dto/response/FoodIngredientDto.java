@@ -46,6 +46,4 @@ public class FoodIngredientDto {
     // 보관방법
     @NotNull
     private WayStatus foodIngredientWay;
-
-
 }

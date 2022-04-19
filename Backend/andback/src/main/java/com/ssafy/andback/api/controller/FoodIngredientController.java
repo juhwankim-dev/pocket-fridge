@@ -1,12 +1,12 @@
 /**
- * FoodIngredientController
- * 식재료 관련 컨트롤러
- *
- * @author 문관필
- * @version 1.0.0
- * 생성일 2022/04/19
- * 마지막 수정일 2022/04/19
- **/
+* FoodIngredientController
+* 식재료 관련 컨트롤러
+*
+* @author 문관필
+* @version 1.0.0
+* 생성일 2022/04/19
+* 마지막 수정일 2022/04/19
+**/
 package com.ssafy.andback.api.controller;
 
 import com.ssafy.andback.api.dto.response.BaseResponseEntity;
@@ -74,6 +74,4 @@ public class FoodIngredientController {
         }
         return ResponseEntity.ok(BaseResponseEntity.of(200, "식재료 등록 성공"));
     }
-
-
 }
