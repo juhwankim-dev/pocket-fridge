@@ -2,9 +2,7 @@ package com.ssafy.andback.core.domain.user;
 
 import com.ssafy.andback.core.domain.BaseEntity;
 import lombok.Builder;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 
