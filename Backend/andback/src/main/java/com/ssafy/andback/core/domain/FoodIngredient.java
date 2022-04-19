@@ -1,12 +1,12 @@
 /**
-* FoodIngredient
-* 식재료 정보 Entity
-*
-* @author 문관필
-* @version 1.0.0
-* 생성일 2022/04/19
-* 마지막 수정일 2022/04/19
-**/
+ * FoodIngredient
+ * 식재료 정보 Entity
+ *
+ * @author 문관필
+ * @version 1.0.0
+ * 생성일 2022/04/19
+ * 마지막 수정일 2022/04/19
+ **/
 package com.ssafy.andback.core.domain;
 
 import com.ssafy.andback.api.constant.WayStatus;
@@ -18,11 +18,13 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 public class FoodIngredient {
 
     // 식재료 아이디
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long foodIngredientId;
 
     // 식재료 이름

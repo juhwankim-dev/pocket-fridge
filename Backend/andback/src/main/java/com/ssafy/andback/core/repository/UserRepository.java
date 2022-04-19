@@ -1,6 +1,6 @@
 package com.ssafy.andback.core.repository;
 
-import com.ssafy.andback.core.domain.user.User;
+import com.ssafy.andback.core.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
