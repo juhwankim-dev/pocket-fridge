@@ -25,4 +25,11 @@ public class BaseResponseEntity {
         this.status = status;
         this.message = message;
     }
+
+    public static BaseResponseEntity of(Integer status, String message) {
+        BaseResponseEntity body = new BaseResponseEntity();
+        body.message = message;
+        body.status = status;
+        return body;
+    }
 }
