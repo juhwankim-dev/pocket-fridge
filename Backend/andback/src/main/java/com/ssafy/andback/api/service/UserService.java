@@ -1,5 +1,10 @@
 package com.ssafy.andback.api.service;
 
+<<<<<<< HEAD
+=======
+import com.ssafy.andback.api.dto.UserDto;
+
+>>>>>>> 84722a442945438e26889240d89b7f1d1a11ab35
 /**
 *
 * UserService
@@ -11,4 +16,8 @@ package com.ssafy.andback.api.service;
 * 마지막 수정일 2022-04-19
 **/
 public interface UserService {
+<<<<<<< HEAD
+=======
+    String insertUser(UserDto userDto);
+>>>>>>> 84722a442945438e26889240d89b7f1d1a11ab35
 }
