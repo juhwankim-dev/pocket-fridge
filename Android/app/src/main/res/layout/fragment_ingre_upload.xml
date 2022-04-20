@@ -44,10 +44,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_margin_narrow"
             android:layout_marginHorizontal="@dimen/activity_margin_24"
-            app:boxCornerRadiusBottomEnd="28dp"
-            app:boxCornerRadiusBottomStart="28dp"
-            app:boxCornerRadiusTopEnd="28dp"
-            app:boxCornerRadiusTopStart="28dp">
+            app:boxCornerRadiusBottomEnd="@dimen/et_radius"
+            app:boxCornerRadiusBottomStart="@dimen/et_radius"
+            app:boxCornerRadiusTopEnd="@dimen/et_radius"
+            app:boxCornerRadiusTopStart="@dimen/et_radius">
 
             <AutoCompleteTextView
                 android:layout_width="match_parent"
