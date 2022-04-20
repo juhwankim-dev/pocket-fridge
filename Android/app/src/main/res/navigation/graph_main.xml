@@ -11,6 +11,11 @@
         android:label="FridgeFragment"
         tools:layout="@layout/fragment_fridge"/>
     <fragment
+        android:id="@+id/ingreUploadFragment"
+        android:name="com.andback.pocketfridge.present.views.main.IngreUploadFragment"
+        android:label="IngreUploadFragment"
+        tools:layout="@layout/fragment_ingre_upload"/>
+    <fragment
         android:id="@+id/recipeFragment"
         android:name="com.andback.pocketfridge.present.views.main.RecipeFragment"
         android:label="RecipeFragment"

@@ -4,6 +4,7 @@
         android:id="@+id/fridgeFragment"
         android:title="@string/fridge"/>
     <item
+        android:id="@+id/ingreUploadFragment"
         android:title="@string/add"/>
     <item
         android:id="@+id/recipeFragment"
