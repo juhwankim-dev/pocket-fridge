@@ -18,4 +18,7 @@
     <dimen name="text_button_text_size">14sp</dimen>
     <dimen name="form_text_size">16sp</dimen>
     <dimen name="error_text_size">12sp</dimen>
+
+    <!-- edittext radius -->
+    <dimen name="et_radius">28dp</dimen>
 </resources>
