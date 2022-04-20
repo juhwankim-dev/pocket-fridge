@@ -1,6 +1,6 @@
 /**
 * FoodIngredientRepository
-*
+* DB 에서 식재료 정보에 접근하기 위한 Repository
 *
 * @author 문관필
 * @version 1.0.0
@@ -14,4 +14,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FoodIngredientRepository extends JpaRepository<FoodIngredient, Long> {
 
+    FoodIngredient findByFoodIngredientId(Long foodIngredientId);
 }
