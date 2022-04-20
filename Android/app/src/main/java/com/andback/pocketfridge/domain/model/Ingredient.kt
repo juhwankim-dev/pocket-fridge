@@ -1,6 +1,7 @@
-package com.andback.pocketfridge.data.model
+package com.andback.pocketfridge.domain.model
 
 import android.os.Parcelable
+import com.andback.pocketfridge.present.utils.Storage
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -11,5 +12,5 @@ data class Ingredient(
     var expiryDate: String,
     var name: String = "",
     var fridgeId: Int = -1,
-    var storage: String) :
+    var storage: Storage) :
     Parcelable
