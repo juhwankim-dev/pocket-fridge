@@ -1,7 +1,9 @@
 package com.ssafy.andback.api.service;
 
-import com.ssafy.andback.api.dto.FoodIngredientDto;
+import com.ssafy.andback.api.dto.request.InsertFoodIngredientReqDto;
+import com.ssafy.andback.api.dto.request.UpdateFoodIngredientReqDto;
 
 public interface FoodIngredientService {
-    String saveFoodIngredient(FoodIngredientDto foodIngredientDto);
+    String saveFoodIngredient(InsertFoodIngredientReqDto insertFoodIngredientReqDto);
+    String updateFoodIngredient(Long foodIngredientId, UpdateFoodIngredientReqDto updateFoodIngredientReqDto);
 }

@@ -9,9 +9,12 @@
 **/
 package com.ssafy.andback.api.service;
 
-import com.ssafy.andback.api.dto.FoodIngredientDto;
+import com.ssafy.andback.api.dto.request.InsertFoodIngredientReqDto;
+import com.ssafy.andback.api.dto.request.UpdateFoodIngredientReqDto;
 import com.ssafy.andback.core.domain.FoodIngredient;
+import com.ssafy.andback.core.domain.Refrigerator;
 import com.ssafy.andback.core.repository.FoodIngredientRepository;
+import com.ssafy.andback.core.repository.RefrigeratorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,24 +25,59 @@ import org.springframework.transaction.annotation.Transactional;
 public class FoodIngredientServiceImpl implements FoodIngredientService{
 
     private final FoodIngredientRepository foodIngredientRepository;
+    private final RefrigeratorRepository refrigeratorRepository;
 
-    public String saveFoodIngredient(FoodIngredientDto foodIngredientDto) {
+    public String saveFoodIngredient(InsertFoodIngredientReqDto insertFoodIngredientReqDto) {
 
         // 식재료 등록
         FoodIngredient foodIngredient = new FoodIngredient();
-        foodIngredient.setFoodIngredientName(foodIngredientDto.getFoodIngredientName());
-        foodIngredient.setFoodIngredientExp(foodIngredientDto.getFoodIngredientExp());
-        foodIngredient.setFoodIngredientCategory(foodIngredientDto.getFoodIngredientCategory());
-        foodIngredient.setFoodIngredientCount(foodIngredientDto.getFoodIngredientCount());
-        foodIngredient.setFoodIngredientDate(foodIngredientDto.getFoodIngredientDate());
-        foodIngredient.setFoodIngredientWay(foodIngredientDto.getFoodIngredientWay());
+        Refrigerator refrigerator;
+
+        foodIngredient.setFoodIngredientName(insertFoodIngredientReqDto.getFoodIngredientName());
+        foodIngredient.setFoodIngredientExp(insertFoodIngredientReqDto.getFoodIngredientExp());
+        foodIngredient.setFoodIngredientCategory(insertFoodIngredientReqDto.getFoodIngredientCategory());
+        foodIngredient.setFoodIngredientCount(insertFoodIngredientReqDto.getFoodIngredientCount());
+        foodIngredient.setFoodIngredientDate(insertFoodIngredientReqDto.getFoodIngredientDate());
+        foodIngredient.setFoodIngredientWay(insertFoodIngredientReqDto.getFoodIngredientWay());
 
         if (foodIngredient.getFoodIngredientName().equals("") || foodIngredient.getFoodIngredientExp().equals("")
                 || foodIngredient.getFoodIngredientCategory().equals("") || foodIngredient.getFoodIngredientCount() <= 0 ||
-                foodIngredient.getFoodIngredientDate().equals("") || foodIngredient.getFoodIngredientWay().equals("")) {
+                foodIngredient.getFoodIngredientDate().equals("") || foodIngredient.getFoodIngredientWay().equals("")
+                || refrigeratorRepository.findByRefrigeratorId(insertFoodIngredientReqDto.getRefrigeratorId()) == null
+        ) {
             return "fail";
         }
 
+        refrigerator = refrigeratorRepository.findByRefrigeratorId(insertFoodIngredientReqDto.getRefrigeratorId());
+        foodIngredient.setRefrigerator(refrigerator);
+        foodIngredientRepository.save(foodIngredient);
+        return "success";
+    }
+
+    @Override
+    public String updateFoodIngredient(Long foodIngredientId, UpdateFoodIngredientReqDto updateFoodIngredientReqDto) {
+
+        FoodIngredient foodIngredient = foodIngredientRepository.findByFoodIngredientId(foodIngredientId);
+        Refrigerator refrigerator;
+
+        // 식재료 수정
+        foodIngredient.setFoodIngredientName(updateFoodIngredientReqDto.getFoodIngredientName());
+        foodIngredient.setFoodIngredientExp(updateFoodIngredientReqDto.getFoodIngredientExp());
+        foodIngredient.setFoodIngredientCategory(updateFoodIngredientReqDto.getFoodIngredientCategory());
+        foodIngredient.setFoodIngredientCount(updateFoodIngredientReqDto.getFoodIngredientCount());
+        foodIngredient.setFoodIngredientDate(updateFoodIngredientReqDto.getFoodIngredientDate());
+        foodIngredient.setFoodIngredientWay(updateFoodIngredientReqDto.getFoodIngredientWay());
+
+
+        if (foodIngredient.getFoodIngredientName().equals("") || foodIngredient.getFoodIngredientExp().equals("")
+                || foodIngredient.getFoodIngredientCategory().equals("") || foodIngredient.getFoodIngredientCount() <= 0 ||
+                foodIngredient.getFoodIngredientDate().equals("") || foodIngredient.getFoodIngredientWay().equals("") ||
+                refrigeratorRepository.findByRefrigeratorId(updateFoodIngredientReqDto.getRefrigeratorId()) == null) {
+            return "fail";
+        }
+
+        refrigerator = refrigeratorRepository.findByRefrigeratorId(updateFoodIngredientReqDto.getRefrigeratorId());
+        foodIngredient.setRefrigerator(refrigerator);
         foodIngredientRepository.save(foodIngredient);
         return "success";
     }
