@@ -5,4 +5,7 @@
     <string name="fridge">냉장고</string>
     <string name="add">추가</string>
     <string name="recipe">레시피</string>
+    <string name="ingre_upload">식재료 등록</string>
+    <string name="merchandise">상품</string>
+    <string name="accept">확인</string>
 </resources>
