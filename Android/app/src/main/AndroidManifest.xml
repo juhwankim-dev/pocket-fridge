@@ -17,7 +17,7 @@
             android:name=".present.views.user.UserActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".present.views.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

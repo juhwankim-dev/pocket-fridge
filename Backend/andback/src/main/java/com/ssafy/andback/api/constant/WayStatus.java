@@ -15,5 +15,5 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum WayStatus {
-    실온, 냉장
+    실온, 냉장, 냉동
 }

@@ -7,7 +7,7 @@
  * 생성일 2022/04/19
  * 마지막 수정일 2022/04/19
  **/
-package com.ssafy.andback.api.dto;
+package com.ssafy.andback.api.dto.request;
 
 import com.ssafy.andback.api.constant.WayStatus;
 import com.sun.istack.NotNull;
@@ -19,7 +19,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class FoodIngredientDto {
+public class InsertFoodIngredientReqDto {
 
     // 식재료 이름
     @NotNull
@@ -46,4 +46,8 @@ public class FoodIngredientDto {
     // 보관방법
     @NotNull
     private WayStatus foodIngredientWay;
+
+    // 냉장고 아이디
+    @NotNull
+    private Long refrigeratorId;
 }
