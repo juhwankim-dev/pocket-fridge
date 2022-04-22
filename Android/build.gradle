@@ -4,10 +4,12 @@ buildscript {
         retrofit_version = "2.9.0"
         gson_version = "2.9.0"
         okhttp_version = "4.9.0"
-        rx_version = "3.1.4"
-        rx_android_version = "3.0.0"
+        rx_android_version = "2.1.1"
+        rx_kotlin_version = "2.3.0"
+        rx_java_adapter_version = "2.5.0"
         room_version = "2.4.0"
-        hilt_version = "2.28-alpha"
+        hilt_version = "2.38.1"
+        livedata_version = "2.4.1"
     }
     dependencies {
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
