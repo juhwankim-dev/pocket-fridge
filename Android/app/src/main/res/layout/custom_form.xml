@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/body_text"
+                android:layout_marginStart="@dimen/activity_margin_default"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="2dp"
+                android:text="*"
+                android:textColor="#ff786a" />
+
+            <TextView
+                android:id="@+id/tv_menu_title"
+                style="@style/menu_text"
+                android:layout_marginEnd="@dimen/activity_margin_default"
+                tools:text="닉네임" />
+        </LinearLayout>
+
+        <EditText
+            style="@style/form_text"
+            android:id="@+id/et_form"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="@dimen/activity_margin_default"
+            android:backgroundTint="@color/black_low_emphasis"
+            android:ems="10"
+            tools:hint="영문 3~6자"
+            android:inputType="textPersonName"
+            android:paddingBottom="20dp"
+            android:textStyle="bold" />
+
+        <TextView
+            style="@style/error_text"
+            android:id="@+id/tv_error_msg"
+            android:layout_marginStart="20dp"
+            android:text=""
+            android:textColor="@color/red_error_message" />
+    </LinearLayout>
+</layout>

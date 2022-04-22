@@ -2,10 +2,12 @@ package com.andback.pocketfridge.present.config
 
 import android.app.Application
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 class ApplicationClass : Application() {
-    private val baseUrl = ""
+    private val baseUrl = "https://hoonycode.loca.lt:443/"
+
     companion object {
         lateinit var retrofit: Retrofit
     }
@@ -13,9 +15,10 @@ class ApplicationClass : Application() {
     override fun onCreate() {
         super.onCreate()
 
-//        retrofit = Retrofit.Builder()
-//            .baseUrl(baseUrl)
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .build()
+        retrofit = Retrofit.Builder()
+            .baseUrl(baseUrl)
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
     }
 }
