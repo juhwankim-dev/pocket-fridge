@@ -5,8 +5,7 @@ import androidx.activity.viewModels
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.databinding.ActivityUserBinding
 import com.andback.pocketfridge.present.config.BaseActivity
-import com.andback.pocketfridge.present.views.user.UserViewModel.Companion.STEP_ONE_PAGE
-import com.andback.pocketfridge.present.views.user.UserViewModel.Companion.STEP_TWO_PAGE
+import com.andback.pocketfridge.present.utils.PageSet
 import com.andback.pocketfridge.present.views.user.signup.StepOneFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,25 +28,21 @@ class UserActivity : BaseActivity<ActivityUserBinding>(R.layout.activity_user) {
         }
     }
 
-    fun onChangeFragement(p: Int) {
+    fun onChangeFragement(p: PageSet) {
         when (p) {
-            STEP_ONE_PAGE -> supportFragmentManager
+            PageSet.STEP_ONE -> supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fl_main, StepOneFragment())
                 .addToBackStack(null)
                 .commit()
-            STEP_TWO_PAGE -> supportFragmentManager
+            PageSet.STEP_TWO -> supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fl_main, StepOneFragment())
                 .addToBackStack(null)
                 .commit()
-        }
-
-        var test = 1
-        when(test) {
-            0 -> {}
+            PageSet.LOGIN -> {
+                // Login Activity로 이동
+            }
         }
     }
-
-
 }

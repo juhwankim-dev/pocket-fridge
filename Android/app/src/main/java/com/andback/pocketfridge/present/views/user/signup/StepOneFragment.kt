@@ -7,13 +7,9 @@ import androidx.fragment.app.viewModels
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.databinding.FragmentStepOneBinding
 import com.andback.pocketfridge.present.config.BaseFragment
+import com.andback.pocketfridge.present.utils.PageSet
 import com.andback.pocketfridge.present.views.user.UserActivity
 import com.andback.pocketfridge.present.views.user.UserViewModel
-import com.andback.pocketfridge.present.views.user.UserViewModel.Companion.LOGIN_PAGE
-import com.andback.pocketfridge.present.views.user.UserViewModel.Companion.STEP_ONE_PAGE
-import com.andback.pocketfridge.present.views.user.UserViewModel.Companion.STEP_TWO_PAGE
-
-private const val TAG = "StepOneFragment_juhwan"
 
 class StepOneFragment : BaseFragment<FragmentStepOneBinding>(R.layout.fragment_step_one) {
     private val viewModel: UserViewModel by viewModels()
@@ -29,12 +25,9 @@ class StepOneFragment : BaseFragment<FragmentStepOneBinding>(R.layout.fragment_s
         with(viewModel) {
             pageNumber.observe(viewLifecycleOwner) {
                 when (pageNumber.value) {
-                    STEP_ONE_PAGE -> (context as UserActivity).onChangeFragement(STEP_ONE_PAGE)
-                    STEP_TWO_PAGE -> (context as UserActivity).onChangeFragement(STEP_TWO_PAGE)
-                    LOGIN_PAGE -> {
-                        // LoginActivity로 이동
-                    }
-                    else -> Log.d(TAG, "initViewModelCallback: 지원하지 않는 페이지 값이 입력됨")
+                    PageSet.STEP_ONE -> (context as UserActivity).onChangeFragement(PageSet.STEP_ONE)
+                    PageSet.STEP_TWO -> (context as UserActivity).onChangeFragement(PageSet.STEP_TWO)
+                    PageSet.LOGIN -> (context as UserActivity).onChangeFragement(PageSet.LOGIN)
                 }
             }
         }

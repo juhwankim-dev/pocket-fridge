@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.andback.pocketfridge.domain.usecase.GetLoginUseCase
 import com.andback.pocketfridge.present.utils.NetworkManager
+import com.andback.pocketfridge.present.utils.PageSet
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -25,8 +26,8 @@ class UserViewModel @Inject constructor (
     private val nameForSignUp: MutableLiveData<String> = MutableLiveData("")
     private val nicknameForSignUp: MutableLiveData<String> = MutableLiveData("")
 
-    private val _pageNumber = MutableLiveData<Int>()
-    val pageNumber: LiveData<Int> get() = _pageNumber
+    private val _pageNumber = MutableLiveData<PageSet>()
+    val pageNumber: LiveData<PageSet> get() = _pageNumber
 
     fun signUp(req: MutableMap<String, String>) {
         compositeDisposable.add(
@@ -43,14 +44,14 @@ class UserViewModel @Inject constructor (
                     },
                     {
                         // hideLoading()
-                        _pageNumber.value = LOGIN_PAGE
+                        _pageNumber.value = PageSet.LOGIN
                     },
                     {
                         // showLoading()
                     }
                 )
         )
-        _pageNumber.value = LOGIN_PAGE
+        _pageNumber.value = PageSet.LOGIN
     }
 
     fun onNextClick() {
@@ -62,7 +63,7 @@ class UserViewModel @Inject constructor (
 
         // TODO: 유효성 검사
 
-        _pageNumber.value = STEP_TWO_PAGE
+        _pageNumber.value = PageSet.STEP_TWO
     }
 
     fun onSignUpClick() {
@@ -94,11 +95,5 @@ class UserViewModel @Inject constructor (
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.dispose()
-    }
-
-    companion object {
-        const val STEP_ONE_PAGE = 1
-        const val STEP_TWO_PAGE = 2
-        const val LOGIN_PAGE = 3
     }
 }
