@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.databinding.ActivityUserBinding
 import com.andback.pocketfridge.present.config.BaseActivity
+import com.andback.pocketfridge.present.utils.PageSet
 import com.andback.pocketfridge.present.views.user.signup.StepOneFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,14 +28,14 @@ class UserActivity : BaseActivity<ActivityUserBinding>(R.layout.activity_user) {
         }
     }
 
-    fun onChangeFragement(s:Int) {
-        when (s) {
-            0 -> supportFragmentManager
+    fun onChangeFragement(p: PageSet) {
+        when (p) {
+            PageSet.STEP_ONE -> supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fl_main, StepOneFragment())
                 .addToBackStack(null)
                 .commit()
-            1 -> supportFragmentManager
+            PageSet.STEP_TWO -> supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fl_main, StepOneFragment())
                 .addToBackStack(null)
