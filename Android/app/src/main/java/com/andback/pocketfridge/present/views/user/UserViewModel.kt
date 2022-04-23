@@ -4,17 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.andback.pocketfridge.domain.usecase.GetLoginUseCase
-import com.andback.pocketfridge.present.config.SingleLiveEvent
 import com.andback.pocketfridge.present.utils.NetworkManager
-import com.andback.pocketfridge.present.utils.PageSet
-import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import org.json.JSONObject
-import retrofit2.HttpException
-import java.io.IOException
 import javax.inject.Inject
 
 
@@ -31,8 +25,8 @@ class UserViewModel @Inject constructor (
     private val nameForSignUp: MutableLiveData<String> = MutableLiveData("")
     private val nicknameForSignUp: MutableLiveData<String> = MutableLiveData("")
 
-    private val _pageNumber = MutableLiveData<PageSet>()
-    val pageNumber: LiveData<PageSet> get() = _pageNumber
+    private val _pageNumber = MutableLiveData<Int>()
+    val pageNumber: LiveData<Int> get() = _pageNumber
 
     fun signUp(req: MutableMap<String, String>) {
         compositeDisposable.add(
@@ -49,14 +43,14 @@ class UserViewModel @Inject constructor (
                     },
                     {
                         // hideLoading()
-                        _pageNumber.value = PageSet.LOGIN
+                        _pageNumber.value = LOGIN_PAGE
                     },
                     {
                         // showLoading()
                     }
                 )
         )
-        _pageNumber.value = PageSet.LOGIN
+        _pageNumber.value = LOGIN_PAGE
     }
 
     fun onNextClick() {
@@ -68,7 +62,7 @@ class UserViewModel @Inject constructor (
 
         // TODO: 유효성 검사
 
-        _pageNumber.value = PageSet.STEP_TWO
+        _pageNumber.value = STEP_TWO_PAGE
     }
 
     fun onSignUpClick() {
@@ -100,5 +94,11 @@ class UserViewModel @Inject constructor (
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.dispose()
+    }
+
+    companion object {
+        const val STEP_ONE_PAGE = 1
+        const val STEP_TWO_PAGE = 2
+        const val LOGIN_PAGE = 3
     }
 }
