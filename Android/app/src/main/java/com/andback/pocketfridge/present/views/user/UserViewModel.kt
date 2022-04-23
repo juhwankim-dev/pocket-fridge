@@ -20,11 +20,11 @@ class UserViewModel @Inject constructor (
 ) : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
 
-    private val emailForSignUp: MutableLiveData<String> = MutableLiveData("")
-    private val pwForSignUp: MutableLiveData<String> = MutableLiveData("")
-    private val pwConfirmForSignUp: MutableLiveData<String> = MutableLiveData("")
-    private val nameForSignUp: MutableLiveData<String> = MutableLiveData("")
-    private val nicknameForSignUp: MutableLiveData<String> = MutableLiveData("")
+    val emailForSignUp: MutableLiveData<String> = MutableLiveData("")
+    val pwForSignUp: MutableLiveData<String> = MutableLiveData("")
+    val pwConfirmForSignUp: MutableLiveData<String> = MutableLiveData("")
+    val nameForSignUp: MutableLiveData<String> = MutableLiveData("")
+    val nicknameForSignUp: MutableLiveData<String> = MutableLiveData("")
 
     private val _pageNumber = MutableLiveData<PageSet>()
     val pageNumber: LiveData<PageSet> get() = _pageNumber

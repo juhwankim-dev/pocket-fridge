@@ -47,6 +47,7 @@
             android:layout_marginTop="100dp"
             app:menu_title="이름"
             app:hint_msg="이름을 입력해주세요"
+            app:get_input_text="@={vm.nameForSignUp}"
             app:layout_constraintTop_toBottomOf="@+id/tv_step_twoF_title" />
 
         <com.andback.pocketfridge.present.utils.CustomForm
@@ -55,6 +56,7 @@
             android:layout_height="wrap_content"
             app:menu_title="닉네임"
             app:hint_msg="영문 3~6자"
+            app:get_input_text="@={vm.nicknameForSignUp}"
             app:layout_constraintTop_toBottomOf="@+id/custom_form_step_twoF_name" />
 
         <Button
