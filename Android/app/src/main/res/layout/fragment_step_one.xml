@@ -57,6 +57,14 @@
             app:hint_msg="영문, 숫자 조합 8~20자"
             app:layout_constraintTop_toBottomOf="@+id/custom_form_step_oneF_email" />
 
+        <com.andback.pocketfridge.present.utils.CustomForm
+            android:id="@+id/custom_form_step_oneF_pw_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:menu_title="비밀번호 확인"
+            app:hint_msg="영문, 숫자 조합 8~20자"
+            app:layout_constraintTop_toBottomOf="@+id/custom_form_step_oneF_pw" />
+
         <Button
             android:id="@+id/btn_step_oneF_next"
             style="@style/button_text"
@@ -66,7 +74,7 @@
             android:text="다음"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:onClick="@{()->vm.onLoginClick()}"
+            android:onClick="@{()->vm.onNextClick()}"
             app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

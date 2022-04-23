@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="vm"
+            type="com.andback.pocketfridge.present.views.user.UserViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -39,7 +41,7 @@
             app:layout_constraintTop_toBottomOf="@+id/iv_step_twoF_close" />
 
         <com.andback.pocketfridge.present.utils.CustomForm
-            android:id="@+id/custom_form_step_twoF_email"
+            android:id="@+id/custom_form_step_twoF_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="100dp"
@@ -48,15 +50,15 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_step_twoF_title" />
 
         <com.andback.pocketfridge.present.utils.CustomForm
-            android:id="@+id/custom_form_step_twoF_pw"
+            android:id="@+id/custom_form_step_twoF_nickname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:menu_title="닉네임"
             app:hint_msg="영문 3~6자"
-            app:layout_constraintTop_toBottomOf="@+id/custom_form_step_twoF_email" />
+            app:layout_constraintTop_toBottomOf="@+id/custom_form_step_twoF_name" />
 
         <Button
-            android:id="@+id/btn_step_twoF_next"
+            android:id="@+id/btn_step_twoF_signup"
             style="@style/button_text"
             android:layout_width="match_parent"
             android:layout_margin="@dimen/activity_margin_default"
@@ -64,6 +66,7 @@
             android:text="회원가입"
             android:textAllCaps="false"
             android:textColor="@color/white"
+            android:onClick="@{()->vm.onSignUpClick()}"
             app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
