@@ -3,9 +3,11 @@ package com.andback.pocketfridge.present.views.user
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.andback.pocketfridge.domain.model.CheckResult
 import com.andback.pocketfridge.domain.usecase.GetLoginUseCase
 import com.andback.pocketfridge.present.utils.NetworkManager
 import com.andback.pocketfridge.present.utils.PageSet
+import com.andback.pocketfridge.present.utils.SignUpChecker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -20,12 +22,14 @@ class UserViewModel @Inject constructor (
 ) : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
 
+    // viewmodel이 editText에 입력된 값을 observe 하기 위함
     val emailForSignUp: MutableLiveData<String> = MutableLiveData("")
     val pwForSignUp: MutableLiveData<String> = MutableLiveData("")
     val pwConfirmForSignUp: MutableLiveData<String> = MutableLiveData("")
     val nameForSignUp: MutableLiveData<String> = MutableLiveData("")
     val nicknameForSignUp: MutableLiveData<String> = MutableLiveData("")
 
+    // view가 다음으로 넘어갈 페이지를 observe 하기 위함
     private val _pageNumber = MutableLiveData<PageSet>()
     val pageNumber: LiveData<PageSet> get() = _pageNumber
 
@@ -61,9 +65,11 @@ class UserViewModel @Inject constructor (
         val pw = pwForSignUp.value.toString()
         val pwConfirm = pwConfirmForSignUp.value.toString()
 
-        // TODO: 유효성 검사
-
-        _pageNumber.value = PageSet.STEP_TWO
+        if(SignUpChecker.validateEmail(id).isValid
+            && SignUpChecker.validatePw(pw).isValid
+            && SignUpChecker.validateConfirmPw(pw, pwConfirm).isValid) {
+            _pageNumber.value = PageSet.STEP_TWO
+        }
     }
 
     fun onSignUpClick() {
