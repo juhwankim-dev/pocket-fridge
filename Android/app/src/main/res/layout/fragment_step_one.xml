@@ -78,6 +78,7 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:onClick="@{()->vm.onNextClick()}"
+            android:clickable="false"
             app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
