@@ -14,4 +14,5 @@
     <color name="black_low_emphasis">#66000000</color>
     <color name="main_color">#FF5C00</color>
     <color name="red_error_message">#b00020</color>
+    <color name="gray_non_clickable_button">#cfcfd9</color>
 </resources>
