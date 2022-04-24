@@ -16,4 +16,10 @@ class ApiModule {
     fun provideApiInterface(): UserApi? {
         return RetrofitUtil.userService
     }
+
+    @Provides
+    @Singleton
+    fun provideIngreApiInterface(): UserApi? {
+        return RetrofitUtil.userService
+    }
 }
