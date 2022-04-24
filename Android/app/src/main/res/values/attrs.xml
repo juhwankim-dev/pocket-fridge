@@ -4,5 +4,6 @@
         <attr name="menu_title" format="reference|string" />
         <attr name="hint_msg" format="reference|string" />
         <attr name="error_msg" format="reference|string" />
+        <attr name="get_input_text" format="reference|string" />
     </declare-styleable>
 </resources>

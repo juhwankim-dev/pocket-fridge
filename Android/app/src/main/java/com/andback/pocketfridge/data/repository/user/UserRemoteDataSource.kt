@@ -1,9 +1,9 @@
 package com.andback.pocketfridge.data.repository.user
 
-import com.andback.pocketfridge.data.model.TempEntity
-import io.reactivex.Single
+import com.andback.pocketfridge.data.model.BaseResponse
+import io.reactivex.Flowable
 import retrofit2.http.FieldMap
 
 interface UserRemoteDataSource {
-    fun signUp(@FieldMap req: MutableMap<String, String>): Single<TempEntity>
+    fun signUp(@FieldMap req: MutableMap<String, String>): Flowable<BaseResponse<Any>>
 }
