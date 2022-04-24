@@ -11,12 +11,20 @@ object SignUpChecker {
     const val NICKNAME = "^[a-zA-Z가-힣0-9]*\$"
     const val PW = "^[a-zA-Z0-9!@#$%^&*]*\$"
 
+    const val DEFAULT_ERROR = "사용할 수 없는 문자를 포함하고 있습니다."
+    const val ID_LEN_ERROR = "아이디는 6 ~ 15자입니다."
+    const val NICKNAME_LEN_ERROR = "닉네임은 1 ~ 6자입니다."
+    const val EMAIL_EMPTY_ERROR = "이메일을 입력하십시오."
+    const val EMAIL_PATTERN_ERROR = "올바른 이메일 형식이 아닙니다."
+    const val PW_LEN_ERROR = "비밀번호는 8 ~ 20자입니다."
+    const val PW_MATCH_ERROR = "비밀번호가 일치하지 않습니다."
+
     fun validateId(id: String): CheckResult {
         return when {
             Pattern.matches(ID, id) == false -> {
-                CheckResult("Resources.getSystem().getString(R.string.error_msg_default)", false)
+                CheckResult(DEFAULT_ERROR, false)
             } id.length < 6 || id.length > 15 -> {
-                CheckResult(Resources.getSystem().getString(R.string.error_msg_id_len), false)
+                CheckResult(ID_LEN_ERROR, false)
             } else -> {
                 CheckResult("", true)
             }
@@ -26,9 +34,9 @@ object SignUpChecker {
     fun validateNickname(nickname: String): CheckResult {
         return when {
             Pattern.matches(NICKNAME, nickname) == false -> {
-                CheckResult(Resources.getSystem().getString(R.string.error_msg_default), false)
+                CheckResult(DEFAULT_ERROR, false)
             } nickname.isEmpty() || nickname.length > 6 -> {
-                CheckResult(Resources.getSystem().getString(R.string.error_msg_nickname_len), false)
+                CheckResult(NICKNAME_LEN_ERROR, false)
             } else -> {
                 CheckResult("", true)
             }
@@ -40,10 +48,10 @@ object SignUpChecker {
 
         return when {
             email.trim().isEmpty() -> {
-                CheckResult(Resources.getSystem().getString(R.string.error_msg_email_empty), false)
+                CheckResult(EMAIL_EMPTY_ERROR, false)
             }
             pattern.matcher(email).matches() == false -> {
-                CheckResult(Resources.getSystem().getString(R.string.error_msg_email_pattern), false)
+                CheckResult(EMAIL_PATTERN_ERROR, false)
             }
             else -> {
                 CheckResult("", true)
@@ -54,10 +62,10 @@ object SignUpChecker {
     fun validatePw(pw: String): CheckResult {
         return when {
             Pattern.matches(PW, pw) == false -> {
-                CheckResult(Resources.getSystem().getString(R.string.error_msg_default), false)
+                CheckResult(DEFAULT_ERROR, false)
             }
             pw.length < 8 || pw.length > 20 -> {
-                CheckResult(Resources.getSystem().getString(R.string.error_msg_pw_len), false)
+                CheckResult(PW_LEN_ERROR, false)
             }
             else -> {
                 CheckResult("", true)
@@ -74,7 +82,7 @@ object SignUpChecker {
                 CheckResult("", false)
             }
             else -> {
-                CheckResult(Resources.getSystem().getString(R.string.error_msg_pw_match), false)
+                CheckResult(PW_MATCH_ERROR, false)
             }
         }
     }
