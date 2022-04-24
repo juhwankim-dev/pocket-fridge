@@ -8,13 +8,4 @@
     <string name="ingre_upload">식재료 등록</string>
     <string name="merchandise">상품</string>
     <string name="accept">확인</string>
-
-    <!-- 회원가입 에러메시지 strings -->
-    <string name="error_msg_default">사용할 수 없는 문자를 포함하고 있습니다.</string>
-    <string name="error_msg_id_len">아이디는 6 ~ 15자입니다.</string>
-    <string name="error_msg_nickname_len">닉네임은 1 ~ 6자입니다.</string>
-    <string name="error_msg_email_empty">이메일을 입력하십시오.</string>
-    <string name="error_msg_email_pattern">올바른 이메일 형식이 아닙니다.</string>
-    <string name="error_msg_pw_len">비밀번호는 8 ~ 20자입니다.</string>
-    <string name="error_msg_pw_match">비밀번호가 일치하지 않습니다.</string>
 </resources>
