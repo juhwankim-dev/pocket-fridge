@@ -45,27 +45,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="100dp"
+            setTextWatcher="@{vm}"
             app:menu_title="이메일"
             app:hint_msg="이메일 주소를 입력해주세요"
-            app:get_input_text="@={vm.emailForSignUp}"
             app:layout_constraintTop_toBottomOf="@+id/tv_step_oneF_title" />
 
         <com.andback.pocketfridge.present.utils.CustomForm
             android:id="@+id/custom_form_step_oneF_pw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            setTextWatcher="@{vm}"
             app:menu_title="비밀번호"
             app:hint_msg="영문, 숫자 조합 8~20자"
-            app:get_input_text="@={vm.pwForSignUp}"
             app:layout_constraintTop_toBottomOf="@+id/custom_form_step_oneF_email" />
 
         <com.andback.pocketfridge.present.utils.CustomForm
             android:id="@+id/custom_form_step_oneF_pw_confirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            setTextWatcher="@{vm}"
             app:menu_title="비밀번호 확인"
             app:hint_msg="영문, 숫자 조합 8~20자"
-            app:get_input_text="@={vm.pwConfirmForSignUp}"
             app:layout_constraintTop_toBottomOf="@+id/custom_form_step_oneF_pw" />
 
         <Button
