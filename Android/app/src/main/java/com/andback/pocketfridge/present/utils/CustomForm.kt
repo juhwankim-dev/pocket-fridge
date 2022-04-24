@@ -4,12 +4,14 @@ import android.content.Context
 import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.widget.EditText
 import android.widget.LinearLayout
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.databinding.CustomFormBinding
 
 class CustomForm : LinearLayout {
     private var binding = CustomFormBinding.inflate(LayoutInflater.from(context), this, true)
+    val editText: EditText get() = binding.etForm
 
     constructor(context: Context?) : super(context)
 
@@ -41,9 +43,5 @@ class CustomForm : LinearLayout {
 
     fun setErrorMsg(s: String) {
         binding.tvErrorMsg.text = s
-    }
-
-    fun removeErrorMsg() {
-        binding.tvErrorMsg.text = ""
     }
 }
