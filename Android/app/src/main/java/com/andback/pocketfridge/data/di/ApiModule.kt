@@ -13,7 +13,7 @@ import javax.inject.Singleton
 class ApiModule {
     @Provides
     @Singleton
-    fun provideApiInterface(): UserApi? {
+    fun provideApiInterface(): UserApi {
         return RetrofitUtil.userService
     }
 }
