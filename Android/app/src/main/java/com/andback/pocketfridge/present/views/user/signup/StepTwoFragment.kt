@@ -2,6 +2,7 @@ package com.andback.pocketfridge.present.views.user.signup
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.andback.pocketfridge.R
@@ -12,7 +13,7 @@ import com.andback.pocketfridge.present.views.user.UserActivity
 import com.andback.pocketfridge.present.views.user.UserViewModel
 
 class StepTwoFragment : BaseFragment<FragmentStepTwoBinding>(R.layout.fragment_step_two) {
-    lateinit var viewModel: UserViewModel
+    private val viewModel: UserViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -22,7 +23,6 @@ class StepTwoFragment : BaseFragment<FragmentStepTwoBinding>(R.layout.fragment_s
     }
 
     private fun initViewModel() {
-        viewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
         binding.vm = viewModel
 
         with(viewModel) {

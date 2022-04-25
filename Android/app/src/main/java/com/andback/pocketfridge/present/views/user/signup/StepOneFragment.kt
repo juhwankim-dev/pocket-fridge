@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.andback.pocketfridge.R
@@ -16,7 +17,7 @@ import com.andback.pocketfridge.present.views.user.UserActivity
 import com.andback.pocketfridge.present.views.user.UserViewModel
 
 class StepOneFragment : BaseFragment<FragmentStepOneBinding>(R.layout.fragment_step_one) {
-    lateinit var viewModel: UserViewModel
+    private val viewModel: UserViewModel by activityViewModels()
     private var isValidEmail = false
     private var isValidPw = false
     private var isValidConfirmPw = false
@@ -29,7 +30,6 @@ class StepOneFragment : BaseFragment<FragmentStepOneBinding>(R.layout.fragment_s
     }
 
     private fun initViewModel() {
-        viewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
         binding.vm = viewModel
 
         with(viewModel) {
