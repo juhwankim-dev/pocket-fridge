@@ -77,17 +77,135 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/activity_margin_narrow"
-                tools:text="0"/>
+                tools:text="1"/>
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_ingre_uploadF"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_ingre_uploadF_input"
+            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ll_ingre_uploadF"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="@dimen/activity_margin_narrow"/>
+            android:layout_marginHorizontal="@dimen/activity_margin_24"
+            android:layout_marginTop="@dimen/activity_margin_default"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/gray_non_clickable_button"
+            app:cardElevation="0dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/activity_margin_default">
+
+                <LinearLayout
+                    android:id="@+id/ll_ingre_uploadF_storage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tv_ingre_uploadF_storage_fridge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/activity_margin_narrow"
+                        android:text="@string/storage_fridge" />
+
+                    <TextView
+                        android:id="@+id/tv_ingre_uploadF_storage_freeze"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/activity_margin_narrow"
+                        android:text="@string/storage_freeze" />
+
+                    <TextView
+                        android:id="@+id/tv_ingre_uploadF_storage_room"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/storage_room" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/iv_ingre_uploadF"
+                    android:layout_width="@dimen/ingre_image_size"
+                    android:layout_height="@dimen/ingre_image_size"
+                    android:layout_marginTop="@dimen/activity_margin_narrow"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ll_ingre_uploadF_storage"
+                    tools:src="@color/black" />
+
+                <TextView
+                    android:id="@+id/tv_ingre_uploadF_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/noto_sans_bold"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_ingre_uploadF"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/iv_ingre_uploadF"
+                    tools:text="사과" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:id="@+id/til_ingre_uploadF_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_margin_default"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_ingre_uploadF"
+                    android:hint="@string/name"
+                    app:endIconMode="clear_text">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_ingre_uploadF_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:id="@+id/til_ingre_uploadF_purchased_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_margin_default"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/til_ingre_uploadF_name"
+                    android:hint="@string/purchased_date"
+                    app:startIconDrawable="@drawable/ic_calendar_month_24"
+                    app:endIconMode="clear_text">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_ingre_uploadF_purchased_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:id="@+id/til_ingre_uploadF_expiry_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_margin_default"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/til_ingre_uploadF_purchased_date"
+                    android:hint="@string/expiry_date"
+                    app:startIconDrawable="@drawable/ic_calendar_month_24"
+                    app:endIconMode="clear_text">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_ingre_uploadF_expiry_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
 
 
 
