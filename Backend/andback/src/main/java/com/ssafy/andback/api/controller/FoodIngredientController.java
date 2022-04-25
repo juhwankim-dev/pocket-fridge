@@ -9,10 +9,10 @@
  **/
 package com.ssafy.andback.api.controller;
 
-import com.ssafy.andback.api.dto.request.UpdateFoodIngredientReqDto;
+import com.ssafy.andback.api.dto.request.UpdateFoodIngredientRequestDto;
 import com.ssafy.andback.api.dto.response.BaseResponseDto;
-import com.ssafy.andback.api.dto.request.InsertFoodIngredientReqDto;
-import com.ssafy.andback.api.dto.response.FoodIngredientResDto;
+import com.ssafy.andback.api.dto.request.InsertFoodIngredientRequestDto;
+import com.ssafy.andback.api.dto.response.FoodIngredientResponseDto;
 import com.ssafy.andback.api.dto.response.ListResponseDto;
 import com.ssafy.andback.api.service.FoodIngredientService;
 import io.swagger.annotations.Api;
@@ -34,7 +34,7 @@ public class FoodIngredientController {
 
     @ApiOperation(value = "식재료 등록", notes = "식재료 정보를 입력받아 DB에 저장한다.")
     @PostMapping()
-    public ResponseEntity<BaseResponseDto> insertFoodIngredient(InsertFoodIngredientReqDto insertFoodIngredientReqDto) {
+    public ResponseEntity<BaseResponseDto> insertFoodIngredient(InsertFoodIngredientRequestDto insertFoodIngredientReqDto) {
 
         String res = foodIngredientService.saveFoodIngredient(insertFoodIngredientReqDto);
 
@@ -47,7 +47,7 @@ public class FoodIngredientController {
     @ApiOperation(value = "식재료 수정", notes = "식재료 정보를 입력받아 해당하는 식재료의 정보를 DB에 수정한다.")
     @PutMapping("/{foodIngredientId}")
     public ResponseEntity<BaseResponseDto> updateFoodIngredient(@PathVariable Long foodIngredientId,
-                                                                UpdateFoodIngredientReqDto updateFoodIngredientReqDto) {
+                                                                UpdateFoodIngredientRequestDto updateFoodIngredientReqDto) {
         String res = foodIngredientService.updateFoodIngredient(foodIngredientId, updateFoodIngredientReqDto);
 
         if (res.equals("fail")) {
@@ -70,10 +70,10 @@ public class FoodIngredientController {
 
     @ApiOperation(value = "식재료 목록", notes = "해당하는 냉장고의 식재료 List를 보여준다")
     @GetMapping("/{refrigeratorId}")
-    public ResponseEntity<ListResponseDto<FoodIngredientResDto>> findFoodIngredientByRefrigeratorID(@ApiParam(value = "냉장고 아이디") @PathVariable Long refrigeratorId) {
+    public ResponseEntity<ListResponseDto<FoodIngredientResponseDto>> findFoodIngredientByRefrigeratorID(@ApiParam(value = "냉장고 아이디") @PathVariable Long refrigeratorId) {
 
-        List<FoodIngredientResDto> response = foodIngredientService.findAllByRefrigeratorId(refrigeratorId);
+        List<FoodIngredientResponseDto> response = foodIngredientService.findAllByRefrigeratorId(refrigeratorId);
 
-        return ResponseEntity.ok(new ListResponseDto<FoodIngredientResDto>(200, "success", response));
+        return ResponseEntity.ok(new ListResponseDto<FoodIngredientResponseDto>(200, "success", response));
     }
 }

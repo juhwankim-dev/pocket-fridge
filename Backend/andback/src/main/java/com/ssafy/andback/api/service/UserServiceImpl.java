@@ -1,5 +1,6 @@
 package com.ssafy.andback.api.service;
 
+import com.ssafy.andback.api.dto.request.LoginRequestDto;
 import com.ssafy.andback.core.domain.Refrigerator;
 import com.ssafy.andback.core.domain.UserRefrigerator;
 import com.ssafy.andback.core.repository.RefrigeratorRepository;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -38,10 +40,10 @@ public class UserServiceImpl implements UserService {
     private final UserRefrigeratorRepository userRefrigeratorRepository;
 
     @Autowired
-    private PasswordEncoder passwordEncoder; // WebSecurityConfiguration.java 에서 Bean 설정
+    private PasswordEncoder passwordEncoder; // WebSecurityConfig.java 에서 Bean 설정
 
     @Autowired
-    private JavaMailSender javaMailSender;
+    private JavaMailSender javaMailSender;  // WebSecurityConfig.java 에서 Bean 설정
 
     @DisplayName("패스워드 암호화")
     public String passwordEncode(String userPassword) {
@@ -141,5 +143,19 @@ public class UserServiceImpl implements UserService {
             sb.append(charSet[idx]);
         }
         return sb.toString();
+    }
+
+    // 로그인
+    @Override
+    public String login(LoginRequestDto loginRequestDto) {
+        Optional<User> user = userRepository.findByUserEmail(loginRequestDto.getUserEmail());
+        if (!user.isPresent()) {
+            return "fail";
+        }
+        // 암호화된 비밀번호 비교
+        if (!passwordEncoder.matches(loginRequestDto.getUserPassword(), user.get().getUserPassword())) {
+            return "fail";
+        }
+        return "success";
     }
 }
