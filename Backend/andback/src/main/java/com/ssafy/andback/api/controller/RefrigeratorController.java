@@ -18,8 +18,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+*
+* RefrigeratorController
+* 냉장공 API 컨트롤러
+*
+* @author hoony
+* @version 1.0.0
+* 생성일 2022-04-25
+* 마지막 수정일 2022-04-25
+**/
+
 @Api(tags = {"냉장고 API"})
-@RestController("/refrigerator")
+@RestController()
+@RequestMapping(value = "/refrigerator")
 @RequiredArgsConstructor
 public class RefrigeratorController {
 
