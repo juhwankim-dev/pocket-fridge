@@ -1,10 +1,13 @@
 package com.ssafy.andback.api.service;
 
+import com.ssafy.andback.api.dto.request.InsertRefrigeratorReqDto;
 import com.ssafy.andback.api.dto.response.RefrigeratorResDto;
 import com.ssafy.andback.core.domain.Refrigerator;
 import com.ssafy.andback.core.domain.User;
+import com.ssafy.andback.core.domain.UserRefrigerator;
 import com.ssafy.andback.core.queryrepository.RefrigeratorQueryRepository;
 import com.ssafy.andback.core.repository.RefrigeratorRepository;
+import com.ssafy.andback.core.repository.UserRefrigeratorRepository;
 import com.ssafy.andback.core.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,13 +33,24 @@ public class RefrigeratorServiceImpl implements RefrigeratorService {
     private final RefrigeratorRepository refrigeratorRepository;
     private final RefrigeratorQueryRepository refrigeratorQueryRepository;
     private final UserRepository userRepository;
+    private final UserRefrigeratorRepository userRefrigeratorRepository;
 
-    public String insertRefrigerator(String refrigeratorName) {
+    public String insertRefrigerator(InsertRefrigeratorReqDto reqDto) {
 
-        if (refrigeratorName.equals("")) return "false";
+        User user = userRepository.findByUserEmail(reqDto.getUserEmail());
 
-        Refrigerator refrigerator = Refrigerator.builder().refrigeratorName(refrigeratorName).build();
-        Refrigerator save = refrigeratorRepository.save(refrigerator);
+        if (user == null) {
+            return "fail";
+        }
+
+        Refrigerator refrigerator = refrigeratorRepository.save(Refrigerator.builder()
+                .refrigeratorName(reqDto.getRefrigeratorName())
+                .build());
+
+        UserRefrigerator save = userRefrigeratorRepository.save(UserRefrigerator.builder()
+                .refrigerator(refrigerator)
+                .user(user)
+                .build());
 
         return "success";
     }
