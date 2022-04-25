@@ -1,7 +1,6 @@
 package com.ssafy.andback.core.queryrepository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.ssafy.andback.core.domain.QUserRefrigerator;
 import com.ssafy.andback.core.domain.Refrigerator;
 import com.ssafy.andback.core.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +24,9 @@ public class RefrigeratorQueryRepositoryImpl implements RefrigeratorQueryReposit
         return query.select(refrigerator)
                 .from(refrigerator)
                 .rightJoin(userRefrigerator)
-                .on(refrigerator.eq(userRefrigerator.refrigerator))
-                .where(userRefrigerator.userRefrigeratorId.eq(user.getUserId()))
+                .on(refrigerator.refrigeratorId.eq(userRefrigerator.refrigerator.refrigeratorId))
+                .where(userRefrigerator.user.userId.eq(user.getUserId()))
                 .fetch();
     }
+
 }
