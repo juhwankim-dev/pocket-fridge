@@ -14,4 +14,5 @@ import com.ssafy.andback.api.dto.UserDto;
 **/
 public interface UserService {
     String insertUser(UserDto userDto);
+    String checkUserEmail(String userEmail);
 }

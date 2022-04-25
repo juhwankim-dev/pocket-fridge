@@ -3,6 +3,8 @@ package com.ssafy.andback.core.repository;
 import com.ssafy.andback.core.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 /**
  *
  * UserRepository
@@ -14,5 +16,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * 마지막 수정일 2022-04-19
  **/
 public interface UserRepository extends JpaRepository<User, Long> {
-    User findByUserEmail(String userEmail);   // 유저 이메일로 검색
+    Boolean existsByUserEmail(String userEmail);
+    Optional<User> findByUserEmail(String userEmail);   // 유저 이메일로 검색
 }

@@ -61,4 +61,14 @@ public class UserServiceImpl implements UserService{
         userRepository.save(user);
         return "success";
     }
+
+    // 이메일 중복 검사
+    @Override
+    public String checkUserEmail(String userEmail) {
+
+        if(userEmail.equals("") || userRepository.existsByUserEmail(userEmail))
+            return "fail";
+
+        return "success";
+    }
 }
