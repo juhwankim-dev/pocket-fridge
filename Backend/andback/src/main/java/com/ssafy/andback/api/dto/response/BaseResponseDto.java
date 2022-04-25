@@ -18,7 +18,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BaseResponseDto {
     private int status;
-    private String code;
     private String message;
 
     public BaseResponseDto(int status, String message) {

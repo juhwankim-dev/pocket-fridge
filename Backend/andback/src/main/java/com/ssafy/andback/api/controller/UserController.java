@@ -59,11 +59,6 @@ public class UserController {
                     @ApiImplicitParam(
                             name = "userPicture",
                             value = "유저 사진 (null 가능)"
-                    ),
-                    @ApiImplicitParam(
-                            name = "userLoginType",
-                            value = "유저 로그인 타입 (일반 회원가입: false, 소셜 로그인: true)",
-                            required = true
                     )
             }
     )
