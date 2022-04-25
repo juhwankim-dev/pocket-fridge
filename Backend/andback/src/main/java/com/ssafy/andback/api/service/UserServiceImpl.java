@@ -158,4 +158,23 @@ public class UserServiceImpl implements UserService {
         }
         return "success";
     }
+
+    // 비밀번호 찾기 (비밀번호 변경)
+    @Override
+    public String findUserPassword(String userEmail) {
+        Optional<User> user = userRepository.findByUserEmail(userEmail);
+        if (!user.isPresent()) {
+            return "fail";
+        }
+
+        String userPassword = sendUserEmailNumber(userEmail);
+
+        user.get().setUserPassword(passwordEncoder.encode(userPassword));
+        userRepository.save(user.get());
+
+        return "success";
+    }
+
+
+
 }
