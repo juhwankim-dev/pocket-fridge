@@ -14,50 +14,60 @@
         android:layout_height="match_parent"
         tools:context=".present.views.user.signup.StepOneFragment">
 
-        <ImageView
-            android:id="@+id/iv_step_twoF_close"
-            android:layout_width="52dp"
-            android:layout_height="52dp"
-            android:padding="@dimen/activity_margin_default"
-            android:src="@drawable/ic_back"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            style="@style/page_title_text"
-            android:text="회원가입"
-            android:layout_marginStart="@dimen/activity_margin_default"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_step_twoF_close"
-            app:layout_constraintStart_toEndOf="@+id/iv_step_twoF_close"
-            app:layout_constraintTop_toTopOf="@+id/iv_step_twoF_close" />
-
-        <TextView
-            android:id="@+id/tv_step_twoF_title"
-            style="@style/page_title_text"
-            android:layout_marginStart="@dimen/activity_margin_wide"
-            android:layout_marginTop="60dp"
-            android:text="2단계 중 2단계"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_step_twoF_close" />
-
-        <com.andback.pocketfridge.present.utils.CustomForm
-            android:id="@+id/custom_form_step_twoF_name"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/al_step_oneF"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            setTextWatcher="@{vm}"
-            app:menu_title="이름"
-            app:hint_msg="이름을 입력해주세요"
-            app:layout_constraintTop_toBottomOf="@+id/tv_step_twoF_title" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <com.andback.pocketfridge.present.utils.CustomForm
-            android:id="@+id/custom_form_step_twoF_nickname"
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/tb_step_oneF"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="@string/sign_up"
+                app:navigationIcon="@drawable/ic_close"/>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            setTextWatcher="@{vm}"
-            app:menu_title="닉네임"
-            app:hint_msg="영문 3~6자"
-            app:layout_constraintTop_toBottomOf="@+id/custom_form_step_twoF_name" />
+            android:layout_height="0dp"
+            android:overScrollMode="never"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btn_step_twoF_signup">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_step_twoF_title"
+                    style="@style/page_title_text"
+                    android:layout_marginStart="@dimen/activity_margin_wide"
+                    android:layout_marginTop="120dp"
+                    android:text="2단계 중 2단계" />
+
+                <com.andback.pocketfridge.present.utils.CustomForm
+                    android:id="@+id/custom_form_step_twoF_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="100dp"
+                    setTextWatcher="@{vm}"
+                    app:menu_title="이름"
+                    app:hint_msg="특수문자를 제외한 2~20자리"/>
+
+                <com.andback.pocketfridge.present.utils.CustomForm
+                    android:id="@+id/custom_form_step_twoF_nickname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    setTextWatcher="@{vm}"
+                    app:menu_title="닉네임"
+                    app:hint_msg="특수문자 제외 2~10자리" />
+
+            </LinearLayout>
+        </ScrollView>
 
         <Button
             android:id="@+id/btn_step_twoF_signup"

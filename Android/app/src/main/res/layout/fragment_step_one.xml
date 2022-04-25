@@ -14,59 +14,70 @@
         android:layout_height="match_parent"
         tools:context=".present.views.user.signup.StepOneFragment">
 
-        <ImageView
-            android:id="@+id/iv_step_oneF_close"
-            android:layout_width="52dp"
-            android:layout_height="52dp"
-            android:padding="@dimen/activity_margin_default"
-            android:src="@drawable/ic_close"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/al_step_oneF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            style="@style/page_title_text"
-            android:text="회원가입"
-            android:layout_marginStart="@dimen/activity_margin_default"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_step_oneF_close"
-            app:layout_constraintStart_toEndOf="@+id/iv_step_oneF_close"
-            app:layout_constraintTop_toTopOf="@+id/iv_step_oneF_close" />
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/tb_step_oneF"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="@string/sign_up"
+                app:navigationIcon="@drawable/ic_close"/>
 
-        <TextView
-            android:id="@+id/tv_step_oneF_title"
-            style="@style/page_title_text"
-            android:layout_marginStart="@dimen/activity_margin_wide"
-            android:layout_marginTop="60dp"
-            android:text="2단계 중 1단계"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_step_oneF_close" />
+        </com.google.android.material.appbar.AppBarLayout>
 
-        <com.andback.pocketfridge.present.utils.CustomForm
-            android:id="@+id/custom_form_step_oneF_email"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            setTextWatcher="@{vm}"
-            app:menu_title="이메일"
-            app:hint_msg="이메일 주소를 입력해주세요"
-            app:layout_constraintTop_toBottomOf="@+id/tv_step_oneF_title" />
+            android:layout_height="0dp"
+            android:overScrollMode="never"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btn_step_oneF_next">
 
-        <com.andback.pocketfridge.present.utils.CustomForm
-            android:id="@+id/custom_form_step_oneF_pw"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            setTextWatcher="@{vm}"
-            app:menu_title="비밀번호"
-            app:hint_msg="영문, 숫자 조합 8~20자"
-            app:layout_constraintTop_toBottomOf="@+id/custom_form_step_oneF_email" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <com.andback.pocketfridge.present.utils.CustomForm
-            android:id="@+id/custom_form_step_oneF_pw_confirm"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            setTextWatcher="@{vm}"
-            app:menu_title="비밀번호 확인"
-            app:hint_msg="영문, 숫자 조합 8~20자"
-            app:layout_constraintTop_toBottomOf="@+id/custom_form_step_oneF_pw" />
+                <TextView
+                    style="@style/page_title_text"
+                    android:layout_marginStart="@dimen/activity_margin_wide"
+                    android:layout_marginTop="120dp"
+                    android:text="2단계 중 1단계" />
+
+                <com.andback.pocketfridge.present.utils.CustomForm
+                    android:id="@+id/custom_form_step_oneF_email"
+                    setTextWatcher="@{vm}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="100dp"
+                    app:hint_msg="이메일 주소를 입력해주세요"
+                    app:menu_title="이메일" />
+
+                <com.andback.pocketfridge.present.utils.CustomForm
+                    android:id="@+id/custom_form_step_oneF_pw"
+                    setTextWatcher="@{vm}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hint_msg="영문 포함 5~15자리"
+                    app:menu_title="비밀번호" />
+
+                <com.andback.pocketfridge.present.utils.CustomForm
+                    android:id="@+id/custom_form_step_oneF_pw_confirm"
+                    setTextWatcher="@{vm}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hint_msg="영문 포함 5~15자리"
+                    app:menu_title="비밀번호 확인" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp" />
+            </LinearLayout>
+        </ScrollView>
 
         <Button
             android:id="@+id/btn_step_oneF_next"
@@ -79,6 +90,7 @@
             android:textColor="@color/white"
             android:onClick="@{()->vm.onNextClick()}"
             android:clickable="false"
+            app:backgroundTint="@color/gray_non_clickable_button"
             app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
