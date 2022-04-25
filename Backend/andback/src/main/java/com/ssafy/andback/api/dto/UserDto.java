@@ -43,4 +43,6 @@ public class UserDto {
 
     @ApiParam(value = "유저 사진(null 허용")
     private String userPicture;
+
+
 }
