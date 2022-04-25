@@ -11,7 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- *
  * UserServiceImpl
  * UserService 구체화
  *
@@ -22,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
  **/
 
 @Service("userService")
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     @Autowired
     UserRepository userRepository;
@@ -31,7 +30,7 @@ public class UserServiceImpl implements UserService{
     private PasswordEncoder passwordEncoder; // WebSecurityConfiguration.java 에서 Bean 설정
 
     @DisplayName("패스워드 암호화")
-    public String passwordEncode(String userPassword){
+    public String passwordEncode(String userPassword) {
         String encodedPassword = passwordEncoder.encode(userPassword);
 
         assertAll(
@@ -44,8 +43,7 @@ public class UserServiceImpl implements UserService{
     // 회원가입
     @Override
     public String insertUser(UserDto userDto) {
-
-        if(userDto.getUserEmail().equals(""))   // @Email 은 공백을 검사하지 않으므로 조건 추가
+        if (userDto.getUserEmail().equals(""))   // @Email 은 공백을 검사하지 않으므로 조건 추가
             return "fail";
 
         String userPassword = passwordEncode(userDto.getUserPassword());
@@ -65,10 +63,16 @@ public class UserServiceImpl implements UserService{
     // 이메일 중복 검사
     @Override
     public String checkUserEmail(String userEmail) {
-
-        if(userEmail.equals("") || userRepository.existsByUserEmail(userEmail))
+        if (userEmail.equals("") || userRepository.existsByUserEmail(userEmail))
             return "fail";
+        return "success";
+    }
 
+    // 닉네임 중복 검사
+    @Override
+    public String checkUserNickname(String userNickname) {
+        if (userNickname.equals("") || userRepository.existsByUserNickname(userNickname))
+            return "fail";
         return "success";
     }
 }

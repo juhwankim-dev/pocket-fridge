@@ -38,19 +38,27 @@ public class UserController {
         if (errors.hasErrors() || result.equals("fail")) {
             return ResponseEntity.status(401).body(BaseResponseDto.of(401, "회원가입 실패"));
         }
-
         return ResponseEntity.ok(BaseResponseDto.of(200, "회원가입 성공"));
     }
 
     @ApiOperation(value = "이메일 중복 검사", notes = "유저 이메일 중복 검사")
-    @GetMapping("/{userEmail}")
-    public ResponseEntity<BaseResponseDto> checkEmail(@PathVariable String userEmail){
+    @GetMapping("/checkemail/{userEmail}")
+    public ResponseEntity<BaseResponseDto> checkUserEmail(@PathVariable String userEmail) {
         String result = userService.checkUserEmail(userEmail);
-        if(result.equals("fail")){
+        if (result.equals("fail")) {
             return ResponseEntity.status(401).body(BaseResponseDto.of(401, "이메일 중복"));
         }
-
         return ResponseEntity.ok(BaseResponseDto.of(200, "이메일 사용 가능"));
+    }
+
+    @ApiOperation(value = "닉네임 중복 검사", notes = "유저 닉네임 중복 검사")
+    @GetMapping("/checknickname/{userNickname}")
+    public ResponseEntity<BaseResponseDto> checkUserNickname(@PathVariable String userNickname) {
+        String result = userService.checkUserNickname(userNickname);
+        if (result.equals("fail")) {
+            return ResponseEntity.status(401).body(BaseResponseDto.of(401, "닉네임 중복"));
+        }
+        return ResponseEntity.ok(BaseResponseDto.of(200, "닉네임 사용 가능"));
     }
 
 }
