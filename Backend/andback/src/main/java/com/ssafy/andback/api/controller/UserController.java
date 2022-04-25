@@ -20,7 +20,7 @@ import javax.validation.Valid;
  * @author 김다은
  * @version 1.0.0
  * 생성일 2022-04-19
- * 마지막 수정일 2022-04-19
+ * 마지막 수정일 2022-04-25
  **/
 
 @Api(value = "유저 API", tags = {"User"})
@@ -43,16 +43,6 @@ public class UserController {
     }
 
     @ApiOperation(value = "이메일 중복 검사", notes = "유저 이메일 중복 검사")
-    @GetMapping("/{userEmail}")
-    public ResponseEntity<BaseResponseDto> checkEmail(@PathVariable String userEmail) {
-        String result = userService.checkUserEmail(userEmail);
-        if (result.equals("fail")) {
-            return ResponseEntity.status(401).body(BaseResponseDto.of(401, "이메일 중복"));
-        }
-
-        return ResponseEntity.ok(BaseResponseDto.of(200, "이메일 사용 가능"));
-    }
-
     @GetMapping("/checkemail/{userEmail}")
     public ResponseEntity<BaseResponseDto> checkUserEmail(@PathVariable String userEmail) {
         String result = userService.checkUserEmail(userEmail);
