@@ -37,13 +37,9 @@ public class FoodIngredient {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate foodIngredientExp;
 
-    // 식재로 카테고리
-    @Column(name = "food_ingredient_category", nullable = false)
-    private String foodIngredientCategory;
-
     // 식재료 수량
     @Column(name = "food_ingredient_count", nullable = false)
-    private int foodIngredientCount;
+    private float foodIngredientCount;
 
     // 구입일
     @Column(name = "food_ingredient_date", nullable = false)
