@@ -44,4 +44,8 @@ class CustomForm : LinearLayout {
     fun setErrorMsg(s: String) {
         binding.tvErrorMsg.text = s
     }
+
+    fun getMenuTitle(): String {
+        return binding.tvMenuTitle.text.toString()
+    }
 }
