@@ -18,6 +18,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "food_ingredient")
 @Getter
 @Setter
 public class FoodIngredient {
@@ -36,13 +37,9 @@ public class FoodIngredient {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate foodIngredientExp;
 
-    // 식재로 카테고리
-    @Column(name = "food_ingredient_category", nullable = false)
-    private String foodIngredientCategory;
-
     // 식재료 수량
     @Column(name = "food_ingredient_count", nullable = false)
-    private int foodIngredientCount;
+    private float foodIngredientCount;
 
     // 구입일
     @Column(name = "food_ingredient_date", nullable = false)
@@ -55,6 +52,7 @@ public class FoodIngredient {
     private WayStatus foodIngredientWay;
 
     // 냉장고 아이디(냉장고 1 : 식재료 N)
-//    @ManyToOne(targetEntity = Refrigerator.class, fetch = FetchType.LAZY)
-//    private Refrigerator refrigeratorId;
+    @ManyToOne(targetEntity = Refrigerator.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "refrigerator_id")
+    private Refrigerator refrigerator;
 }

@@ -7,10 +7,11 @@
  * 생성일 2022/04/19
  * 마지막 수정일 2022/04/19
  **/
-package com.ssafy.andback.api.dto;
+package com.ssafy.andback.api.dto.request;
 
 import com.ssafy.andback.api.constant.WayStatus;
 import com.sun.istack.NotNull;
+import io.swagger.annotations.ApiParam;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,31 +20,38 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class FoodIngredientDto {
+public class UpdateFoodIngredientRequestDto {
+
+    // 식재료 아이디
+    @ApiParam(value = "식재료 아이디", required = true)
+    @NotNull
+    private Long foodIngredientId;
 
     // 식재료 이름
+    @ApiParam(value = "식재료 이름", required = true)
     @NotNull
     private String foodIngredientName;
 
     // 유통기한
+    @ApiParam(name = "식재료 유통기한", required = true)
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate foodIngredientExp;
 
-    // 식재로 카테고리
-    @NotNull
-    private String foodIngredientCategory;
-
-    // 식재료 수량
-    @NotNull
-    private int foodIngredientCount;
 
     // 구입일
+    @ApiParam(value = "식재료 구입일", required = true)
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate foodIngredientDate;
 
     // 보관방법
+    @ApiParam(value = "식재료 보관방법", required = true)
     @NotNull
     private WayStatus foodIngredientWay;
+
+    // 냉장고 아이디
+    @ApiParam(value = "냉장고 아이디", required = true)
+    @NotNull
+    private Long refrigeratorId;
 }

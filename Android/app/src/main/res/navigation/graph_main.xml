@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/graph_main"
+    app:startDestination="@id/fridgeFragment">
+
+    <fragment
+        android:id="@+id/fridgeFragment"
+        android:name="com.andback.pocketfridge.present.views.main.FridgeFragment"
+        android:label="FridgeFragment"
+        tools:layout="@layout/fragment_fridge"/>
+    <fragment
+        android:id="@+id/ingreUploadFragment"
+        android:name="com.andback.pocketfridge.present.views.main.IngreUploadFragment"
+        android:label="IngreUploadFragment"
+        tools:layout="@layout/fragment_ingre_upload"/>
+    <fragment
+        android:id="@+id/recipeFragment"
+        android:name="com.andback.pocketfridge.present.views.main.RecipeFragment"
+        android:label="RecipeFragment"
+        tools:layout="@layout/fragment_recipe"/>
+</navigation>
