@@ -10,9 +10,15 @@
 package com.ssafy.andback.core.repository;
 
 import com.ssafy.andback.core.domain.FoodIngredient;
+import com.ssafy.andback.core.domain.Refrigerator;
+import lombok.extern.java.Log;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 
 public interface FoodIngredientRepository extends JpaRepository<FoodIngredient, Long> {
 
     FoodIngredient findByFoodIngredientId(Long foodIngredientId);
+
+    List<FoodIngredient> findAllByRefrigerator(Refrigerator refrigeratorId);
 }
