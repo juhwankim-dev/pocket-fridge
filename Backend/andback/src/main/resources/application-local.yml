@@ -58,10 +58,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username:  #이름
-    to-name:  #이름
-    #docong1234!
-    password:  #비밀번호
+    username: andbackRFT@gmail.com  #이메일
+    password: srhbjmlsjskqbjpp #앱비밀번호
     properties:
       mail:
         smtp:
