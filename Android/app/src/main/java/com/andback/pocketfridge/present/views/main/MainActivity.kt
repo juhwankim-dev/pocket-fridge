@@ -10,7 +10,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.databinding.ActivityMainBinding
 import com.andback.pocketfridge.present.config.BaseActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private val TAG = "MainActivity_debuk"
     override fun onCreate(savedInstanceState: Bundle?) {
