@@ -7,31 +7,30 @@ import android.content.res.Resources
 import com.andback.pocketfridge.domain.model.CheckResult
 
 object SignUpChecker {
-    const val ID = "^[a-zA-Z0-9]*\$"
-    const val ID_REQUIRED = "[a-zA-z]"
-    const val NICKNAME = "^[a-zA-Z가-힣0-9]*\$"
-    const val PW = "^[a-zA-Z0-9!@#$%^&*]*\$"
+    const val NAME = "^[a-zA-Zㄱ-ㅎ가-힣0-9]*\$"
+    const val NICKNAME = "^[a-zA-Zㄱ-ㅎ가-힣0-9]*\$"
+    const val PW = "^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z[0-9]]{5,15}\$"
 
-    const val DEFAULT_ERROR = "사용할 수 없는 문자를 포함하고 있습니다."
-    const val ID_LEN_ERROR = "아이디는 5 ~ 15자입니다."
-    const val ID_REQUIRED_ALPHABET = "영문자를 포함해야 합니다."
-    const val NICKNAME_LEN_ERROR = "닉네임은 2 ~ 10자입니다."
-    const val EMAIL_EMPTY_ERROR = "이메일을 입력하십시오."
-    const val EMAIL_PATTERN_ERROR = "올바른 이메일 형식이 아닙니다."
-    const val PW_LEN_ERROR = "비밀번호는 5 ~ 15자입니다."
-    const val PW_REQUIRED_ALPHABET = "영문자를 포함해야 합니다."
+    const val NAME_EMPTY_ERROR = "이름은 필수 입력 값입니다."
+    const val NAME_PATTERN_ERROR = "이름은 특수문자를 제외한 2~20자리여야 합니다."
+
+    const val NICKNAME_EMPTY_ERROR = "닉네임은 필수 입력 값입니다."
+    const val NICKNAME_PATTERN_ERROR = "닉네임은 특수문자를 제외한 2~10자리여야 합니다."
+
+    const val EMAIL_EMPTY_ERROR = "이메일은 필수 입력 값입니다."
+    const val EMAIL_PATTERN_ERROR = "이메일 형식이 올바르지 않습니다."
+
+    const val PW_EMPTY_ERROR = "비밀번호는 필수 입력 값입니다."
+    const val PW_PATTERN_ERROR = "비밀번호는 영문자를 포함한 5~15자리여야 합니다."
     const val PW_MATCH_ERROR = "비밀번호가 일치하지 않습니다."
 
-    fun validateId(id: String): CheckResult {
+    fun validateName(name: String): CheckResult {
         return when {
-            Pattern.matches(ID, id) == false -> {
-                CheckResult(DEFAULT_ERROR, false)
+            name.isEmpty() -> {
+                CheckResult(NAME_EMPTY_ERROR, false)
             }
-            id.length < 5 || id.length > 15 -> {
-                CheckResult(ID_LEN_ERROR, false)
-            }
-            Pattern.matches(ID_REQUIRED, id) == false -> {
-                CheckResult(ID_REQUIRED_ALPHABET, false)
+            Pattern.matches(NAME, name) == false -> {
+                CheckResult(NAME_PATTERN_ERROR, false)
             }
             else -> {
                 CheckResult("", true)
@@ -41,11 +40,11 @@ object SignUpChecker {
 
     fun validateNickname(nickname: String): CheckResult {
         return when {
-            Pattern.matches(NICKNAME, nickname) == false -> {
-                CheckResult(DEFAULT_ERROR, false)
+            nickname.isEmpty() -> {
+                CheckResult(NICKNAME_EMPTY_ERROR, false)
             }
-            nickname.length < 2 || nickname.length > 10 -> {
-                CheckResult(NICKNAME_LEN_ERROR, false)
+            Pattern.matches(NICKNAME, nickname) == false -> {
+                CheckResult(NICKNAME_PATTERN_ERROR, false)
             }
             else -> {
                 CheckResult("", true)
@@ -71,14 +70,11 @@ object SignUpChecker {
 
     fun validatePw(pw: String): CheckResult {
         return when {
+            pw.isEmpty() -> {
+                CheckResult(PW_EMPTY_ERROR, false)
+            }
             Pattern.matches(PW, pw) == false -> {
-                CheckResult(DEFAULT_ERROR, false)
-            }
-            pw.length < 5 || pw.length > 15 -> {
-                CheckResult(PW_LEN_ERROR, false)
-            }
-            Pattern.matches(PW_REQUIRED_ALPHABET, pw) == false -> {
-                CheckResult(PW_REQUIRED_ALPHABET, false)
+                CheckResult(PW_PATTERN_ERROR, false)
             }
             else -> {
                 CheckResult("", true)
