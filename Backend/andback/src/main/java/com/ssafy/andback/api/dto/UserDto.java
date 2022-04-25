@@ -1,6 +1,10 @@
 package com.ssafy.andback.api.dto;
 
+<<<<<<<HEAD
 import io.swagger.annotations.ApiParam;
+=======
+import lombok.Builder;
+>>>>>>>f8ba250e0e51ac6821d19fc723e14b5216871bfd
 import lombok.Getter;
 import lombok.Setter;
 
@@ -43,6 +47,5 @@ public class UserDto {
 
     @ApiParam(value = "유저 사진(null 허용")
     private String userPicture;
-
 
 }

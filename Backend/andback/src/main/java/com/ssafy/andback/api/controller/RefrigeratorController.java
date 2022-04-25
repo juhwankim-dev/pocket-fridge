@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import java.util.List;
 
 @Api(tags = {"냉장고 API"})
@@ -38,6 +39,7 @@ public class RefrigeratorController {
     public ResponseEntity<BaseResponseDto> insertRefrigerator(InsertRefrigeratorReqDto reqDto) {
 
         String response = refrigeratorService.insertRefrigerator(reqDto);
+
 
         if (response.equals("fail")) {
             return ResponseEntity.status(401).body(BaseResponseDto.of(401, "실패"));

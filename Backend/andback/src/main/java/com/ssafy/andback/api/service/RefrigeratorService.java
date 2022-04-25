@@ -5,7 +5,6 @@ import com.ssafy.andback.api.dto.response.RefrigeratorResDto;
 
 import java.util.List;
 
-
 /**
  * RefrigeratorService
  * 냉장고 서비스 인터페이스
