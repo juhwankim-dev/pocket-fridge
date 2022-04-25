@@ -44,9 +44,10 @@ public class UserServiceImpl implements UserService{
     // 회원가입
     @Override
     public String insertUser(UserDto userDto) {
-        if(userDto.getUserEmail().equals("") || userDto.getUserName().equals("") ||
-        userDto.getUserNickname().equals("") || userDto.getUserPassword().equals(""))
+
+        if(userDto.getUserEmail().equals(""))   // @Email 은 공백을 검사하지 않으므로 조건 추가
             return "fail";
+
         String userPassword = passwordEncode(userDto.getUserPassword());
         userDto.setUserPassword(userPassword);
         User user = User.builder()
