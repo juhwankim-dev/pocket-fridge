@@ -11,13 +11,18 @@ package com.ssafy.andback.api.service;
 
 import com.ssafy.andback.api.dto.request.InsertFoodIngredientReqDto;
 import com.ssafy.andback.api.dto.request.UpdateFoodIngredientReqDto;
+import com.ssafy.andback.api.dto.response.FoodIngredientResDto;
 import com.ssafy.andback.core.domain.FoodIngredient;
 import com.ssafy.andback.core.domain.Refrigerator;
 import com.ssafy.andback.core.repository.FoodIngredientRepository;
 import com.ssafy.andback.core.repository.RefrigeratorRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -88,5 +93,25 @@ public class FoodIngredientServiceImpl implements FoodIngredientService {
 
         foodIngredientRepository.delete(foodIngredient);
         return "success";
+    }
+
+    @Override
+    public List<FoodIngredientResDto> findAllByRefrigeratorId(Long refrigeratorId) {
+
+        Refrigerator refrigerator = refrigeratorRepository.findByRefrigeratorId(refrigeratorId);
+
+        List<FoodIngredient> allByRefrigerator = foodIngredientRepository.findAllByRefrigerator(refrigerator);
+
+        List<FoodIngredientResDto> res = new ArrayList<>();
+
+        for (FoodIngredient temp : allByRefrigerator) {
+            res.add(FoodIngredientResDto.builder()
+                    .foodIngredientDate(temp.getFoodIngredientDate())
+                    .foodIngredientExp(temp.getFoodIngredientExp())
+                    .foodIngredientName(temp.getFoodIngredientName())
+                    .build());
+        }
+
+        return res;
     }
 }
