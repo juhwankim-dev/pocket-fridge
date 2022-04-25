@@ -2,16 +2,12 @@ package com.andback.pocketfridge.present.views.user.signup
 
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.databinding.FragmentStepOneBinding
 import com.andback.pocketfridge.present.config.BaseFragment
-import com.andback.pocketfridge.present.utils.PageSet
 import com.andback.pocketfridge.present.utils.SignUpChecker
 import com.andback.pocketfridge.present.views.user.UserActivity
 import com.andback.pocketfridge.present.views.user.UserViewModel
@@ -34,11 +30,7 @@ class StepOneFragment : BaseFragment<FragmentStepOneBinding>(R.layout.fragment_s
 
         with(viewModel) {
             pageNumber.observe(viewLifecycleOwner) {
-                when (pageNumber.value) {
-                    PageSet.STEP_ONE -> (context as UserActivity).onChangeFragement(PageSet.STEP_ONE)
-                    PageSet.STEP_TWO -> (context as UserActivity).onChangeFragement(PageSet.STEP_TWO)
-                    PageSet.LOGIN -> (context as UserActivity).onChangeFragement(PageSet.LOGIN)
-                }
+                (context as UserActivity).onChangeFragement(it)
             }
         }
     }
@@ -59,7 +51,7 @@ class StepOneFragment : BaseFragment<FragmentStepOneBinding>(R.layout.fragment_s
             it.editText.addTextChangedListener { newText ->
                 SignUpChecker.validatePw(newText.toString()).apply {
                     it.setErrorMsg(errorMsg)
-                    isValidEmail = isValid
+                    isValidPw = isValid
                 }
 
                 decideActiveButton()
@@ -68,9 +60,9 @@ class StepOneFragment : BaseFragment<FragmentStepOneBinding>(R.layout.fragment_s
 
         binding.customFormStepOneFPwConfirm.also {
             it.editText.addTextChangedListener { newText ->
-                SignUpChecker.validateConfirmPw(binding.customFormStepOneFPw.editText.toString(), newText.toString()).apply {
+                SignUpChecker.validateConfirmPw(binding.customFormStepOneFPw.editText.text.toString(), newText.toString()).apply {
                     it.setErrorMsg(errorMsg)
-                    isValidEmail = isValid
+                    isValidConfirmPw = isValid
                 }
 
                 decideActiveButton()
