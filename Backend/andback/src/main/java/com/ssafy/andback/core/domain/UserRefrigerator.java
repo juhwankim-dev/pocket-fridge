@@ -8,7 +8,6 @@ import lombok.Setter;
 import javax.persistence.*;
 
 /**
- *
  * UserRefrigerator
  * user_refrigerator
  *
@@ -26,7 +25,8 @@ import javax.persistence.*;
 
 public class UserRefrigerator {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_refrigerator")
     private Long userRefrigeratorId;
 

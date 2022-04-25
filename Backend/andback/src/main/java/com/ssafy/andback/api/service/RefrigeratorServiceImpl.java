@@ -26,7 +26,6 @@ import java.util.List;
  * 마지막 수정일 2022-04-25
  **/
 
-
 @Service
 @RequiredArgsConstructor
 public class RefrigeratorServiceImpl implements RefrigeratorService {
@@ -53,9 +52,9 @@ public class RefrigeratorServiceImpl implements RefrigeratorService {
                 .user(user)
                 .build());
 
-
         return "success";
     }
+
 
     @Override
     public List<RefrigeratorResDto> findAllRefrigeratorByUser(String userEmail) {
