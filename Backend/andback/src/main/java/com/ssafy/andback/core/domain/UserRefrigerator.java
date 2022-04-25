@@ -9,6 +9,17 @@ import javax.persistence.*;
 @Table(name = "user_refrigerator")
 @Getter
 @Setter
+
+/**
+*
+* UserRefrigerator
+* user_refrigerator
+*
+* @author hoony
+* @version 1.0.0
+* 생성일 2022-04-25
+* 마지막 수정일 2022-04-25
+**/
 public class UserRefrigerator {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
