@@ -33,7 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
 
         javaMailSender.setProtocol("smtp");
-        javaMailSender.setHost("127.0.0.1");
+        javaMailSender.setHost("k6d206.p.ssafy.io");
         javaMailSender.setPort(537);
 
         return javaMailSender;
