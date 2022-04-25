@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -37,9 +38,8 @@ public class RefrigeratorServiceImpl implements RefrigeratorService {
 
     public String insertRefrigerator(InsertRefrigeratorReqDto reqDto) {
 
-        User user = userRepository.findByUserEmail(reqDto.getUserEmail());
-
-        if (user == null) {
+        Optional<User> user = userRepository.findByUserEmail(reqDto.getUserEmail());
+        if (!user.isPresent()) {
             return "fail";
         }
 
@@ -49,7 +49,7 @@ public class RefrigeratorServiceImpl implements RefrigeratorService {
 
         UserRefrigerator save = userRefrigeratorRepository.save(UserRefrigerator.builder()
                 .refrigerator(refrigerator)
-                .user(user)
+                .user(user.get())
                 .build());
 
         return "success";
@@ -58,9 +58,12 @@ public class RefrigeratorServiceImpl implements RefrigeratorService {
     @Override
     public List<RefrigeratorResDto> findAllRefrigeratorByUser(String userEmail) {
 
-        User user = userRepository.findByUserEmail(userEmail);
+        Optional<User> user = userRepository.findByUserEmail(userEmail);
+        if (!user.isPresent()) {
+            return null;
+        }
 
-        List<Refrigerator> refrigeratorByUser = refrigeratorQueryRepository.findAllRefrigeratorByUser(user);
+        List<Refrigerator> refrigeratorByUser = refrigeratorQueryRepository.findAllRefrigeratorByUser(user.get());
         List<RefrigeratorResDto> response = new ArrayList<>();
 
         for (Refrigerator temp : refrigeratorByUser) {
