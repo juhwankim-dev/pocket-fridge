@@ -8,4 +8,10 @@
     <string name="ingre_upload">식재료 등록</string>
     <string name="merchandise">상품</string>
     <string name="accept">확인</string>
+    <string name="storage_fridge">냉장</string>
+    <string name="storage_freeze">냉동</string>
+    <string name="storage_room">실온</string>
+    <string name="name">상품명</string>
+    <string name="purchased_date">구매일</string>
+    <string name="expiry_date">유통기한</string>
 </resources>

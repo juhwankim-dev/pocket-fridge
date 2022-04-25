@@ -21,4 +21,5 @@
 
     <!-- edittext radius -->
     <dimen name="et_radius">28dp</dimen>
+    <dimen name="ingre_image_size">72dp</dimen>
 </resources>
