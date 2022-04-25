@@ -8,24 +8,32 @@ import com.andback.pocketfridge.domain.model.CheckResult
 
 object SignUpChecker {
     const val ID = "^[a-zA-Z0-9]*\$"
+    const val ID_REQUIRED = "[a-zA-z]"
     const val NICKNAME = "^[a-zA-Z가-힣0-9]*\$"
     const val PW = "^[a-zA-Z0-9!@#$%^&*]*\$"
 
     const val DEFAULT_ERROR = "사용할 수 없는 문자를 포함하고 있습니다."
-    const val ID_LEN_ERROR = "아이디는 6 ~ 15자입니다."
-    const val NICKNAME_LEN_ERROR = "닉네임은 1 ~ 6자입니다."
+    const val ID_LEN_ERROR = "아이디는 5 ~ 15자입니다."
+    const val ID_REQUIRED_ALPHABET = "영문자를 포함해야 합니다."
+    const val NICKNAME_LEN_ERROR = "닉네임은 2 ~ 10자입니다."
     const val EMAIL_EMPTY_ERROR = "이메일을 입력하십시오."
     const val EMAIL_PATTERN_ERROR = "올바른 이메일 형식이 아닙니다."
-    const val PW_LEN_ERROR = "비밀번호는 8 ~ 20자입니다."
+    const val PW_LEN_ERROR = "비밀번호는 5 ~ 15자입니다."
+    const val PW_REQUIRED_ALPHABET = "영문자를 포함해야 합니다."
     const val PW_MATCH_ERROR = "비밀번호가 일치하지 않습니다."
 
     fun validateId(id: String): CheckResult {
         return when {
             Pattern.matches(ID, id) == false -> {
                 CheckResult(DEFAULT_ERROR, false)
-            } id.length < 6 || id.length > 15 -> {
+            }
+            id.length < 5 || id.length > 15 -> {
                 CheckResult(ID_LEN_ERROR, false)
-            } else -> {
+            }
+            Pattern.matches(ID_REQUIRED, id) == false -> {
+                CheckResult(ID_REQUIRED_ALPHABET, false)
+            }
+            else -> {
                 CheckResult("", true)
             }
         }
@@ -35,9 +43,11 @@ object SignUpChecker {
         return when {
             Pattern.matches(NICKNAME, nickname) == false -> {
                 CheckResult(DEFAULT_ERROR, false)
-            } nickname.isEmpty() || nickname.length > 6 -> {
+            }
+            nickname.length < 2 || nickname.length > 10 -> {
                 CheckResult(NICKNAME_LEN_ERROR, false)
-            } else -> {
+            }
+            else -> {
                 CheckResult("", true)
             }
         }
@@ -64,8 +74,11 @@ object SignUpChecker {
             Pattern.matches(PW, pw) == false -> {
                 CheckResult(DEFAULT_ERROR, false)
             }
-            pw.length < 8 || pw.length > 20 -> {
+            pw.length < 5 || pw.length > 15 -> {
                 CheckResult(PW_LEN_ERROR, false)
+            }
+            Pattern.matches(PW_REQUIRED_ALPHABET, pw) == false -> {
+                CheckResult(PW_REQUIRED_ALPHABET, false)
             }
             else -> {
                 CheckResult("", true)
