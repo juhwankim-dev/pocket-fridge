@@ -26,7 +26,7 @@ public class RefrigeratorController {
 
     @ApiOperation(value = "냉장고 조회", notes = "사용자의 냉장고 리스트를 보여준다")
     @GetMapping("/{userEmail}")
-    public ResponseEntity<ListResponseDto<RefrigeratorResDto>> insertFoodIngredient(@ApiParam(value = "유저 이메일", required = true, example = "test@google") @PathVariable String userEmail) {
+    public ResponseEntity<ListResponseDto<RefrigeratorResDto>> findRefrigeratorList(@ApiParam(value = "유저 이메일", required = true, example = "test@google") @PathVariable String userEmail) {
 
         List<RefrigeratorResDto> response = refrigeratorService.findAllRefrigeratorByUser(userEmail);
 
