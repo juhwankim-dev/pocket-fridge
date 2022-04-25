@@ -4,12 +4,13 @@ import android.widget.TextView
 import com.andback.pocketfridge.R
 import java.util.regex.Pattern
 import android.content.res.Resources
+import android.util.Log
 import com.andback.pocketfridge.domain.model.CheckResult
 
 object SignUpChecker {
     const val NAME = "^[a-zA-Zㄱ-ㅎ가-힣0-9]*\$"
     const val NICKNAME = "^[a-zA-Zㄱ-ㅎ가-힣0-9]*\$"
-    const val PW = "^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z[0-9]]{5,15}\$"
+    const val PW = "^(?=.*[A-Za-z])[A-Za-z0-9]{5,15}\$"
 
     const val NAME_EMPTY_ERROR = "이름은 필수 입력 값입니다."
     const val NAME_PATTERN_ERROR = "이름은 특수문자를 제외한 2~20자리여야 합니다."
