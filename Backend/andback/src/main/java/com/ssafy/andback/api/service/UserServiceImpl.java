@@ -42,8 +42,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder; // WebSecurityConfig.java 에서 Bean 설정
 
-    @Autowired
-    private JavaMailSender javaMailSender;  // WebSecurityConfig.java 에서 Bean 설정
+    private final JavaMailSender javaMailSender;  // WebSecurityConfig.java 에서 Bean 설정
 
     @DisplayName("패스워드 암호화")
     public String passwordEncode(String userPassword) {
