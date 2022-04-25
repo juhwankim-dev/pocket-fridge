@@ -1,6 +1,8 @@
 package com.ssafy.andback.api.service;
 
-import org.springframework.stereotype.Service;
+import com.ssafy.andback.api.dto.response.RefrigeratorResDto;
+
+import java.util.List;
 
 /**
  * RefrigeratorService
@@ -15,5 +17,7 @@ import org.springframework.stereotype.Service;
 public interface RefrigeratorService {
 
     public String insertRefrigerator(String refrigeratorName);
+
+    public List<RefrigeratorResDto> findAllRefrigeratorByUser(String userEmail);
 
 }
