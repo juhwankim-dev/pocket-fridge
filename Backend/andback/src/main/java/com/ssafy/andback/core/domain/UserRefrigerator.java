@@ -23,6 +23,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
+
 public class UserRefrigerator {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
