@@ -1,5 +1,10 @@
 package com.ssafy.andback.api.service;
 
+import com.ssafy.andback.core.domain.Refrigerator;
+import com.ssafy.andback.core.domain.UserRefrigerator;
+import com.ssafy.andback.core.repository.RefrigeratorRepository;
+import com.ssafy.andback.core.repository.UserRefrigeratorRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.ssafy.andback.api.dto.UserDto;
 import com.ssafy.andback.core.domain.User;
@@ -22,10 +27,12 @@ import static org.junit.jupiter.api.Assertions.*;
  **/
 
 @Service("userService")
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final RefrigeratorRepository refrigeratorRepository;
+    private final UserRefrigeratorRepository userRefrigeratorRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder; // WebSecurityConfiguration.java 에서 Bean 설정
@@ -58,7 +65,13 @@ public class UserServiceImpl implements UserService{
                 .userPicture(userDto.getUserPicture())
                 .userLoginType(userDto.getUserLoginType())
                 .build();
-        userRepository.save(user);
+
+        User saveUser = userRepository.save(user);
+        Refrigerator refrigerator = Refrigerator.builder().refrigeratorName("냉장고").build();
+        Refrigerator saveRefrigerator = refrigeratorRepository.save(refrigerator);
+        UserRefrigerator userRefrigerator = UserRefrigerator.builder().user(saveUser).refrigerator(saveRefrigerator).build();
+        userRefrigeratorRepository.save(userRefrigerator);
+
         return "success";
     }
 }

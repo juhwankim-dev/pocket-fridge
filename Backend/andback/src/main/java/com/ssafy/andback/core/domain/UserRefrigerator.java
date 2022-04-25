@@ -1,25 +1,28 @@
 package com.ssafy.andback.core.domain;
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+
+/**
+ *
+ * UserRefrigerator
+ * user_refrigerator
+ *
+ * @author hoony
+ * @version 1.0.0
+ * 생성일 2022-04-25
+ * 마지막 수정일 2022-04-25
+ **/
 
 @Entity
 @Table(name = "user_refrigerator")
 @Getter
 @Setter
-
-/**
-*
-* UserRefrigerator
-* user_refrigerator
-*
-* @author hoony
-* @version 1.0.0
-* 생성일 2022-04-25
-* 마지막 수정일 2022-04-25
-**/
+@NoArgsConstructor
 public class UserRefrigerator {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,4 +38,11 @@ public class UserRefrigerator {
     @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+
+    @Builder
+    public UserRefrigerator(Refrigerator refrigerator, User user) {
+        this.refrigerator = refrigerator;
+        this.user = user;
+    }
 }
