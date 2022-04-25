@@ -25,8 +25,8 @@ class IngreUploadViewModel @Inject constructor(
 
     // TODO: 카테고리 테이블 완성 후 추가
 //    private val ingreCategory = MutableLiveData<String>("")
-    private val ingreStorage = MutableLiveData<Storage>(Storage.Fridge)
-    private val ingreFridgeId = MutableLiveData<Int>(-1)
+    val ingreStorage = MutableLiveData<Storage>(Storage.Fridge)
+    val ingreFridgeId = MutableLiveData<Int>(-1)
 
     // 에러 라이브 데이터
     private val _isNameError = MutableLiveData(false)
