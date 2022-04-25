@@ -14,4 +14,5 @@ import com.ssafy.andback.core.domain.User;
  **/
 public interface UserService {
     String insertUser(UserDto userDto);
+    String checkUserEmail(String userEmail);
 }
