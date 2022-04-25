@@ -1,5 +1,6 @@
 package com.andback.pocketfridge.data.di
 
+import com.andback.pocketfridge.data.api.IngreApi
 import com.andback.pocketfridge.data.api.UserApi
 import com.andback.pocketfridge.present.utils.RetrofitUtil
 import dagger.Module
@@ -15,5 +16,11 @@ class ApiModule {
     @Singleton
     fun provideApiInterface(): UserApi? {
         return RetrofitUtil.userService
+    }
+
+    @Provides
+    @Singleton
+    fun provideIngreApiInterface(): IngreApi  {
+        return RetrofitUtil.ingreService
     }
 }
