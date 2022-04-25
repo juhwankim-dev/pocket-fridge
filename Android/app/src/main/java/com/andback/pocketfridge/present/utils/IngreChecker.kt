@@ -7,8 +7,14 @@ import java.util.*
 
 object IngreChecker {
 
-    fun check(ingredient: Ingredient): Boolean {
-        return false
+    // 유효성 검사 체크
+    fun check(ingredient: Ingredient) {
+        if(!checkQuantity(ingredient)) throw IngreQuantityException()
+        if(!checkName(ingredient)) throw IngreNameException()
+        if(!checkFridge(ingredient)) throw IngreFridgeIdException()
+        if(!checkCategory(ingredient)) throw IngreCategoryException()
+        if(!checkDatePurchased(Date(), ingredient)) throw IngreDatePurchasedException()
+        if(!checkExpiryDate(ingredient)) throw IngreDateExpiryException()
     }
 
     fun checkQuantity(ingredient: Ingredient): Boolean {
