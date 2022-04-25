@@ -1,5 +1,6 @@
 package com.ssafy.andback.api.controller;
 
+import com.ssafy.andback.api.dto.response.UserEmailNumberResponseDto;
 import io.swagger.annotations.*;
 import com.ssafy.andback.api.dto.UserDto;
 import com.ssafy.andback.api.dto.response.BaseResponseDto;
@@ -59,6 +60,14 @@ public class UserController {
             return ResponseEntity.status(401).body(BaseResponseDto.of(401, "닉네임 중복"));
         }
         return ResponseEntity.ok(BaseResponseDto.of(200, "닉네임 사용 가능"));
+    }
+
+    @ApiOperation(value = "이메일 인증번호 전송", notes = "회원가입 시 이메일 인증번호 전송")
+    @GetMapping(value = "/{userEmail}")
+    public ResponseEntity<BaseResponseDto> sendUserEmailNumber(@PathVariable String userEmail){
+        String userEmailNumber = userService.sendUserEmailNumber(userEmail);
+
+        return ResponseEntity.ok(UserEmailNumberResponseDto.of(200, "이메일 인증번호 전송 완료", userEmailNumber));
     }
 
 }

@@ -17,4 +17,6 @@ public interface UserService {
     String checkUserEmail(String userEmail);
 
     String checkUserNickname(String userNickname);
+
+    String sendUserEmailNumber(String userEmail);
 }
