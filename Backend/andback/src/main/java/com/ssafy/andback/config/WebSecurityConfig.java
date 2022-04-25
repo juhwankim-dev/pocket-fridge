@@ -28,17 +28,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public JavaMailSenderImpl javaMailSender(){
-        JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
-
-        javaMailSender.setProtocol("smtp");
-        javaMailSender.setHost("k6d206.p.ssafy.io");
-        javaMailSender.setPort(537);
-
-        return javaMailSender;
-    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
