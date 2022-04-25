@@ -1,6 +1,10 @@
 package com.ssafy.andback.core.queryrepository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+<<<<<<< HEAD
+=======
+import com.ssafy.andback.core.domain.QUserRefrigerator;
+>>>>>>> S06P31D206-164 [be] feat: :sparkles: 유저 냉장고 리스트 조회 구현
 import com.ssafy.andback.core.domain.Refrigerator;
 import com.ssafy.andback.core.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -24,9 +28,16 @@ public class RefrigeratorQueryRepositoryImpl implements RefrigeratorQueryReposit
         return query.select(refrigerator)
                 .from(refrigerator)
                 .rightJoin(userRefrigerator)
+<<<<<<< HEAD
                 .on(refrigerator.refrigeratorId.eq(userRefrigerator.refrigerator.refrigeratorId))
                 .where(userRefrigerator.user.userId.eq(user.getUserId()))
                 .fetch();
     }
 
+=======
+                .on(refrigerator.eq(userRefrigerator.refrigerator))
+                .where(userRefrigerator.userRefrigeratorId.eq(user.getUserId()))
+                .fetch();
+    }
+>>>>>>> S06P31D206-164 [be] feat: :sparkles: 유저 냉장고 리스트 조회 구현
 }

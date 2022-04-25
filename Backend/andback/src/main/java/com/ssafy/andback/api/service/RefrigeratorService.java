@@ -22,5 +22,4 @@ public interface RefrigeratorService {
 
     public List<RefrigeratorResDto> findAllRefrigeratorByUser(String userEmail);
 
-
 }

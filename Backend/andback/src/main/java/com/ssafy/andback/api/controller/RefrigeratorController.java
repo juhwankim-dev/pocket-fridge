@@ -11,6 +11,9 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -23,7 +26,7 @@ public class RefrigeratorController {
 
     @ApiOperation(value = "냉장고 조회", notes = "사용자의 냉장고 리스트를 보여준다")
     @GetMapping("/{userEmail}")
-    public ResponseEntity<ListResponseDto<RefrigeratorResDto>> findRefrigeratorList(@ApiParam(value = "유저 이메일", required = true, example = "test@google") @PathVariable String userEmail) {
+    public ResponseEntity<ListResponseDto<RefrigeratorResDto>> insertFoodIngredient(@ApiParam(value = "유저 이메일", required = true, example = "test@google") @PathVariable String userEmail) {
 
         List<RefrigeratorResDto> response = refrigeratorService.findAllRefrigeratorByUser(userEmail);
 
@@ -36,7 +39,7 @@ public class RefrigeratorController {
 
         String response = refrigeratorService.insertRefrigerator(reqDto);
 
-        if (response.equals("fail")){
+        if (response.equals("fail")) {
             return ResponseEntity.status(401).body(BaseResponseDto.of(401, "실패"));
         }
 

@@ -55,7 +55,6 @@ public class RefrigeratorServiceImpl implements RefrigeratorService {
         return "success";
     }
 
-
     @Override
     public List<RefrigeratorResDto> findAllRefrigeratorByUser(String userEmail) {
 
