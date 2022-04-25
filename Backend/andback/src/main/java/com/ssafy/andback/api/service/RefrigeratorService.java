@@ -1,7 +1,7 @@
 package com.ssafy.andback.api.service;
 
-import com.ssafy.andback.api.dto.request.InsertRefrigeratorReqDto;
-import com.ssafy.andback.api.dto.response.RefrigeratorResDto;
+import com.ssafy.andback.api.dto.request.InsertRefrigeratorRequestDto;
+import com.ssafy.andback.api.dto.response.RefrigeratorResponseDto;
 
 import java.util.List;
 
@@ -17,8 +17,8 @@ import java.util.List;
 
 public interface RefrigeratorService {
 
-    public String insertRefrigerator(InsertRefrigeratorReqDto reqDto);
+    public String insertRefrigerator(InsertRefrigeratorRequestDto reqDto);
 
-    public List<RefrigeratorResDto> findAllRefrigeratorByUser(String userEmail);
+    public List<RefrigeratorResponseDto> findAllRefrigeratorByUser(String userEmail);
 
 }

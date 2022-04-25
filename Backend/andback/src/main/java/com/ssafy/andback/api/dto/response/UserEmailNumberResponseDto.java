@@ -25,7 +25,7 @@ public class UserEmailNumberResponseDto extends BaseResponseDto{
         UserEmailNumberResponseDto body = new UserEmailNumberResponseDto();
         body.setMessage(message);
         body.setStatus(status);
-        body.userEmailNumber = userEmailNumber;
+        body.setUserEmailNumber(userEmailNumber);
         return body;
     }
 }

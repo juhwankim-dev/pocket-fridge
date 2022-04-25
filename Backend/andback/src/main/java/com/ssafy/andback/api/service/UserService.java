@@ -1,6 +1,7 @@
 package com.ssafy.andback.api.service;
 
 import com.ssafy.andback.api.dto.UserDto;
+import com.ssafy.andback.api.dto.request.LoginRequestDto;
 
 /**
  * UserService
@@ -19,4 +20,6 @@ public interface UserService {
     String checkUserNickname(String userNickname);
 
     String sendUserEmailNumber(String userEmail);
+
+    String login(LoginRequestDto loginRequestDto);
 }
