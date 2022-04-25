@@ -3,6 +3,7 @@ package com.ssafy.andback.core.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -19,6 +20,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "user")
 @Getter
+@Setter
 @NoArgsConstructor // 파라미터 없는 기본 생성자 자동 생성 (lombok 어노테이션)
 public class User extends BaseEntity {
     @Id

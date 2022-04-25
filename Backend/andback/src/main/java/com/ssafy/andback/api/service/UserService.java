@@ -22,4 +22,7 @@ public interface UserService {
     String sendUserEmailNumber(String userEmail);
 
     String login(LoginRequestDto loginRequestDto);
+
+    String findUserPassword(String userEmail);
+
 }
