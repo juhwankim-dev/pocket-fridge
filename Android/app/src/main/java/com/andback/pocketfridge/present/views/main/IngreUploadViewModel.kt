@@ -1,5 +1,6 @@
 package com.andback.pocketfridge.present.views.main
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.andback.pocketfridge.domain.model.Ingredient
@@ -18,9 +19,9 @@ class IngreUploadViewModel @Inject constructor(
     private val uploadIngreUseCase: UploadIngreUseCase
 ): ViewModel() {
     private val compositeDisposable = CompositeDisposable()
-    private val ingreName = MutableLiveData<String>("")
-    private val ingreDatePurchased = MutableLiveData<String>("")
-    private val ingreDateExpiry = MutableLiveData<String>("")
+    val ingreName = MutableLiveData<String>("")
+    val ingreDatePurchased = MutableLiveData<String>("")
+    val ingreDateExpiry = MutableLiveData<String>("")
 
     // TODO: 카테고리 테이블 완성 후 추가
 //    private val ingreCategory = MutableLiveData<String>("")
@@ -28,15 +29,35 @@ class IngreUploadViewModel @Inject constructor(
     private val ingreFridgeId = MutableLiveData<Int>(-1)
 
     // 에러 라이브 데이터
-    private val isNameError = MutableLiveData(false)
-    private val isQuantityError = MutableLiveData(false)
-    private val isDatePurchasedError = MutableLiveData(false)
-    private val isDateExpiryError = MutableLiveData(false)
-    private val isCategoryError = MutableLiveData(false)
-    private val isStorageError = MutableLiveData(false)
-    private val isFridgeIdError = MutableLiveData(false)
-    private val isNetworkError = MutableLiveData(false)
-    private val isServerError = MutableLiveData(false)
+    private val _isNameError = MutableLiveData(false)
+    val isNameError: LiveData<Boolean>
+        get() = _isNameError
+    private val _isQuantityError = MutableLiveData(false)
+    val isQuantityError: LiveData<Boolean>
+        get() = _isQuantityError
+    private val _isDatePurchasedError = MutableLiveData(false)
+    val isDatePurchasedError: LiveData<Boolean>
+        get() =_isDatePurchasedError
+    private val _isDateExpiryError = MutableLiveData(false)
+    val isDateExpiryError: LiveData<Boolean>
+        get() = _isDateExpiryError
+    private val _isCategoryError = MutableLiveData(false)
+    val isCategoryError: LiveData<Boolean>
+        get() =_isCategoryError
+    private val _isStorageError = MutableLiveData(false)
+    val isStorageError: LiveData<Boolean>
+        get() = _isStorageError
+    private val _isFridgeIdError = MutableLiveData(false)
+    val isFridgeIdError: LiveData<Boolean>
+        get() = _isFridgeIdError
+    private val _isNetworkError = MutableLiveData(false)
+    val isNetworkError: LiveData<Boolean>
+        get() =_isNetworkError
+    private val _isServerError = MutableLiveData(false)
+    val isServerError: LiveData<Boolean>
+        get() = _isServerError
+
+    // TODO: 보유 냉장고 목록 반환 usecase로 냉장고 정보 얻기 
 
     fun onUploadBtnClick() {
         compositeDisposable.add(
@@ -64,42 +85,42 @@ class IngreUploadViewModel @Inject constructor(
         clearError()
         when(e) {
             is HttpException -> {
-                isServerError.value = true
+                _isServerError.value = true
             }
             is IOException -> {
-                isNetworkError.value = true
+                _isNetworkError.value = true
             }
             is IngreNameException -> {
-                isNameError.value = true
+                _isNameError.value = true
             }
             is IngreQuantityException -> {
-                isQuantityError.value = true
+                _isQuantityError.value = true
             }
             is IngreFridgeIdException -> {
-                isFridgeIdError.value = true
+                _isFridgeIdError.value = true
             }
             is IngreCategoryException -> {
-                isCategoryError.value = true
+                _isCategoryError.value = true
             }
             is IngreDatePurchasedException -> {
-                isDatePurchasedError.value = true
+                _isDatePurchasedError.value = true
             }
             is IngreDateExpiryException -> {
-                isDateExpiryError.value = true
+                _isDateExpiryError.value = true
             }
         }
     }
 
     private fun clearError() {
-        isNameError.value = false
-        isQuantityError.value = false
-        isDatePurchasedError.value = false
-        isDateExpiryError.value = false
-        isCategoryError.value = false
-        isStorageError.value = false
-        isFridgeIdError.value = false
-        isNetworkError.value = false
-        isServerError.value = false
+        _isNameError.value = false
+        _isQuantityError.value = false
+        _isDatePurchasedError.value = false
+        _isDateExpiryError.value = false
+        _isCategoryError.value = false
+        _isStorageError.value = false
+        _isFridgeIdError.value = false
+        _isNetworkError.value = false
+        _isServerError.value = false
     }
 
     private fun getIngredientFromInput(): Ingredient {
