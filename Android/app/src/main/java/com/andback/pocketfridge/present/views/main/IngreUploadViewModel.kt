@@ -11,7 +11,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import retrofit2.HttpException
 import java.io.IOException
-import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,6 +26,17 @@ class IngreUploadViewModel @Inject constructor(
 //    private val ingreCategory = MutableLiveData<String>("")
     private val ingreStorage = MutableLiveData<Storage>(Storage.Fridge)
     private val ingreFridgeId = MutableLiveData<Int>(-1)
+
+    // 에러 라이브 데이터
+    private val isNameError = MutableLiveData(false)
+    private val isQuantityError = MutableLiveData(false)
+    private val isDatePurchasedError = MutableLiveData(false)
+    private val isDateExpiryError = MutableLiveData(false)
+    private val isCategoryError = MutableLiveData(false)
+    private val isStorageError = MutableLiveData(false)
+    private val isFridgeIdError = MutableLiveData(false)
+    private val isNetworkError = MutableLiveData(false)
+    private val isServerError = MutableLiveData(false)
 
     fun onUploadBtnClick() {
         compositeDisposable.add(
@@ -51,32 +61,45 @@ class IngreUploadViewModel @Inject constructor(
     }
 
     private fun handleException(e: Throwable) {
+        clearError()
         when(e) {
             is HttpException -> {
-                // TODO: 서버 통신 에러
+                isServerError.value = true
             }
             is IOException -> {
-                // TODO: 네트워크 에러
+                isNetworkError.value = true
             }
             is IngreNameException -> {
-                // TODO: 재료 이름 에러
+                isNameError.value = true
             }
             is IngreQuantityException -> {
-                // TODO: 재료 수량 에러
+                isQuantityError.value = true
             }
             is IngreFridgeIdException -> {
-                // TODO: 냉장고 id 에러
+                isFridgeIdError.value = true
             }
             is IngreCategoryException -> {
-                // TODO: 재료 카테고리 에러
+                isCategoryError.value = true
             }
             is IngreDatePurchasedException -> {
-                // TODO: 재료 구매일 에러
+                isDatePurchasedError.value = true
             }
             is IngreDateExpiryException -> {
-                // TODO: 재료 유통기한 에러
+                isDateExpiryError.value = true
             }
         }
+    }
+
+    private fun clearError() {
+        isNameError.value = false
+        isQuantityError.value = false
+        isDatePurchasedError.value = false
+        isDateExpiryError.value = false
+        isCategoryError.value = false
+        isStorageError.value = false
+        isFridgeIdError.value = false
+        isNetworkError.value = false
+        isServerError.value = false
     }
 
     private fun getIngredientFromInput(): Ingredient {
