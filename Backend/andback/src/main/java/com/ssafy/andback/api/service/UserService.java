@@ -1,7 +1,6 @@
 package com.ssafy.andback.api.service;
 
 import com.ssafy.andback.api.dto.UserDto;
-import com.ssafy.andback.core.domain.User;
 
 /**
  * UserService
@@ -14,5 +13,10 @@ import com.ssafy.andback.core.domain.User;
  **/
 public interface UserService {
     String insertUser(UserDto userDto);
+
     String checkUserEmail(String userEmail);
+
+    String checkUserNickname(String userNickname);
+
+    String sendUserEmailNumber(String userEmail);
 }
