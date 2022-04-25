@@ -1,5 +1,6 @@
 package com.ssafy.andback.api.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -25,4 +26,13 @@ public class UserDto {
     @NonNull
     private String userPassword;
     private String userPicture;
+
+    @Builder
+    public UserDto(@NonNull String userEmail, @NonNull String userName, @NonNull String userNickname, @NonNull String userPassword, String userPicture) {
+        this.userEmail = userEmail;
+        this.userName = userName;
+        this.userNickname = userNickname;
+        this.userPassword = userPassword;
+        this.userPicture = userPicture;
+    }
 }

@@ -34,6 +34,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //Swagger 허용
                 .antMatchers("/swagger-ui/index.html").permitAll()
                 .antMatchers("/foodingredient/**").permitAll()
+                .antMatchers("/refrigerator/**").permitAll()
                 .antMatchers("/user/**").permitAll();
         http.csrf().disable();
     }
