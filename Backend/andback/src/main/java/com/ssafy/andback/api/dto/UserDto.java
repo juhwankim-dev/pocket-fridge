@@ -1,7 +1,5 @@
 package com.ssafy.andback.api.dto;
 
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -27,6 +25,4 @@ public class UserDto {
     @NonNull
     private String userPassword;
     private String userPicture;
-    @NonNull
-    private Boolean userLoginType;
 }

@@ -44,7 +44,6 @@ public class UserServiceImpl implements UserService{
     // 회원가입
     @Override
     public String insertUser(UserDto userDto) {
-        System.out.println(userDto.getUserLoginType());
         if(userDto.getUserEmail().equals("") || userDto.getUserName().equals("") ||
         userDto.getUserNickname().equals("") || userDto.getUserPassword().equals(""))
             return "fail";
@@ -56,7 +55,7 @@ public class UserServiceImpl implements UserService{
                 .userNickname(userDto.getUserNickname())
                 .userPassword(userDto.getUserPassword())
                 .userPicture(userDto.getUserPicture())
-                .userLoginType(userDto.getUserLoginType())
+                .userLoginType(false)
                 .build();
         userRepository.save(user);
         return "success";
