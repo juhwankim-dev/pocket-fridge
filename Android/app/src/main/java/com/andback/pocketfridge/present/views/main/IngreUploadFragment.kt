@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import com.andback.pocketfridge.R
@@ -99,10 +100,22 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
     }
 
     private fun setDropDownAdapter() {
-
+        // TODO: 냉장고 정보 받아와서 어댑터 세팅 
     }
 
     private fun setToolbarButton() {
+        binding.tbIngreUploadF.setNavigationOnClickListener {
+            // TODO: 바코드 찍는 화면으로 돌아가기
+        }
 
+        binding.tbIngreUploadF.setOnMenuItemClickListener {
+            when(it.itemId) {
+                R.id.accept_menu_toolbar -> {
+                    viewModel.onUploadBtnClick()
+                    true
+                }
+                else -> false
+            }
+        }
     }
 }
