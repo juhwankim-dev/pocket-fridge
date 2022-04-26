@@ -7,13 +7,13 @@ import lombok.Data;
 @Data
 public class MainCategoryResponseDto {
 
-    private Long mainCategory;
+    private Long mainCategoryId;
 
     private String mainCategoryName;
 
     @Builder
-    public MainCategoryResponseDto(Long mainCategory, String mainCategoryName) {
-        this.mainCategory = mainCategory;
+    public MainCategoryResponseDto(Long mainCategoryId, String mainCategoryName) {
+        this.mainCategoryId = mainCategoryId;
         this.mainCategoryName = mainCategoryName;
     }
 }

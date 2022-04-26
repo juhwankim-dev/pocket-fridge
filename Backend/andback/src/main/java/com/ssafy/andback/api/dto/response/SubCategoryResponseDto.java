@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class SubCategoryResponseDto {
 
-    private Long subCategory;
+    private Long subCategoryId;
 
     private String subCategoryName;
 
@@ -15,8 +15,8 @@ public class SubCategoryResponseDto {
 
 
     @Builder
-    public SubCategoryResponseDto(Long subCategory, String subCategoryName, Long mainCategoryId) {
-        this.subCategory = subCategory;
+    public SubCategoryResponseDto(Long subCategoryId, String subCategoryName, Long mainCategoryId) {
+        this.subCategoryId = subCategoryId;
         this.subCategoryName = subCategoryName;
         this.mainCategoryId = mainCategoryId;
     }

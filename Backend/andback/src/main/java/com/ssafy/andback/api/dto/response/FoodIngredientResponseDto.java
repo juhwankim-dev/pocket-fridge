@@ -34,17 +34,17 @@ public class FoodIngredientResponseDto {
     @ApiParam(value = "냉장고 아이디", required = true)
     private Long refrigeratorId;
 
-    //카테고리 아이디
+    //서브 카테고리 아이디
     @ApiParam(value = "카테고리 아이디", required = true)
-    private Long categoryId;
+    private Long subCategoryId;
 
     @Builder
-    public FoodIngredientResponseDto(String foodIngredientName, LocalDate foodIngredientExp, LocalDate foodIngredientDate, WayStatus foodIngredientWay, Long refrigeratorId, Long categoryId) {
+    public FoodIngredientResponseDto(String foodIngredientName, LocalDate foodIngredientExp, LocalDate foodIngredientDate, WayStatus foodIngredientWay, Long refrigeratorId, Long subCategoryId) {
         this.foodIngredientName = foodIngredientName;
         this.foodIngredientExp = foodIngredientExp;
         this.foodIngredientDate = foodIngredientDate;
         this.foodIngredientWay = foodIngredientWay;
         this.refrigeratorId = refrigeratorId;
-        this.categoryId = categoryId;
+        this.subCategoryId = subCategoryId;
     }
 }

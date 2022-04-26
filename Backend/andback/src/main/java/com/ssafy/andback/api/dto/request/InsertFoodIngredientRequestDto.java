@@ -48,7 +48,7 @@ public class InsertFoodIngredientRequestDto {
     private Long refrigeratorId;
 
     // 식재료 카테고리
-    @ApiParam(value = "카테고리", required = true)
+    @ApiParam(value = "서브 카테고리", required = true)
     @NotNull
-    private Long categoryId;
+    private Long subCategoryId;
 }

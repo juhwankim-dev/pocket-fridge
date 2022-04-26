@@ -60,7 +60,7 @@ public class FoodIngredientServiceImpl implements FoodIngredientService {
         }
 
         refrigerator = refrigeratorRepository.findByRefrigeratorId(insertFoodIngredientReqDto.getRefrigeratorId());
-        Optional<SubCategory> subCategory = subCategoryRepository.findById(insertFoodIngredientReqDto.getCategoryId());
+        Optional<SubCategory> subCategory = subCategoryRepository.findById(insertFoodIngredientReqDto.getSubCategoryId());
         foodIngredient.setRefrigerator(refrigerator);
         foodIngredient.setSubCategory(subCategory.get());
         foodIngredientRepository.save(foodIngredient);
@@ -121,7 +121,7 @@ public class FoodIngredientServiceImpl implements FoodIngredientService {
                     .foodIngredientName(temp.getFoodIngredientName())
                     .foodIngredientWay(temp.getFoodIngredientWay())
                     .refrigeratorId(temp.getRefrigerator().getRefrigeratorId())
-                    .categoryId(temp.getSubCategory().getSubCategory())
+                    .subCategoryId(temp.getSubCategory().getSubCategory())
                     .build());
         }
 
@@ -137,7 +137,7 @@ public class FoodIngredientServiceImpl implements FoodIngredientService {
 
         for (MainCategory temp : mainCategoryList) {
             res.add(MainCategoryResponseDto.builder()
-                    .mainCategory(temp.getMainCategory())
+                    .mainCategoryId(temp.getMainCategory())
                     .mainCategoryName(temp.getMainCategoryName())
                     .build());
         }
@@ -155,7 +155,7 @@ public class FoodIngredientServiceImpl implements FoodIngredientService {
         for (SubCategory temp : subCategoryList) {
             res.add(SubCategoryResponseDto.builder()
                     .mainCategoryId(temp.getMainCategory().getMainCategory())
-                    .subCategory(temp.getSubCategory())
+                    .subCategoryId(temp.getSubCategory())
                     .subCategoryName(temp.getSubCategoryName())
                     .build());
         }
