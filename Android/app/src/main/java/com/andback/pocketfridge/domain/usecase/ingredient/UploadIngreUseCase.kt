@@ -1,4 +1,4 @@
-package com.andback.pocketfridge.domain.usecase
+package com.andback.pocketfridge.domain.usecase.ingredient
 
 import com.andback.pocketfridge.data.model.BaseResponse
 import com.andback.pocketfridge.data.model.IngreEntityForUpload

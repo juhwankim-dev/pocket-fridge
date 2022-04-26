@@ -6,10 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.domain.model.CheckResult
-import com.andback.pocketfridge.domain.usecase.GetCheckEmailUseCase
-import com.andback.pocketfridge.domain.usecase.GetCheckNicknameUseCase
-import com.andback.pocketfridge.domain.usecase.GetSignUpUseCase
-import com.andback.pocketfridge.domain.usecase.GetSendEmailUseCase
+import com.andback.pocketfridge.domain.usecase.user.GetCheckEmailUseCase
+import com.andback.pocketfridge.domain.usecase.user.GetCheckNicknameUseCase
+import com.andback.pocketfridge.domain.usecase.user.GetSignUpUseCase
+import com.andback.pocketfridge.domain.usecase.user.GetSendEmailUseCase
 import com.andback.pocketfridge.present.config.SingleLiveEvent
 import com.andback.pocketfridge.present.utils.PageSet
 import dagger.hilt.android.lifecycle.HiltViewModel

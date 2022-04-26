@@ -1,4 +1,4 @@
-package com.andback.pocketfridge.domain.usecase
+package com.andback.pocketfridge.domain.usecase.user
 
 import android.util.Log
 import com.andback.pocketfridge.data.model.BaseResponse
