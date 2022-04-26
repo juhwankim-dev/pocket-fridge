@@ -12,16 +12,20 @@ package com.ssafy.andback.api.dto.request;
 import com.ssafy.andback.api.constant.WayStatus;
 import com.sun.istack.NotNull;
 import io.swagger.annotations.ApiParam;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
-@Data
-public class InsertFoodIngredientReqDto {
+@Getter
+@Setter
+public class UpdateFoodIngredientRequestDto {
+
+    // 식재료 아이디
+    @ApiParam(value = "식재료 아이디", required = true)
+    @NotNull
+    private Long foodIngredientId;
 
     // 식재료 이름
     @ApiParam(value = "식재료 이름", required = true)
@@ -29,10 +33,11 @@ public class InsertFoodIngredientReqDto {
     private String foodIngredientName;
 
     // 유통기한
-    @ApiParam(value = "식재료 유통기한", required = true)
+    @ApiParam(name = "식재료 유통기한", required = true)
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate foodIngredientExp;
+
 
     // 구입일
     @ApiParam(value = "식재료 구입일", required = true)

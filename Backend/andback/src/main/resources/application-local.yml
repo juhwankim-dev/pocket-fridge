@@ -36,7 +36,7 @@ spring:
 
   # 데이터 베이스 연결 설정
   datasource:
-    url: jdbc:mariadb://localhost:3306/andback_test_v1?characterEncoding=utf-8&createDatabaseIfNotExist=true #데이터 베이스 이름 수정 필요
+    url: jdbc:mariadb://k6d206.p.ssafy.io:3306/pocket_fridge?characterEncoding=utf-8&createDatabaseIfNotExist=true #데이터 베이스 이름 수정 필요
     driver-class-name: org.mariadb.jdbc.Driver
     username: andback
     password: Ssafy6!
@@ -58,10 +58,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username:  #이름
-    to-name:  #이름
-    #docong1234!
-    password:  #비밀번호
+    username: andbackRFT@gmail.com  #이메일
+    password: srhbjmlsjskqbjpp #앱비밀번호
     properties:
       mail:
         smtp:
@@ -106,7 +104,3 @@ notification:
     author-name: Back-End Exception # attachment의 상단에 나오는 이름
     author-icon: https://media.vlpt.us/images/ayoung0073/post/2db5c70c-d494-4cca-ad58-7b4eaabc3c9a/springboot.jpeg # author-icon 왼쪽에 나올 아이콘의 url링크
     footer: # attachment에 하단에 나올 부분. default=현재 시간
-
-# 암호화
-encrypt:
-  keyString: docongjiraapitokenencode

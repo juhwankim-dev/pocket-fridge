@@ -6,7 +6,8 @@ import com.andback.pocketfridge.R
 import com.andback.pocketfridge.databinding.ActivityUserBinding
 import com.andback.pocketfridge.present.config.BaseActivity
 import com.andback.pocketfridge.present.utils.PageSet
-import com.andback.pocketfridge.present.views.user.signup.StepOneFragment
+import com.andback.pocketfridge.present.views.user.signup.EmailAuthFragment
+import com.andback.pocketfridge.present.views.user.signup.SignUpFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,7 +21,7 @@ class UserActivity : BaseActivity<ActivityUserBinding>(R.layout.activity_user) {
         val currentFragment = supportFragmentManager.findFragmentById(R.id.fl_main)
 
         if(currentFragment == null){
-            val fragment = StepOneFragment()
+            val fragment = EmailAuthFragment()
             supportFragmentManager
                 .beginTransaction()
                 .add(R.id.fl_main, fragment)
@@ -30,14 +31,14 @@ class UserActivity : BaseActivity<ActivityUserBinding>(R.layout.activity_user) {
 
     fun onChangeFragement(p: PageSet) {
         when (p) {
-            PageSet.STEP_ONE -> supportFragmentManager
+            PageSet.EMAIL_AUTH -> supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.fl_main, StepOneFragment())
+                .replace(R.id.fl_main, EmailAuthFragment())
                 .addToBackStack(null)
                 .commit()
-            PageSet.STEP_TWO -> supportFragmentManager
+            PageSet.SIGN_UP -> supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.fl_main, StepOneFragment())
+                .replace(R.id.fl_main, SignUpFragment())
                 .addToBackStack(null)
                 .commit()
             PageSet.LOGIN -> {

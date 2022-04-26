@@ -1,6 +1,6 @@
 package com.andback.pocketfridge.domain.model
 
 data class CheckResult(
-    var errorMsg: String = "",
+    var stringId: Int,
     var isValid: Boolean = false,
 )
