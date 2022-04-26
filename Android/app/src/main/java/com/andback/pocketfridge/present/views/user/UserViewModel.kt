@@ -43,6 +43,10 @@ class UserViewModel @Inject constructor (
     // view가 다음으로 넘어갈 페이지를 observe 하기 위함
     val pageNumber = SingleLiveEvent<PageSet>()
 
+    // 로딩을 보여줄지 결정하기 위함
+    private val _isShowLoading: MutableLiveData<Boolean> = MutableLiveData()
+    val isShowLoading: LiveData<Boolean> get() = _isShowLoading
+
     // 이메일을 성공적으로 보냈는지 xml에서 확인하기 위함
     val isSentEmail = SingleLiveEvent<Boolean>()
 
@@ -97,11 +101,18 @@ class UserViewModel @Inject constructor (
                                 sentEmailAuthNumber = it.data!!
                                 _toastMsg.value = it.message
                             }
-                            401 -> {
-                                _toastMsg.value = it.message
-                            }
                         }
-                    }, {}, {}, {}
+                    },
+                    {
+                        showError(it)
+                        _isShowLoading.value = false
+                    },
+                    {
+                        _isShowLoading.value = false
+                    },
+                    {
+                        _isShowLoading.value = true
+                    }
                 )
         )
     }
@@ -139,22 +150,15 @@ class UserViewModel @Inject constructor (
                         // hideLoading()
                     },
                     {
-                        // hideLoading()
-                        // showError()
-                        if (it is HttpException && (it!!.code() in 400 until 500)){
-                            var responseBody = it!!.response()?.errorBody()?.string()
-                            val jsonObject = JSONObject(responseBody!!.trim())
-                            var message = jsonObject.getString("message")
-                            Log.d("UserViewModel", "signUp: ${message}")
-                            Log.d("UserViewModel", "signUp: ${it.code()}")
-                        }
+                        _isShowLoading.value = false
+                        showError(it)
                     },
                     {
-                        // hideLoading()
-                        pageNumber.value = PageSet.LOGIN
+                        _isShowLoading.value = false
+                        //pageNumber.value = PageSet.LOGIN
                     },
                     {
-                        // showLoading()
+                        _isShowLoading.value = true
                     }
                 )
         )
