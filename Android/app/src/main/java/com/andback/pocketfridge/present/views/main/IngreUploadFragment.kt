@@ -72,7 +72,7 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
     }
 
     private fun clearStorageTextView() {
-        val color = ContextCompat.getColor(requireContext(), com.google.android.material.R.color.secondary_text_default_material_dark)
+        val color = ContextCompat.getColor(requireContext(), R.color.gray)
         binding.tvIngreUploadFStorageFridge.setTextColor(color)
         binding.tvIngreUploadFStorageFreeze.setTextColor(color)
         binding.tvIngreUploadFStorageRoom.setTextColor(color)
