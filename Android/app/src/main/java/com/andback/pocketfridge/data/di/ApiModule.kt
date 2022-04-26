@@ -1,5 +1,6 @@
 package com.andback.pocketfridge.data.di
 
+import com.andback.pocketfridge.data.api.FridgeApi
 import com.andback.pocketfridge.data.api.IngreApi
 import com.andback.pocketfridge.data.api.UserApi
 import com.andback.pocketfridge.present.utils.RetrofitUtil
@@ -22,5 +23,11 @@ class ApiModule {
     @Singleton
     fun provideIngreApiInterface(): IngreApi  {
         return RetrofitUtil.ingreService
+    }
+
+    @Provides
+    @Singleton
+    fun provideFridgeApiInterface(): FridgeApi  {
+        return RetrofitUtil.fridgeService
     }
 }

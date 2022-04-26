@@ -80,4 +80,13 @@
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.Toolbar</item>
     </style>
 
+    <!-- date picker style -->
+    <style name="date_picker_dialog_theme" parent="ThemeOverlay.AppCompat.Dialog">
+        <item name="colorAccent">@color/main_color</item>                   <!--header background-->
+        <item name="android:windowBackground">@color/white</item>     <!--calendar background-->
+        <item name="android:colorControlActivated">@color/main_color</item> <!--selected day-->
+        <item name="android:textColorPrimary">@color/black</item> <!--days of the month-->
+        <item name="android:textColorSecondary">@color/gray</item>    <!--days of the week-->
+    </style>
+
 </resources>

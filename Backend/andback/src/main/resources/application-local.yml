@@ -104,7 +104,3 @@ notification:
     author-name: Back-End Exception # attachment의 상단에 나오는 이름
     author-icon: https://media.vlpt.us/images/ayoung0073/post/2db5c70c-d494-4cca-ad58-7b4eaabc3c9a/springboot.jpeg # author-icon 왼쪽에 나올 아이콘의 url링크
     footer: # attachment에 하단에 나올 부분. default=현재 시간
-
-# 암호화
-encrypt:
-  keyString: docongjiraapitokenencode
