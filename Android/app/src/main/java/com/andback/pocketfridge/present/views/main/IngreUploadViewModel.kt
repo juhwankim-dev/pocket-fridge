@@ -125,7 +125,8 @@ class IngreUploadViewModel @Inject constructor(
 
     private fun getIngredientFromInput(): Ingredient {
         // TODO: 카테고리 테이블 완성 후 값 변경
-        return Ingredient(category = "temp", name = ingreName.value?: "", purchasedDate = ingreDatePurchased.value.toString(), expiryDate = ingreDateExpiry.value.toString(), fridgeId = ingreFridgeId.value?: -1, storage = ingreStorage.value?:Storage.Fridge)
+        // TODO: 수량 data가 필요해지면 추가
+        return Ingredient(quantity = 1, category = "temp", name = ingreName.value?: "", purchasedDate = ingreDatePurchased.value.toString(), expiryDate = ingreDateExpiry.value.toString(), fridgeId = ingreFridgeId.value?: -1, storage = ingreStorage.value?:Storage.Fridge)
     }
 
     override fun onCleared() {
