@@ -1,8 +1,8 @@
 package com.ssafy.andback.api.controller;
 
-import com.ssafy.andback.api.dto.request.InsertRefrigeratorReqDto;
+import com.ssafy.andback.api.dto.request.InsertRefrigeratorRequestDto;
 import com.ssafy.andback.api.dto.response.ListResponseDto;
-import com.ssafy.andback.api.dto.response.RefrigeratorResDto;
+import com.ssafy.andback.api.dto.response.RefrigeratorResponseDto;
 import com.ssafy.andback.api.dto.response.BaseResponseDto;
 import com.ssafy.andback.api.service.RefrigeratorService;
 import io.swagger.annotations.Api;
@@ -38,16 +38,16 @@ public class RefrigeratorController {
 
     @ApiOperation(value = "냉장고 조회", notes = "사용자의 냉장고 리스트를 보여준다")
     @GetMapping("/{userEmail}")
-    public ResponseEntity<ListResponseDto<RefrigeratorResDto>> findRefrigeratorList(@ApiParam(value = "유저 이메일", required = true, example = "test@google") @PathVariable String userEmail) {
+    public ResponseEntity<ListResponseDto<RefrigeratorResponseDto>> findRefrigeratorList(@ApiParam(value = "유저 이메일", required = true, example = "test@google") @PathVariable String userEmail) {
 
-        List<RefrigeratorResDto> response = refrigeratorService.findAllRefrigeratorByUser(userEmail);
+        List<RefrigeratorResponseDto> response = refrigeratorService.findAllRefrigeratorByUser(userEmail);
 
-        return ResponseEntity.ok(new ListResponseDto<RefrigeratorResDto>(200, "success", response));
+        return ResponseEntity.ok(new ListResponseDto<RefrigeratorResponseDto>(200, "success", response));
     }
 
     @ApiOperation(value = "냉장고 생성", notes = "사용자의 새로운 냉장고를 생성한다")
     @PostMapping
-    public ResponseEntity<BaseResponseDto> insertRefrigerator(InsertRefrigeratorReqDto reqDto) {
+    public ResponseEntity<BaseResponseDto> insertRefrigerator(InsertRefrigeratorRequestDto reqDto) {
 
         String response = refrigeratorService.insertRefrigerator(reqDto);
 

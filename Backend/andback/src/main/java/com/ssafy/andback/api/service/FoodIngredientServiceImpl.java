@@ -9,15 +9,14 @@
  **/
 package com.ssafy.andback.api.service;
 
-import com.ssafy.andback.api.dto.request.InsertFoodIngredientReqDto;
-import com.ssafy.andback.api.dto.request.UpdateFoodIngredientReqDto;
-import com.ssafy.andback.api.dto.response.FoodIngredientResDto;
+import com.ssafy.andback.api.dto.request.InsertFoodIngredientRequestDto;
+import com.ssafy.andback.api.dto.request.UpdateFoodIngredientRequestDto;
+import com.ssafy.andback.api.dto.response.FoodIngredientResponseDto;
 import com.ssafy.andback.core.domain.FoodIngredient;
 import com.ssafy.andback.core.domain.Refrigerator;
 import com.ssafy.andback.core.repository.FoodIngredientRepository;
 import com.ssafy.andback.core.repository.RefrigeratorRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,7 +31,7 @@ public class FoodIngredientServiceImpl implements FoodIngredientService {
     private final FoodIngredientRepository foodIngredientRepository;
     private final RefrigeratorRepository refrigeratorRepository;
 
-    public String saveFoodIngredient(InsertFoodIngredientReqDto insertFoodIngredientReqDto) {
+    public String saveFoodIngredient(InsertFoodIngredientRequestDto insertFoodIngredientReqDto) {
 
         // 식재료 등록
         FoodIngredient foodIngredient = new FoodIngredient();
@@ -58,7 +57,7 @@ public class FoodIngredientServiceImpl implements FoodIngredientService {
     }
 
     @Override
-    public String updateFoodIngredient(Long foodIngredientId, UpdateFoodIngredientReqDto updateFoodIngredientReqDto) {
+    public String updateFoodIngredient(Long foodIngredientId, UpdateFoodIngredientRequestDto updateFoodIngredientReqDto) {
 
         FoodIngredient foodIngredient = foodIngredientRepository.findByFoodIngredientId(foodIngredientId);
         Refrigerator refrigerator;
@@ -96,16 +95,16 @@ public class FoodIngredientServiceImpl implements FoodIngredientService {
     }
 
     @Override
-    public List<FoodIngredientResDto> findAllByRefrigeratorId(Long refrigeratorId) {
+    public List<FoodIngredientResponseDto> findAllByRefrigeratorId(Long refrigeratorId) {
 
         Refrigerator refrigerator = refrigeratorRepository.findByRefrigeratorId(refrigeratorId);
 
         List<FoodIngredient> allByRefrigerator = foodIngredientRepository.findAllByRefrigerator(refrigerator);
 
-        List<FoodIngredientResDto> res = new ArrayList<>();
+        List<FoodIngredientResponseDto> res = new ArrayList<>();
 
         for (FoodIngredient temp : allByRefrigerator) {
-            res.add(FoodIngredientResDto.builder()
+            res.add(FoodIngredientResponseDto.builder()
                     .foodIngredientDate(temp.getFoodIngredientDate())
                     .foodIngredientExp(temp.getFoodIngredientExp())
                     .foodIngredientName(temp.getFoodIngredientName())

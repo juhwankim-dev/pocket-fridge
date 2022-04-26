@@ -1,5 +1,7 @@
 package com.ssafy.andback.api.controller;
 
+import com.ssafy.andback.api.dto.request.LoginRequestDto;
+import com.ssafy.andback.api.dto.response.LoginResponseDto;
 import com.ssafy.andback.api.dto.response.UserEmailNumberResponseDto;
 import io.swagger.annotations.*;
 import com.ssafy.andback.api.dto.UserDto;
@@ -69,5 +71,37 @@ public class UserController {
 
         return ResponseEntity.ok(UserEmailNumberResponseDto.of(200, "이메일 인증번호 전송 완료", userEmailNumber));
     }
+
+    @ApiOperation(value = "로그인", notes = "이메일, 비밀번호로 로그인")
+    @PostMapping(value = "/login")
+    public ResponseEntity<BaseResponseDto> login(LoginRequestDto loginRequestDto){
+        String result = userService.login(loginRequestDto);
+        if(result.equals("fail")){
+            return ResponseEntity.status(401).body(LoginResponseDto.of(401, "아이디와 비밀번호를 확인해주세요.", null));
+        }
+//        return ResponseEntity.ok(LoginResponseDto.of(200, "로그인 성공", ));
+        return ResponseEntity.ok(BaseResponseDto.of(200, "로그인 성공"));
+    }
+
+    @ApiOperation(value = "비밀번호 찾기", notes = "비밀번호 찾기 시 새 비밀번호를 이메일에 전송한다.")
+    @PutMapping(value = "/findpassword/{userEmail}")
+    public ResponseEntity<BaseResponseDto> findUserPassword(@PathVariable String userEmail){
+        String result = userService.findUserPassword(userEmail);
+        if(result.equals("fail")){
+            return ResponseEntity.status(401).body(BaseResponseDto.of(401, "이메일을 확인해주세요."));
+        }
+        return ResponseEntity.ok(BaseResponseDto.of(200, "새 비밀번호 전송 완료"));
+    }
+
+//    @ApiOperation(value = "회원 탈퇴", notes = "회원을 탈퇴한다")
+//    @DeleteMapping(value = "/delete")
+//    public ResponseEntity<BaseResponseDto> deleteUser(@PathVariable User)
+
+//    @ApiOperation(value = "회원정보 수정", notes = "유저의 정보를 수정한다.")
+//    @PutMapping("/update")
+//    public ResponseEntity<BaseResponseDto> updateUser(UserDto userDto){
+//        String result = userService
+//    }
+
 
 }
