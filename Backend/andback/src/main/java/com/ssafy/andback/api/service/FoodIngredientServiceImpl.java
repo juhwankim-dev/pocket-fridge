@@ -12,16 +12,23 @@ package com.ssafy.andback.api.service;
 import com.ssafy.andback.api.dto.request.InsertFoodIngredientRequestDto;
 import com.ssafy.andback.api.dto.request.UpdateFoodIngredientRequestDto;
 import com.ssafy.andback.api.dto.response.FoodIngredientResponseDto;
+import com.ssafy.andback.api.dto.response.MainCategoryResponseDto;
+import com.ssafy.andback.api.dto.response.SubCategoryResponseDto;
 import com.ssafy.andback.core.domain.FoodIngredient;
+import com.ssafy.andback.core.domain.MainCategory;
 import com.ssafy.andback.core.domain.Refrigerator;
+import com.ssafy.andback.core.domain.SubCategory;
 import com.ssafy.andback.core.repository.FoodIngredientRepository;
+import com.ssafy.andback.core.repository.MainCategoryRepository;
 import com.ssafy.andback.core.repository.RefrigeratorRepository;
+import com.ssafy.andback.core.repository.SubCategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -30,6 +37,8 @@ public class FoodIngredientServiceImpl implements FoodIngredientService {
 
     private final FoodIngredientRepository foodIngredientRepository;
     private final RefrigeratorRepository refrigeratorRepository;
+    private final SubCategoryRepository subCategoryRepository;
+    private final MainCategoryRepository mainCategoryRepository;
 
     public String saveFoodIngredient(InsertFoodIngredientRequestDto insertFoodIngredientReqDto) {
 
@@ -51,7 +60,9 @@ public class FoodIngredientServiceImpl implements FoodIngredientService {
         }
 
         refrigerator = refrigeratorRepository.findByRefrigeratorId(insertFoodIngredientReqDto.getRefrigeratorId());
+        Optional<SubCategory> subCategory = subCategoryRepository.findById(insertFoodIngredientReqDto.getSubCategoryId());
         foodIngredient.setRefrigerator(refrigerator);
+        foodIngredient.setSubCategory(subCategory.get());
         foodIngredientRepository.save(foodIngredient);
         return "success";
     }
@@ -108,9 +119,49 @@ public class FoodIngredientServiceImpl implements FoodIngredientService {
                     .foodIngredientDate(temp.getFoodIngredientDate())
                     .foodIngredientExp(temp.getFoodIngredientExp())
                     .foodIngredientName(temp.getFoodIngredientName())
+                    .foodIngredientWay(temp.getFoodIngredientWay())
+                    .refrigeratorId(temp.getRefrigerator().getRefrigeratorId())
+                    .subCategoryId(temp.getSubCategory().getSubCategory())
                     .build());
         }
 
         return res;
     }
+
+    @Override
+    public List<MainCategoryResponseDto> findAllMainCategory() {
+
+        List<MainCategory> mainCategoryList = mainCategoryRepository.findAll();
+
+        List<MainCategoryResponseDto> res = new ArrayList<>();
+
+        for (MainCategory temp : mainCategoryList) {
+            res.add(MainCategoryResponseDto.builder()
+                    .mainCategoryId(temp.getMainCategory())
+                    .mainCategoryName(temp.getMainCategoryName())
+                    .build());
+        }
+
+        return res;
+    }
+
+    @Override
+    public List<SubCategoryResponseDto> findAllSubCategory() {
+
+        List<SubCategory> subCategoryList = subCategoryRepository.findAll();
+
+        List<SubCategoryResponseDto> res = new ArrayList<>();
+
+        for (SubCategory temp : subCategoryList) {
+            res.add(SubCategoryResponseDto.builder()
+                    .mainCategoryId(temp.getMainCategory().getMainCategory())
+                    .subCategoryId(temp.getSubCategory())
+                    .subCategoryName(temp.getSubCategoryName())
+                    .build());
+        }
+
+        return res;
+    }
+
+
 }
