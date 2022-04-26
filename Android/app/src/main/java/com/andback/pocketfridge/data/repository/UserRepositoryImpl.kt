@@ -13,4 +13,16 @@ class UserRepositoryImpl @Inject constructor(
     override fun signUp(req: MutableMap<String, String>): Flowable<BaseResponse<Any>> {
         return userRemoteDataSource.signUp(req)
     }
+
+    override fun sendEmail(email: String): Flowable<BaseResponse<String>> {
+        return userRemoteDataSource.sendEmail(email)
+    }
+
+    override fun checkEmail(email: String): Flowable<BaseResponse<Any>> {
+        return userRemoteDataSource.checkEmail(email)
+    }
+
+    override fun checkNickname(nickname: String): Flowable<BaseResponse<Any>> {
+        return userRemoteDataSource.checkNickname(nickname)
+    }
 }
