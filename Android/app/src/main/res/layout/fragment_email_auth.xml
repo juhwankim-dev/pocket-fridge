@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="vm"
+            type="com.andback.pocketfridge.present.views.user.UserViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".present.views.user.signup.EmailAuthFragment">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/al_step_oneF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/tb_step_oneF"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="@string/sign_up"
+                app:navigationIcon="@drawable/ic_close"/>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:overScrollMode="never"
+            app:layout_constraintBottom_toTopOf="@+id/btn_email_authF_next"
+            app:layout_constraintTop_toBottomOf="@+id/al_step_oneF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_margin_wide"
+                android:layout_marginTop="@dimen/activity_margin_wide"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:id="@+id/til_email_authF_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:errorEnabled="true"
+                    android:hint="이메일">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_email_authF_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@={vm.email}"
+                        android:inputType="textEmailAddress" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_email_authF_send_email"
+                    style="@style/button_text"
+                    android:layout_width="match_parent"
+                    android:layout_marginVertical="@dimen/activity_margin_default"
+                    android:background="@drawable/bg_elipse_outline_black_4"
+                    android:clickable="false"
+                    android:text="인증번호 전송"
+                    android:onClick="@{()->vm.onSendEmailClick()}"
+                    android:visibility="@{vm.isSentEmail() ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_email_authF_guide"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:backgroundTint="#F5F5F5"
+                    android:visibility="@{vm.isSentEmail() ? View.VISIBLE : View.GONE}"
+                    tools:visibility="gone"
+                    app:cardCornerRadius="@dimen/activity_margin_narrow"
+                    app:cardElevation="0dp">
+
+                    <TextView
+                        style="@style/body_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="입력하신 이메일 주소로 인증번호가 발송되었습니다.\n인증번호를 확인해 주세요." />
+                </androidx.cardview.widget.CardView>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:id="@+id/til_email_authF_auth_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="인증번호"
+                    app:errorEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_email_authF_auth_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLength="10"
+                        android:inputType="text"
+                        android:visibility="@{vm.isSentEmail() ? View.VISIBLE : View.GONE}"
+                        android:text="@={vm.EmailAuthNumber}"
+                        tools:visibility="gone"/>
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/btn_email_authF_next"
+            style="@style/button_text"
+            android:layout_width="match_parent"
+            android:layout_margin="@dimen/activity_margin_default"
+            android:background="@drawable/bg_ellipse_colored_32"
+            android:text="다음"
+            android:textColor="@color/white"
+            android:onClick="@{()->vm.onNextClick()}"
+            android:clickable="false"
+            app:backgroundTint="@color/gray_non_clickable_button"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
