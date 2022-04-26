@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.andback.pocketfridge.domain.model.Ingredient
-import com.andback.pocketfridge.domain.usecase.UploadIngreUseCase
+import com.andback.pocketfridge.domain.usecase.ingredient.UploadIngreUseCase
 import com.andback.pocketfridge.present.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
