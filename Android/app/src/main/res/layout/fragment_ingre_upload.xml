@@ -117,20 +117,23 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/activity_margin_narrow"
-                        android:text="@string/storage_fridge" />
+                        android:text="@string/storage_fridge"
+                        android:onClick="@{() -> vm.setFridge()}"/>
 
                     <TextView
                         android:id="@+id/tv_ingre_uploadF_storage_freeze"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/activity_margin_narrow"
-                        android:text="@string/storage_freeze" />
+                        android:text="@string/storage_freeze"
+                        android:onClick="@{() -> vm.setFreeze()}"/>
 
                     <TextView
                         android:id="@+id/tv_ingre_uploadF_storage_room"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/storage_room" />
+                        android:text="@string/storage_room"
+                        android:onClick="@{() -> vm.setRoom()}"/>
                 </LinearLayout>
 
                 <ImageView
