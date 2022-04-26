@@ -65,7 +65,7 @@ class UserViewModel @Inject constructor (
 
     // 이메일 인증번호
     val EmailAuthNumber: MutableLiveData<String> = MutableLiveData("")
-    var sentEmailAuthNumber = ""
+    var sentEmailAuthNumber = "THISISPRIVATEKEY"
 
     private fun checkEmail(email: String) {
         compositeDisposable.add(
@@ -82,8 +82,11 @@ class UserViewModel @Inject constructor (
                             401 -> {
                                 _emailErrorMsg.value = CheckResult(R.string.email_overlap_error, false)
                             }
+                            else -> {
+                                _toastMsg.value = it.message
+                            }
                         }
-                    }, {}, {}, {}
+                    }, { showError(it) }
                 )
         )
     }
@@ -99,6 +102,8 @@ class UserViewModel @Inject constructor (
                             200 -> {
                                 isSentEmail.value = true
                                 sentEmailAuthNumber = it.data!!
+                            }
+                            else -> {
                                 _toastMsg.value = it.message
                             }
                         }
@@ -128,14 +133,12 @@ class UserViewModel @Inject constructor (
                             200 -> {
                                 _nicknameErrorMsg.value = R.string.no_error
                                 signUp(getEnteredUserInfo())
-                                _toastMsg.value = it.message
                             }
                             401 -> {
                                 _nicknameErrorMsg.value = R.string.nickname_overlap_error
-                                _toastMsg.value = it.message
                             }
                         }
-                    }, {}, {}, {}
+                    }, { showError(it) },
                 )
         )
     }
@@ -147,7 +150,7 @@ class UserViewModel @Inject constructor (
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                        // hideLoading()
+                        _toastMsg.value = it.message
                     },
                     {
                         _isShowLoading.value = false
@@ -162,7 +165,6 @@ class UserViewModel @Inject constructor (
                     }
                 )
         )
-        pageNumber.value = PageSet.LOGIN
     }
 
     fun onSendEmailClick() {
@@ -190,6 +192,19 @@ class UserViewModel @Inject constructor (
         req["userPassword"] = pw.value.toString()
 
         return req
+    }
+
+    private fun showError(t : Throwable) {
+        if (t is HttpException && (t.code() in 400 until 500)){
+            var responseBody = t.response()?.errorBody()?.string()
+            val jsonObject = JSONObject(responseBody!!.trim())
+            var message = jsonObject.getString("message")
+            _toastMsg.value = message
+            Log.d("UserViewModel", "${message}")
+            Log.d("UserViewModel", "${t.code()}")
+        } else {
+            _toastMsg.value = t.message
+        }
     }
 
     override fun onCleared() {
