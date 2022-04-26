@@ -30,6 +30,7 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
     }
 
     private fun init() {
+        binding.vm = viewModel
         setObserver()
         setExpiryDateIcon()
         setPurchasedDateIcon()
