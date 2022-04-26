@@ -1,8 +1,7 @@
 package com.ssafy.andback.api.controller;
 
 import com.ssafy.andback.api.dto.request.LoginRequestDto;
-import com.ssafy.andback.api.dto.response.LoginResponseDto;
-import com.ssafy.andback.api.dto.response.UserEmailNumberResponseDto;
+import com.ssafy.andback.api.dto.response.SingleResponseDto;
 import io.swagger.annotations.*;
 import com.ssafy.andback.api.dto.UserDto;
 import com.ssafy.andback.api.dto.response.BaseResponseDto;
@@ -66,21 +65,20 @@ public class UserController {
 
     @ApiOperation(value = "이메일 인증번호 전송", notes = "회원가입 시 이메일 인증번호 전송")
     @GetMapping(value = "/{userEmail}")
-    public ResponseEntity<BaseResponseDto> sendUserEmailNumber(@PathVariable String userEmail) {
+    public ResponseEntity<SingleResponseDto<String>> sendUserEmailNumber(@PathVariable String userEmail) {
         String userEmailNumber = userService.sendUserEmailNumber(userEmail);
 
-        return ResponseEntity.ok(UserEmailNumberResponseDto.of(200, "이메일 인증번호 전송 완료", userEmailNumber));
+        return ResponseEntity.ok(new SingleResponseDto<>(200, "이메일 인증번호 전송 완료", userEmailNumber));
     }
 
     @ApiOperation(value = "로그인", notes = "이메일, 비밀번호로 로그인")
     @PostMapping(value = "/login")
-    public ResponseEntity<BaseResponseDto> login(LoginRequestDto loginRequestDto){
+    public ResponseEntity<SingleResponseDto<String>> login(LoginRequestDto loginRequestDto){
         String result = userService.login(loginRequestDto);
         if(result.equals("fail")){
-            return ResponseEntity.status(401).body(LoginResponseDto.of(401, "아이디와 비밀번호를 확인해주세요.", null));
+            return ResponseEntity.status(401).body(new SingleResponseDto<String>(401, "아이디와 비밀번호를 확인해주세요.", null));
         }
-//        return ResponseEntity.ok(LoginResponseDto.of(200, "로그인 성공", ));
-        return ResponseEntity.ok(BaseResponseDto.of(200, "로그인 성공"));
+        return ResponseEntity.ok(new SingleResponseDto<>(200, "로그인 성공", "temp"));
     }
 
     @ApiOperation(value = "비밀번호 찾기", notes = "비밀번호 찾기 시 새 비밀번호를 이메일에 전송한다.")
@@ -95,13 +93,18 @@ public class UserController {
 
 //    @ApiOperation(value = "회원 탈퇴", notes = "회원을 탈퇴한다")
 //    @DeleteMapping(value = "/delete")
-//    public ResponseEntity<BaseResponseDto> deleteUser(@PathVariable User)
+//    public ResponseEntity<BaseResponseDto> deleteUser(@ApiIgnore Authentication authentication)
 
 //    @ApiOperation(value = "회원정보 수정", notes = "유저의 정보를 수정한다.")
 //    @PutMapping("/update")
-//    public ResponseEntity<BaseResponseDto> updateUser(UserDto userDto){
+//    public ResponseEntity<BaseResponseDto> updateUser(@ApiIgnore Authentication authentication, UserDto userDto){
 //        String result = userService
 //    }
 
+//    @ApiOperation(value = "회원정보 조회", notes = "유저의 정보를 조회한다.")
+//    @GetMapping("/info")
+//    public ResponseEntity<BaseResponseDto> getUserInfo(@ApiIgnore Authentication authentication){
+//
+//    }
 
 }
