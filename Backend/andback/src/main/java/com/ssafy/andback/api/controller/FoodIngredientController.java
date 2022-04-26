@@ -10,10 +10,8 @@
 package com.ssafy.andback.api.controller;
 
 import com.ssafy.andback.api.dto.request.UpdateFoodIngredientRequestDto;
-import com.ssafy.andback.api.dto.response.BaseResponseDto;
+import com.ssafy.andback.api.dto.response.*;
 import com.ssafy.andback.api.dto.request.InsertFoodIngredientRequestDto;
-import com.ssafy.andback.api.dto.response.FoodIngredientResponseDto;
-import com.ssafy.andback.api.dto.response.ListResponseDto;
 import com.ssafy.andback.api.service.FoodIngredientService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -75,5 +73,23 @@ public class FoodIngredientController {
         List<FoodIngredientResponseDto> response = foodIngredientService.findAllByRefrigeratorId(refrigeratorId);
 
         return ResponseEntity.ok(new ListResponseDto<FoodIngredientResponseDto>(200, "success", response));
+    }
+
+    @ApiOperation(value = "메인 카테고리 목록", notes = "메인 카테고리 목록을 보여준다")
+    @GetMapping("/maincategory")
+    public ResponseEntity<ListResponseDto<MainCategoryResponseDto>> findAllMainCategory(){
+
+        List<MainCategoryResponseDto> response = foodIngredientService.findAllMainCategory();
+
+        return ResponseEntity.ok(new ListResponseDto<MainCategoryResponseDto>(200, "success", response));
+    }
+
+    @ApiOperation(value = "서브 카테고리 목록", notes = "서브 카테고리 목록을 보여준다")
+    @GetMapping("/subcategory")
+    public ResponseEntity<ListResponseDto<SubCategoryResponseDto>> findAllSubCategory() {
+
+        List<SubCategoryResponseDto> response = foodIngredientService.findAllSubCategory();
+
+        return ResponseEntity.ok(new ListResponseDto<SubCategoryResponseDto>(200, "success", response));
     }
 }

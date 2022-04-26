@@ -10,7 +10,9 @@
 package com.ssafy.andback.core.domain;
 
 import com.ssafy.andback.api.constant.WayStatus;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -21,6 +23,7 @@ import java.time.LocalDate;
 @Table(name = "food_ingredient")
 @Getter
 @Setter
+@NoArgsConstructor
 public class FoodIngredient {
 
     // 식재료 아이디
@@ -55,4 +58,20 @@ public class FoodIngredient {
     @ManyToOne(targetEntity = Refrigerator.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "refrigerator_id")
     private Refrigerator refrigerator;
+
+    // (카테고리 1 : 식재료 N)
+    @ManyToOne(targetEntity = SubCategory.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "sub_category_id")
+    private SubCategory subCategory;
+
+    @Builder
+    public FoodIngredient(String foodIngredientName, LocalDate foodIngredientExp, float foodIngredientCount, LocalDate foodIngredientDate, WayStatus foodIngredientWay, Refrigerator refrigerator, SubCategory subCategory) {
+        this.foodIngredientName = foodIngredientName;
+        this.foodIngredientExp = foodIngredientExp;
+        this.foodIngredientCount = foodIngredientCount;
+        this.foodIngredientDate = foodIngredientDate;
+        this.foodIngredientWay = foodIngredientWay;
+        this.refrigerator = refrigerator;
+        this.subCategory = subCategory;
+    }
 }

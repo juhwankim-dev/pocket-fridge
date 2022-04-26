@@ -1,6 +1,7 @@
 package com.ssafy.andback.api.dto.response;
 
 import com.ssafy.andback.api.constant.WayStatus;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
 import lombok.Builder;
 import lombok.Data;
@@ -33,12 +34,17 @@ public class FoodIngredientResponseDto {
     @ApiParam(value = "냉장고 아이디", required = true)
     private Long refrigeratorId;
 
+    //카테고리 아이디
+    @ApiParam(value = "카테고리 아이디", required = true)
+    private Long categoryId;
+
     @Builder
-    public FoodIngredientResponseDto(String foodIngredientName, LocalDate foodIngredientExp, LocalDate foodIngredientDate, WayStatus foodIngredientWay, Long refrigeratorId) {
+    public FoodIngredientResponseDto(String foodIngredientName, LocalDate foodIngredientExp, LocalDate foodIngredientDate, WayStatus foodIngredientWay, Long refrigeratorId, Long categoryId) {
         this.foodIngredientName = foodIngredientName;
         this.foodIngredientExp = foodIngredientExp;
         this.foodIngredientDate = foodIngredientDate;
         this.foodIngredientWay = foodIngredientWay;
         this.refrigeratorId = refrigeratorId;
+        this.categoryId = categoryId;
     }
 }
