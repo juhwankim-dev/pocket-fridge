@@ -2,7 +2,6 @@ package com.andback.pocketfridge.present.views.user.signup
 
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
@@ -11,10 +10,9 @@ import com.andback.pocketfridge.databinding.FragmentEmailAuthBinding
 import com.andback.pocketfridge.present.config.BaseFragment
 import com.andback.pocketfridge.present.utils.SignUpChecker
 import com.andback.pocketfridge.present.views.user.UserActivity
-import com.andback.pocketfridge.present.views.user.UserViewModel
 
 class EmailAuthFragment : BaseFragment<FragmentEmailAuthBinding>(R.layout.fragment_email_auth) {
-    private val viewModel: UserViewModel by activityViewModels()
+    private val viewModel: SignViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

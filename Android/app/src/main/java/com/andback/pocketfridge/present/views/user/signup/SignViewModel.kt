@@ -25,7 +25,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class UserViewModel @Inject constructor (
+class SignViewModel @Inject constructor (
     private val getSignUpUseCase: GetSignUpUseCase,
     private val getSendEmailUseCase: GetSendEmailUseCase,
     private val getCheckEmailUseCase: GetCheckEmailUseCase,

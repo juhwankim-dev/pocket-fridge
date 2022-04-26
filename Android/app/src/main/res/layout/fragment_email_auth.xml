@@ -7,7 +7,7 @@
         <import type="android.view.View"/>
         <variable
             name="vm"
-            type="com.andback.pocketfridge.present.views.user.UserViewModel" />
+            type="com.andback.pocketfridge.present.views.user.signup.SignViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
