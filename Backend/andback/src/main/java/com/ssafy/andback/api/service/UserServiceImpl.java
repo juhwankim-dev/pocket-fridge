@@ -15,6 +15,7 @@ import com.ssafy.andback.core.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -160,6 +161,7 @@ public class UserServiceImpl implements UserService {
 
     // 비밀번호 찾기 (비밀번호 변경)
     @Override
+    @Transactional(readOnly = false) // save 없이 자동으로 업데이트
     public String findUserPassword(String userEmail) {
         Optional<User> user = userRepository.findByUserEmail(userEmail);
         if (!user.isPresent()) {
@@ -169,7 +171,6 @@ public class UserServiceImpl implements UserService {
         String userPassword = sendUserEmailNumber(userEmail);
 
         user.get().setUserPassword(passwordEncoder.encode(userPassword));
-        userRepository.save(user.get());
 
         return "success";
     }
