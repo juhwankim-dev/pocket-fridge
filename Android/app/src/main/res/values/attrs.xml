@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <declare-styleable name="CustomForm">
-        <attr name="menu_title" format="reference|string" />
-        <attr name="hint_msg" format="reference|string" />
-        <attr name="error_msg" format="reference|string" />
-    </declare-styleable>
-</resources>

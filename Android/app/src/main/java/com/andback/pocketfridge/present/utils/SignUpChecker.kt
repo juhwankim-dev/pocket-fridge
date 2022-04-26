@@ -12,29 +12,16 @@ object SignUpChecker {
     const val NICKNAME = "^[a-zA-Zㄱ-ㅎ가-힣0-9]*\$"
     const val PW = "^(?=.*[A-Za-z])[A-Za-z0-9]{5,15}\$"
 
-    const val NAME_EMPTY_ERROR = "이름은 필수 입력 값입니다."
-    const val NAME_PATTERN_ERROR = "이름은 특수문자를 제외한 2~20자리여야 합니다."
-
-    const val NICKNAME_EMPTY_ERROR = "닉네임은 필수 입력 값입니다."
-    const val NICKNAME_PATTERN_ERROR = "닉네임은 특수문자를 제외한 2~10자리여야 합니다."
-
-    const val EMAIL_EMPTY_ERROR = "이메일은 필수 입력 값입니다."
-    const val EMAIL_PATTERN_ERROR = "이메일 형식이 올바르지 않습니다."
-
-    const val PW_EMPTY_ERROR = "비밀번호는 필수 입력 값입니다."
-    const val PW_PATTERN_ERROR = "비밀번호는 영문자를 포함한 5~15자리여야 합니다."
-    const val PW_MATCH_ERROR = "비밀번호가 일치하지 않습니다."
-
     fun validateName(name: String): CheckResult {
         return when {
             name.isEmpty() -> {
-                CheckResult(NAME_EMPTY_ERROR, false)
+                CheckResult(R.string.name_empty_error, false)
             }
             Pattern.matches(NAME, name) == false -> {
-                CheckResult(NAME_PATTERN_ERROR, false)
+                CheckResult(R.string.name_pattern_error, false)
             }
             else -> {
-                CheckResult("", true)
+                CheckResult(R.string.no_error, true)
             }
         }
     }
@@ -42,13 +29,13 @@ object SignUpChecker {
     fun validateNickname(nickname: String): CheckResult {
         return when {
             nickname.isEmpty() -> {
-                CheckResult(NICKNAME_EMPTY_ERROR, false)
+                CheckResult(R.string.nickname_empty_error, false)
             }
             Pattern.matches(NICKNAME, nickname) == false -> {
-                CheckResult(NICKNAME_PATTERN_ERROR, false)
+                CheckResult(R.string.nickname_pattern_error, false)
             }
             else -> {
-                CheckResult("", true)
+                CheckResult(R.string.no_error, true)
             }
         }
     }
@@ -58,13 +45,13 @@ object SignUpChecker {
 
         return when {
             email.trim().isEmpty() -> {
-                CheckResult(EMAIL_EMPTY_ERROR, false)
+                CheckResult(R.string.email_empty_error, false)
             }
             pattern.matcher(email).matches() == false -> {
-                CheckResult(EMAIL_PATTERN_ERROR, false)
+                CheckResult(R.string.email_pattern_error, false)
             }
             else -> {
-                CheckResult("", true)
+                CheckResult(R.string.no_error, true)
             }
         }
     }
@@ -72,13 +59,13 @@ object SignUpChecker {
     fun validatePw(pw: String): CheckResult {
         return when {
             pw.isEmpty() -> {
-                CheckResult(PW_EMPTY_ERROR, false)
+                CheckResult(R.string.pw_empty_error, false)
             }
             Pattern.matches(PW, pw) == false -> {
-                CheckResult(PW_PATTERN_ERROR, false)
+                CheckResult(R.string.pw_pattern_error, false)
             }
             else -> {
-                CheckResult("", true)
+                CheckResult(R.string.no_error, true)
             }
         }
     }
@@ -86,13 +73,13 @@ object SignUpChecker {
     fun validateConfirmPw(checkedPw: String, pw: String): CheckResult {
         return when {
             checkedPw == pw -> {
-                CheckResult("", true)
+                CheckResult(R.string.no_error, true)
             }
             checkedPw.isEmpty() -> {
-                CheckResult("", false)
+                CheckResult(R.string.no_error, false)
             }
             else -> {
-                CheckResult(PW_MATCH_ERROR, false)
+                CheckResult(R.string.pw_match_error, false)
             }
         }
     }

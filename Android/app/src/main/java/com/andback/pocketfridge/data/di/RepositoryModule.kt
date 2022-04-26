@@ -17,7 +17,7 @@ import javax.inject.Singleton
 class RepositoryModule {
     @Provides
     @Singleton
-    fun provideSignUpRepository(userRemoteDataSource: UserRemoteDataSource): UserRepository {
+    fun provideUserRepository(userRemoteDataSource: UserRemoteDataSource): UserRepository {
         return UserRepositoryImpl(userRemoteDataSource)
     }
 
