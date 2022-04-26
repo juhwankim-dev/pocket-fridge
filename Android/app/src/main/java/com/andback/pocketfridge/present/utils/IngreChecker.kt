@@ -11,10 +11,10 @@ object IngreChecker {
     fun check(ingredient: Ingredient) {
         if(!checkQuantity(ingredient)) throw IngreQuantityException()
         if(!checkName(ingredient)) throw IngreNameException()
-        if(!checkFridge(ingredient)) throw IngreFridgeIdException()
-        if(!checkCategory(ingredient)) throw IngreCategoryException()
         if(!checkDatePurchased(Date(), ingredient)) throw IngreDatePurchasedException()
         if(!checkExpiryDate(ingredient)) throw IngreDateExpiryException()
+        if(!checkFridge(ingredient)) throw IngreFridgeIdException()
+        if(!checkCategory(ingredient)) throw IngreCategoryException()
     }
 
     fun checkQuantity(ingredient: Ingredient): Boolean {
@@ -37,6 +37,7 @@ object IngreChecker {
     fun convertDate(dateString: String): Date? {
         return try {
             val formatter = SimpleDateFormat("yyyy-MM-dd")
+            formatter.isLenient = false
             val date = formatter.parse(dateString)
             date
         } catch (e: Exception) {
