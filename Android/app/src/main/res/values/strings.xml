@@ -8,6 +8,17 @@
     <string name="ingre_upload">식재료 등록</string>
     <string name="merchandise">상품</string>
     <string name="accept">확인</string>
+    <string name="storage_fridge">냉장</string>
+    <string name="storage_freeze">냉동</string>
+    <string name="storage_room">실온</string>
+    <string name="name">상품명</string>
+    <string name="purchased_date">구매일</string>
+    <string name="expiry_date">유통기한</string>
+
+    <string name="error_msg_ingre_name">올바른 상품명을 입력해 주세요</string>
+    <string name="error_msg_ingre_date_expiry">유통기한은 구매일보다 미래의 날짜로 입력해 주세요</string>
+    <string name="error_msg_ingre_date_purchased">구매일은 오늘 포함 과거의 날짜로 입력해 주세요</string>
+
     <string name="sign_up">회원가입</string>
 
     <!-- Error Messages -->

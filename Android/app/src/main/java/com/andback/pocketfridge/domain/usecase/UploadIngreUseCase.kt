@@ -21,12 +21,12 @@ class UploadIngreUseCase @Inject constructor(
             IngreChecker.check(ingredient)
             val ingredientEntity = IngreEntityForUpload(ingredient.name, ingredient.expiryDate, ingredient.purchasedDate, ingredient.fridgeId, category = ingredient.category, storage = ingredient.storage.value)
             ingreRepository.uploadIngre(ingreEntityForUpload = ingredientEntity)
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
             makeValidationErrorObservable(e)
         }
     }
 
-    private fun makeValidationErrorObservable(e: Exception): Observable<BaseResponse<Any>> {
+    private fun makeValidationErrorObservable(e: Throwable): Observable<BaseResponse<Any>> {
         return Observable.create { emitter ->
             emitter.onError(e)
         }
