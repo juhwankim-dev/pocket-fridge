@@ -5,7 +5,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <LinearLayout
@@ -44,6 +44,7 @@
             style="@style/error_text"
             android:id="@+id/tv_error_msg"
             android:layout_marginStart="20dp"
+            android:layout_marginBottom="@dimen/activity_margin_default"
             android:text=""
             android:textColor="@color/red_error_message" />
     </LinearLayout>
