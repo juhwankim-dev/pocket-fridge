@@ -2,6 +2,7 @@ package com.andback.pocketfridge.present.views.user.signup
 
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
@@ -52,7 +53,7 @@ class EmailAuthFragment : BaseFragment<FragmentEmailAuthBinding>(R.layout.fragme
         binding.etEmailAuthFEmail.addTextChangedListener { newText ->
             SignUpChecker.validateEmail(newText.toString()).apply {
                 binding.tilEmailAuthFEmail.error = resources.getString(stringId)
-                binding.btnEmailAuthFSendEmail.isClickable = isValid
+                binding.btnEmailAuthFSendEmail.isEnabled = isValid
             }
         }
 
@@ -70,14 +71,14 @@ class EmailAuthFragment : BaseFragment<FragmentEmailAuthBinding>(R.layout.fragme
     private fun deactivateButton() {
         binding.btnEmailAuthFNext.apply {
             backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.gray_non_clickable_button))
-            isClickable = false
+            isEnabled = false
         }
     }
 
     private fun activateButton() {
         binding.btnEmailAuthFNext.apply {
             backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.main_color))
-            isClickable = true
+            isEnabled = true
         }
     }
 }

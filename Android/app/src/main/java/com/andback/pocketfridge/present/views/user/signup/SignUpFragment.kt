@@ -42,7 +42,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
             }
 
             nicknameErrorMsg.observe(viewLifecycleOwner) {
-                binding.etSignUpFNickname.error = resources.getString(it)
+                binding.tilSignUpFNickname.error = resources.getString(it)
             }
         }
     }
@@ -86,12 +86,12 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
         if(isValidName && isValidNickname && isValidPw && isValidPwConfirm) {
             binding.btnSignUpFSignup.apply {
                 backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.main_color))
-                isClickable = true
+                isEnabled = true
             }
         } else {
             binding.btnSignUpFSignup.apply {
                 backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.gray_non_clickable_button))
-                isClickable = false
+                isEnabled = false
             }
         }
     }
