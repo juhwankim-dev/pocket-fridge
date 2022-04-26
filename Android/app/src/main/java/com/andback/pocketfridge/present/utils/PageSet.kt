@@ -1,7 +1,7 @@
 package com.andback.pocketfridge.present.utils
 
 enum class PageSet {
-    STEP_ONE,
-    STEP_TWO,
+    EMAIL_AUTH,
+    SIGN_UP,
     LOGIN
 }
