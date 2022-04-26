@@ -129,8 +129,29 @@ class IngreUploadViewModel @Inject constructor(
         return Ingredient(quantity = 1, category = "temp", name = ingreName.value?: "", purchasedDate = ingreDatePurchased.value.toString(), expiryDate = ingreDateExpiry.value.toString(), fridgeId = ingreFridgeId.value?: -1, storage = ingreStorage.value?:Storage.Fridge)
     }
 
+    fun setFridge() {
+        ingreStorage.value = Storage.Fridge
+    }
+
+    fun setFreeze() {
+        ingreStorage.value = Storage.Freeze
+    }
+
+    fun setRoom() {
+        ingreStorage.value = Storage.Room
+    }
+
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.clear()
+    }
+
+    fun clearData() {
+        clearError()
+        ingreName.value = ""
+        ingreDatePurchased.value = ""
+        ingreDateExpiry.value = ""
+        ingreStorage.value = Storage.Fridge
+        ingreFridgeId.value = -1
     }
 }
