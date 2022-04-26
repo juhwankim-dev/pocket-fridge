@@ -8,11 +8,12 @@ import com.andback.pocketfridge.present.config.BaseActivity
 import com.andback.pocketfridge.present.utils.PageSet
 import com.andback.pocketfridge.present.views.user.signup.EmailAuthFragment
 import com.andback.pocketfridge.present.views.user.signup.SignUpFragment
+import com.andback.pocketfridge.present.views.user.signup.SignViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class UserActivity : BaseActivity<ActivityUserBinding>(R.layout.activity_user) {
-    private val viewModel: UserViewModel by viewModels()
+    private val viewModel: SignViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

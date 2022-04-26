@@ -5,16 +5,14 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.MutableLiveData
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.databinding.FragmentSignUpBinding
 import com.andback.pocketfridge.present.config.BaseFragment
 import com.andback.pocketfridge.present.utils.SignUpChecker
 import com.andback.pocketfridge.present.views.user.UserActivity
-import com.andback.pocketfridge.present.views.user.UserViewModel
 
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sign_up) {
-    private val viewModel: UserViewModel by activityViewModels()
+    private val viewModel: SignViewModel by activityViewModels()
 
     // 이름, 닉네임, 비밀번호, 비밀번호 확인 유효성
     var isValidName = false
@@ -42,7 +40,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
             }
 
             nicknameErrorMsg.observe(viewLifecycleOwner) {
-                binding.etSignUpFNickname.error = resources.getString(it)
+                binding.tilSignUpFNickname.error = resources.getString(it)
             }
         }
     }
@@ -86,12 +84,12 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
         if(isValidName && isValidNickname && isValidPw && isValidPwConfirm) {
             binding.btnSignUpFSignup.apply {
                 backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.main_color))
-                isClickable = true
+                isEnabled = true
             }
         } else {
             binding.btnSignUpFSignup.apply {
                 backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.gray_non_clickable_button))
-                isClickable = false
+                isEnabled = false
             }
         }
     }

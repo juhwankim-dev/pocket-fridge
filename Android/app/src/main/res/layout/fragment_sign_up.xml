@@ -7,7 +7,7 @@
         <import type="android.view.View"/>
         <variable
             name="vm"
-            type="com.andback.pocketfridge.present.views.user.UserViewModel" />
+            type="com.andback.pocketfridge.present.views.user.signup.SignViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,19 +35,19 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:overScrollMode="never"
-            app:layout_constraintBottom_toTopOf="@+id/btn_step_twoF_signup"
+            app:layout_constraintBottom_toTopOf="@+id/btn_sign_upF_signup"
             app:layout_constraintTop_toBottomOf="@+id/al_step_oneF">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_margin_wide"
                 android:layout_marginHorizontal="@dimen/activity_margin_wide"
+                android:layout_marginTop="@dimen/activity_margin_wide"
                 android:orientation="vertical">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:id="@+id/til_sign_upF_name"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/activity_margin_default"
@@ -58,13 +58,13 @@
                         android:id="@+id/et_sign_upF_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@={vm.name}"
-                        android:inputType="text" />
+                        android:inputType="text"
+                        android:text="@={vm.name}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:id="@+id/til_sign_upF_nickname"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/activity_margin_default"
@@ -75,47 +75,73 @@
                         android:id="@+id/et_sign_upF_nickname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@={vm.nickname}"
-                        android:inputType="text" />
+                        android:inputType="text"
+                        android:text="@={vm.nickname}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:id="@+id/til_sign_upF_pw"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/activity_margin_default"
                     android:hint="비밀번호"
-                    app:errorEnabled="true"
-                    app:endIconMode="password_toggle">
+                    app:endIconMode="password_toggle"
+                    app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_sign_upF_pw"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@={vm.pw}"
-                        android:inputType="textPassword" />
+                        android:inputType="textPassword"
+                        android:text="@={vm.pw}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:id="@+id/til_sign_upF_pw_confirm"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/activity_margin_default"
                     android:hint="비밀번호 확인"
-                    app:errorEnabled="true"
-                    app:endIconMode="password_toggle">
+                    app:endIconMode="password_toggle"
+                    app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_sign_upF_pw_confirm"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@={vm.pwConfirm}"
-                        android:inputType="textPassword" />
+                        android:inputType="textPassword"
+                        android:text="@={vm.pwConfirm}" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
         </ScrollView>
+
+        <View
+            android:id="@+id/view_sign_upF_opaque_screen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black_opaque_screen"
+            android:elevation="6dp"
+            android:visibility="@{vm.isShowLoading() ? View.VISIBLE : View.GONE}"
+            tools:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_sign_upF_loading"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:elevation="8dp"
+            android:visibility="@{vm.isShowLoading() ? View.VISIBLE : View.GONE}"
+            tools:visibility="gone"
+            setLottiePlay="@{vm.isShowLoading()}"
+            app:lottie_loop="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_rawRes="@raw/lottie_loading" />
 
         <Button
             android:id="@+id/btn_sign_upF_signup"
@@ -126,7 +152,7 @@
             android:text="회원가입"
             android:textColor="@color/white"
             android:onClick="@{()->vm.onSignUpClick()}"
-            android:clickable="false"
+            android:enabled="false"
             android:visibility="@{vm.isSentEmail() ? View.VISIBLE : View.GONE}"
             app:backgroundTint="@color/gray_non_clickable_button"
             app:layout_constraintBottom_toBottomOf="parent" />

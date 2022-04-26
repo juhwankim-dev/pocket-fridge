@@ -1,20 +1,17 @@
-package com.andback.pocketfridge.present.views.user
+package com.andback.pocketfridge.present.views.user.signup
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.andback.pocketfridge.R
-import com.andback.pocketfridge.data.model.BaseResponse
 import com.andback.pocketfridge.domain.model.CheckResult
 import com.andback.pocketfridge.domain.usecase.GetCheckEmailUseCase
 import com.andback.pocketfridge.domain.usecase.GetCheckNicknameUseCase
 import com.andback.pocketfridge.domain.usecase.GetSignUpUseCase
 import com.andback.pocketfridge.domain.usecase.GetSendEmailUseCase
 import com.andback.pocketfridge.present.config.SingleLiveEvent
-import com.andback.pocketfridge.present.utils.NetworkManager
 import com.andback.pocketfridge.present.utils.PageSet
-import com.andback.pocketfridge.present.utils.SignUpChecker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -25,7 +22,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class UserViewModel @Inject constructor (
+class SignViewModel @Inject constructor (
     private val getSignUpUseCase: GetSignUpUseCase,
     private val getSendEmailUseCase: GetSendEmailUseCase,
     private val getCheckEmailUseCase: GetCheckEmailUseCase,
@@ -34,14 +31,18 @@ class UserViewModel @Inject constructor (
     private val compositeDisposable = CompositeDisposable()
 
     // viewmodel이 editText에 입력된 값을 observe 하기 위함
-    val email: MutableLiveData<String> = MutableLiveData("")
-    val name: MutableLiveData<String> = MutableLiveData("")
-    val nickname: MutableLiveData<String> = MutableLiveData("")
-    val pw: MutableLiveData<String> = MutableLiveData("")
-    val pwConfirm: MutableLiveData<String> = MutableLiveData("")
+    val email = MutableLiveData<String>()
+    val name = MutableLiveData<String>()
+    val nickname = MutableLiveData<String>()
+    val pw = MutableLiveData<String>()
+    val pwConfirm = MutableLiveData<String>()
 
     // view가 다음으로 넘어갈 페이지를 observe 하기 위함
     val pageNumber = SingleLiveEvent<PageSet>()
+
+    // 로딩을 보여줄지 결정하기 위함
+    private val _isShowLoading = MutableLiveData<Boolean>()
+    val isShowLoading: LiveData<Boolean> get() = _isShowLoading
 
     // 이메일을 성공적으로 보냈는지 xml에서 확인하기 위함
     val isSentEmail = SingleLiveEvent<Boolean>()
@@ -49,9 +50,9 @@ class UserViewModel @Inject constructor (
     // 토스트 메시지 & 에러 메시지
     private val _toastMsg = MutableLiveData<String>()
     private val _toastMsgIntType = MutableLiveData<Int>()
-    private val _emailErrorMsg: MutableLiveData<CheckResult> = MutableLiveData()
-    private val _emailAuthNumberErrorMsg: MutableLiveData<Int> = MutableLiveData()
-    private val _nicknameErrorMsg: MutableLiveData<Int> = MutableLiveData()
+    private val _emailErrorMsg = MutableLiveData<CheckResult>()
+    private val _emailAuthNumberErrorMsg = MutableLiveData<Int>()
+    private val _nicknameErrorMsg = MutableLiveData<Int>()
 
     val toastMsg: LiveData<String> get() = _toastMsg
     val toastMsgIntType: LiveData<Int> get() = _toastMsgIntType
@@ -60,8 +61,8 @@ class UserViewModel @Inject constructor (
     val nicknameErrorMsg: LiveData<Int> get() = _nicknameErrorMsg
 
     // 이메일 인증번호
-    val EmailAuthNumber: MutableLiveData<String> = MutableLiveData("")
-    var sentEmailAuthNumber = ""
+    val EmailAuthNumber = MutableLiveData<String>()
+    var sentEmailAuthNumber = "THISISPRIVATEKEY"
 
     private fun checkEmail(email: String) {
         compositeDisposable.add(
@@ -75,11 +76,11 @@ class UserViewModel @Inject constructor (
                                 _emailErrorMsg.value = CheckResult(R.string.no_error, true)
                                 sendEmail(email)
                             }
-                            401 -> {
-                                _emailErrorMsg.value = CheckResult(R.string.email_overlap_error, false)
+                            else -> {
+                                _toastMsg.value = it.message
                             }
                         }
-                    }, {}, {}, {}
+                    }, { showError(it) }
                 )
         )
     }
@@ -95,13 +96,22 @@ class UserViewModel @Inject constructor (
                             200 -> {
                                 isSentEmail.value = true
                                 sentEmailAuthNumber = it.data!!
-                                _toastMsg.value = it.message
                             }
-                            401 -> {
+                            else -> {
                                 _toastMsg.value = it.message
                             }
                         }
-                    }, {}, {}, {}
+                    },
+                    {
+                        showError(it)
+                        _isShowLoading.value = false
+                    },
+                    {
+                        _isShowLoading.value = false
+                    },
+                    {
+                        _isShowLoading.value = true
+                    }
                 )
         )
     }
@@ -117,14 +127,9 @@ class UserViewModel @Inject constructor (
                             200 -> {
                                 _nicknameErrorMsg.value = R.string.no_error
                                 signUp(getEnteredUserInfo())
-                                _toastMsg.value = it.message
-                            }
-                            401 -> {
-                                _nicknameErrorMsg.value = R.string.nickname_overlap_error
-                                _toastMsg.value = it.message
                             }
                         }
-                    }, {}, {}, {}
+                    }, { showError(it) },
                 )
         )
     }
@@ -136,29 +141,21 @@ class UserViewModel @Inject constructor (
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                        // hideLoading()
+                        _toastMsg.value = it.message
                     },
                     {
-                        // hideLoading()
-                        // showError()
-                        if (it is HttpException && (it!!.code() in 400 until 500)){
-                            var responseBody = it!!.response()?.errorBody()?.string()
-                            val jsonObject = JSONObject(responseBody!!.trim())
-                            var message = jsonObject.getString("message")
-                            Log.d("UserViewModel", "signUp: ${message}")
-                            Log.d("UserViewModel", "signUp: ${it.code()}")
-                        }
+                        _isShowLoading.value = false
+                        showError(it)
                     },
                     {
-                        // hideLoading()
-                        pageNumber.value = PageSet.LOGIN
+                        _isShowLoading.value = false
+                        //pageNumber.value = PageSet.LOGIN
                     },
                     {
-                        // showLoading()
+                        _isShowLoading.value = true
                     }
                 )
         )
-        pageNumber.value = PageSet.LOGIN
     }
 
     fun onSendEmailClick() {
@@ -186,6 +183,18 @@ class UserViewModel @Inject constructor (
         req["userPassword"] = pw.value.toString()
 
         return req
+    }
+
+    private fun showError(t : Throwable) {
+        if (t is HttpException && (t.code() in 400 until 500)){
+            var responseBody = t.response()?.errorBody()?.string()
+            val jsonObject = JSONObject(responseBody!!.trim())
+            var message = jsonObject.getString("message")
+            _toastMsg.value = message
+            Log.d("UserViewModel", "${t.code()}")
+        } else {
+            _toastMsg.value = t.message
+        }
     }
 
     override fun onCleared() {

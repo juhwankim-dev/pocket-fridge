@@ -16,4 +16,5 @@
     <color name="red_error_message">#b00020</color>
     <color name="gray_non_clickable_button">#cfcfd9</color>
     <color name="gray">#C4C4C4</color>
+    <color name="black_opaque_screen">#66000000</color>
 </resources>

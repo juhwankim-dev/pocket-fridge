@@ -10,10 +10,9 @@ import com.andback.pocketfridge.databinding.FragmentEmailAuthBinding
 import com.andback.pocketfridge.present.config.BaseFragment
 import com.andback.pocketfridge.present.utils.SignUpChecker
 import com.andback.pocketfridge.present.views.user.UserActivity
-import com.andback.pocketfridge.present.views.user.UserViewModel
 
 class EmailAuthFragment : BaseFragment<FragmentEmailAuthBinding>(R.layout.fragment_email_auth) {
-    private val viewModel: UserViewModel by activityViewModels()
+    private val viewModel: SignViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,7 +51,7 @@ class EmailAuthFragment : BaseFragment<FragmentEmailAuthBinding>(R.layout.fragme
         binding.etEmailAuthFEmail.addTextChangedListener { newText ->
             SignUpChecker.validateEmail(newText.toString()).apply {
                 binding.tilEmailAuthFEmail.error = resources.getString(stringId)
-                binding.btnEmailAuthFSendEmail.isClickable = isValid
+                binding.btnEmailAuthFSendEmail.isEnabled = isValid
             }
         }
 
@@ -70,14 +69,14 @@ class EmailAuthFragment : BaseFragment<FragmentEmailAuthBinding>(R.layout.fragme
     private fun deactivateButton() {
         binding.btnEmailAuthFNext.apply {
             backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.gray_non_clickable_button))
-            isClickable = false
+            isEnabled = false
         }
     }
 
     private fun activateButton() {
         binding.btnEmailAuthFNext.apply {
             backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.main_color))
-            isClickable = true
+            isEnabled = true
         }
     }
 }

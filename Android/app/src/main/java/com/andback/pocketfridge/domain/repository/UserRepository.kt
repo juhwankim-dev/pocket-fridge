@@ -1,11 +1,11 @@
 package com.andback.pocketfridge.domain.repository
 
 import com.andback.pocketfridge.data.model.BaseResponse
-import io.reactivex.Flowable
+import io.reactivex.Observable
 
 interface UserRepository {
-    fun signUp(req: MutableMap<String, String>): Flowable<BaseResponse<Any>>
-    fun sendEmail(email: String): Flowable<BaseResponse<String>>
-    fun checkEmail(email: String): Flowable<BaseResponse<Any>>
-    fun checkNickname(nickname: String): Flowable<BaseResponse<Any>>
+    fun signUp(req: MutableMap<String, String>): Observable<BaseResponse<Any>>
+    fun sendEmail(email: String): Observable<BaseResponse<String>>
+    fun checkEmail(email: String): Observable<BaseResponse<Any>>
+    fun checkNickname(nickname: String): Observable<BaseResponse<Any>>
 }
