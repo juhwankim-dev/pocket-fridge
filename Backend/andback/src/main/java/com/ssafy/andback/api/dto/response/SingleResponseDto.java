@@ -5,13 +5,13 @@ import lombok.Setter;
 
 /**
 *
-* UserEmailNumberResponseDto
-* 이메일 인증번호 response
+* SingleResponseDto
+* 하나의 데이터만 응답하는 response
 *
 * @author 김다은
 * @version 1.0.0
-* 생성일 2022-04-25
-* 마지막 수정일 2022-04-25
+* 생성일 2022-04-26
+* 마지막 수정일 2022-04-26
 **/
 
 @Getter
