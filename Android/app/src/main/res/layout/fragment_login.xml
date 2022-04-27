@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="vm"
+            type="com.andback.pocketfridge.present.views.user.login.LoginViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".present.views.user.login.LoginFragment">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/al_loginF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/tb_loginF"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="@string/login" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_loginF_email"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/activity_margin_wide"
+            android:layout_marginTop="@dimen/activity_margin_wide"
+            android:hint="이메일"
+            app:errorEnabled="true"
+            app:layout_constraintTop_toBottomOf="@+id/al_loginF">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_loginF_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text="@={vm.email}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_loginF_pw"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/activity_margin_wide"
+            android:hint="비밀번호"
+            app:endIconMode="password_toggle"
+            app:errorEnabled="true"
+            app:layout_constraintTop_toBottomOf="@+id/til_loginF_email">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_loginF_pw"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:text="@={vm.pw}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_loginF_login"
+            style="@style/button_text"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="@dimen/activity_margin_wide"
+            android:background="@drawable/bg_ellipse_filled_main_color_32"
+            android:onClick="@{()->vm.onLoginClick()}"
+            android:text="로그인"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/til_loginF_pw" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_loginF_social_login"
+            style="@style/button_text"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="@dimen/activity_margin_wide"
+            android:layout_marginTop="@dimen/activity_margin_default"
+            android:background="@drawable/bg_ellipse_outline_main_color_32"
+            android:onClick="@{()->vm.onSocialLoginClick()}"
+            android:text="SNS로 로그인"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@+id/btn_loginF_login" />
+
+        <TextView
+            android:id="@+id/tv_loginF_sign_up"
+            style="@style/body_text"
+            android:text="회원가입"
+            android:padding="@dimen/activity_margin_narrow"
+            android:onClick="@{()->vm.onSignUpClick()}"
+            app:layout_constraintEnd_toStartOf="@+id/tv_loginF_nothing"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_loginF_social_login" />
+
+        <TextView
+            android:id="@+id/tv_loginF_nothing"
+            style="@style/body_text"
+            android:text="   |   "
+            app:layout_constraintBottom_toBottomOf="@+id/tv_loginF_sign_up"
+            app:layout_constraintEnd_toStartOf="@+id/tv_loginF_find_pw"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tv_loginF_sign_up"
+            app:layout_constraintTop_toTopOf="@+id/tv_loginF_sign_up" />
+
+        <TextView
+            android:id="@+id/tv_loginF_find_pw"
+            style="@style/body_text"
+            android:padding="@dimen/activity_margin_narrow"
+            android:text="PW 찾기"
+            android:onClick="@{()->vm.onFindPwClick()}"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_loginF_sign_up"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tv_loginF_nothing" />
+
+        <View
+            android:id="@+id/view_loginF_opaque_screen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black_opaque_screen"
+            android:elevation="6dp"
+            android:visibility="@{vm.isShowLoading() ? View.VISIBLE : View.GONE}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_loginF_loading"
+            setLottiePlay="@{vm.isShowLoading()}"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:elevation="8dp"
+            android:visibility="@{vm.isShowLoading() ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/lottie_loading"
+            tools:visibility="gone" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -22,7 +22,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class SignViewModel @Inject constructor (
+class SignUpViewModel @Inject constructor (
     private val getSignUpUseCase: GetSignUpUseCase,
     private val getSendEmailUseCase: GetSendEmailUseCase,
     private val getCheckEmailUseCase: GetCheckEmailUseCase,
@@ -149,7 +149,7 @@ class SignViewModel @Inject constructor (
                     },
                     {
                         _isShowLoading.value = false
-                        //pageNumber.value = PageSet.LOGIN
+                        pageNumber.value = PageSet.LOGIN
                     },
                     {
                         _isShowLoading.value = true

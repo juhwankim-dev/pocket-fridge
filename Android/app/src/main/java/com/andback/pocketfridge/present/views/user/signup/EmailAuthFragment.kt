@@ -12,7 +12,7 @@ import com.andback.pocketfridge.present.utils.SignUpChecker
 import com.andback.pocketfridge.present.views.user.UserActivity
 
 class EmailAuthFragment : BaseFragment<FragmentEmailAuthBinding>(R.layout.fragment_email_auth) {
-    private val viewModel: SignViewModel by activityViewModels()
+    private val viewModel: SignUpViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

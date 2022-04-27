@@ -12,7 +12,7 @@ import com.andback.pocketfridge.present.utils.SignUpChecker
 import com.andback.pocketfridge.present.views.user.UserActivity
 
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sign_up) {
-    private val viewModel: SignViewModel by activityViewModels()
+    private val viewModel: SignUpViewModel by activityViewModels()
 
     // 이름, 닉네임, 비밀번호, 비밀번호 확인 유효성
     var isValidName = false
