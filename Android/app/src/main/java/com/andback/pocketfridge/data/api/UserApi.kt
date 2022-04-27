@@ -18,4 +18,8 @@ interface UserApi {
 
     @GET("user/checknickname/{userNickname}")
     fun checkNickname(@Path("userNickname") @NotNull nickname: String): Observable<BaseResponse<Any>>
+
+    @FormUrlEncoded
+    @POST("user/login")
+    fun login(@FieldMap req: MutableMap<String, String>): Observable<BaseResponse<String>>
 }

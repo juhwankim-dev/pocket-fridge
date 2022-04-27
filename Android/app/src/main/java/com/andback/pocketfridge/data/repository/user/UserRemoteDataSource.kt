@@ -12,4 +12,5 @@ interface UserRemoteDataSource {
     fun sendEmail(@Path("userEmail") @NotNull email: String): Observable<BaseResponse<String>>
     fun checkEmail(@Path("userEmail") @NotNull email: String): Observable<BaseResponse<Any>>
     fun checkNickname(@Path("userNickname") @NotNull nickname: String): Observable<BaseResponse<Any>>
+    fun login(@FieldMap req: MutableMap<String, String>): Observable<BaseResponse<String>>
 }

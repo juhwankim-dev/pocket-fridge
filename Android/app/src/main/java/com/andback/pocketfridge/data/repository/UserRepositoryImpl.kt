@@ -25,4 +25,8 @@ class UserRepositoryImpl @Inject constructor(
     override fun checkNickname(nickname: String): Observable<BaseResponse<Any>> {
         return userRemoteDataSource.checkNickname(nickname)
     }
+
+    override fun login(req: MutableMap<String, String>): Observable<BaseResponse<String>> {
+        return userRemoteDataSource.login(req)
+    }
 }

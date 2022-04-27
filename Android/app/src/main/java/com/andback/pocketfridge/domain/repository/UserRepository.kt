@@ -8,4 +8,5 @@ interface UserRepository {
     fun sendEmail(email: String): Observable<BaseResponse<String>>
     fun checkEmail(email: String): Observable<BaseResponse<Any>>
     fun checkNickname(nickname: String): Observable<BaseResponse<Any>>
+    fun login(req: MutableMap<String, String>): Observable<BaseResponse<String>>
 }
