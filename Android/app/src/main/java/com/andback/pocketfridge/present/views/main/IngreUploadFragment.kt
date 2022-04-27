@@ -83,6 +83,10 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
                     clearStorageTextView()
                     setBrandColorOnText(it)
                 }
+
+                ingreCategory.observe(owner) {
+                    binding.tvIngreUploadFCategory.text = it
+                }
             }
         }
 

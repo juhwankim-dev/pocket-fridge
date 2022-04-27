@@ -1,9 +1,13 @@
 package com.andback.pocketfridge.present.views.main
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.andback.pocketfridge.data.model.MainCategoryEntity
+import com.andback.pocketfridge.data.model.SubCategoryEntity
 import com.andback.pocketfridge.domain.model.Ingredient
+import com.andback.pocketfridge.domain.usecase.category.GetCategoryUseCase
 import com.andback.pocketfridge.domain.usecase.ingredient.UploadIngreUseCase
 import com.andback.pocketfridge.present.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,17 +20,26 @@ import javax.inject.Inject
 
 @HiltViewModel
 class IngreUploadViewModel @Inject constructor(
-    private val uploadIngreUseCase: UploadIngreUseCase
+    private val uploadIngreUseCase: UploadIngreUseCase,
+    private val getCategoryUseCase: GetCategoryUseCase
 ): ViewModel() {
     private val compositeDisposable = CompositeDisposable()
     val ingreName = MutableLiveData<String>("")
     val ingreDatePurchased = MutableLiveData<String>("")
     val ingreDateExpiry = MutableLiveData<String>("")
-
-    // TODO: 카테고리 테이블 완성 후 추가
-//    private val ingreCategory = MutableLiveData<String>("")
+    val ingreCategory = MutableLiveData<String>("")
     val ingreStorage = MutableLiveData<Storage>(Storage.Fridge)
     val ingreFridgeId = MutableLiveData<Int>(-1)
+
+    //카테고리 livedata
+    private val _mainCategory = MutableLiveData<List<MainCategoryEntity>>()
+    val mainCategory: LiveData<List<MainCategoryEntity>>
+        get() = _mainCategory
+
+    private val _subCategory = MutableLiveData<List<SubCategoryEntity>>()
+    val subCategory: LiveData<List<SubCategoryEntity>>
+        get() = _subCategory
+
 
     // 에러 라이브 데이터
     private val _isNameError = MutableLiveData(false)
@@ -57,7 +70,39 @@ class IngreUploadViewModel @Inject constructor(
     val isServerError: LiveData<Boolean>
         get() = _isServerError
 
-    // TODO: 보유 냉장고 목록 반환 usecase로 냉장고 정보 얻기 
+    // TODO: 보유 냉장고 목록 반환 usecase로 냉장고 정보 얻기
+    //
+    init {
+        getCategoryUseCase.getAllCategories()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    if(!it.data.isNullOrEmpty()) {
+                        when {
+                            it.data[0] is MainCategoryEntity -> {
+                                _mainCategory.value = it.data as List<MainCategoryEntity>
+                            }
+                            it.data[0] is SubCategoryEntity -> {
+                                _subCategory.value = it.data as List<SubCategoryEntity>
+                            }
+                            else -> {
+                                // TODO: error 처리
+                            }
+                        }
+                    }
+                },
+                {
+                    // TODO: 카테고리 에러 처리
+                },
+                {
+                    // TODO: complete 처리
+                },
+                {
+                    // TODO: onSubscribe 처리
+                }
+            )
+    }
 
     fun onUploadBtnClick() {
         compositeDisposable.add(
@@ -124,9 +169,9 @@ class IngreUploadViewModel @Inject constructor(
     }
 
     private fun getIngredientFromInput(): Ingredient {
-        // TODO: 카테고리 테이블 완성 후 값 변경
         // TODO: 수량 data가 필요해지면 추가
-        return Ingredient(quantity = 1, category = "temp", name = ingreName.value?: "", purchasedDate = ingreDatePurchased.value.toString(), expiryDate = ingreDateExpiry.value.toString(), fridgeId = ingreFridgeId.value?: -1, storage = ingreStorage.value?:Storage.Fridge)
+        // TODO: mapper 필요
+        return Ingredient(quantity = 1, category = ingreCategory.value?: "", name = ingreName.value?: "", purchasedDate = ingreDatePurchased.value.toString(), expiryDate = ingreDateExpiry.value.toString(), fridgeId = ingreFridgeId.value?: -1, storage = ingreStorage.value?:Storage.Fridge)
     }
 
     fun setFridge() {
@@ -141,6 +186,8 @@ class IngreUploadViewModel @Inject constructor(
         ingreStorage.value = Storage.Room
     }
 
+
+
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.clear()
@@ -152,6 +199,7 @@ class IngreUploadViewModel @Inject constructor(
         ingreDatePurchased.value = ""
         ingreDateExpiry.value = ""
         ingreStorage.value = Storage.Fridge
+        ingreCategory.value = ""
         ingreFridgeId.value = -1
     }
 }
