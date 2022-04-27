@@ -7,11 +7,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.DatePicker
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import com.andback.pocketfridge.R
+import com.andback.pocketfridge.data.model.FridgeEntity
 import com.andback.pocketfridge.databinding.FragmentIngreUploadBinding
 import com.andback.pocketfridge.present.config.BaseFragment
 import com.andback.pocketfridge.present.utils.DateConverter
@@ -24,6 +28,7 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
         private const val TAG = "IngreUploadFragment_debuk"
     }
     private val viewModel: IngreUploadViewModel by activityViewModels()
+    private val fridgeViewModel: FridgeViewModel by activityViewModels()
     // TODO: 냉장고 목록 요청
     // TODO: 냉장고 드롭박스 어댑터
     // TODO: app bar navbtn, action 세팅
@@ -40,7 +45,6 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
         setObserver()
         setExpiryDateIcon()
         setPurchasedDateIcon()
-        setDropDownAdapter()
         setToolbarButton()
     }
 
@@ -78,6 +82,14 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
                 ingreStorage.observe(owner) {
                     clearStorageTextView()
                     setBrandColorOnText(it)
+                }
+            }
+        }
+
+        with(fridgeViewModel) {
+            binding.lifecycleOwner?.let { owner ->
+                fridges.observe(owner) {
+                    setDropDownAdapter(it)
                 }
             }
         }
@@ -124,8 +136,20 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
         datePickerFragment.show(childFragmentManager, "datePicker")
     }
 
-    private fun setDropDownAdapter() {
-        // TODO: 냉장고 정보 받아와서 어댑터 세팅 
+    private fun setDropDownAdapter(list: List<FridgeEntity>) {
+        val stringList = list.map { it.refrigeratorName }
+        val adapter = ArrayAdapter(requireContext(), R.layout.item_fridge_list, stringList)
+        (binding.tvIngreUploadFSelectFridge as? AutoCompleteTextView)?.let { tv ->
+            tv.addTextChangedListener { text ->
+                val fridge = list.find { it.refrigeratorName == text.toString() }
+                Log.d(TAG, "setDropDownAdapter: $fridge")
+                // 냉장고 이름으로 FridgeEntity 찾아서 viewmodel에 update
+                viewModel.ingreFridgeId.value = fridge?.refrigeratorId
+            }
+            tv.setAdapter(adapter)
+            // 기본값으로 첫번째 FridgeEntity 세팅
+            tv.setText(stringList[0])
+        }
     }
 
     private fun setToolbarButton() {
