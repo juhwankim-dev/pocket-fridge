@@ -56,6 +56,7 @@
             app:boxCornerRadiusTopStart="@dimen/et_radius">
 
             <AutoCompleteTextView
+                android:id="@+id/tv_ingre_uploadF_select_fridge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"/>

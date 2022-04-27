@@ -33,7 +33,7 @@ class FridgeViewModel @Inject constructor(
     }
 
     fun getFridges() {
-        if(isLoading.value!!) {
+        if(!isLoading.value!!) {
             compositeDisposable.add(
                 getFridgesUseCase.excute(getEmail())
                     .subscribeOn(Schedulers.io())
