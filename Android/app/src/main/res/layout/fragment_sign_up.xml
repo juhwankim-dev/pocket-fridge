@@ -7,7 +7,7 @@
         <import type="android.view.View"/>
         <variable
             name="vm"
-            type="com.andback.pocketfridge.present.views.user.signup.SignViewModel" />
+            type="com.andback.pocketfridge.present.views.user.signup.SignUpViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,7 +16,7 @@
         tools:context=".present.views.user.signup.EmailAuthFragment">
 
         <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/al_step_oneF"
+            android:id="@+id/al_sign_upF"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +36,7 @@
             android:layout_height="0dp"
             android:overScrollMode="never"
             app:layout_constraintBottom_toTopOf="@+id/btn_sign_upF_signup"
-            app:layout_constraintTop_toBottomOf="@+id/al_step_oneF">
+            app:layout_constraintTop_toBottomOf="@+id/al_sign_upF">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -148,7 +148,7 @@
             style="@style/button_text"
             android:layout_width="match_parent"
             android:layout_margin="@dimen/activity_margin_default"
-            android:background="@drawable/bg_ellipse_colored_32"
+            android:background="@drawable/bg_ellipse_filled_main_color_32"
             android:text="회원가입"
             android:textColor="@color/white"
             android:onClick="@{()->vm.onSignUpClick()}"
