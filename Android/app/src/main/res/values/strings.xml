@@ -20,6 +20,7 @@
     <string name="error_msg_ingre_date_purchased">구매일은 오늘 포함 과거의 날짜로 입력해 주세요</string>
 
     <string name="sign_up">회원가입</string>
+    <string name="login">로그인</string>
 
     <!-- Error Messages -->
     <string name="name_empty_error">"이름은 필수 입력 값입니다."</string>
