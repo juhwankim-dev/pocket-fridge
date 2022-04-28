@@ -12,6 +12,7 @@
     <dimen name="modal_text_size">16sp</dimen>
     <dimen name="list_item_text_size">16sp</dimen>
     <dimen name="menu_title_text_size">14sp</dimen>
+    <dimen name="menu_title_18_size">18sp</dimen>
     <dimen name="secondary_text_size">14sp</dimen>
     <dimen name="tab_text_size">14sp</dimen>
     <dimen name="button_text_size">14sp</dimen>

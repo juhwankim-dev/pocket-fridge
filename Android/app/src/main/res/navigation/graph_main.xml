@@ -17,7 +17,7 @@
         tools:layout="@layout/fragment_ingre_upload"/>
     <fragment
         android:id="@+id/recipeFragment"
-        android:name="com.andback.pocketfridge.present.views.main.RecipeFragment"
+        android:name="com.andback.pocketfridge.present.views.main.recipe.RecipeFragment"
         android:label="RecipeFragment"
         tools:layout="@layout/fragment_recipe"/>
 </navigation>

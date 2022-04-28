@@ -70,6 +70,16 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
+    <style name="menu_text_18">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/menu_title_18_size</item>
+        <item name="android:textColor">@color/black_high_emphasis</item>
+        <item name="android:fontFamily">@font/noto_sans_regular</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
     <!-- toolbar style -->
     <style name="ThemeOverlay.App.Toolbar" parent="">
         <item name="colorPrimary">@color/white</item>
