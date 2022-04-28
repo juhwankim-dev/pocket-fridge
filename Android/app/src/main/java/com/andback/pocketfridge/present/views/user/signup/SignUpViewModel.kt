@@ -86,6 +86,8 @@ class SignUpViewModel @Inject constructor (
     }
 
     private fun sendEmail(email: String) {
+        _isShowLoading.value = true
+
         compositeDisposable.add(
             getSendEmailUseCase.execute(email)
                 .subscribeOn(Schedulers.io())
@@ -95,6 +97,7 @@ class SignUpViewModel @Inject constructor (
                         when(it.status) {
                             200 -> {
                                 isSentEmail.value = true
+                                _isShowLoading.value = true
                                 sentEmailAuthNumber = it.data!!
                             }
                             else -> {
@@ -106,12 +109,6 @@ class SignUpViewModel @Inject constructor (
                         showError(it)
                         _isShowLoading.value = false
                     },
-                    {
-                        _isShowLoading.value = false
-                    },
-                    {
-                        _isShowLoading.value = true
-                    }
                 )
         )
     }
@@ -135,6 +132,8 @@ class SignUpViewModel @Inject constructor (
     }
 
     private fun signUp(req: MutableMap<String, String>) {
+        _isShowLoading.value = true
+
         compositeDisposable.add(
             getSignUpUseCase.execute(req)
                 .subscribeOn(Schedulers.io())
@@ -142,18 +141,13 @@ class SignUpViewModel @Inject constructor (
                 .subscribe(
                     {
                         _toastMsg.value = it.message
+                        _isShowLoading.value = false
+                        pageNumber.value = PageSet.LOGIN
                     },
                     {
                         _isShowLoading.value = false
                         showError(it)
                     },
-                    {
-                        _isShowLoading.value = false
-                        pageNumber.value = PageSet.LOGIN
-                    },
-                    {
-                        _isShowLoading.value = true
-                    }
                 )
         )
     }
