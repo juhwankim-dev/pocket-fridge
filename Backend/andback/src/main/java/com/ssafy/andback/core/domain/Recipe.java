@@ -14,12 +14,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "recipe")
 @NoArgsConstructor
 @Getter
-public class RecipeBasic {
+public class Recipe {
 
     // 레시피 아이디
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,6 +49,6 @@ public class RecipeBasic {
     private RecipeType recipeType;
 
     // 레시피 재료
-//    @OneToMany(mappedBy = "recipe")
-//    private List<RecipeIngredient> recipeIngredientList = new ArrayList<RecipeIngredient>();
+    @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY)
+    private List<RecipeIngredient> recipeIngredientList = new ArrayList<RecipeIngredient>();
 }
