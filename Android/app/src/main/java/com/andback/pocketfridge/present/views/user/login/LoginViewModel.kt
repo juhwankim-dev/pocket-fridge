@@ -35,6 +35,8 @@ class LoginViewModel @Inject constructor(
     val toastMsg: LiveData<String> get() = _toastMsg
 
     private fun login(req: MutableMap<String, String>) {
+        _isShowLoading.value = true
+
         compositeDisposable.add(
             getLoginUseCase.execute(req)
                 .subscribeOn(Schedulers.io())
@@ -42,18 +44,13 @@ class LoginViewModel @Inject constructor(
                 .subscribe(
                     {
                         _toastMsg.value = it.message
+                        _isShowLoading.value = false
+                        pageNumber.value = PageSet.MAIN
                     },
                     {
                         _isShowLoading.value = false
                         showError(it)
                     },
-                    {
-                        _isShowLoading.value = false
-                        pageNumber.value = PageSet.MAIN
-                    },
-                    {
-                        _isShowLoading.value = true
-                    }
                 )
         )
     }
