@@ -28,6 +28,7 @@
             app:boxCornerRadiusTopStart="@dimen/et_radius">
 
             <AutoCompleteTextView
+                android:id="@+id/tv_category_selectF_main_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"/>
