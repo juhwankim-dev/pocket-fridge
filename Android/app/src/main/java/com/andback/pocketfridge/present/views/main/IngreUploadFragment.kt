@@ -83,6 +83,15 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
                     clearStorageTextView()
                     setBrandColorOnText(it)
                 }
+
+                ingreCategory.observe(owner) {
+                    binding.tvIngreUploadFCategory.text = it
+                }
+
+                // 서브카테고리 리스트가 있으면 첫 값을 기본으로 세팅
+                subCategory.observe(owner) {
+                    ingreCategory.value = it[0].subCategoryName
+                }
             }
         }
 
