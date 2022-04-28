@@ -42,12 +42,9 @@ class IngreUploadViewModel @Inject constructor(
     val selectedSubCategory: LiveData<SubCategoryEntity> get() = _selectedSubCategory
     private val _selectedSubCategories = MutableLiveData<List<SubCategoryEntity>>()
     val selectedSubCategories: LiveData<List<SubCategoryEntity>> get() = _selectedSubCategories
-    private val _name = MutableLiveData<String>()
-    val name: LiveData<String> get() = _name
-    private val _datePurchased = MutableLiveData<String>()
-    val ingreDatePurchased: LiveData<String> get() = _datePurchased
-    private val _dateExpiry = MutableLiveData<String>()
-    val ingreDateExpiry: LiveData<String> get() = _dateExpiry
+    val name = MutableLiveData<String>()
+    val datePurchased = MutableLiveData<String>()
+    val dateExpiry = MutableLiveData<String>()
     // endregion
 
     // region 카테고리 리스트 라이브 데이터
@@ -194,7 +191,7 @@ class IngreUploadViewModel @Inject constructor(
     private fun getIngredientFromInput(): Ingredient {
         // TODO: 수량 data가 필요해지면 추가
         // TODO: mapper 필요
-        return Ingredient(quantity = 1, category = selectedSubCategory.value?.subCategoryId?: -1, name = name.value?: "", purchasedDate = ingreDatePurchased.value.toString(), expiryDate = ingreDateExpiry.value.toString(), fridgeId = selectedFridge.value?.refrigeratorId?: -1, storage = selectedStorage.value?:Storage.Fridge)
+        return Ingredient(quantity = 1, category = selectedSubCategory.value?.subCategoryId?: -1, name = name.value?: "", purchasedDate = datePurchased.value.toString(), expiryDate = dateExpiry.value.toString(), fridgeId = selectedFridge.value?.refrigeratorId?: -1, storage = selectedStorage.value?:Storage.Fridge)
     }
 
     fun setFridge() {
@@ -209,10 +206,14 @@ class IngreUploadViewModel @Inject constructor(
         _selectedStorage.value = Storage.Room
     }
 
+    fun setFridge(fridge: FridgeEntity) {
+        _selectedFridge.value = fridge
+    }
+
     private fun setDefaultData() {
-        _name.value = ""
-        _datePurchased.value = ""
-        _dateExpiry.value = ""
+        name.value = ""
+        datePurchased.value = ""
+        dateExpiry.value = ""
         _selectedStorage.value = Storage.Fridge
         _selectedFridge.value = getDefaultFridge()
         _selectedMainCategory.value = getDefaultMainCategory()
@@ -237,6 +238,17 @@ class IngreUploadViewModel @Inject constructor(
         return if(!subCategories.value.isNullOrEmpty() && selectedMainCategory.value != null) {
             _selectedSubCategories.value = subCategories.value!!.filter { it.mainCategoryId == selectedMainCategory.value!!.mainCategoryId }
             _selectedSubCategories.value!![0]
+        } else {
+            null
+        }
+    }
+
+    /**
+     * 디폴트 냉장고는 냉장고 리스트의 첫 번째 값
+     */
+    private fun getDefaultFridge(): FridgeEntity? {
+        return if(!fridges.value.isNullOrEmpty()) {
+            fridges.value!![0]
         } else {
             null
         }
