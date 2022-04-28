@@ -77,7 +77,15 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
                 }
 
                 selectedSubCategory.observe(owner) {
-                    binding.tvIngreUploadFCategory.text = it.subCategoryName
+                    it?.let {
+                        binding.tvIngreUploadFCategory.text = it.subCategoryName    
+                    }
+                }
+                
+                selectedMainCategory.observe(owner) {
+                    it?.let {
+                        // TODO: 이미지 반영 
+                    }
                 }
 
 //                // 서브카테고리 리스트가 있으면 첫 값을 기본으로 세팅
