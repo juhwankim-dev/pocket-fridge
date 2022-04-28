@@ -46,6 +46,7 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
         setExpiryDateIcon()
         setPurchasedDateIcon()
         setToolbarButton()
+        setCategoryClickListener()
     }
 
     override fun onStop() {
@@ -145,6 +146,11 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
         datePickerFragment.show(childFragmentManager, "datePicker")
     }
 
+    private fun showCategoryPicker() {
+        val categorySelectFragment = CategorySelectFragment()
+        categorySelectFragment.show(childFragmentManager, "categoryPicker")
+    }
+
     private fun setDropDownAdapter(list: List<FridgeEntity>) {
         val stringList = list.map { it.refrigeratorName }
         val adapter = ArrayAdapter(requireContext(), R.layout.item_fridge_list, stringList)
@@ -174,6 +180,15 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
                 }
                 else -> false
             }
+        }
+    }
+
+    private fun setCategoryClickListener() {
+        binding.tvIngreUploadFCategory.setOnClickListener {
+            showCategoryPicker()
+        }
+        binding.ivIngreUploadF.setOnClickListener {
+            showCategoryPicker()
         }
     }
 }
