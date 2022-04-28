@@ -8,6 +8,7 @@ import com.andback.pocketfridge.data.model.MainCategoryEntity
 import com.andback.pocketfridge.data.model.SubCategoryEntity
 import com.andback.pocketfridge.domain.model.Ingredient
 import com.andback.pocketfridge.domain.usecase.category.GetCategoryUseCase
+import com.andback.pocketfridge.domain.usecase.fridge.GetFridgesUseCase
 import com.andback.pocketfridge.domain.usecase.ingredient.UploadIngreUseCase
 import com.andback.pocketfridge.present.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,9 +22,13 @@ import javax.inject.Inject
 @HiltViewModel
 class IngreUploadViewModel @Inject constructor(
     private val uploadIngreUseCase: UploadIngreUseCase,
-    private val getCategoryUseCase: GetCategoryUseCase
+    private val getCategoryUseCase: GetCategoryUseCase,
+    private val getFridgesUseCase: GetFridgesUseCase
 ): ViewModel() {
     private val compositeDisposable = CompositeDisposable()
+
+    private val _isLoading = MutableLiveData(false)
+    val isLoading: LiveData<Boolean> get() = _isLoading
 
     // region view 상태
     // 데이터를 바탕으로 업로드할 식재료 객체 생성
@@ -43,17 +48,19 @@ class IngreUploadViewModel @Inject constructor(
     val ingreDatePurchased: LiveData<String> get() = _datePurchased
     private val _dateExpiry = MutableLiveData<String>()
     val ingreDateExpiry: LiveData<String> get() = _dateExpiry
-
     // endregion
 
     // region 카테고리 리스트 라이브 데이터
     private val _mainCategories = MutableLiveData<List<MainCategoryEntity>>()
-    val mainCategories: LiveData<List<MainCategoryEntity>>
-        get() = _mainCategories
+    val mainCategories: LiveData<List<MainCategoryEntity>> get() = _mainCategories
 
     private val _subCategories = MutableLiveData<List<SubCategoryEntity>>()
-    val subCategories: LiveData<List<SubCategoryEntity>>
-        get() = _subCategories
+    val subCategories: LiveData<List<SubCategoryEntity>> get() = _subCategories
+    // endregion
+
+    // region 냉장고 리스트 라이브 데이터
+    private val _fridges = MutableLiveData<List<FridgeEntity>>()
+    val fridges: LiveData<List<FridgeEntity>> get() = _fridges
     // endregion
 
     // region 에러 라이브 데이터
@@ -117,6 +124,7 @@ class IngreUploadViewModel @Inject constructor(
                     // TODO: onSubscribe 처리
                 }
             )
+        getFridges()
     }
 
     fun onUploadBtnClick() {
@@ -233,6 +241,37 @@ class IngreUploadViewModel @Inject constructor(
             null
         }
     }
+
+    fun getFridges() {
+        if(!isLoading.value!!) {
+            compositeDisposable.add(
+                getFridgesUseCase.excute(getEmail())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
+                            it.data?.let { list ->
+                                _fridges.value = list
+                            }
+                            _isLoading.value = false
+                        },
+                        {
+                            _isLoading.value = false
+                            // TODO: 냉장고 리스트 fail ui 처리
+                        },
+                        {
+                            _isLoading.value = false
+                        },
+                        {
+                            _isLoading.value = true
+                        }
+                    )
+            )
+        }
+    }
+
+    // TODO: 회원정보 가져오는 usecase 생성 후 처리
+    fun getEmail(): String = "ms001118@gmail.com"
 
     override fun onCleared() {
         super.onCleared()
