@@ -22,11 +22,11 @@ public class RecipeIngredient {
 
     // 레시피 재료 아이디
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "recipe_ingredient_id")
+    @Column(name = "recipe_ingredient_id", nullable = false)
     private Long recipeIngredientId;
 
     // 레시피 재료 이름
-    @Column(name = "recipe_ingredient_name")
+    @Column(name = "recipe_ingredient_name", nullable = false)
     private String recipeIngredientName;
 
     // 레시피 아이디 (레시피 1 : 레시피 재료 N)
