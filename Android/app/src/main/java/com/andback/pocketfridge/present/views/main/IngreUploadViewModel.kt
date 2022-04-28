@@ -3,7 +3,6 @@ package com.andback.pocketfridge.present.views.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.map
 import com.andback.pocketfridge.data.model.FridgeEntity
 import com.andback.pocketfridge.data.model.MainCategoryEntity
 import com.andback.pocketfridge.data.model.SubCategoryEntity
@@ -26,12 +25,6 @@ class IngreUploadViewModel @Inject constructor(
 ): ViewModel() {
     private val compositeDisposable = CompositeDisposable()
 
-    // region 식재료 라이브 데이터
-    val ingreCategory = MutableLiveData<String>("")
-    val ingreStorage = MutableLiveData<Storage>(Storage.Fridge)
-    val ingreFridgeId = MutableLiveData<Int>(-1)
-    // endregion
-
     // region view 상태
     // 데이터를 바탕으로 업로드할 식재료 객체 생성
     private val _selectedFridge = MutableLiveData<FridgeEntity>()
@@ -40,27 +33,27 @@ class IngreUploadViewModel @Inject constructor(
     val selectedStorage: LiveData<Storage> get() = _selectedStorage
     private val _selectedMainCategory = MutableLiveData<MainCategoryEntity>()
     val selectedMainCategory: LiveData<MainCategoryEntity> get() = _selectedMainCategory
-    private val _subCategoriesByMain = MutableLiveData<List<SubCategoryEntity>>()
-    val subCategoriesByMain: LiveData<List<SubCategoryEntity>> get() = _subCategoriesByMain
-    private val _ingreName = MutableLiveData<String>()
-    val ingreName: LiveData<String> get() = _ingreName
-    private val _ingreDatePurchased = MutableLiveData<String>()
-    val ingreDatePurchased: LiveData<String> get() = _ingreDatePurchased
-    private val _ingreDateExpiry = MutableLiveData<String>()
-    val ingreDateExpiry: LiveData<String> get() = _ingreDateExpiry
+    private val _selectedSubCategory = MutableLiveData<SubCategoryEntity>()
+    val selectedSubCategory: LiveData<SubCategoryEntity> get() = _selectedSubCategory
+    private val _selectedSubCategories = MutableLiveData<List<SubCategoryEntity>>()
+    val selectedSubCategories: LiveData<List<SubCategoryEntity>> get() = _selectedSubCategories
+    private val _name = MutableLiveData<String>()
+    val name: LiveData<String> get() = _name
+    private val _datePurchased = MutableLiveData<String>()
+    val ingreDatePurchased: LiveData<String> get() = _datePurchased
+    private val _dateExpiry = MutableLiveData<String>()
+    val ingreDateExpiry: LiveData<String> get() = _dateExpiry
+
     // endregion
 
-    // region 카테고리 라이브 데이터
-    private val _mainCategory = MutableLiveData<List<MainCategoryEntity>>()
+    // region 카테고리 리스트 라이브 데이터
+    private val _mainCategories = MutableLiveData<List<MainCategoryEntity>>()
     val mainCategories: LiveData<List<MainCategoryEntity>>
-        get() = _mainCategory
+        get() = _mainCategories
 
     private val _subCategories = MutableLiveData<List<SubCategoryEntity>>()
     val subCategories: LiveData<List<SubCategoryEntity>>
         get() = _subCategories
-
-
-
     // endregion
 
     // region 에러 라이브 데이터
@@ -103,7 +96,7 @@ class IngreUploadViewModel @Inject constructor(
                     if(!it.data.isNullOrEmpty()) {
                         when {
                             it.data[0] is MainCategoryEntity -> {
-                                _mainCategory.value = it.data as List<MainCategoryEntity>
+                                _mainCategories.value = it.data as List<MainCategoryEntity>
                             }
                             it.data[0] is SubCategoryEntity -> {
                                 _subCategories.value = it.data as List<SubCategoryEntity>
@@ -193,35 +186,35 @@ class IngreUploadViewModel @Inject constructor(
     private fun getIngredientFromInput(): Ingredient {
         // TODO: 수량 data가 필요해지면 추가
         // TODO: mapper 필요
-        return Ingredient(quantity = 1, category = ingreCategory.value?: "", name = ingreName.value?: "", purchasedDate = ingreDatePurchased.value.toString(), expiryDate = ingreDateExpiry.value.toString(), fridgeId = ingreFridgeId.value?: -1, storage = ingreStorage.value?:Storage.Fridge)
+        return Ingredient(quantity = 1, category = selectedSubCategory.value?.subCategoryId?: -1, name = name.value?: "", purchasedDate = ingreDatePurchased.value.toString(), expiryDate = ingreDateExpiry.value.toString(), fridgeId = selectedFridge.value?.refrigeratorId?: -1, storage = selectedStorage.value?:Storage.Fridge)
     }
 
     fun setFridge() {
-        ingreStorage.value = Storage.Fridge
+        _selectedStorage.value = Storage.Fridge
     }
 
     fun setFreeze() {
-        ingreStorage.value = Storage.Freeze
+        _selectedStorage.value = Storage.Freeze
     }
 
     fun setRoom() {
-        ingreStorage.value = Storage.Room
+        _selectedStorage.value = Storage.Room
     }
 
     private fun setDefaultData() {
-        ingreName.value = ""
-        ingreDatePurchased.value = ""
-        ingreDateExpiry.value = ""
-        ingreStorage.value = Storage.Fridge
-        ingreFridgeId.value = -1
-        _selectedMainCategory.value = setDefaultMainCategory()
-        ingreCategory.value = setDefaultSubCategory()
+        _name.value = ""
+        _datePurchased.value = ""
+        _dateExpiry.value = ""
+        _selectedStorage.value = Storage.Fridge
+        _selectedFridge.value = getDefaultFridge()
+        _selectedMainCategory.value = getDefaultMainCategory()
+        _selectedSubCategory.value = getDefaultSubCategory()
     }
 
     /**
      * 메인 카테고리의 첫 번째 값이 디폴트
      */
-    private fun setDefaultMainCategory(): MainCategoryEntity? {
+    private fun getDefaultMainCategory(): MainCategoryEntity? {
         return if(!mainCategories.value.isNullOrEmpty()) {
             mainCategories.value!![0]
         } else {
@@ -232,10 +225,10 @@ class IngreUploadViewModel @Inject constructor(
     /**
      * 디폴트 메인 카테고리의 서브 카테고리의 첫 번째 값이 디폴트
      */
-    private fun setDefaultSubCategory(): SubCategoryEntity? {
+    private fun getDefaultSubCategory(): SubCategoryEntity? {
         return if(!subCategories.value.isNullOrEmpty() && selectedMainCategory.value != null) {
-            _subCategoriesByMain.value = subCategories.value!!.filter { it.mainCategoryId == selectedMainCategory.value!!.mainCategoryId }
-            subCategoriesByMain.value!![0]
+            _selectedSubCategories.value = subCategories.value!!.filter { it.mainCategoryId == selectedMainCategory.value!!.mainCategoryId }
+            _selectedSubCategories.value!![0]
         } else {
             null
         }
