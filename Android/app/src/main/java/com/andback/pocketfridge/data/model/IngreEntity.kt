@@ -1,15 +1,18 @@
 package com.andback.pocketfridge.data.model
 
+import com.google.gson.annotations.SerializedName
+
 data class IngreEntityForUpload(
-    val name: String,
-    val expiryDate: String,
-    val purchasedDate: String,
-    val fridgeId: Int,
-    val quantity: Int = 1,
-    val category: String,
-    val storage: String
+    val category: Int,
+    val foodIngredientName: String,
+    val foodIngredientExp: String,
+    val foodIngredientDate: String,
+    val foodIngredientWay : String,
+    val refrigeratorId : Int
 )
 // TODO: SerializedName 설정 필요, fridgeId 타입 체크 필요
+
+
 
 
 // From server code
