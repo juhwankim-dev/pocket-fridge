@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
+import com.andback.pocketfridge.data.model.FridgeEntity
 import com.andback.pocketfridge.data.model.MainCategoryEntity
 import com.andback.pocketfridge.data.model.SubCategoryEntity
 import com.andback.pocketfridge.domain.model.Ingredient
@@ -24,13 +25,29 @@ class IngreUploadViewModel @Inject constructor(
     private val getCategoryUseCase: GetCategoryUseCase
 ): ViewModel() {
     private val compositeDisposable = CompositeDisposable()
+
     // region 식재료 라이브 데이터
-    val ingreName = MutableLiveData<String>("")
-    val ingreDatePurchased = MutableLiveData<String>("")
-    val ingreDateExpiry = MutableLiveData<String>("")
     val ingreCategory = MutableLiveData<String>("")
     val ingreStorage = MutableLiveData<Storage>(Storage.Fridge)
     val ingreFridgeId = MutableLiveData<Int>(-1)
+    // endregion
+
+    // region view 상태
+    // 데이터를 바탕으로 업로드할 식재료 객체 생성
+    private val _selectedFridge = MutableLiveData<FridgeEntity>()
+    val selectedFridge: LiveData<FridgeEntity> get() = _selectedFridge
+    private val _selectedStorage = MutableLiveData<Storage>()
+    val selectedStorage: LiveData<Storage> get() = _selectedStorage
+    private val _selectedMainCategory = MutableLiveData<MainCategoryEntity>()
+    val selectedMainCategory: LiveData<MainCategoryEntity> get() = _selectedMainCategory
+    private val _subCategoriesByMain = MutableLiveData<List<SubCategoryEntity>>()
+    val subCategoriesByMain: LiveData<List<SubCategoryEntity>> get() = _subCategoriesByMain
+    private val _ingreName = MutableLiveData<String>()
+    val ingreName: LiveData<String> get() = _ingreName
+    private val _ingreDatePurchased = MutableLiveData<String>()
+    val ingreDatePurchased: LiveData<String> get() = _ingreDatePurchased
+    private val _ingreDateExpiry = MutableLiveData<String>()
+    val ingreDateExpiry: LiveData<String> get() = _ingreDateExpiry
     // endregion
 
     // region 카테고리 라이브 데이터
@@ -42,13 +59,8 @@ class IngreUploadViewModel @Inject constructor(
     val subCategories: LiveData<List<SubCategoryEntity>>
         get() = _subCategories
 
-    private val _selectedMainCategory = MutableLiveData<MainCategoryEntity>()
-    val selectedMainCategory: LiveData<MainCategoryEntity>
-        get() = _selectedMainCategory
 
-    private val _subCategoriesByMain = MutableLiveData<List<SubCategoryEntity>>()
-    val subCategoriesByMain: LiveData<List<SubCategoryEntity>>
-        get() = _subCategoriesByMain
+
     // endregion
 
     // region 에러 라이브 데이터
