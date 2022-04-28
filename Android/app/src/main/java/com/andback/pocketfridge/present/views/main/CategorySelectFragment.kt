@@ -24,6 +24,24 @@ class CategorySelectFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.vm = viewModel
+        init()
     }
+
+    private fun init() {
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.vm = viewModel
+        setObserver()
+    }
+
+    private fun setObserver() {
+        with(viewModel) {
+            binding.lifecycleOwner?.let { owner ->
+                selectedMainCategory.observe(owner) {
+                    updateSelectedSubCategories()
+                }
+            }
+        }
+    }
+
+
 }
