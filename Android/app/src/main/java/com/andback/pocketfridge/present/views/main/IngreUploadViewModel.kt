@@ -101,9 +101,11 @@ class IngreUploadViewModel @Inject constructor(
                         when {
                             it.data[0] is MainCategoryEntity -> {
                                 _mainCategories.value = it.data as List<MainCategoryEntity>
+                                setDefaultData()
                             }
                             it.data[0] is SubCategoryEntity -> {
                                 _subCategories.value = it.data as List<SubCategoryEntity>
+                                setDefaultData()
                             }
                             else -> {
                                 // TODO: error 처리
@@ -243,6 +245,12 @@ class IngreUploadViewModel @Inject constructor(
         }
     }
 
+    fun updateSelectedSubCategories() {
+        _selectedSubCategories.value = subCategories.value?.filter {
+            it.mainCategoryId == selectedMainCategory.value?.mainCategoryId
+        }
+    }
+
     /**
      * 디폴트 냉장고는 냉장고 리스트의 첫 번째 값
      */
@@ -265,6 +273,7 @@ class IngreUploadViewModel @Inject constructor(
                             it.data?.let { list ->
                                 _fridges.value = list
                             }
+                            setDefaultData()
                             _isLoading.value = false
                         },
                         {
