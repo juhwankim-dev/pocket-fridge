@@ -49,6 +49,6 @@ public class Recipe {
     private RecipeType recipeType;
 
     // 레시피 재료
-    @OneToMany(mappedBy = "recipe")
+    @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY)
     private List<RecipeIngredient> recipeIngredientList = new ArrayList<RecipeIngredient>();
 }
