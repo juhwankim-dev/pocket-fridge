@@ -251,6 +251,14 @@ class IngreUploadViewModel @Inject constructor(
         }
     }
 
+    fun selectSubCategory(value: SubCategoryEntity) {
+        _selectedSubCategory.value = value
+    }
+
+    fun selectMainCategory(value: MainCategoryEntity) {
+        _selectedMainCategory.value = value
+    }
+
     /**
      * 디폴트 냉장고는 냉장고 리스트의 첫 번째 값
      */
