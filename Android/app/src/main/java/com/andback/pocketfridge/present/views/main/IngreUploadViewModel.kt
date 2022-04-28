@@ -206,19 +206,26 @@ class IngreUploadViewModel @Inject constructor(
         ingreCategory.value = setDefaultSubCategory()
     }
 
-    private fun setDefaultMainCategory(): String {
+    /**
+     * 메인 카테고리의 첫 번째 값이 디폴트
+     */
+    private fun setDefaultMainCategory(): MainCategoryEntity? {
         return if(!mainCategories.value.isNullOrEmpty()) {
-            mainCategories.value!![0].mainCategoryName
+            mainCategories.value!![0]
         } else {
-            ""
+            null
         }
     }
 
-    private fun setDefaultSubCategory(): String {
-        return if(!subCategories.value.isNullOrEmpty() && !selectedMainCategory.value.isNullOrEmpty()) {
-            _subCategoriesByMain.value = subCategories.value!!.map { it.mainCategoryId ==  }
+    /**
+     * 디폴트 메인 카테고리의 서브 카테고리의 첫 번째 값이 디폴트
+     */
+    private fun setDefaultSubCategory(): SubCategoryEntity? {
+        return if(!subCategories.value.isNullOrEmpty() && selectedMainCategory.value != null) {
+            _subCategoriesByMain.value = subCategories.value!!.filter { it.mainCategoryId == selectedMainCategory.value!!.mainCategoryId }
+            subCategoriesByMain.value!![0]
         } else {
-            ""
+            null
         }
     }
 
