@@ -1,9 +1,9 @@
 package com.andback.pocketfridge.present.views.main
 
-import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import com.andback.pocketfridge.data.model.MainCategoryEntity
 import com.andback.pocketfridge.data.model.SubCategoryEntity
 import com.andback.pocketfridge.domain.model.Ingredient
@@ -24,24 +24,34 @@ class IngreUploadViewModel @Inject constructor(
     private val getCategoryUseCase: GetCategoryUseCase
 ): ViewModel() {
     private val compositeDisposable = CompositeDisposable()
+    // region 식재료 라이브 데이터
     val ingreName = MutableLiveData<String>("")
     val ingreDatePurchased = MutableLiveData<String>("")
     val ingreDateExpiry = MutableLiveData<String>("")
     val ingreCategory = MutableLiveData<String>("")
     val ingreStorage = MutableLiveData<Storage>(Storage.Fridge)
     val ingreFridgeId = MutableLiveData<Int>(-1)
+    // endregion
 
-    //카테고리 livedata
+    // region 카테고리 라이브 데이터
     private val _mainCategory = MutableLiveData<List<MainCategoryEntity>>()
-    val mainCategory: LiveData<List<MainCategoryEntity>>
+    val mainCategories: LiveData<List<MainCategoryEntity>>
         get() = _mainCategory
 
-    private val _subCategory = MutableLiveData<List<SubCategoryEntity>>()
-    val subCategory: LiveData<List<SubCategoryEntity>>
-        get() = _subCategory
+    private val _subCategories = MutableLiveData<List<SubCategoryEntity>>()
+    val subCategories: LiveData<List<SubCategoryEntity>>
+        get() = _subCategories
 
+    private val _selectedMainCategory = MutableLiveData<MainCategoryEntity>()
+    val selectedMainCategory: LiveData<MainCategoryEntity>
+        get() = _selectedMainCategory
 
-    // 에러 라이브 데이터
+    private val _subCategoriesByMain = MutableLiveData<List<SubCategoryEntity>>()
+    val subCategoriesByMain: LiveData<List<SubCategoryEntity>>
+        get() = _subCategoriesByMain
+    // endregion
+
+    // region 에러 라이브 데이터
     private val _isNameError = MutableLiveData(false)
     val isNameError: LiveData<Boolean>
         get() = _isNameError
@@ -70,8 +80,8 @@ class IngreUploadViewModel @Inject constructor(
     val isServerError: LiveData<Boolean>
         get() = _isServerError
 
-    // TODO: 보유 냉장고 목록 반환 usecase로 냉장고 정보 얻기
-    //
+    // endregion
+
     init {
         getCategoryUseCase.getAllCategories()
             .subscribeOn(Schedulers.io())
@@ -84,7 +94,7 @@ class IngreUploadViewModel @Inject constructor(
                                 _mainCategory.value = it.data as List<MainCategoryEntity>
                             }
                             it.data[0] is SubCategoryEntity -> {
-                                _subCategory.value = it.data as List<SubCategoryEntity>
+                                _subCategories.value = it.data as List<SubCategoryEntity>
                             }
                             else -> {
                                 // TODO: error 처리
@@ -186,7 +196,31 @@ class IngreUploadViewModel @Inject constructor(
         ingreStorage.value = Storage.Room
     }
 
+    private fun setDefaultData() {
+        ingreName.value = ""
+        ingreDatePurchased.value = ""
+        ingreDateExpiry.value = ""
+        ingreStorage.value = Storage.Fridge
+        ingreFridgeId.value = -1
+        _selectedMainCategory.value = setDefaultMainCategory()
+        ingreCategory.value = setDefaultSubCategory()
+    }
 
+    private fun setDefaultMainCategory(): String {
+        return if(!mainCategories.value.isNullOrEmpty()) {
+            mainCategories.value!![0].mainCategoryName
+        } else {
+            ""
+        }
+    }
+
+    private fun setDefaultSubCategory(): String {
+        return if(!subCategories.value.isNullOrEmpty() && !selectedMainCategory.value.isNullOrEmpty()) {
+            _subCategoriesByMain.value = subCategories.value!!.map { it.mainCategoryId ==  }
+        } else {
+            ""
+        }
+    }
 
     override fun onCleared() {
         super.onCleared()
@@ -195,11 +229,6 @@ class IngreUploadViewModel @Inject constructor(
 
     fun clearData() {
         clearError()
-        ingreName.value = ""
-        ingreDatePurchased.value = ""
-        ingreDateExpiry.value = ""
-        ingreStorage.value = Storage.Fridge
-        ingreCategory.value = ""
-        ingreFridgeId.value = -1
+        setDefaultData()
     }
 }
