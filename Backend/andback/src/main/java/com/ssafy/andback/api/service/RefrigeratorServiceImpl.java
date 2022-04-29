@@ -1,7 +1,9 @@
 package com.ssafy.andback.api.service;
 
+import com.ssafy.andback.api.constant.ErrorCode;
 import com.ssafy.andback.api.dto.request.InsertRefrigeratorRequestDto;
 import com.ssafy.andback.api.dto.response.RefrigeratorResponseDto;
+import com.ssafy.andback.api.exception.CustomException;
 import com.ssafy.andback.core.domain.Refrigerator;
 import com.ssafy.andback.core.domain.User;
 import com.ssafy.andback.core.domain.UserRefrigerator;
@@ -39,9 +41,8 @@ public class RefrigeratorServiceImpl implements RefrigeratorService {
     public String insertRefrigerator(InsertRefrigeratorRequestDto reqDto) {
 
         Optional<User> user = userRepository.findByUserEmail(reqDto.getUserEmail());
-        if (!user.isPresent()) {
-            return "fail";
-        }
+        //에러코드 추가
+        user.orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         Refrigerator refrigerator = refrigeratorRepository.save(Refrigerator.builder()
                 .refrigeratorName(reqDto.getRefrigeratorName())
@@ -59,9 +60,9 @@ public class RefrigeratorServiceImpl implements RefrigeratorService {
     public List<RefrigeratorResponseDto> findAllRefrigeratorByUser(String userEmail) {
 
         Optional<User> user = userRepository.findByUserEmail(userEmail);
-        if (!user.isPresent()) {
-            return null;
-        }
+        //에러코드 추가
+        user.orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+
 
         List<Refrigerator> refrigeratorByUser = refrigeratorQueryRepository.findAllRefrigeratorByUser(user.get());
         List<RefrigeratorResponseDto> response = new ArrayList<>();
