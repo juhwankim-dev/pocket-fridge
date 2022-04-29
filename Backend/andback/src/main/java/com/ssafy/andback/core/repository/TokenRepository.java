@@ -2,6 +2,7 @@ package com.ssafy.andback.core.repository;
 
 
 import com.ssafy.andback.core.domain.Token;
+import com.ssafy.andback.core.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -19,6 +20,6 @@ import java.util.Optional;
 
 public interface TokenRepository extends JpaRepository<Token, Long> {
 
-    Optional<List<Token>> findAllByUserId(Long userId);
+    Optional<List<Token>> findAllByUser(User user);
 
 }

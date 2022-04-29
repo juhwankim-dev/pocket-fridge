@@ -38,10 +38,11 @@ public class TokenServiceImpl implements TokenService {
         Optional<User> user = userRepository.findByUserEmail(tokenDto.getUserEmail());
         user.orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
-        Optional<List<Token>> tokenList = tokenRepository.findAllByUserId(user.get().getUserId());
+
+        Optional<List<Token>> tokenList = tokenRepository.findAllByUser(user.get());
 
         for (Token temp : tokenList.get()) {
-            if (temp.getTokenDevice() == tokenDto.getTokenNum()) {
+            if (temp.getTokenDevice().equals(tokenDto.getTokenDeviceNum())) {
                 temp.updateToken(tokenDto.getTokenNum());
                 return "success";
             }
@@ -50,7 +51,7 @@ public class TokenServiceImpl implements TokenService {
         Token token = Token.builder().tokenNum(tokenDto.getTokenNum())
                 .tokenDevice(tokenDto.getTokenDeviceNum())
                 .tokenNum(tokenDto.getTokenNum())
-                .userId(user.get())
+                .user(user.get())
                 .build();
 
 

@@ -6,15 +6,14 @@ import lombok.Builder;
 import lombok.Data;
 
 /**
-*
-* TokenDto
-* 토큰 DTO
-*
-* @author hoony
-* @version 1.0.0
-* 생성일 2022-04-29
-* 마지막 수정일 2022-04-29
-**/
+ * TokenDto
+ * 토큰 DTO
+ *
+ * @author hoony
+ * @version 1.0.0
+ * 생성일 2022-04-29
+ * 마지막 수정일 2022-04-29
+ **/
 
 @Data
 @Builder
@@ -25,7 +24,7 @@ public class TokenDto {
     private String tokenDeviceNum;
 
     @NotNull
-    @ApiParam(value = "유저 이메일", readOnly = true)
+    @ApiParam(value = "유저 이메일", required = true)
     private String userEmail;
 
     @NotNull

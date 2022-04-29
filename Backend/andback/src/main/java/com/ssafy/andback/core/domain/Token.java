@@ -37,16 +37,16 @@ public class Token {
 
     @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User userId;
+    private User user;
 
     public void updateToken(String tokenNum) {
         this.tokenNum = tokenNum;
     }
 
     @Builder
-    public Token(String tokenDevice, String tokenNum, User userId) {
+    public Token(String tokenDevice, String tokenNum, User user) {
         this.tokenDevice = tokenDevice;
         this.tokenNum = tokenNum;
-        this.userId = userId;
+        this.user = user;
     }
 }
