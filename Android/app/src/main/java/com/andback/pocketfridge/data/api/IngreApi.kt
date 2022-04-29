@@ -8,6 +8,6 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface IngreApi {
-    @POST("foodIngredient/insert")
+    @POST("foodingredient")
     fun uploadIngre(@Body ingredient: IngreEntityForUpload): Observable<BaseResponse<Any>>
 }
