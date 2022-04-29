@@ -174,7 +174,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
-                        android:text="@={vm.ingreName}"/>
+                        android:text="@={vm.name}"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -195,7 +195,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
-                        android:text="@={vm.ingreDatePurchased}"/>
+                        android:text="@={vm.datePurchased}"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -216,7 +216,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
-                        android:text="@={vm.ingreDateExpiry}"/>
+                        android:text="@={vm.dateExpiry}"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
