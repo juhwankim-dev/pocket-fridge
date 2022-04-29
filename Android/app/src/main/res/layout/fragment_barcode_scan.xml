@@ -19,6 +19,7 @@
             android:layout_marginBottom="@dimen/activity_margin_wide"
             android:text="@string/help_msg_barcode_scan"
             android:textAlignment="center"
+            android:textAppearance="@style/form_text"
             android:textColor="@color/white" />
 
         <androidx.camera.view.PreviewView
@@ -44,6 +45,7 @@
                 android:paddingTop="@dimen/activity_margin_default"
                 android:paddingBottom="@dimen/activity_margin_default"
                 android:text="@string/cancel"
+                android:textAppearance="@style/button_text_big_white"
                 android:textColor="@color/white"
                 android:textSize="@dimen/button_text_size_big" />
 
@@ -57,6 +59,7 @@
                 android:paddingBottom="@dimen/activity_margin_default"
                 android:text="@string/self_input"
                 android:textAlignment="viewEnd"
+                android:textAppearance="@style/button_text_big_white"
                 android:textColor="@color/white"
                 android:textSize="@dimen/button_text_size_big" />
         </LinearLayout>
