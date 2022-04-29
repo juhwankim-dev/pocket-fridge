@@ -9,11 +9,13 @@
  **/
 package com.ssafy.andback.api.service;
 
+import com.ssafy.andback.api.constant.ErrorCode;
 import com.ssafy.andback.api.dto.request.InsertFoodIngredientRequestDto;
 import com.ssafy.andback.api.dto.request.UpdateFoodIngredientRequestDto;
 import com.ssafy.andback.api.dto.response.FoodIngredientResponseDto;
 import com.ssafy.andback.api.dto.response.MainCategoryResponseDto;
 import com.ssafy.andback.api.dto.response.SubCategoryResponseDto;
+import com.ssafy.andback.api.exception.CustomException;
 import com.ssafy.andback.core.domain.FoodIngredient;
 import com.ssafy.andback.core.domain.MainCategory;
 import com.ssafy.andback.core.domain.Refrigerator;
@@ -84,7 +86,7 @@ public class FoodIngredientServiceImpl implements FoodIngredientService {
         if (foodIngredient.getFoodIngredientName().equals("") || foodIngredient.getFoodIngredientExp().equals("")
                 || foodIngredient.getFoodIngredientDate().equals("") || foodIngredient.getFoodIngredientWay().equals("")
                 || refrigeratorRepository.findByRefrigeratorId(updateFoodIngredientReqDto.getRefrigeratorId()) == null) {
-            return "fail";
+            throw new CustomException(ErrorCode.FAIL_CHANGE_INGREDIENT);
         }
 
         refrigerator = refrigeratorRepository.findByRefrigeratorId(updateFoodIngredientReqDto.getRefrigeratorId());
