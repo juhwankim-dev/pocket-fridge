@@ -31,6 +31,7 @@
                 android:id="@+id/tv_category_selectF_main_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="대분류"
                 android:inputType="none"/>
 
         </com.google.android.material.textfield.TextInputLayout>
