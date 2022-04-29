@@ -47,8 +47,8 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
-        var listItemBinding = ItemRecipeListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return RecipeViewHolder(listItemBinding)
+        var binding = ItemRecipeListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return RecipeViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
