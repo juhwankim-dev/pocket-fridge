@@ -1,13 +1,12 @@
 package com.ssafy.andback.api.controller;
 
 import com.ssafy.andback.api.constant.ErrorCode;
-import com.ssafy.andback.api.dto.TokenDto;
+import com.ssafy.andback.api.dto.request.TokenRequestDto;
 import com.ssafy.andback.api.dto.response.BaseResponseDto;
 import com.ssafy.andback.api.exception.CustomException;
 import com.ssafy.andback.api.service.TokenService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +32,7 @@ public class TokenController {
     private final TokenService tokenService;
 
     @PostMapping()
-    public ResponseEntity<BaseResponseDto> insertToken(TokenDto reqDto) {
+    public ResponseEntity<BaseResponseDto> insertToken(TokenRequestDto reqDto) {
 
         String result = tokenService.insertToken(reqDto);
 

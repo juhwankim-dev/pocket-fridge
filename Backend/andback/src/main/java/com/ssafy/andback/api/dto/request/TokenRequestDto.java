@@ -1,4 +1,4 @@
-package com.ssafy.andback.api.dto;
+package com.ssafy.andback.api.dto.request;
 
 import com.sun.istack.NotNull;
 import io.swagger.annotations.ApiParam;
@@ -17,10 +17,10 @@ import lombok.Data;
 
 @Data
 @Builder
-public class TokenDto {
+public class TokenRequestDto {
 
     @NotNull
-    @ApiParam(value = "토큰 저장 고유 번호", required = true)
+    @ApiParam(value = "디바이스 고유 번호", required = true)
     private String tokenDeviceNum;
 
     @NotNull
@@ -28,7 +28,7 @@ public class TokenDto {
     private String userEmail;
 
     @NotNull
-    @ApiParam(value = "토큰 번호", required = true)
+    @ApiParam(value = "FCM 토큰 번호", required = true)
     private String tokenNum;
 
 }

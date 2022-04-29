@@ -1,7 +1,7 @@
 package com.ssafy.andback.api.service;
 
 import com.ssafy.andback.api.constant.ErrorCode;
-import com.ssafy.andback.api.dto.TokenDto;
+import com.ssafy.andback.api.dto.request.TokenRequestDto;
 import com.ssafy.andback.api.exception.CustomException;
 import com.ssafy.andback.core.domain.Token;
 import com.ssafy.andback.core.domain.User;
@@ -34,7 +34,7 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     @Transactional(readOnly = false)
-    public String insertToken(TokenDto tokenDto) {
+    public String insertToken(TokenRequestDto tokenDto) {
         Optional<User> user = userRepository.findByUserEmail(tokenDto.getUserEmail());
         user.orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 

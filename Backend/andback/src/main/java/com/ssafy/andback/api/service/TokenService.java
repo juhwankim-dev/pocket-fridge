@@ -1,7 +1,7 @@
 package com.ssafy.andback.api.service;
 
 
-import com.ssafy.andback.api.dto.TokenDto;
+import com.ssafy.andback.api.dto.request.TokenRequestDto;
 
 /**
 *
@@ -16,6 +16,6 @@ import com.ssafy.andback.api.dto.TokenDto;
 
 public interface TokenService {
 
-    String insertToken(TokenDto tokenDto);
+    String insertToken(TokenRequestDto tokenDto);
 
 }
