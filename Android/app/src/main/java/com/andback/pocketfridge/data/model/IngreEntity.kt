@@ -10,9 +10,15 @@ data class IngreEntityForUpload(
     val foodIngredientWay : String,
     val refrigeratorId : Int
 )
-// TODO: SerializedName 설정 필요, fridgeId 타입 체크 필요
 
-
+data class IngreEntity(
+    val foodIngredientDate: String,
+    val foodIngredientExp: String,
+    val foodIngredientName: String,
+    val foodIngredientWay: String,
+    val refrigeratorId: Int,
+    val subCategoryId: Int
+)
 
 
 // From server code
