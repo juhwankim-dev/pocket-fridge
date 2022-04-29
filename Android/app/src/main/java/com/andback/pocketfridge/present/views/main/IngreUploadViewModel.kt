@@ -1,5 +1,6 @@
 package com.andback.pocketfridge.present.views.main
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,6 +20,7 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
+private const val TAG = "IngreUploadViewModel_debuk"
 @HiltViewModel
 class IngreUploadViewModel @Inject constructor(
     private val uploadIngreUseCase: UploadIngreUseCase,
@@ -115,6 +117,7 @@ class IngreUploadViewModel @Inject constructor(
                 },
                 {
                     // TODO: 카테고리 에러 처리
+                    Log.d(TAG, "error: ${it.javaClass.canonicalName}")
                 },
                 {
                     // TODO: complete 처리
@@ -138,12 +141,6 @@ class IngreUploadViewModel @Inject constructor(
                     { throwable ->
                         handleException(throwable)
                     },
-                    {
-                        // TODO: hideLoading() 
-                    },
-                    {
-                        // TODO: showLoading() 
-                    }
                 )
         )
     }
@@ -288,12 +285,6 @@ class IngreUploadViewModel @Inject constructor(
                             _isLoading.value = false
                             // TODO: 냉장고 리스트 fail ui 처리
                         },
-                        {
-                            _isLoading.value = false
-                        },
-                        {
-                            _isLoading.value = true
-                        }
                     )
             )
         }
