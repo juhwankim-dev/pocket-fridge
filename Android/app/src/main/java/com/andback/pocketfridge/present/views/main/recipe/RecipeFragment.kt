@@ -1,5 +1,6 @@
 package com.andback.pocketfridge.present.views.main.recipe
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,6 +13,7 @@ import com.andback.pocketfridge.R
 import com.andback.pocketfridge.databinding.FragmentRecipeBinding
 import com.andback.pocketfridge.domain.model.Recipe
 import com.andback.pocketfridge.present.config.BaseFragment
+import com.andback.pocketfridge.present.views.main.recipe.detail.DetailRecipeActivity
 
 class RecipeFragment : BaseFragment<FragmentRecipeBinding>(R.layout.fragment_recipe) {
     lateinit var recipeAdapter: RecipeAdapter
@@ -38,7 +40,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding>(R.layout.fragment_rec
     private fun initEvent() {
         recipeAdapter.setItemClickListener(object : RecipeAdapter.ItemClickListener{
             override fun onClick(recipe: Recipe) {
-                // TODO: 클릭시 레시피 상세 페이지로 이동
+                startActivity(Intent(requireContext(), DetailRecipeActivity::class.java))
             }
         })
     }
