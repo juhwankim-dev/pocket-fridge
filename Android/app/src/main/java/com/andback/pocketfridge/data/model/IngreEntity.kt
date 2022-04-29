@@ -3,7 +3,7 @@ package com.andback.pocketfridge.data.model
 import com.google.gson.annotations.SerializedName
 
 data class IngreEntityForUpload(
-    val category: Int,
+    val subCategoryId: Int,
     val foodIngredientName: String,
     val foodIngredientExp: String,
     val foodIngredientDate: String,
