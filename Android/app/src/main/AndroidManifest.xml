@@ -15,6 +15,9 @@
         android:theme="@style/Theme.PocketFridge"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".present.views.main.recipe.detail.DetailRecipeActivity"
+            android:exported="true"/>
+        <activity
             android:name=".present.views.user.UserActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
@@ -26,8 +29,7 @@
         </activity>
         <activity
             android:name=".present.views.main.MainActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"/>
     </application>
 
 </manifest>
