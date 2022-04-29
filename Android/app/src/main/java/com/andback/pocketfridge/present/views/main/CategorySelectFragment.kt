@@ -1,9 +1,12 @@
 package com.andback.pocketfridge.present.views.main
 
+import android.graphics.Point
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.core.widget.addTextChangedListener
@@ -16,6 +19,8 @@ import com.andback.pocketfridge.databinding.FragmentCategorySelectBinding
 
 class CategorySelectFragment : DialogFragment() {
     private lateinit var binding: FragmentCategorySelectBinding
+
+
     private val viewModel: IngreUploadViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -29,6 +34,15 @@ class CategorySelectFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
+    }
+
+    override fun onResume() {
+        // TODO: 디바이스 크기에 따라 변경
+        val width = 1000
+        val height = 1500
+        dialog?.window?.setLayout(width, height)
+        super.onResume()
+        binding.tvCategorySelectFMainCategory.setSelection(0)
     }
 
     private fun init() {
@@ -60,22 +74,22 @@ class CategorySelectFragment : DialogFragment() {
 
     private fun setDropdownAdapter(list: List<MainCategoryEntity>) {
         val stringList = list.map { it.mainCategoryName }
+        Log.d(TAG, "setDropdownAdapter: ${stringList.size}")
         val adapter = ArrayAdapter(requireContext(), R.layout.item_fridge_list, stringList)
         (binding.tvCategorySelectFMainCategory as? AutoCompleteTextView)?.let { tv ->
-            tv.addTextChangedListener { text ->
-                val mainCategory = list.find { it.mainCategoryName == text.toString() }
-                // 메인 카테고리 이름으로 FridgeEntity 찾아서 viewmodel에 update
+            tv.setAdapter(adapter)
+            // 아이템 클릭 시 mainCategory 업데이트
+            tv.setOnItemClickListener { _, _, i, l ->
+                Log.d(TAG, "setDropdownAdapter: $i, $l")
+                val mainCategory = list.find { it.mainCategoryName == stringList[i] }
                 mainCategory?.let { viewModel.selectMainCategory(it) }
             }
-            tv.setAdapter(adapter)
-            // 기본값으로 첫번째 FridgeEntity 세팅
-            tv.setText(stringList[0])
         }
     }
 
     private fun setRecyclerViewAdapter(list: List<SubCategoryEntity>) {
-
+        Log.d(TAG, "setRecyclerViewAdapter: ${list}")
     }
-
+    private val TAG = "CategorySelectFragment_debuk"
 
 }
