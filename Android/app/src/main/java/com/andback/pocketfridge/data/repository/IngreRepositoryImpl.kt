@@ -8,8 +8,10 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import javax.inject.Inject
 
-class IngreRepositoryImpl @Inject constructor(private val ingreRemoteDataSource: IngreRemoteDataSource): IngreRepository {
-    override fun uploadIngre(ingreEntityForUpload: IngreEntityForUpload): Observable<BaseResponse<Any>> {
+class IngreRepositoryImpl @Inject constructor(
+    private val ingreRemoteDataSource: IngreRemoteDataSource
+): IngreRepository {
+    override fun uploadIngre(ingreEntityForUpload: IngreEntityForUpload): Single<BaseResponse<Any>> {
         return ingreRemoteDataSource.uploadIngre(ingreEntityForUpload)
     }
 }
