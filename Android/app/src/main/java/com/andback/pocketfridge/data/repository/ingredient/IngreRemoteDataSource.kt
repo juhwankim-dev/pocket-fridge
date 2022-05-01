@@ -7,6 +7,6 @@ import io.reactivex.Observable
 import io.reactivex.Single
 
 interface IngreRemoteDataSource {
-    fun uploadIngre(ingreEntityForUpload: IngreEntityForUpload): Observable<BaseResponse<Any>>
+    fun uploadIngre(ingreEntityForUpload: IngreEntityForUpload): Single<BaseResponse<Any>>
     fun getIngreListByFridgeId(fridgeId: Int): Single<BaseResponse<List<IngreEntity>>>
 }

@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 class IngreRepositoryImpl @Inject constructor(private val ingreRemoteDataSource: IngreRemoteDataSource): IngreRepository {
     // TODO: 매퍼 적용 필요 
-    override fun uploadIngre(ingreEntityForUpload: IngreEntityForUpload): Observable<BaseResponse<Any>> {
+    override fun uploadIngre(ingreEntityForUpload: IngreEntityForUpload): Single<BaseResponse<Any>> {
         return ingreRemoteDataSource.uploadIngre(ingreEntityForUpload)
     }
 
