@@ -48,5 +48,6 @@
 
     <!-- Success Messages -->
     <string name="email_auth_success">"이메일 인증이 완료되었습니다."</string>
+    <string name="filter">필터</string>
 
 </resources>
