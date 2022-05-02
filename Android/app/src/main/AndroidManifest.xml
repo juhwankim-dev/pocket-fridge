@@ -19,7 +19,8 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".present.views.main.recipe.detail.DetailRecipeActivity"
-            android:exported="true"/>
+            android:exported="true"
+            android:configChanges="orientation|screenSize"/>
         <activity
             android:name=".present.views.user.UserActivity"
             android:exported="true"
