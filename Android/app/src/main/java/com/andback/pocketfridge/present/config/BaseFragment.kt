@@ -29,6 +29,6 @@ abstract class BaseFragment <B : ViewDataBinding>(@LayoutRes private val layoutR
 
     // 토스트 메시지
     fun showToastMessage(message: String) {
-        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }
