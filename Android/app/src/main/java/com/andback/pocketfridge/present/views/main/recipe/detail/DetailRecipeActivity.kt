@@ -34,22 +34,22 @@ class DetailRecipeActivity : BaseActivity<ActivityDetailRecipeBinding>(R.layout.
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        if(newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+        if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
             binding.flDetailRecipeF.visibility = View.GONE
             binding.ablDetailRecipeF.visibility = View.VISIBLE
             binding.rvDetailRecipe.visibility = View.VISIBLE
-        }else{
+        } else {
             binding.flDetailRecipeF.visibility = View.VISIBLE
             binding.ablDetailRecipeF.visibility = View.GONE
             binding.rvDetailRecipe.visibility = View.GONE
 
             val currentFragment = supportFragmentManager.findFragmentById(R.id.fl_detail_recipeF)
 
-            if(currentFragment == null){
+            if (currentFragment == null) {
                 val fragment = RecipeStepsFragment()
                 supportFragmentManager
                     .beginTransaction()
-                    .add(R.id.fl_detail_recipeF, fragment)
+                    .replace(R.id.fl_detail_recipeF, fragment)
                     .commit()
             }
         }
