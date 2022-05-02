@@ -42,6 +42,12 @@ class IngreRVAdapter: RecyclerView.Adapter<IngreRVAdapter.ViewHolder>() {
 
     override fun getItemCount() = list.size
 
+    fun setItems(list: List<Ingredient>) {
+        this.list.clear()
+        this.list.addAll(list)
+        notifyDataSetChanged()
+    }
+
     interface ItemClickListener {
         fun onClick(data: Ingredient)
     }
