@@ -2,12 +2,18 @@ package com.ssafy.andback.api.controller;
 
 import com.ssafy.andback.api.dto.request.LoginRequestDto;
 import com.ssafy.andback.api.dto.response.SingleResponseDto;
+import com.ssafy.andback.config.jwt.JwtAuthenticationProvider;
+import com.ssafy.andback.core.domain.User;
+import com.ssafy.andback.core.repository.UserRepository;
 import io.swagger.annotations.*;
 import com.ssafy.andback.api.dto.UserDto;
 import com.ssafy.andback.api.dto.response.BaseResponseDto;
 import com.ssafy.andback.api.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
@@ -24,6 +30,7 @@ import javax.validation.Valid;
  * 마지막 수정일 2022-04-25
  **/
 
+@RequiredArgsConstructor
 @Api(value = "유저 API", tags = {"User"})
 @RestController
 @RequestMapping("/user")
@@ -31,6 +38,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @ApiOperation(value = "회원가입", notes = "유저 정보를 받아 DB에 저장한다.")
     @PostMapping
@@ -73,38 +83,47 @@ public class UserController {
 
     @ApiOperation(value = "로그인", notes = "이메일, 비밀번호로 로그인")
     @PostMapping(value = "/login")
-    public ResponseEntity<SingleResponseDto<String>> login(LoginRequestDto loginRequestDto){
+    public ResponseEntity<SingleResponseDto<String>> login(LoginRequestDto loginRequestDto) {
         String result = userService.login(loginRequestDto);
-        if(result.equals("fail")){
+        if (result.equals("fail")) {
             return ResponseEntity.status(401).body(new SingleResponseDto<String>(401, "아이디와 비밀번호를 확인해주세요.", null));
         }
-        return ResponseEntity.ok(new SingleResponseDto<>(200, "로그인 성공", "temp"));
+
+        return ResponseEntity.ok(new SingleResponseDto<>(200, "로그인 성공", result));
     }
 
     @ApiOperation(value = "비밀번호 찾기", notes = "비밀번호 찾기 시 새 비밀번호를 이메일에 전송한다.")
     @PutMapping(value = "/findpassword/{userEmail}")
-    public ResponseEntity<BaseResponseDto> findUserPassword(@PathVariable String userEmail){
+    public ResponseEntity<BaseResponseDto> findUserPassword(@PathVariable String userEmail) {
         String result = userService.findUserPassword(userEmail);
-        if(result.equals("fail")){
+        if (result.equals("fail")) {
             return ResponseEntity.status(401).body(BaseResponseDto.of(401, "이메일을 확인해주세요."));
         }
         return ResponseEntity.ok(BaseResponseDto.of(200, "새 비밀번호 전송 완료"));
     }
 
-//    @ApiOperation(value = "회원 탈퇴", notes = "회원을 탈퇴한다")
-//    @DeleteMapping(value = "/delete")
-//    public ResponseEntity<BaseResponseDto> deleteUser(@ApiIgnore Authentication authentication)
+    @ApiOperation(value = "회원 탈퇴", notes = "userId로 회원정보를 삭제한다.")
+    @Transactional  // org.springframework.dao.InvalidDataAccessApiUsageException 처리
+    // Transaction이 Required 되지 않아서 발생하는 것
+    @DeleteMapping(value = "/delete/{userId}")
+    public ResponseEntity<BaseResponseDto> deleteUserInfo(@PathVariable long userId) {
+        userRepository.deleteUserByUserId(userId);
 
-//    @ApiOperation(value = "회원정보 수정", notes = "유저의 정보를 수정한다.")
+        return ResponseEntity.ok(BaseResponseDto.of(200, "회원 탈퇴 성공"));
+    }
+
+    //    @ApiOperation(value = "회원정보 수정", notes = "유저의 정보를 수정한다.")
 //    @PutMapping("/update")
 //    public ResponseEntity<BaseResponseDto> updateUser(@ApiIgnore Authentication authentication, UserDto userDto){
 //        String result = userService
 //    }
 
+//    @ApiOperation(value = "비밀번호 확인", notes = "회원정보 수정 전 비밀번호 확인을 한다.")
+//    @PostMapping(value = "/checkpw")
+
 //    @ApiOperation(value = "회원정보 조회", notes = "유저의 정보를 조회한다.")
 //    @GetMapping("/info")
-//    public ResponseEntity<BaseResponseDto> getUserInfo(@ApiIgnore Authentication authentication){
-//
-//    }
+//    public ResponseEntity<BaseResponseDto> deleteUser(@ApiIgnore Authentication authentication)
+
 
 }

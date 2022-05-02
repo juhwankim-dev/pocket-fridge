@@ -57,6 +57,9 @@ dependencies {
 	//querydsl 추가
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
 	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
+
+	//jwt (0.9.1 가장 안정된 최신 버전)
+	implementation "io.jsonwebtoken:jjwt:0.9.1"
 }
 
 tasks.named('test') {

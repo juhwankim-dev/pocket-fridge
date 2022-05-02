@@ -30,12 +30,12 @@ public class UserRefrigerator {
     private Long userRefrigeratorId;
 
     // 냉장고(냉장고 1 : 유저 냉장고 N)
-    @ManyToOne(targetEntity = Refrigerator.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Refrigerator.class, fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "refrigerator_id")
     private Refrigerator refrigerator;
 
     // 유저(유저 1 : 유저 냉장고 N)
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "user_id")
     private User user;
 
