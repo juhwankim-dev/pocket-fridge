@@ -28,7 +28,7 @@ import java.util.List;
  * 마지막 수정일 2022-04-25
  **/
 
-@Api(tags = {"냉장고 API"})
+@Api(tags = {"03. 냉장고 API"})
 @RestController()
 @RequestMapping(value = "/refrigerator")
 @RequiredArgsConstructor
