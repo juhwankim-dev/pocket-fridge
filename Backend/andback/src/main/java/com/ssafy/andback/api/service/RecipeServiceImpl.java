@@ -62,7 +62,9 @@ public class RecipeServiceImpl implements RecipeService {
 
         Optional<List<RecipeProcess>> recipeProcessList = recipeProcessRepository.findAllByRecipe(recipe.get());
 
-        recipeProcessList.orElseThrow(() -> new CustomException(ErrorCode.RECIPE_PROCESS_NOT_FOUND));
+        if (recipeProcessList.get().size() == 0) {
+            throw new CustomException(ErrorCode.RECIPE_PROCESS_NOT_FOUND);
+        }
 
         List<RecipeProcessResponseDto> result = new ArrayList<>();
 
