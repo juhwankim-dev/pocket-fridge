@@ -14,6 +14,12 @@ import androidx.core.content.ContextCompat
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.databinding.FragmentBarcodeScanBinding
 import com.andback.pocketfridge.present.config.BaseFragment
+import com.andback.pocketfridge.present.views.main.MainActivity
+import com.google.common.util.concurrent.ListenableFuture
+import com.google.mlkit.vision.barcode.BarcodeScannerOptions
+import com.google.mlkit.vision.barcode.BarcodeScanning
+import com.google.mlkit.vision.barcode.common.Barcode
+import com.google.mlkit.vision.common.InputImage
 import com.gun0912.tedpermission.rx2.TedPermission
 import java.lang.Exception
 import java.util.concurrent.ExecutorService
@@ -36,12 +42,12 @@ class BarcodeScanFragment : BaseFragment<FragmentBarcodeScanBinding>(R.layout.fr
 
     override fun onStart() {
         super.onStart()
-        // TODO 하단 네비 바 숨기기
+        (context as MainActivity).hideBottomNav(true)
     }
 
     override fun onStop() {
         super.onStop()
-        // TODO 하단 네비 바 나타내기
+        (context as MainActivity).hideBottomNav(false)
     }
 
     override fun onDestroy() {
