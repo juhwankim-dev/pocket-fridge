@@ -30,6 +30,8 @@ public enum ErrorCode {
 
     /* 404 NOT_FOUND : resource 를 찾을 수 없음 */
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 정보의 사용자를 찾을 수 없습니다."),
+    RECIPE_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 정보의 레시피를 찾을 수 없습니다."),
+    RECIPE_PROCESS_NOT_FOUND(HttpStatus.NOT_FOUND, "레시피 과정 정보를 찾을 수 없습니다."),
 
     /* 409 : CONFLICT : Resource 의 현재 상태와 충돌. 보통 중복된 데이터 존재 */
     EMAIL_DUPLICATION(HttpStatus.CONFLICT, "이메일이 중복되었습니다"),

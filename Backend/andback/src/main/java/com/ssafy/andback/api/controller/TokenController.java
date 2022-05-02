@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 * 마지막 수정일 2022-04-29
 **/
 
-@Api(tags = {"토큰"})
+@Api(tags = {"05. 토큰"})
 @RestController
 @RequestMapping("/token")
 @RequiredArgsConstructor
