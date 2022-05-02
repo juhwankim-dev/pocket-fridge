@@ -24,4 +24,8 @@
     <!-- edittext radius -->
     <dimen name="et_radius">28dp</dimen>
     <dimen name="ingre_image_size">72dp</dimen>
+
+    <!--image, icon size -->
+    <dimen name="small_icon_size">16dp</dimen>
+    <dimen name="default_icon_size">24dp</dimen>
 </resources>
