@@ -12,7 +12,14 @@
         android:layout_height="match_parent"
         tools:context=".present.views.main.recipe.detail.DetailRecipeActivity">
 
+        <FrameLayout
+            android:id="@+id/fl_detail_recipeF"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
         <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/abl_detail_recipeF"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:fitsSystemWindows="true">
@@ -52,6 +59,5 @@
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         </androidx.recyclerview.widget.RecyclerView>
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
