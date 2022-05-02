@@ -1,9 +1,8 @@
 package com.andback.pocketfridge.present.views.main
 
-import androidx.appcompat.app.AppCompatActivity
+
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
+import android.view.View
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -24,5 +23,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fcv_main) as NavHostFragment
         val navController = navHostFragment.findNavController()
         binding.bnvMain.setupWithNavController(navController)
+
+
+    }
+
+    fun hideBottomNav(status: Boolean) {
+        if (status) binding.bnvMain.visibility = View.GONE
+        else binding.bnvMain.visibility = View.VISIBLE
     }
 }

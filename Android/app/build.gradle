@@ -111,4 +111,7 @@ dependencies {
 
     // Ted Permission
     implementation "io.github.ParkSangGwon:tedpermission-rx2:$ted_version"
+
+    // Barcode Scan
+    implementation "com.google.mlkit:barcode-scanning:$barcode_version"
 }
