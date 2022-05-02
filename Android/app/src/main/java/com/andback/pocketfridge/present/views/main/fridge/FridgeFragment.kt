@@ -3,6 +3,7 @@ package com.andback.pocketfridge.present.views.main.fridge
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.databinding.FragmentFridgeBinding
@@ -11,7 +12,8 @@ import com.andback.pocketfridge.present.config.BaseFragment
 import com.andback.pocketfridge.present.utils.Storage
 
 class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fridge) {
-    lateinit var rvAdapter: IngreRVAdapter
+    private lateinit var rvAdapter: IngreRVAdapter
+    private val viewModel: FridgeViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -20,6 +22,7 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
 
     private fun init() {
         setRecyclerView()
+        setObservers()
     }
 
     private fun setRecyclerView() {
@@ -47,6 +50,16 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
         binding.rvFridgeF.apply {
             adapter = rvAdapter
             layoutManager = GridLayoutManager(requireContext(), 3)
+        }
+    }
+
+    private fun setObservers() {
+        with(viewModel) {
+            binding.lifecycleOwner?.let { owner ->
+                ingreList.observe(owner) {
+                    rvAdapter.setItems(it)
+                }
+            }
         }
     }
     
