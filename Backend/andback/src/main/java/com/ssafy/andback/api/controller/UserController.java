@@ -2,7 +2,11 @@ package com.ssafy.andback.api.controller;
 
 import com.ssafy.andback.api.dto.request.LoginRequestDto;
 import com.ssafy.andback.api.dto.response.SingleResponseDto;
+import com.ssafy.andback.core.domain.Refrigerator;
 import com.ssafy.andback.core.domain.User;
+import com.ssafy.andback.core.domain.UserRefrigerator;
+import com.ssafy.andback.core.repository.RefrigeratorRepository;
+import com.ssafy.andback.core.repository.UserRefrigeratorRepository;
 import com.ssafy.andback.core.repository.UserRepository;
 import io.swagger.annotations.*;
 import com.ssafy.andback.api.dto.UserDto;
@@ -18,6 +22,8 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * UserController
@@ -40,6 +46,12 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserRefrigeratorRepository userRefrigeratorRepository;
+
+    @Autowired
+    private RefrigeratorRepository refrigeratorRepository;
 
     @ApiOperation(value = "회원가입", notes = "유저 정보를 받아 DB에 저장한다.")
     @PostMapping
@@ -109,12 +121,21 @@ public class UserController {
         System.out.println("authentication.getPrincipal() = " + authentication.getPrincipal());
         User user = (User) authentication.getPrincipal();
 
-//        userRepository.deleteUserByUserId(user.getUserId());
+        // 현재 유저의 모든 Refrigerator 삭제
+        List<UserRefrigerator> list;
+        list = userRefrigeratorRepository.findUserRefrigeratorByUser(user);
+        for(UserRefrigerator userRefrigerator : list){
+            refrigeratorRepository.deleteRefrigeratorsByRefrigeratorId(userRefrigerator.getUserRefrigeratorId());
+        }
+        // 현재 유저의 모든 userRefrigerator 삭제
+        userRefrigeratorRepository.deleteUserRefrigeratorByUser(user);
+        // 현재 유저 삭제
+        userRepository.deleteUserByUserId(user.getUserId());
 
         return ResponseEntity.ok(BaseResponseDto.of(200, "회원 탈퇴 성공"));
     }
 
-    //    @ApiOperation(value = "회원정보 수정", notes = "유저의 정보를 수정한다.")
+//    @ApiOperation(value = "회원정보 수정", notes = "유저의 정보를 수정한다.")
 //    @PutMapping("/update")
 //    public ResponseEntity<BaseResponseDto> updateUser(@ApiIgnore Authentication authentication, UserDto userDto){
 //        String result = userService
