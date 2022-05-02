@@ -4,10 +4,7 @@ import com.andback.pocketfridge.data.model.BaseResponse
 import com.andback.pocketfridge.data.model.IngreEntity
 import com.andback.pocketfridge.data.model.IngreEntityForUpload
 import io.reactivex.Single
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface IngreApi {
     @POST("foodingredient")
@@ -15,4 +12,7 @@ interface IngreApi {
 
     @GET("foodingredient/{refrigeratorId}")
     fun getIngreListByFridgeId(@Path("refrigeratorId") fridgeId: Int): Single<BaseResponse<List<IngreEntity>>>
+
+    @DELETE("foodingredient/{ingreId}")
+    fun deleteIngreById(@Path("ingreId") ingreId: Int): Single<BaseResponse<Any>>
 }
