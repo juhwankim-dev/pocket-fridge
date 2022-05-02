@@ -21,6 +21,7 @@ public enum ErrorCode {
     NULL_PASSWORD(HttpStatus.BAD_REQUEST, "Password 값이 null 입니다."),
     FAIL_CHANGE_INGREDIENT(HttpStatus.BAD_REQUEST, "식재료 수정 실패"),
     FAIL_SAVE_TOKEN(HttpStatus.BAD_REQUEST, "토큰 저장에 실패했습니다"),
+    FAIL_LIKE(HttpStatus.BAD_REQUEST, "좋아요 실패"),
 
 
     /* 401 UNAUTHORIZED : 인증되지 않은 사용자 */

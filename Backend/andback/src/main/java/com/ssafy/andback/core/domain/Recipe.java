@@ -56,4 +56,8 @@ public class Recipe {
     // 레시피 과정정보
     @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY)
     private List<RecipeProcess> recipeProcessList = new ArrayList<RecipeProcess>();
+
+    // 레시피 좋아요
+    @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY)
+    private List<RecipeLike> recipeLikeList = new ArrayList<RecipeLike>();
 }

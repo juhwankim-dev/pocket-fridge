@@ -104,4 +104,7 @@ public class User extends BaseEntity implements UserDetails {
     }
 
     // 연관관계 매핑 (레시피 좋아요 테이블 고민해봐야겠음)
+    // 레시피 좋아요
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<RecipeLike> recipeLikeList = new ArrayList<RecipeLike>();
 }
