@@ -21,4 +21,6 @@ public interface FoodIngredientRepository extends JpaRepository<FoodIngredient, 
     FoodIngredient findByFoodIngredientId(Long foodIngredientId);
 
     List<FoodIngredient> findAllByRefrigerator(Refrigerator refrigeratorId);
+
+    void deleteFoodIngredientsByRefrigerator(Refrigerator refrigeratorId);
 }
