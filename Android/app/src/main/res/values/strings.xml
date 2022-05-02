@@ -1,5 +1,9 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">pocket fridge</string>
+
+    <string name="cancel">취소</string>
+    <string name="accept">확인</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="fridge">냉장고</string>
@@ -7,7 +11,6 @@
     <string name="recipe">레시피</string>
     <string name="ingre_upload">식재료 등록</string>
     <string name="merchandise">상품</string>
-    <string name="accept">확인</string>
     <string name="storage_fridge">냉장</string>
     <string name="storage_freeze">냉동</string>
     <string name="storage_room">실온</string>
@@ -21,6 +24,11 @@
 
     <string name="sign_up">회원가입</string>
     <string name="login">로그인</string>
+    <string name="notification">알림</string>
+    <string name="profile">프로필</string>
+
+    <string name="help_msg_barcode_scan">화면 중앙에 바코드를 스캔해주세요</string>
+    <string name="self_input">직접 입력</string>
 
     <!-- Error Messages -->
     <string name="name_empty_error">"이름은 필수 입력 값입니다."</string>
@@ -40,4 +48,6 @@
 
     <!-- Success Messages -->
     <string name="email_auth_success">"이메일 인증이 완료되었습니다."</string>
+    <string name="filter">필터</string>
+
 </resources>

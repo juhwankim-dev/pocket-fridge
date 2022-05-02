@@ -1,6 +1,7 @@
 package com.ssafy.andback.api.service;
 
 import com.ssafy.andback.api.dto.request.LoginRequestDto;
+import com.ssafy.andback.config.jwt.JwtAuthenticationProvider;
 import com.ssafy.andback.core.domain.Refrigerator;
 import com.ssafy.andback.core.domain.UserRefrigerator;
 import com.ssafy.andback.core.repository.RefrigeratorRepository;
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -40,10 +42,13 @@ public class UserServiceImpl implements UserService {
     private final RefrigeratorRepository refrigeratorRepository;
     private final UserRefrigeratorRepository userRefrigeratorRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder; // WebSecurityConfig.java 에서 Bean 설정
+    private final PasswordEncoder passwordEncoder; // WebSecurityConfig.java 에서 Bean 설정
 
-    private final JavaMailSender javaMailSender;  // WebSecurityConfig.java 에서 Bean 설정
+    private final JavaMailSender javaMailSender;
+
+    // JWT 토큰 발급받는 객체
+    private final JwtAuthenticationProvider jwtAuthenticationProvider;
+
 
     @DisplayName("패스워드 암호화")
     public String passwordEncode(String userPassword) {
@@ -72,6 +77,7 @@ public class UserServiceImpl implements UserService {
                 .userPassword(userDto.getUserPassword())
                 .userPicture(userDto.getUserPicture())
                 .userLoginType(false)
+                .roles(Collections.singletonList("USER"))  // 최초 가입시 USER로 설정
                 .build();
 
         User saveUser = userRepository.save(user);
@@ -156,7 +162,11 @@ public class UserServiceImpl implements UserService {
         if (!passwordEncoder.matches(loginRequestDto.getUserPassword(), user.get().getUserPassword())) {
             return "fail";
         }
-        return "success";
+
+        // 토큰 발급
+        String token = jwtAuthenticationProvider.createToken(user.get().getUserEmail(), user.get().getRoles());
+
+        return token;
     }
 
     // 비밀번호 찾기 (비밀번호 변경)
@@ -175,6 +185,10 @@ public class UserServiceImpl implements UserService {
         return "success";
     }
 
+    @Override
+    public String updateUser(String token) {
+        return null;
+    }
 
 
 }

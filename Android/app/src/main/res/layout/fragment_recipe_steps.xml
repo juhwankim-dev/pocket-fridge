@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".present.views.main.recipe.detail.RecipeStepsFragment">
+
+        <ImageView
+            android:id="@+id/iv_recipe_stepsF_back"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:padding="@dimen/activity_margin_default"
+            android:src="@drawable/ic_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_recipe_stepsF_title"
+            style="@style/body_text"
+            android:text="추억의 분식집 맛 그대로 매콤달콤 떡볶이 레시피 (1/7)"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_recipe_stepsF_back"
+            app:layout_constraintStart_toEndOf="@+id/iv_recipe_stepsF_back"
+            app:layout_constraintTop_toTopOf="@+id/iv_recipe_stepsF_back" />
+
+        <ProgressBar
+            android:id="@+id/pb_recipe_stepsF"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            app:layout_constraintTop_toBottomOf="@+id/iv_recipe_stepsF_back" />
+
+        <ImageView
+            android:id="@+id/iv_recipe_stepsF_img"
+            android:layout_width="240dp"
+            android:layout_height="240dp"
+            android:layout_marginStart="60dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/bg_food_sample"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pb_recipe_stepsF" />
+
+        <TextView
+            android:id="@+id/tv_recipe_stepsF_step"
+            style="@style/body_text"
+            android:background="@drawable/bg_ellipse_filled_main_color_32"
+            android:paddingHorizontal="@dimen/activity_margin_narrow"
+            android:paddingVertical="4dp"
+            android:text="Step 01"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_marginStart="@dimen/activity_margin_default"
+            android:layout_marginBottom="@dimen/activity_margin_default"
+            app:layout_constraintBottom_toTopOf="@+id/tv_recipe_stepsF_explanation"
+            app:layout_constraintStart_toEndOf="@+id/iv_recipe_stepsF_img"
+            app:layout_constraintTop_toBottomOf="@+id/pb_recipe_stepsF"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/tv_recipe_stepsF_explanation"
+            style="@style/body_text"
+            android:paddingHorizontal="@dimen/activity_margin_narrow"
+            android:paddingVertical="4dp"
+            android:text="어묵은 길게 썰고 대파는 어슷하게 썰어주세요."
+            android:textStyle="bold"
+            android:layout_marginStart="@dimen/activity_margin_default"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_recipe_stepsF_img"
+            app:layout_constraintTop_toBottomOf="@+id/tv_recipe_stepsF_step" />
+
+        <ImageView
+            android:id="@+id/iv_recipe_stepsF_circle"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_margin="@dimen/activity_margin_wide"
+            android:background="@drawable/bg_circle_white"
+            android:elevation="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/ic_mic"
+            android:elevation="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_recipe_stepsF_circle"
+            app:layout_constraintEnd_toEndOf="@+id/iv_recipe_stepsF_circle"
+            app:layout_constraintStart_toStartOf="@+id/iv_recipe_stepsF_circle"
+            app:layout_constraintTop_toTopOf="@+id/iv_recipe_stepsF_circle" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
