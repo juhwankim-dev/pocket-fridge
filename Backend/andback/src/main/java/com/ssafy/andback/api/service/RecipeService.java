@@ -1,6 +1,7 @@
 package com.ssafy.andback.api.service;
 
 
+import com.ssafy.andback.api.dto.response.RecipeProcessResponseDto;
 import com.ssafy.andback.api.dto.response.RecipeResponseDto;
 
 import java.util.List;
@@ -18,5 +19,6 @@ import java.util.List;
 public interface RecipeService {
 
     List<RecipeResponseDto> findAllRecipe();
+    List<RecipeProcessResponseDto> findRecipeProcessByRecipeId(Long recipeId);
 
 }
