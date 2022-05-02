@@ -5,6 +5,7 @@ import com.ssafy.andback.api.dto.response.SingleResponseDto;
 import com.ssafy.andback.core.domain.Refrigerator;
 import com.ssafy.andback.core.domain.User;
 import com.ssafy.andback.core.domain.UserRefrigerator;
+import com.ssafy.andback.core.repository.FoodIngredientRepository;
 import com.ssafy.andback.core.repository.RefrigeratorRepository;
 import com.ssafy.andback.core.repository.UserRefrigeratorRepository;
 import com.ssafy.andback.core.repository.UserRepository;
@@ -52,6 +53,9 @@ public class UserController {
 
     @Autowired
     private RefrigeratorRepository refrigeratorRepository;
+
+    @Autowired
+    private FoodIngredientRepository foodIngredientRepository;
 
     @ApiOperation(value = "회원가입", notes = "유저 정보를 받아 DB에 저장한다.")
     @PostMapping
@@ -123,9 +127,10 @@ public class UserController {
 
         // 현재 유저의 모든 Refrigerator 삭제
         List<UserRefrigerator> list;
-        list = userRefrigeratorRepository.findUserRefrigeratorByUser(user);
+        list = userRefrigeratorRepository.findUserRefrigeratorByUser(user); // 유저가 가진 모든 냉장고 가져오기
         for(UserRefrigerator userRefrigerator : list){
-            refrigeratorRepository.deleteRefrigeratorsByRefrigeratorId(userRefrigerator.getUserRefrigeratorId());
+            foodIngredientRepository.deleteFoodIngredientsByRefrigerator(userRefrigerator.getRefrigerator());   // 해당 냉장고가 가진 식재료 모두 삭제
+            refrigeratorRepository.deleteRefrigeratorByRefrigeratorId(userRefrigerator.getUserRefrigeratorId());    // 해당 냉장고 id 값을 가진 냉장고 삭제
         }
         // 현재 유저의 모든 userRefrigerator 삭제
         userRefrigeratorRepository.deleteUserRefrigeratorByUser(user);

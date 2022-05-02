@@ -16,5 +16,5 @@ public interface RefrigeratorRepository extends JpaRepository<Refrigerator, Long
 
     Refrigerator findByRefrigeratorId(Long refrigeratorId);
 
-    void deleteRefrigeratorsByRefrigeratorId(Long refrigeratorId);
+    void deleteRefrigeratorByRefrigeratorId(Long refrigeratorId);
 }
