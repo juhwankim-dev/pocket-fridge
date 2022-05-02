@@ -8,6 +8,7 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Data
 public class FoodIngredientResponseDto {
@@ -18,13 +19,11 @@ public class FoodIngredientResponseDto {
 
     // 유통기한
     @ApiParam(value = "식재료 유통기한", required = true)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate foodIngredientExp;
+    private String foodIngredientExp;
 
     // 구입일
     @ApiParam(value = "식재료 구입일", required = true)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate foodIngredientDate;
+    private String foodIngredientDate;
 
     // 보관방법
     @ApiParam(value = "식재료 보관방법", required = true)
@@ -41,8 +40,8 @@ public class FoodIngredientResponseDto {
     @Builder
     public FoodIngredientResponseDto(String foodIngredientName, LocalDate foodIngredientExp, LocalDate foodIngredientDate, WayStatus foodIngredientWay, Long refrigeratorId, Long subCategoryId) {
         this.foodIngredientName = foodIngredientName;
-        this.foodIngredientExp = foodIngredientExp;
-        this.foodIngredientDate = foodIngredientDate;
+        this.foodIngredientExp = foodIngredientExp.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        this.foodIngredientDate = foodIngredientDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         this.foodIngredientWay = foodIngredientWay;
         this.refrigeratorId = refrigeratorId;
         this.subCategoryId = subCategoryId;
