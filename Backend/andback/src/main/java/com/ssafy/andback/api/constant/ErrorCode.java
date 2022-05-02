@@ -5,15 +5,14 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 /**
-*
-* ErrorCode
-* Custom ErrorCode
-*
-* @author hoony
-* @version 1.0.0
-* 생성일 2022-04-28
-* 마지막 수정일 2022-04-28
-**/
+ * ErrorCode
+ * Custom ErrorCode
+ *
+ * @author hoony
+ * @version 1.0.0
+ * 생성일 2022-04-28
+ * 마지막 수정일 2022-04-28
+ **/
 
 @Getter
 @AllArgsConstructor
@@ -21,6 +20,7 @@ public enum ErrorCode {
     /* 400 BAD_REQUEST : 잘못된 요청 */
     NULL_PASSWORD(HttpStatus.BAD_REQUEST, "Password 값이 null 입니다."),
     FAIL_CHANGE_INGREDIENT(HttpStatus.BAD_REQUEST, "식재료 수정 실패"),
+    FAIL_SAVE_TOKEN(HttpStatus.BAD_REQUEST, "토큰 저장에 실패했습니다"),
 
 
     /* 401 UNAUTHORIZED : 인증되지 않은 사용자 */
