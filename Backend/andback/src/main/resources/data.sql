@@ -237,3 +237,5 @@ INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) 
 INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (226, 11,'짜장가루');
 INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (227, 11,'허니머스타드');
 INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (228, 11,'돈까스소스');
+
+
