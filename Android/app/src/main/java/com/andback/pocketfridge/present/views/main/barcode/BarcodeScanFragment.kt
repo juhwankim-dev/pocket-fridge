@@ -50,8 +50,8 @@ class BarcodeScanFragment : BaseFragment<FragmentBarcodeScanBinding>(R.layout.fr
         (context as MainActivity).hideBottomNav(false)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         cameraProvider?.unbindAll()
         cameraProviderFuture?.cancel(true)
         cameraExecutor?.shutdown()
@@ -113,7 +113,7 @@ class BarcodeScanFragment : BaseFragment<FragmentBarcodeScanBinding>(R.layout.fr
             cameraProvider!!.unbindAll()
 
             // Bind use cases to camera
-            cameraProvider!!.bindToLifecycle(this, cameraSelector, preview, imageAnalyzer)
+            cameraProvider!!.bindToLifecycle(viewLifecycleOwner, cameraSelector, preview, imageAnalyzer)
 
         } catch (e: Exception) {
             Log.e(TAG, "camera binding failed", e)
