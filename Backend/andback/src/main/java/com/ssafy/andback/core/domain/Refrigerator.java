@@ -34,7 +34,7 @@ public class Refrigerator {
     @Column(name = "refrigerator_name")
     private String refrigeratorName;
 
-    @OneToMany(mappedBy = "refrigerator", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "refrigerator", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<FoodIngredient> foodIngredientList = new ArrayList<FoodIngredient>();
 
     @Builder

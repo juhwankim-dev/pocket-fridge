@@ -4,9 +4,13 @@ import io.swagger.annotations.ApiParam;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.FetchType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * UserDto
@@ -43,5 +47,8 @@ public class UserDto {
 
     @ApiParam(value = "유저 사진(null 허용)")
     private String userPicture;
+
+//    @ElementCollection(fetch = FetchType.EAGER)
+//    private List<String> roles = new ArrayList<>();
 
 }

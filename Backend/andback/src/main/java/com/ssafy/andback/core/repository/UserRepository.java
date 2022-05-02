@@ -20,4 +20,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     boolean existsByUserNickname(String userNickname);  // 닉네임 중복 검사
 
     Optional<User> findByUserEmail(String userEmail);   // 유저 이메일로 검색
+
+    void deleteUserByUserId(Long userId);
 }

@@ -17,9 +17,6 @@ spring:
   messages:
     basename: i18n/exception
     encoding: UTF-8
-  # JWT 토큰에 사용할 secret 키값 (임의의 랜덤 키값)
-  jwt:
-    secret: #설정 필요
   # JPA 기본 설정
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
@@ -35,6 +32,12 @@ spring:
     defer-datasource-initialization: true
   freemarker:
     checkTemplateLocation: false
+  # JWT 토큰에 사용할 secret 키값 (임의의 랜덤 키값)
+  jwt:
+    secret: SSAFYPocketFridge
+  # Spring Boot 순환참조 허용 설정 (WebSecurityConfig와 jwtAuthenticationProvider의 사이클링 문제)
+  main:
+    allow-circular-references: true
 
   # 데이터 베이스 연결 설정
   datasource:
