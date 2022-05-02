@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fridgeFragment"
-        android:name="com.andback.pocketfridge.present.views.main.FridgeFragment"
+        android:name="com.andback.pocketfridge.present.views.main.fridge.FridgeFragment"
         android:label="FridgeFragment"
         tools:layout="@layout/fragment_fridge"/>
     <fragment
