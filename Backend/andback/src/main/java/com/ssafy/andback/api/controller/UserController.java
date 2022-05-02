@@ -34,7 +34,7 @@ public class UserController {
 
     @ApiOperation(value = "회원가입", notes = "유저 정보를 받아 DB에 저장한다.")
     @PostMapping
-    public ResponseEntity<BaseResponseDto> signUp(@Valid UserDto userDto, @ApiIgnore Errors errors) {
+    public ResponseEntity<BaseResponseDto> signUp(@RequestBody @Valid UserDto userDto, @ApiIgnore Errors errors) {
         String result = userService.insertUser(userDto);
         if (errors.hasErrors() || result.equals("fail")) {
             return ResponseEntity.status(401).body(BaseResponseDto.of(401, "회원가입 실패"));
@@ -73,7 +73,7 @@ public class UserController {
 
     @ApiOperation(value = "로그인", notes = "이메일, 비밀번호로 로그인")
     @PostMapping(value = "/login")
-    public ResponseEntity<SingleResponseDto<String>> login(LoginRequestDto loginRequestDto){
+    public ResponseEntity<SingleResponseDto<String>> login(@RequestBody LoginRequestDto loginRequestDto){
         String result = userService.login(loginRequestDto);
         if(result.equals("fail")){
             return ResponseEntity.status(401).body(new SingleResponseDto<String>(401, "아이디와 비밀번호를 확인해주세요.", null));
