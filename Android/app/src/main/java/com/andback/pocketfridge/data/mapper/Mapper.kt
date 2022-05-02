@@ -5,6 +5,7 @@ import com.andback.pocketfridge.data.model.IngreEntity
 import com.andback.pocketfridge.domain.model.Ingredient
 import com.andback.pocketfridge.present.utils.DateConverter
 import com.andback.pocketfridge.present.utils.Storage
+import okhttp3.internal.wait
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.ceil
@@ -19,7 +20,7 @@ object IngreMapper {
             expiryDate = entity.foodIngredientExp,
             name = entity.foodIngredientName,
             fridgeId = entity.refrigeratorId,
-            storage = Storage.valueOf(entity.foodIngredientWay),
+            storage = Storage.getWithString(entity.foodIngredientWay),
             leftDay = getLeftDay(entity.foodIngredientExp, SimpleDateFormat("yyyy-MM-dd").format(Date()))
         )
     }
