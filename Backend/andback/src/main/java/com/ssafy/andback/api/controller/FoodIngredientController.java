@@ -32,7 +32,7 @@ public class FoodIngredientController {
 
     @ApiOperation(value = "식재료 등록", notes = "식재료 정보를 입력받아 DB에 저장한다.")
     @PostMapping()
-    public ResponseEntity<BaseResponseDto> insertFoodIngredient(InsertFoodIngredientRequestDto insertFoodIngredientReqDto) {
+    public ResponseEntity<BaseResponseDto> insertFoodIngredient(@RequestBody InsertFoodIngredientRequestDto insertFoodIngredientReqDto) {
 
         String res = foodIngredientService.saveFoodIngredient(insertFoodIngredientReqDto);
 

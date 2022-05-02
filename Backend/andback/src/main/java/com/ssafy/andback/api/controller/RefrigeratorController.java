@@ -47,7 +47,7 @@ public class RefrigeratorController {
 
     @ApiOperation(value = "냉장고 생성", notes = "사용자의 새로운 냉장고를 생성한다")
     @PostMapping
-    public ResponseEntity<BaseResponseDto> insertRefrigerator(InsertRefrigeratorRequestDto reqDto) {
+    public ResponseEntity<BaseResponseDto> insertRefrigerator(@RequestBody InsertRefrigeratorRequestDto reqDto) {
 
         String response = refrigeratorService.insertRefrigerator(reqDto);
 
