@@ -2,6 +2,7 @@ package com.ssafy.andback.api.controller;
 
 import com.ssafy.andback.api.dto.request.LoginRequestDto;
 import com.ssafy.andback.api.dto.response.SingleResponseDto;
+import com.ssafy.andback.core.domain.User;
 import com.ssafy.andback.core.repository.UserRepository;
 import io.swagger.annotations.*;
 import com.ssafy.andback.api.dto.UserDto;
@@ -10,6 +11,7 @@ import com.ssafy.andback.api.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
@@ -99,12 +101,15 @@ public class UserController {
         return ResponseEntity.ok(BaseResponseDto.of(200, "새 비밀번호 전송 완료"));
     }
 
-    @ApiOperation(value = "회원 탈퇴", notes = "userId로 회원정보를 삭제한다.")
+    @ApiOperation(value = "회원 탈퇴", notes = "jwt 토큰을 받아 회원정보를 삭제한다.")
     @Transactional  // org.springframework.dao.InvalidDataAccessApiUsageException 처리
     // Transaction이 Required 되지 않아서 발생하는 것
-    @DeleteMapping(value = "/delete/{userId}")
-    public ResponseEntity<BaseResponseDto> deleteUserInfo(@PathVariable long userId) {
-        userRepository.deleteUserByUserId(userId);
+    @DeleteMapping
+    public ResponseEntity<BaseResponseDto> deleteUser(@ApiIgnore Authentication authentication) {
+        System.out.println("authentication.getPrincipal() = " + authentication.getPrincipal());
+        User user = (User) authentication.getPrincipal();
+
+//        userRepository.deleteUserByUserId(user.getUserId());
 
         return ResponseEntity.ok(BaseResponseDto.of(200, "회원 탈퇴 성공"));
     }
