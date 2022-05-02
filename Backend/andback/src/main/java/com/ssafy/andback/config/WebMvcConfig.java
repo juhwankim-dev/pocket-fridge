@@ -31,8 +31,6 @@ import java.util.List;
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurationSupport {
 
-    public static final String SECURITY_SCHEMA_NAME = "JWT";
-
     // JWT 인증
     private SecurityContext securityContext() {
         return SecurityContext.builder()

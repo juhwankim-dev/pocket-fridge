@@ -28,7 +28,7 @@ import javax.validation.Valid;
  **/
 
 @RequiredArgsConstructor
-@Api(value = "유저 API", tags = {"User"})
+@Api(value = "유저 API", tags = {"01. 유저 API"})
 @RestController
 @RequestMapping("/user")
 public class UserController {
