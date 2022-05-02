@@ -15,4 +15,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface RefrigeratorRepository extends JpaRepository<Refrigerator, Long> {
 
     Refrigerator findByRefrigeratorId(Long refrigeratorId);
+
+    void deleteRefrigeratorsByRefrigeratorId(Long refrigeratorId);
 }

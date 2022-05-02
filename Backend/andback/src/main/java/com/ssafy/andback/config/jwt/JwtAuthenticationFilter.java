@@ -22,7 +22,6 @@ import java.io.IOException;
 * 생성일 2022-04-30
 * 마지막 수정일 2022-05-02
 **/
-//@Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends GenericFilterBean {
 

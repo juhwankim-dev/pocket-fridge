@@ -45,8 +45,8 @@ public class RecipeController {
 
 
     @ApiOperation(value = "레시피 과정 정보 조회", notes = "레시피 Id로 레시피 과정을 조회한다")
-    @GetMapping("/{recipe-id}")
-    ResponseEntity<ListResponseDto<RecipeProcessResponseDto>> findAllRecipeProcessByRecipeId(@PathVariable(value = "recipe-id", required = true) Long recipeId){
+    @GetMapping("/{recipeId}")
+    ResponseEntity<ListResponseDto<RecipeProcessResponseDto>> findAllRecipeProcessByRecipeId(@PathVariable(value = "recipeId", required = true) Long recipeId){
 
         List<RecipeProcessResponseDto> response = recipeService.findRecipeProcessByRecipeId(recipeId);
 

@@ -2,6 +2,11 @@ package com.ssafy.andback.api.controller;
 
 import com.ssafy.andback.api.dto.request.LoginRequestDto;
 import com.ssafy.andback.api.dto.response.SingleResponseDto;
+import com.ssafy.andback.core.domain.Refrigerator;
+import com.ssafy.andback.core.domain.User;
+import com.ssafy.andback.core.domain.UserRefrigerator;
+import com.ssafy.andback.core.repository.RefrigeratorRepository;
+import com.ssafy.andback.core.repository.UserRefrigeratorRepository;
 import com.ssafy.andback.core.repository.UserRepository;
 import io.swagger.annotations.*;
 import com.ssafy.andback.api.dto.UserDto;
@@ -10,12 +15,15 @@ import com.ssafy.andback.api.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * UserController
@@ -28,7 +36,7 @@ import javax.validation.Valid;
  **/
 
 @RequiredArgsConstructor
-@Api(value = "유저 API", tags = {"User"})
+@Api(value = "유저 API", tags = {"01. 유저 API"})
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -38,6 +46,12 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserRefrigeratorRepository userRefrigeratorRepository;
+
+    @Autowired
+    private RefrigeratorRepository refrigeratorRepository;
 
     @ApiOperation(value = "회원가입", notes = "유저 정보를 받아 DB에 저장한다.")
     @PostMapping
@@ -99,17 +113,29 @@ public class UserController {
         return ResponseEntity.ok(BaseResponseDto.of(200, "새 비밀번호 전송 완료"));
     }
 
-    @ApiOperation(value = "회원 탈퇴", notes = "userId로 회원정보를 삭제한다.")
+    @ApiOperation(value = "회원 탈퇴", notes = "jwt 토큰을 받아 회원정보를 삭제한다.")
     @Transactional  // org.springframework.dao.InvalidDataAccessApiUsageException 처리
     // Transaction이 Required 되지 않아서 발생하는 것
-    @DeleteMapping(value = "/delete/{userId}")
-    public ResponseEntity<BaseResponseDto> deleteUserInfo(@PathVariable long userId) {
-        userRepository.deleteUserByUserId(userId);
+    @DeleteMapping
+    public ResponseEntity<BaseResponseDto> deleteUser(@ApiIgnore Authentication authentication) {
+        System.out.println("authentication.getPrincipal() = " + authentication.getPrincipal());
+        User user = (User) authentication.getPrincipal();
+
+        // 현재 유저의 모든 Refrigerator 삭제
+        List<UserRefrigerator> list;
+        list = userRefrigeratorRepository.findUserRefrigeratorByUser(user);
+        for(UserRefrigerator userRefrigerator : list){
+            refrigeratorRepository.deleteRefrigeratorsByRefrigeratorId(userRefrigerator.getUserRefrigeratorId());
+        }
+        // 현재 유저의 모든 userRefrigerator 삭제
+        userRefrigeratorRepository.deleteUserRefrigeratorByUser(user);
+        // 현재 유저 삭제
+        userRepository.deleteUserByUserId(user.getUserId());
 
         return ResponseEntity.ok(BaseResponseDto.of(200, "회원 탈퇴 성공"));
     }
 
-    //    @ApiOperation(value = "회원정보 수정", notes = "유저의 정보를 수정한다.")
+//    @ApiOperation(value = "회원정보 수정", notes = "유저의 정보를 수정한다.")
 //    @PutMapping("/update")
 //    public ResponseEntity<BaseResponseDto> updateUser(@ApiIgnore Authentication authentication, UserDto userDto){
 //        String result = userService
