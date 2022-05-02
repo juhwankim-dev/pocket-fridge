@@ -22,7 +22,7 @@
             app:layout_constraintStart_toStartOf="@id/guideline_ingreI_vertical"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="@dimen/activity_margin_default"
-            tools:srcCompat="@tools:sample/avatars" />
+            android:src="@drawable/bg_ellipse_filled_main_color_32" />
 
         <TextView
             style="@style/button_text"
@@ -54,6 +54,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="@dimen/activity_margin_narrow"
             android:layout_marginEnd="@dimen/activity_margin_narrow"
+            android:visibility="gone"
             android:src="@drawable/ic_close"/>
 
         <androidx.constraintlayout.widget.Guideline
