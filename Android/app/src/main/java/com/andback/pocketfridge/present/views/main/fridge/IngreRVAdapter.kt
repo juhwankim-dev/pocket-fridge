@@ -28,6 +28,17 @@ class IngreRVAdapter: RecyclerView.Adapter<IngreRVAdapter.ViewHolder>() {
 
         fun bind(data: Ingredient) {
             binding.ingredient = data
+            binding.leftday = when {
+                data.leftDay > 0 -> {
+                    "D+${data.leftDay}"
+                }
+                data.leftDay == 0 -> {
+                    "D-Day"
+                }
+                else -> {
+                    "D${data.leftDay}"
+                }
+            }
         }
     }
 
