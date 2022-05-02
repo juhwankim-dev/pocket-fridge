@@ -7,6 +7,9 @@
         <variable
             name="ingredient"
             type="com.andback.pocketfridge.domain.model.Ingredient" />
+        <variable
+            name="leftday"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,8 +24,7 @@
             app:layout_constraintEnd_toEndOf="@id/guideline3_ingreI_vertical"
             app:layout_constraintStart_toStartOf="@id/guideline_ingreI_vertical"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="@dimen/activity_margin_default"
-            android:src="@drawable/bg_ellipse_filled_main_color_32" />
+            android:layout_marginTop="@dimen/activity_margin_default" />
 
         <TextView
             style="@style/button_text"
@@ -31,8 +33,13 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toStartOf="@+id/guideline2_ingreI_vertical"
             app:layout_constraintTop_toTopOf="@id/iv_ingreI"
-            android:padding="@dimen/activity_margin_narrow"
-            tools:text="D-3" />
+            android:paddingVertical="4dp"
+            android:paddingHorizontal="@dimen/activity_margin_narrow"
+            android:text="@{leftday}"
+            tools:text="D-3"
+            android:background="@drawable/bg_ellipse_filled_4"
+            android:textColor="@color/white"
+            android:backgroundTint="@{(0 > ingredient.leftDay)? @color/main_color : @color/black}"/>
 
         <TextView
             android:id="@+id/textView2"
