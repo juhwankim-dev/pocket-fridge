@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.andback.pocketfridge.data.model.FridgeEntity
 import com.andback.pocketfridge.domain.model.Ingredient
 import com.andback.pocketfridge.domain.usecase.fridge.GetFridgesUseCase
+import com.andback.pocketfridge.domain.usecase.ingredient.DeleteIngreUseCase
 import com.andback.pocketfridge.domain.usecase.ingredient.GetIngreListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -16,7 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class FridgeViewModel @Inject constructor(
     private val getFridgesUseCase: GetFridgesUseCase,
-    private val getIngreListUseCase: GetIngreListUseCase
+    private val getIngreListUseCase: GetIngreListUseCase,
+    private val deleteIngreUseCase: DeleteIngreUseCase
 ): ViewModel() {
     // data
     private val _fridges = MutableLiveData<List<FridgeEntity>>()
@@ -77,5 +79,23 @@ class FridgeViewModel @Inject constructor(
         val selectedFridge = fridges.value?.find { it.refrigeratorId == id }?: return
         _selectedFridge.value = selectedFridge
         getIngreList(id)
+    }
+
+    /**
+     * 식재료 id로 삭제
+     */
+    fun deleteIngreById(id: Int) {
+        _isLoading.value = true
+        deleteIngreUseCase(id).subscribeOn(Schedulers.io())
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    _isLoading.value = false
+                },
+                {
+                    _isLoading.value = false
+                    // TODO: 예외 처리
+                }
+            )
     }
 }
