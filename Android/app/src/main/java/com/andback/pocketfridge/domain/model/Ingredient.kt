@@ -12,5 +12,6 @@ data class Ingredient(
     var expiryDate: String,
     var name: String = "",
     var fridgeId: Int = -1,
-    var storage: Storage) :
+    var storage: Storage,
+    var leftDay: Int = 0) :
     Parcelable

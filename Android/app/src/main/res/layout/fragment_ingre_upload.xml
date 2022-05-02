@@ -6,13 +6,13 @@
     <data>
         <variable
             name="vm"
-            type="com.andback.pocketfridge.present.views.main.IngreUploadViewModel" />
+            type="com.andback.pocketfridge.present.views.main.ingreupload.IngreUploadViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".present.views.main.IngreUploadFragment">
+        tools:context=".present.views.main.ingreupload.IngreUploadFragment">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/al_ingre_uploadF"

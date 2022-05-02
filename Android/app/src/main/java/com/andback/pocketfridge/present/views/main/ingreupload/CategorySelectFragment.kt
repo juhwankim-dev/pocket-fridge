@@ -1,23 +1,20 @@
-package com.andback.pocketfridge.present.views.main
+package com.andback.pocketfridge.present.views.main.ingreupload
 
-import android.graphics.Point
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.data.model.MainCategoryEntity
 import com.andback.pocketfridge.data.model.SubCategoryEntity
 import com.andback.pocketfridge.databinding.FragmentCategorySelectBinding
+import com.andback.pocketfridge.present.views.main.SubCategoryRVAdapter
 
 class CategorySelectFragment : DialogFragment() {
     private lateinit var binding: FragmentCategorySelectBinding
