@@ -1,9 +1,8 @@
 package com.andback.pocketfridge.data.di
 
-import com.andback.pocketfridge.data.api.CategoryApi
-import com.andback.pocketfridge.data.api.FridgeApi
-import com.andback.pocketfridge.data.api.IngreApi
-import com.andback.pocketfridge.data.api.UserApi
+import com.andback.pocketfridge.data.api.*
+import com.andback.pocketfridge.data.repository.Recipe.RecipeRemoteDataSource
+import com.andback.pocketfridge.data.repository.Recipe.RecipeRemoteDataSourceImpl
 import com.andback.pocketfridge.data.repository.category.CategoryRemoteDataSource
 import com.andback.pocketfridge.data.repository.category.CategoryRemoteDataSourceImpl
 import com.andback.pocketfridge.data.repository.fridge.FridgeRemoteDataSource
@@ -43,5 +42,11 @@ class RemoteDataModule {
     @Singleton
     fun provideCategoryRemoteDataSource(categoryApi: CategoryApi): CategoryRemoteDataSource {
         return CategoryRemoteDataSourceImpl(categoryApi)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRecipeRemoteDataSource(recipeApi: RecipeApi): RecipeRemoteDataSource {
+        return RecipeRemoteDataSourceImpl(recipeApi)
     }
 }
