@@ -87,15 +87,26 @@ class FridgeViewModel @Inject constructor(
     fun deleteIngreById(id: Int) {
         _isLoading.value = true
         deleteIngreUseCase(id).subscribeOn(Schedulers.io())
-            .subscribeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
                     _isLoading.value = false
+                    removeIngreFromLiveData(id)
                 },
                 {
                     _isLoading.value = false
                     // TODO: 예외 처리
                 }
             )
+    }
+
+    private fun removeIngreFromLiveData(id: Int) {
+        _ingreList.value?.let { list ->
+            val index = list.indexOfFirst { it.id == id }
+            val refreshedList = list.toMutableList().also {
+                it.removeAt(index)
+            }
+            _ingreList.value = refreshedList
+        }
     }
 }
