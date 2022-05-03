@@ -53,4 +53,12 @@
     <string name="delete_ingre_title">"식재료를 삭제하시겠습니까?"</string>
     <string name="delete_button">삭제하기</string>
 
+    <string name="ipa_ready">네 말씀해주세요</string>
+    <string name="ipa_next">다음 페이지로 이동합니다</string>
+    <string-array name="ipa_name_list">
+        <item>영훈아</item>
+        <item>영운아</item>
+        <item>여훈아</item>
+        <item>영후나</item>
+    </string-array>
 </resources>
