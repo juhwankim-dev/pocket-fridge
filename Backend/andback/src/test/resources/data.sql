@@ -481,16 +481,7 @@ VALUES (228, 11, '돈까스소스');
 -- 레시피 정보 // 아이디 값, 이름, 내용, 요약, 이미지, 타입 //한식 일식 중식 양식
 InsERT INTO recipe (recipe_id, recipe_food_name, recipe_content, recipe_food_summary, recipe_image, recipe_type)
 values (1, "라면", "라면", "국민 라면", null, "한식");
-InsERT INTO recipe (recipe_id, recipe_food_name, recipe_content, recipe_food_summary, recipe_image, recipe_type)
-values (2, "라면", "라면", "국민 라면", null, "한식");
-InsERT INTO recipe (recipe_id, recipe_food_name, recipe_content, recipe_food_summary, recipe_image, recipe_type)
-values (3, "라면", "라면", "국민 라면", null, "한식");
-InsERT INTO recipe (recipe_id, recipe_food_name, recipe_content, recipe_food_summary, recipe_image, recipe_type)
-values (4, "라면", "라면", "국민 라면", null, "한식");
-InsERT INTO recipe (recipe_id, recipe_food_name, recipe_content, recipe_food_summary, recipe_image, recipe_type)
-values (5, "라면", "라면", "국민 라면", null, "한식");
-InsERT INTO recipe (recipe_id, recipe_food_name, recipe_content, recipe_food_summary, recipe_image, recipe_type)
-values (6, "라면", "라면", "국민 라면", null, "한식");
+
 
 
 insert into recipe_process (recipe_process_id, recipe_process_description, recipe_process_image, recipe_process_sequence, recipe_id)
