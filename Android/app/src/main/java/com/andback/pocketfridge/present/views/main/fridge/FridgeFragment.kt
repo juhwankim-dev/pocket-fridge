@@ -10,6 +10,7 @@ import com.andback.pocketfridge.databinding.FragmentFridgeBinding
 import com.andback.pocketfridge.domain.model.Ingredient
 import com.andback.pocketfridge.present.config.BaseFragment
 import com.andback.pocketfridge.present.utils.Storage
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fridge) {
     private lateinit var rvAdapter: IngreRVAdapter
@@ -37,6 +38,7 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
                 override fun onLongClick(data: Ingredient) {
                     Log.d(TAG, "onLongClick: ${data}")
                     // TODO: 삭제 다이얼로그 호출
+                    showDeleteDialog(data)
                 }
             }
         }
@@ -61,6 +63,18 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
                 }
             }
         }
+    }
+
+    private fun showDeleteDialog(ingre: Ingredient) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(resources.getString(R.string.delete_ingre_title))
+            .setMessage("${ingre.name}")
+            .setCancelable(true)
+            .setPositiveButton(resources.getString(R.string.delete_button)) { dialog, which ->
+                // TODO: Ingredient Id 추가되면 주석 해제 
+//                viewModel.deleteIngreById(ingre.id)
+            }
+            .show()
     }
     
     companion object {
