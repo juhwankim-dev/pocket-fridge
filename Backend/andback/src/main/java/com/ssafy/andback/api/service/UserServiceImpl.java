@@ -226,6 +226,9 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = false) // save 없이 자동으로 업데이트
     public String updateUser(User user, UpdateUserRequestDto updateUserRequestDto) {
+        // 닉네임 중복검사
+        if(checkUserNickname(updateUserRequestDto.getUserNickname()).equals("fail"))
+            return "fail";
         if(!updateUserRequestDto.getUserNickname().equals(user.getUserNickname()))
             user.setUserNickname(updateUserRequestDto.getUserNickname());
         if(!passwordEncoder.matches(updateUserRequestDto.getUserPassword(), user.getUserPassword()))

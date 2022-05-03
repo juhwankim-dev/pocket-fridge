@@ -155,7 +155,7 @@ public class UserController {
 
         String answer = userService.updateUser(user, updateUserRequestDto);
         if(answer.equals("fail")){
-            return ResponseEntity.status(401).body(BaseResponseDto.of(401, "회원 정보 수정 실패"));
+            return ResponseEntity.status(401).body(BaseResponseDto.of(401, "닉네임 중복을 확인하세요."));
         }
         return ResponseEntity.ok(BaseResponseDto.of(200, "회원 정보 수정 완료"));
     }
