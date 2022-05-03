@@ -1,7 +1,6 @@
 package com.andback.pocketfridge.present.config
 
 import android.app.Application
-import com.andback.pocketfridge.BuildConfig
 import dagger.hilt.android.HiltAndroidApp
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

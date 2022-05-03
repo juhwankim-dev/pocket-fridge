@@ -9,11 +9,11 @@ import retrofit2.http.Query
 
 interface BarcodeApi {
     @GET("{serviceKey}/C005/{dataType}/{startIdx}/{endIdx}")
-    fun getIngreFromBarcode(
+    fun getProductFromBarcode(
         @Path("serviceKey") serviceKey: String = BuildConfig.BARCODE_SERVICE_KEY,
         @Path("dataType") dataType: String = "json",
         @Path("startIdx") startIdx: String = "1",
         @Path("endIdx") endIdx: String = "1",
-        @Query("BAR_CD") barCd: String
+        @Query("BAR_CD") barcode: String
     ): Single<BarcodeResponse>
 }
