@@ -1,10 +1,7 @@
 package com.andback.pocketfridge.present.utils
 
-import android.widget.TextView
 import com.andback.pocketfridge.R
 import java.util.regex.Pattern
-import android.content.res.Resources
-import android.util.Log
 import com.andback.pocketfridge.domain.model.CheckResult
 
 object SignUpChecker {
@@ -20,6 +17,9 @@ object SignUpChecker {
             Pattern.matches(NAME, name) == false -> {
                 CheckResult(R.string.name_pattern_error, false)
             }
+            name.length < 2 || name.length > 20 -> {
+                CheckResult(R.string.name_pattern_error, false)
+            }
             else -> {
                 CheckResult(R.string.no_error, true)
             }
@@ -32,6 +32,9 @@ object SignUpChecker {
                 CheckResult(R.string.nickname_empty_error, false)
             }
             Pattern.matches(NICKNAME, nickname) == false -> {
+                CheckResult(R.string.nickname_pattern_error, false)
+            }
+            nickname.length < 2 || nickname.length > 10 -> {
                 CheckResult(R.string.nickname_pattern_error, false)
             }
             else -> {
@@ -62,6 +65,9 @@ object SignUpChecker {
                 CheckResult(R.string.pw_empty_error, false)
             }
             Pattern.matches(PW, pw) == false -> {
+                CheckResult(R.string.pw_pattern_error, false)
+            }
+            pw.length < 5 || pw.length > 15 -> {
                 CheckResult(R.string.pw_pattern_error, false)
             }
             else -> {
