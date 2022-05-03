@@ -17,4 +17,7 @@ public class FindUserPasswordRequestDto {
 
     @ApiParam(value = "유저 이메일", required = true)
     String userEmail;
+
+    @ApiParam(value = "유저 이름", required = true)
+    String userName;
 }

@@ -1,5 +1,6 @@
 package com.ssafy.andback.api.service;
 
+import com.ssafy.andback.api.dto.request.FindUserPasswordRequestDto;
 import com.ssafy.andback.api.dto.request.LoginRequestDto;
 import com.ssafy.andback.api.dto.request.UpdateUserRequestDto;
 import com.ssafy.andback.config.jwt.JwtAuthenticationProvider;
@@ -178,11 +179,16 @@ public class UserServiceImpl implements UserService {
     // 비밀번호 찾기 (비밀번호 변경)
     @Override
     @Transactional(readOnly = false) // save 없이 자동으로 업데이트
-    public String findUserPassword(String userEmail) {
+    public String findUserPassword(FindUserPasswordRequestDto findUserPasswordRequestDto) {
 
+        String userEmail = findUserPasswordRequestDto.getUserEmail();
         Optional<User> user = userRepository.findByUserEmail(userEmail);
 
         if(!user.isPresent())   // 이메일에 해당하는 유저가 없으면 fail
+            return "fail";
+
+        // 다른 이름이 들어왔다면 fail
+        if(!user.get().getUserName().equals(findUserPasswordRequestDto.getUserName()))
             return "fail";
 
         String userPassword = sendUserEmailNumber(userEmail);
