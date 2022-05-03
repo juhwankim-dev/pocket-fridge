@@ -97,7 +97,7 @@ public class UserController {
 
     @ApiOperation(value = "로그인", notes = "이메일, 비밀번호로 로그인")
     @PostMapping(value = "/login")
-    public ResponseEntity<SingleResponseDto<String>> login(@RequestBody LoginRequestDto loginRequestDto){
+    public ResponseEntity<SingleResponseDto<String>> login(@RequestBody LoginRequestDto loginRequestDto) {
         String result = userService.login(loginRequestDto);
         if (result.equals("fail")) {
             return ResponseEntity.status(401).body(new SingleResponseDto<String>(401, "아이디와 비밀번호를 확인해주세요.", null));
@@ -127,13 +127,17 @@ public class UserController {
 
         // 현재 유저의 모든 Refrigerator 삭제
         List<UserRefrigerator> list;
-        list = userRefrigeratorRepository.findUserRefrigeratorByUser(user); // 유저가 가진 모든 냉장고 가져오기
-        for(UserRefrigerator userRefrigerator : list){
-            foodIngredientRepository.deleteFoodIngredientsByRefrigerator(userRefrigerator.getRefrigerator());   // 해당 냉장고가 가진 식재료 모두 삭제
-            refrigeratorRepository.deleteRefrigeratorByRefrigeratorId(userRefrigerator.getUserRefrigeratorId());    // 해당 냉장고 id 값을 가진 냉장고 삭제
+        list = userRefrigeratorRepository.findUserRefrigeratorByUser(user); // 유저가 가진 모든 유저냉장고 가져오기
+        // 연관관계 매핑 순서대로 삭제 (FoodIngredient => Refrigerator의 자식, UserRefrigerator => User의 자식 이므로 FoodIngredient와 UserRefrigerator를 먼저 지운다)
+        for (UserRefrigerator userRefrigerator : list) {
+            // 해당 냉장고가 가진 식재료 모두 삭제
+            foodIngredientRepository.deleteFoodIngredientsByRefrigerator(userRefrigerator.getRefrigerator());
+            // 현재 유저의 모든 userRefrigerator 삭제
+            userRefrigeratorRepository.deleteUserRefrigeratorByRefrigerator(userRefrigerator.getRefrigerator());
+            // 해당 냉장고 id 값을 가진 냉장고 삭제
+            refrigeratorRepository.deleteRefrigeratorByRefrigeratorId(userRefrigerator.getUserRefrigeratorId());
         }
-        // 현재 유저의 모든 userRefrigerator 삭제
-        userRefrigeratorRepository.deleteUserRefrigeratorByUser(user);
+
         // 현재 유저 삭제
         userRepository.deleteUserByUserId(user.getUserId());
 
@@ -142,7 +146,7 @@ public class UserController {
 
     @ApiOperation(value = "회원정보 조회", notes = "유저의 정보를 조회한다.")
     @GetMapping
-    public ResponseEntity<SingleResponseDto<CheckUserResponseDto>> checkUser(@ApiIgnore Authentication authentication){
+    public ResponseEntity<SingleResponseDto<CheckUserResponseDto>> checkUser(@ApiIgnore Authentication authentication) {
         User user = (User) authentication.getPrincipal();
 
         CheckUserResponseDto checkUserResponseDto = CheckUserResponseDto.builder()
@@ -156,14 +160,14 @@ public class UserController {
         return ResponseEntity.ok(new SingleResponseDto<CheckUserResponseDto>(200, "회원 정보 조회 성공", checkUserResponseDto));
     }
 
+//    @ApiOperation(value = "비밀번호 확인", notes = "회원정보 수정 전 비밀번호 확인을 한다.")
+//    @PostMapping(value = "/checkpw")
+
 //    @ApiOperation(value = "회원정보 수정", notes = "유저의 정보를 수정한다.")
 //    @PutMapping
 //    public ResponseEntity<BaseResponseDto> updateUser(@ApiIgnore Authentication authentication, UserDto userDto){
 //        String result = userService
 //    }
-
-//    @ApiOperation(value = "비밀번호 확인", notes = "회원정보 수정 전 비밀번호 확인을 한다.")
-//    @PostMapping(value = "/checkpw")
 
 
 
