@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/fridgeFragment"
-        android:name="com.andback.pocketfridge.present.views.main.FridgeFragment"
+        android:name="com.andback.pocketfridge.present.views.main.fridge.FridgeFragment"
         android:label="FridgeFragment"
         tools:layout="@layout/fragment_fridge"/>
     <fragment
         android:id="@+id/ingreUploadFragment"
-        android:name="com.andback.pocketfridge.present.views.main.IngreUploadFragment"
+        android:name="com.andback.pocketfridge.present.views.main.ingreupload.IngreUploadFragment"
         android:label="IngreUploadFragment"
         tools:layout="@layout/fragment_ingre_upload"/>
     <fragment

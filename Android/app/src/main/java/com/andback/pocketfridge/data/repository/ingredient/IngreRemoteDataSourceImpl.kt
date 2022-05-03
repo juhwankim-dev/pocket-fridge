@@ -7,12 +7,18 @@ import com.andback.pocketfridge.data.model.IngreEntityForUpload
 import io.reactivex.Single
 import javax.inject.Inject
 
-class IngreRemoteDataSourceImpl @Inject constructor(val ingreApi: IngreApi): IngreRemoteDataSource {
+class IngreRemoteDataSourceImpl @Inject constructor(
+    private val ingreApi: IngreApi
+): IngreRemoteDataSource {
     override fun uploadIngre(ingreEntityForUpload: IngreEntityForUpload): Single<BaseResponse<Any>> {
         return ingreApi.uploadIngre(ingreEntityForUpload)
     }
 
     override fun getIngreListByFridgeId(fridgeId: Int): Single<BaseResponse<List<IngreEntity>>> {
         return ingreApi.getIngreListByFridgeId(fridgeId)
+    }
+
+    override fun deleteIngreById(ingreId: Int): Single<BaseResponse<Any>> {
+        return ingreApi.deleteIngreById(ingreId)
     }
 }

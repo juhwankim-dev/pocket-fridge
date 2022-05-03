@@ -22,7 +22,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     properties.hibernate:
       # 재시작 시 JPA Entity(DB 테이블 데이터)를 새로 생성할지 여부 (create:기존데이터 삭제 후 신규 생성, udpate:신규 데이터만 업데이트, none:아무 실행도 하지 않음)
-      hbm2ddl.auto: create
+      hbm2ddl.auto: update
       format_sql: true
       show_sql: true
       use_sql_comments: true
@@ -75,7 +75,7 @@ spring:
   sql:
     init:
       data-locations: classpath:data.sql
-      mode: always
+      mode: never
 
 
 server:

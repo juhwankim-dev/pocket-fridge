@@ -6,14 +6,14 @@
     <data>
         <variable
             name="vm"
-            type="com.andback.pocketfridge.present.views.main.IngreUploadViewModel" />
+            type="com.andback.pocketfridge.present.views.main.ingreupload.IngreUploadViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/activity_margin_default"
-        tools:context=".present.views.main.CategorySelectFragment">
+        tools:context=".present.views.main.ingreupload.CategorySelectFragment">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_category_selectF_main_category"
