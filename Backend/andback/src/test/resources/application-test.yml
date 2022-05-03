@@ -1,0 +1,115 @@
+# 로컬에서 사용할 application yml 설정 파일
+# ':' 뒤에 설정값을 입력할 때는 반드시 ':' 다음에 공백이 필요
+# 설정할 값들의 레벨 주의 (ex. spring.datasource.url 을 입력할 경우, datasource: 는 spring: 보다 우측으로 한 탭 이동. url: 은 datasource: 보다 우측으로 한 탭 이동)
+
+# 기본 로그 레벨 설정
+logging:
+  level:
+    root: info
+    com.ssapy.api: debug
+    org.hibernate.type.descriptor.sql: trace   # trace
+
+spring:
+  profiles:
+    # application-aws.yml 추가 include
+    include:
+      - aws
+  messages:
+    basename: i18n/exception
+    encoding: UTF-8
+  # JPA 기본 설정
+  jpa:
+    hibernate:
+      ddl-auto: create
+      properties:
+        hibernate:
+          format_sql: true #To beautify or pretty print the SQL
+          show_sql: true #show sql
+    # JPA 실행 후 data.sql 진행
+    defer-datasource-initialization: true
+  freemarker:
+    checkTemplateLocation: false
+  # JWT 토큰에 사용할 secret 키값 (임의의 랜덤 키값)
+  jwt:
+    secret: SSAFYPocketFridge
+  # Spring Boot 순환참조 허용 설정 (WebSecurityConfig와 jwtAuthenticationProvider의 사이클링 문제)
+  main:
+    allow-circular-references: true
+
+  # 데이터 베이스 연결 설정
+  datasource:
+    url: jdbc:mariadb://k6d206.p.ssafy.io:3306/pocket_fridge_test?characterEncoding=utf-8&createDatabaseIfNotExist=true #데이터 베이스 이름 수정 필요
+#    url: jdbc:mariadb://localhost:3306/andback_test_v1?characterEncoding=utf-8&createDatabaseIfNotExist=true #데이터 베이스 이름 수정 필요
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: andback
+    password: Ssafy6!
+  flyway:
+    enabled: false
+  config:
+    activate:
+      on-profile: local
+    use-legacy-processing: true
+  servlet:
+    multipart:
+      file-size-threshold: 15MB
+      # 프로젝트 환경의 upload 파일을 저장할 경로
+      location: C:\Develop\projects\ssafy\upload
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+
+  # 메일 전송 시 사용할 설정값
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: andbackRFT@gmail.com  #이메일
+    password: srhbjmlsjskqbjpp #앱비밀번호
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  sql:
+    init:
+      data-locations: classpath:data.sql
+      mode: always
+
+
+server:
+  # 프로젝트 환경의 포트 설정
+  port: 8080 # 포트 수정 필요
+  domain: http:127.0.0.1
+  servlet:
+    session:
+      timeout: 43200m      # 60m * 24h * 30d
+      cookie:
+        max-age: 43200m    # 60m * 24h * 30d
+        name: SID
+        http-only: true
+        secure: true
+    #context-path: /api
+  max-http-header-size: 3145728
+
+aes256:
+  key: WZsExuBV3GSQ55Uf
+
+# 푸쉬 알림 전송 시 필요한 firebase json 파일의 위치
+app:
+  firebase-config: ssafy-e6f74-firebase-adminsdk-2911y-cfd0f23f96.json
+
+# swagger에서 테스트 할 때의 host
+swagger:
+  host: http://localhost:8080
+
+# notification 부분 mattermost랑 연동
+notification:
+  mattermost:
+    enabled: true # mmSender를 사용할 지 여부, false면 알림이 오지 않는다
+    webhook-url: https://meeting.ssafy.com/hooks/ipy1snjf5igwxrtcdqt88kb5nw # 위의 Webhook URL을 기입
+    channel: # 기본 설정한 채널이 아닌 다른 채널로 보내고 싶을 때 기입한다
+    pretext: # attachments의 상단에 나오게 되는 일반 텍스트 문자
+    color: # attachment에 왼쪽 사이드 컬러. default=red
+    author-name: Back-End Exception # attachment의 상단에 나오는 이름
+    author-icon: https://media.vlpt.us/images/ayoung0073/post/2db5c70c-d494-4cca-ad58-7b4eaabc3c9a/springboot.jpeg # author-icon 왼쪽에 나올 아이콘의 url링크
+    footer: # attachment에 하단에 나올 부분. default=현재 시간
