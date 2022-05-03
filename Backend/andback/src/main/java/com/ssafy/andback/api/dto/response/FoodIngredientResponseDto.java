@@ -1,17 +1,29 @@
 package com.ssafy.andback.api.dto.response;
 
 import com.ssafy.andback.api.constant.WayStatus;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * FoodIngredientResponseDto
+ * 식재료 ResponseDto
+ *
+ * @author hoony
+ * @version 1.0.0
+ * 생성일 2022-05-03
+ * 마지막 수정일 2022-05-03
+ **/
+
 @Data
 public class FoodIngredientResponseDto {
+
+    //식재료 고유 번호
+    @ApiParam(value = "식재료 고유 번호", required = true)
+    private Long foodIngredientId;
 
     // 식재료 이름
     @ApiParam(value = "식재료 이름", required = true)
@@ -38,7 +50,8 @@ public class FoodIngredientResponseDto {
     private Long subCategoryId;
 
     @Builder
-    public FoodIngredientResponseDto(String foodIngredientName, LocalDate foodIngredientExp, LocalDate foodIngredientDate, WayStatus foodIngredientWay, Long refrigeratorId, Long subCategoryId) {
+    public FoodIngredientResponseDto(Long foodIngredientId, String foodIngredientName, LocalDate foodIngredientExp, LocalDate foodIngredientDate, WayStatus foodIngredientWay, Long refrigeratorId, Long subCategoryId) {
+        this.foodIngredientId = foodIngredientId;
         this.foodIngredientName = foodIngredientName;
         this.foodIngredientExp = foodIngredientExp.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         this.foodIngredientDate = foodIngredientDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
