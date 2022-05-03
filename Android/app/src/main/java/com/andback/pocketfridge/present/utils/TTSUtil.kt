@@ -4,10 +4,13 @@ import android.content.Context
 import android.os.Handler
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
+import androidx.lifecycle.MutableLiveData
+import com.andback.pocketfridge.R
 import java.util.*
 
-class TTSUtil(val context: Context, val stt: STTUtil?) {
+class TTSUtil(val context: Context, val stt: STTUtil?, val isListening: MutableLiveData<Boolean>) {
     lateinit var textToSpeech: TextToSpeech
+    private var isReady = false
 
     fun initTTS() {
         textToSpeech = TextToSpeech(context) {
@@ -26,6 +29,7 @@ class TTSUtil(val context: Context, val stt: STTUtil?) {
                 val mainHandler = Handler(context.mainLooper)
                 val myRunnable = Runnable {
                     stt!!.startListening()
+                    isListening.postValue(isReady)
                 }
                 mainHandler.post(myRunnable)
             }
@@ -35,6 +39,7 @@ class TTSUtil(val context: Context, val stt: STTUtil?) {
     }
 
     fun speak(text: String) {
+        isReady = (text == context.resources.getString(R.string.ipa_ready))
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, "temp")
         } else {
