@@ -81,10 +81,10 @@ class RecipeStepsFragment : BaseFragment<FragmentRecipeStepsBinding>(R.layout.fr
         return resources.getStringArray(R.array.ipa_name_list).any { s.indexOf(it) > -1 }
     }
 
-    override fun onDestroy() {
+    override fun onDestroyView() {
         tts.textToSpeech.stop()
         tts.textToSpeech.shutdown()
         stt.stopListening()
-        super.onDestroy()
+        super.onDestroyView()
     }
 }
