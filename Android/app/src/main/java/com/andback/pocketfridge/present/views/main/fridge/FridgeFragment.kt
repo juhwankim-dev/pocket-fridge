@@ -42,12 +42,6 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
                 }
             }
         }
-        // 더미 데이터
-        val list = mutableListOf(Ingredient(1, 0, "2022-05-01", "2022-05-03", "돼지고기", -1, Storage.Fridge))
-        for(i in 0..5) {
-            list.add(Ingredient(1, 0, "2022-05-01", "2022-05-03", "돼지고기", -1, Storage.Fridge))
-        }
-        rvAdapter.setItems(list)
 
         binding.rvFridgeF.apply {
             adapter = rvAdapter
@@ -71,8 +65,7 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
             .setMessage("${ingre.name}")
             .setCancelable(true)
             .setPositiveButton(resources.getString(R.string.delete_button)) { dialog, which ->
-                // TODO: Ingredient Id 추가되면 주석 해제 
-//                viewModel.deleteIngreById(ingre.id)
+                viewModel.deleteIngreById(ingre.id)
             }
             .show()
     }

@@ -15,6 +15,7 @@ object IngreMapper {
 
     operator fun invoke(entity: IngreEntity): Ingredient {
         return Ingredient(
+            id = entity.foodIngredientId,
             category = entity.subCategoryId,
             purchasedDate = entity.foodIngredientDate,
             expiryDate = entity.foodIngredientExp,
@@ -27,6 +28,7 @@ object IngreMapper {
 
     operator fun invoke(ingredient: Ingredient): IngreEntity {
         return IngreEntity(
+            foodIngredientId = ingredient.id,
             subCategoryId = ingredient.category,
             foodIngredientDate = ingredient.purchasedDate,
             foodIngredientExp = ingredient.expiryDate,
