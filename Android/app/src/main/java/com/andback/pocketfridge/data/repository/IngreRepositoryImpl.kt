@@ -30,4 +30,9 @@ class IngreRepositoryImpl @Inject constructor(private val ingreRemoteDataSource:
     override fun deleteIngreById(ingreId: Int): Single<BaseResponse<Any>> {
         return ingreRemoteDataSource.deleteIngreById(ingreId)
     }
+
+    override fun updateIngre(ingreId: Int, ingredient: Ingredient): Single<BaseResponse<Any>> {
+        val ingreEntity = IngreMapper.invoke(ingredient)
+        return ingreRemoteDataSource.updateIngre(ingreId, ingreEntity)
+    }
 }
