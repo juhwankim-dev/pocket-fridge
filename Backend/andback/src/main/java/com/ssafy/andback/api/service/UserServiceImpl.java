@@ -1,18 +1,17 @@
 package com.ssafy.andback.api.service;
 
 import com.ssafy.andback.api.dto.request.LoginRequestDto;
+import com.ssafy.andback.api.dto.request.UpdateUserRequestDto;
 import com.ssafy.andback.config.jwt.JwtAuthenticationProvider;
 import com.ssafy.andback.core.domain.Refrigerator;
 import com.ssafy.andback.core.domain.UserRefrigerator;
-import com.ssafy.andback.core.repository.RefrigeratorRepository;
-import com.ssafy.andback.core.repository.UserRefrigeratorRepository;
+import com.ssafy.andback.core.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import com.ssafy.andback.api.dto.UserDto;
 import com.ssafy.andback.core.domain.User;
-import com.ssafy.andback.core.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -41,6 +41,12 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RefrigeratorRepository refrigeratorRepository;
     private final UserRefrigeratorRepository userRefrigeratorRepository;
+
+    @Autowired
+    private FoodIngredientRepository foodIngredientRepository;
+
+    @Autowired
+    private RecipeLikeRepository recipeLikeRepository;
 
     private final PasswordEncoder passwordEncoder; // WebSecurityConfig.java 에서 Bean 설정
 
@@ -172,22 +178,62 @@ public class UserServiceImpl implements UserService {
     // 비밀번호 찾기 (비밀번호 변경)
     @Override
     @Transactional(readOnly = false) // save 없이 자동으로 업데이트
-    public String findUserPassword(String userEmail) {
-        Optional<User> user = userRepository.findByUserEmail(userEmail);
-        if (!user.isPresent()) {
+    public String findUserPassword(User user, String userEmail) {
+        if(user.getUserEmail().equals(userEmail))   // 현재유저와 같지 않은 이메일 입력시 fail
             return "fail";
-        }
 
         String userPassword = sendUserEmailNumber(userEmail);
 
-        user.get().setUserPassword(passwordEncoder.encode(userPassword));
+        user.setUserPassword(passwordEncoder.encode(userPassword));
 
         return "success";
     }
 
+    // 회원 탈퇴
     @Override
-    public String updateUser(String token) {
-        return null;
+    public void deleteUser(User user) {
+        // 현재 유저의 모든 Refrigerator 삭제
+        List<UserRefrigerator> list;
+        list = userRefrigeratorRepository.findUserRefrigeratorByUser(user); // 유저가 가진 모든 유저냉장고 가져오기
+        // 연관관계 매핑 순서대로 삭제 (FoodIngredient => Refrigerator의 자식, UserRefrigerator => User의 자식 이므로 FoodIngredient와 UserRefrigerator를 먼저 지운다)
+        for (UserRefrigerator userRefrigerator : list) {
+            // 해당 냉장고가 가진 식재료 모두 삭제
+            foodIngredientRepository.deleteFoodIngredientsByRefrigerator(userRefrigerator.getRefrigerator());
+            // 현재 유저의 모든 userRefrigerator 삭제
+            userRefrigeratorRepository.deleteUserRefrigeratorByRefrigerator(userRefrigerator.getRefrigerator());
+            // 해당 냉장고 id 값을 가진 냉장고 삭제
+            refrigeratorRepository.deleteRefrigeratorByRefrigeratorId(userRefrigerator.getUserRefrigeratorId());
+        }
+
+        // 현재 유저의 레시피 좋아요 삭제
+        recipeLikeRepository.deleteRecipeLikeByUser(user);
+
+        // 현재 유저 삭제
+        userRepository.deleteUserByUserId(user.getUserId());
+    }
+
+    // 회원 정보 수정 전 비밀번호 확인
+    @Override
+    public String checkUserPassword(User user, String userPassword) {
+        // 암호화된 비밀번호 비교
+        if (!passwordEncoder.matches(userPassword, user.getUserPassword())) {
+            return "fail";
+        }
+        return "success";
+    }
+
+    // 회원 정보 수정
+    @Override
+    @Transactional(readOnly = false) // save 없이 자동으로 업데이트
+    public String updateUser(User user, UpdateUserRequestDto updateUserRequestDto) {
+        if(!updateUserRequestDto.getUserNickname().equals(user.getUserNickname()))
+            user.setUserNickname(updateUserRequestDto.getUserNickname());
+        if(!passwordEncoder.matches(updateUserRequestDto.getUserPassword(), user.getUserPassword()))
+            user.setUserPassword(passwordEncode(updateUserRequestDto.getUserPassword()));
+        if(!updateUserRequestDto.getUserPicture().equals(user.getUserPicture()))
+            user.setUserPicture(updateUserRequestDto.getUserPicture());
+        userRepository.save(user);
+        return "success";
     }
 
 
