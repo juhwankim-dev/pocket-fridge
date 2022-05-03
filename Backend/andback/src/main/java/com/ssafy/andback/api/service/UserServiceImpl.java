@@ -1,6 +1,7 @@
 package com.ssafy.andback.api.service;
 
 import com.ssafy.andback.api.dto.request.LoginRequestDto;
+import com.ssafy.andback.api.dto.request.UpdateUserRequestDto;
 import com.ssafy.andback.config.jwt.JwtAuthenticationProvider;
 import com.ssafy.andback.core.domain.Refrigerator;
 import com.ssafy.andback.core.domain.UserRefrigerator;
@@ -177,15 +178,13 @@ public class UserServiceImpl implements UserService {
     // 비밀번호 찾기 (비밀번호 변경)
     @Override
     @Transactional(readOnly = false) // save 없이 자동으로 업데이트
-    public String findUserPassword(String userEmail) {
-        Optional<User> user = userRepository.findByUserEmail(userEmail);
-        if (!user.isPresent()) {
+    public String findUserPassword(User user, String userEmail) {
+        if(user.getUserEmail().equals(userEmail))   // 현재유저와 같지 않은 이메일 입력시 fail
             return "fail";
-        }
 
         String userPassword = sendUserEmailNumber(userEmail);
 
-        user.get().setUserPassword(passwordEncoder.encode(userPassword));
+        user.setUserPassword(passwordEncoder.encode(userPassword));
 
         return "success";
     }
@@ -225,8 +224,16 @@ public class UserServiceImpl implements UserService {
 
     // 회원 정보 수정
     @Override
-    public String updateUser(String token) {
-        return null;
+    @Transactional(readOnly = false) // save 없이 자동으로 업데이트
+    public String updateUser(User user, UpdateUserRequestDto updateUserRequestDto) {
+        if(!updateUserRequestDto.getUserNickname().equals(user.getUserNickname()))
+            user.setUserNickname(updateUserRequestDto.getUserNickname());
+        if(!passwordEncoder.matches(updateUserRequestDto.getUserPassword(), user.getUserPassword()))
+            user.setUserPassword(passwordEncode(updateUserRequestDto.getUserPassword()));
+        if(!updateUserRequestDto.getUserPicture().equals(user.getUserPicture()))
+            user.setUserPicture(updateUserRequestDto.getUserPicture());
+        userRepository.save(user);
+        return "success";
     }
 
 

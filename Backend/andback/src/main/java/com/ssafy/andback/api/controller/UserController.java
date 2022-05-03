@@ -1,7 +1,9 @@
 package com.ssafy.andback.api.controller;
 
 import com.ssafy.andback.api.dto.request.CheckUserPasswordRequestDto;
+import com.ssafy.andback.api.dto.request.FindUserPasswordRequestDto;
 import com.ssafy.andback.api.dto.request.LoginRequestDto;
+import com.ssafy.andback.api.dto.request.UpdateUserRequestDto;
 import com.ssafy.andback.api.dto.response.CheckUserResponseDto;
 import com.ssafy.andback.api.dto.response.SingleResponseDto;
 import com.ssafy.andback.core.domain.User;
@@ -39,7 +41,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @ApiOperation(value = "회원가입", notes = "유저 정보를 받아 DB에 저장한다.")
+    @ApiOperation(value = "회원가입", notes = "유저 정보를 받아 DB에 저장한다. " +
+            "이메일: 이메일 형식, 이름: 2~20자, 닉네임: 2~10자(특수문자 제외), 비밀번호(영문자 포함 5~15자), 사진: null 허용")
     @PostMapping
     public ResponseEntity<BaseResponseDto> signUp(@RequestBody @Valid UserDto userDto, @ApiIgnore Errors errors) {
         String result = userService.insertUser(userDto);
@@ -91,8 +94,11 @@ public class UserController {
 
     @ApiOperation(value = "비밀번호 찾기", notes = "비밀번호 찾기 시 새 비밀번호를 이메일에 전송한다.")
     @PutMapping(value = "/findpassword/{userEmail}")
-    public ResponseEntity<BaseResponseDto> findUserPassword(@PathVariable String userEmail) {
-        String result = userService.findUserPassword(userEmail);
+    public ResponseEntity<BaseResponseDto> findUserPassword(@ApiIgnore Authentication authentication,
+                                                            @RequestBody FindUserPasswordRequestDto findUserPasswordRequestDto) {
+        User user = (User) authentication.getPrincipal();
+
+        String result = userService.findUserPassword(user, findUserPasswordRequestDto.getUserEmail());
         if (result.equals("fail")) {
             return ResponseEntity.status(401).body(BaseResponseDto.of(401, "이메일을 확인해주세요."));
         }
@@ -140,11 +146,19 @@ public class UserController {
         return ResponseEntity.ok(BaseResponseDto.of(200, "비밀번호 확인 완료"));
     }
 
-//    @ApiOperation(value = "회원정보 수정", notes = "유저의 정보를 수정한다.")
-//    @PutMapping(value = "/update")
-//    public ResponseEntity<BaseResponseDto> updateUser(@ApiIgnore Authentication authentication, UserDto userDto){
-//        String result = userService
-//    }
+    @ApiOperation(value = "회원정보 수정", notes = "유저의 정보를 수정한다.")
+    @PutMapping(value = "/update")
+    public ResponseEntity<BaseResponseDto> updateUser(@ApiIgnore Authentication authentication,
+                                                      @RequestBody @Valid UpdateUserRequestDto updateUserRequestDto,
+                                                      @ApiIgnore Errors errors){
+        User user = (User) authentication.getPrincipal();
+
+        String answer = userService.updateUser(user, updateUserRequestDto);
+        if(answer.equals("fail")){
+            return ResponseEntity.status(401).body(BaseResponseDto.of(401, "회원 정보 수정 실패"));
+        }
+        return ResponseEntity.ok(BaseResponseDto.of(200, "회원 정보 수정 완료"));
+    }
 
 
 
