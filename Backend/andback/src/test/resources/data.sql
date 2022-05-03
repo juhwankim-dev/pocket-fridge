@@ -479,8 +479,27 @@ VALUES (228, 11, '돈까스소스');
 
 
 -- 레시피 정보 // 아이디 값, 이름, 내용, 요약, 이미지, 타입 //한식 일식 중식 양식
-InsERT INTO recipe (recipe_id, recipe_food_name, recipe_content, recipe_food_summary, recipe_image, recipe_type)
-values (1, "라면", "라면", "국민 라면", null, "한식");
+INSERT INTO recipe (recipe_id, recipe_food_name, recipe_content, recipe_all_ingredient, recipe_image, recipe_type, recipe_time, recipe_serving)
+values (1, "라면", "지글지글 보글보글 맛있는 라면~이다", "라면 라면스프 고추가루 순두부", null, "한식", 30, 1);
+INSERT INTO recipe (recipe_id, recipe_food_name, recipe_content, recipe_all_ingredient, recipe_image, recipe_type, recipe_time, recipe_serving)
+values (2, "라면", "지글지글 보글보글 맛있는 라면~이다", "라면 라면스프 고추가루 순두부", null, "한식", 30, 1);
+INSERT INTO recipe (recipe_id, recipe_food_name, recipe_content, recipe_all_ingredient, recipe_image, recipe_type, recipe_time, recipe_serving)
+values (3, "라면", "지글지글 보글보글 맛있는 라면~이다", "라면 라면스프 고추가루 순두부", null, "한식", 30, 1);
+INSERT INTO recipe (recipe_id, recipe_food_name, recipe_content, recipe_all_ingredient, recipe_image, recipe_type, recipe_time, recipe_serving)
+values (4, "라면", "지글지글 보글보글 맛있는 라면~이다", "라면 라면스프 고추가루 순두부", null, "한식", 30, 1);
+INSERT INTO recipe (recipe_id, recipe_food_name, recipe_content, recipe_all_ingredient, recipe_image, recipe_type, recipe_time, recipe_serving)
+values (5, "라면", "지글지글 보글보글 맛있는 라면~이다", "라면 라면스프 고추가루 순두부", null, "한식", 30, 1);
+InsERT INTO recipe (recipe_id, recipe_food_name, recipe_content, recipe_all_ingredient, recipe_image, recipe_type, recipe_time, recipe_serving)
+values (6, "라면", "지글지글 보글보글 맛있는 라면~이다", "라면 라면스프 고추가루 순두부", null, "한식", 30, 1);
+
+insert into recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count)
+values (1, 1, 1, "라면", "1개");
+insert into recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count)
+values (2, 1, 2, "라면스프", "1개");
+insert into recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count)
+values (3, 1, 3, "고추가루", "한 스푼");
+insert into recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count)
+values (4, 1, 3, "순두부", "100g");
 
 
 
@@ -490,3 +509,4 @@ insert into recipe_process (recipe_process_id, recipe_process_description, recip
 values (2, "끓는 물에 라면과 스프를 넣고 3분 끓인다", null, 2, 1);
 insert into recipe_process (recipe_process_id, recipe_process_description, recipe_process_image, recipe_process_sequence, recipe_id)
 values (3, "맛있게 먹는다", null, 3, 1);
+
