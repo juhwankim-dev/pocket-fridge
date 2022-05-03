@@ -1,8 +1,8 @@
 package com.ssafy.andback.api.controller;
 
 import com.ssafy.andback.api.dto.request.LoginRequestDto;
+import com.ssafy.andback.api.dto.response.CheckUserResponseDto;
 import com.ssafy.andback.api.dto.response.SingleResponseDto;
-import com.ssafy.andback.core.domain.Refrigerator;
 import com.ssafy.andback.core.domain.User;
 import com.ssafy.andback.core.domain.UserRefrigerator;
 import com.ssafy.andback.core.repository.FoodIngredientRepository;
@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,7 +32,7 @@ import java.util.List;
  * @author 김다은
  * @version 1.0.0
  * 생성일 2022-04-19
- * 마지막 수정일 2022-04-25
+ * 마지막 수정일 2022-05-02
  **/
 
 @RequiredArgsConstructor
@@ -121,6 +120,7 @@ public class UserController {
     @Transactional  // org.springframework.dao.InvalidDataAccessApiUsageException 처리
     // Transaction이 Required 되지 않아서 발생하는 것
     @DeleteMapping
+    // Authentication 객체: 인증에 성공한 사용자의 정보를 가지고 있는 객체
     public ResponseEntity<BaseResponseDto> deleteUser(@ApiIgnore Authentication authentication) {
         System.out.println("authentication.getPrincipal() = " + authentication.getPrincipal());
         User user = (User) authentication.getPrincipal();
@@ -140,8 +140,24 @@ public class UserController {
         return ResponseEntity.ok(BaseResponseDto.of(200, "회원 탈퇴 성공"));
     }
 
+    @ApiOperation(value = "회원정보 조회", notes = "유저의 정보를 조회한다.")
+    @GetMapping
+    public ResponseEntity<SingleResponseDto<CheckUserResponseDto>> checkUser(@ApiIgnore Authentication authentication){
+        User user = (User) authentication.getPrincipal();
+
+        CheckUserResponseDto checkUserResponseDto = CheckUserResponseDto.builder()
+                .userId(user.getUserId())
+                .userEmail(user.getUserEmail())
+                .userName(user.getUserName())
+                .userNickname(user.getUserNickname())
+                .userPicture(user.getUserPicture())
+                .build();
+
+        return ResponseEntity.ok(new SingleResponseDto<CheckUserResponseDto>(200, "회원 정보 조회 성공", checkUserResponseDto));
+    }
+
 //    @ApiOperation(value = "회원정보 수정", notes = "유저의 정보를 수정한다.")
-//    @PutMapping("/update")
+//    @PutMapping
 //    public ResponseEntity<BaseResponseDto> updateUser(@ApiIgnore Authentication authentication, UserDto userDto){
 //        String result = userService
 //    }
@@ -149,9 +165,6 @@ public class UserController {
 //    @ApiOperation(value = "비밀번호 확인", notes = "회원정보 수정 전 비밀번호 확인을 한다.")
 //    @PostMapping(value = "/checkpw")
 
-//    @ApiOperation(value = "회원정보 조회", notes = "유저의 정보를 조회한다.")
-//    @GetMapping("/info")
-//    public ResponseEntity<BaseResponseDto> deleteUser(@ApiIgnore Authentication authentication)
 
 
 }

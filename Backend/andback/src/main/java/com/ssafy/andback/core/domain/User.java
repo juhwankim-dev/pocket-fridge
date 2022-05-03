@@ -64,6 +64,10 @@ public class User extends BaseEntity implements UserDetails {
                 .collect(Collectors.toList());
     }
 
+    public String getUserName(){
+        return this.userName;
+    }
+
     @Override
     public String getPassword() {
         return this.getUserPassword();
