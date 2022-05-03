@@ -10,7 +10,7 @@ import android.util.Log
 import com.andback.pocketfridge.present.views.main.recipe.detail.RecipeStepsFragment
 import java.util.*
 
-class STTUtil(val context: Context, val packageName: String, val c: RecipeStepsFragment.Command) {
+class STTUtil(val context: Context, val packageName: String, val assistant: RecipeStepsFragment.Assistant) {
     var speechRecognizer: SpeechRecognizer? = null
     lateinit var sttIntent: Intent
 
@@ -24,7 +24,7 @@ class STTUtil(val context: Context, val packageName: String, val c: RecipeStepsF
         }
 
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context).apply {
-            setRecognitionListener(sttlistener)
+            setRecognitionListener(sttListener)
             startListening(sttIntent)
         }
     }
@@ -33,7 +33,7 @@ class STTUtil(val context: Context, val packageName: String, val c: RecipeStepsF
         speechRecognizer!!.startListening(sttIntent)
     }
 
-    val sttlistener: RecognitionListener = object : RecognitionListener {
+    private val sttListener: RecognitionListener = object : RecognitionListener {
         override fun onReadyForSpeech(params: Bundle) {
             // 말하기 시작할 준비가되면 호출
         }
@@ -83,7 +83,7 @@ class STTUtil(val context: Context, val packageName: String, val c: RecipeStepsF
 
             if (resultStr.isEmpty()) return
             resultStr = resultStr.replace(" ", "")
-            c.command = resultStr
+            assistant.command = resultStr
         }
 
         override fun onPartialResults(partialResults: Bundle) {

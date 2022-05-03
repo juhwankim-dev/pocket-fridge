@@ -16,11 +16,13 @@ import kotlin.properties.Delegates
 class RecipeStepsFragment : BaseFragment<FragmentRecipeStepsBinding>(R.layout.fragment_recipe_steps) {
     lateinit var tts: TTSUtil
     lateinit var stt: STTUtil
+    private val assistant = Assistant()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         checkPermission()
+        initEvent()
     }
 
     @SuppressLint("CheckResult")
@@ -42,8 +44,14 @@ class RecipeStepsFragment : BaseFragment<FragmentRecipeStepsBinding>(R.layout.fr
                 })
     }
 
+    private fun initEvent() {
+        binding.ivRecipeStepsFCircle.setOnClickListener {
+            assistant.command = resources.getStringArray(R.array.ipa_name_list)[0]
+        }
+    }
+
     private fun initSTT() {
-        stt = STTUtil(requireContext(), requireContext().packageName, Command())
+        stt = STTUtil(requireContext(), requireContext().packageName, assistant)
         stt.initSTT()
     }
 
@@ -52,7 +60,7 @@ class RecipeStepsFragment : BaseFragment<FragmentRecipeStepsBinding>(R.layout.fr
         tts.initTTS()
     }
 
-    inner class Command {
+    inner class Assistant {
         var command: String by Delegates.observable("") {
                 _, oldValue, newValue ->
             if (isCallMsg(newValue)) {
