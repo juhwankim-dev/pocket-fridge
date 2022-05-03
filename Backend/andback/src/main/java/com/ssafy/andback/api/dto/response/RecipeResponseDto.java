@@ -4,6 +4,7 @@ import com.ssafy.andback.api.constant.RecipeType;
 import lombok.Builder;
 import lombok.Data;
 
+
 /**
  * RecipeResponseDto
  * 레시피 전달 DTO
@@ -15,7 +16,6 @@ import lombok.Data;
  **/
 
 @Data
-@Builder
 public class RecipeResponseDto {
 
     // 레시피 아이디
@@ -24,8 +24,8 @@ public class RecipeResponseDto {
     // 요리 이름
     private String recipeFoodName;
 
-    // 요리 요약
-    private String recipeFoodSummary;
+    // 요리 재료 요약
+    private String recipeAllIngredient;
 
     // 내용
     private String recipeContent;
@@ -36,4 +36,22 @@ public class RecipeResponseDto {
     // 음식 종류
     private RecipeType recipeType;
 
+    // 음식 조리 시간 분
+    private String recipeTime;
+
+    // 음식 인분
+    private String recipeServing;
+
+
+    @Builder
+    public RecipeResponseDto(Long recipeId, String recipeFoodName, String recipeAllIngredient, String recipeContent, String recipeImage, RecipeType recipeType, int recipeTime, int recipeServing) {
+        this.recipeId = recipeId;
+        this.recipeFoodName = recipeFoodName;
+        this.recipeAllIngredient = recipeAllIngredient;
+        this.recipeContent = recipeContent;
+        this.recipeImage = recipeImage;
+        this.recipeType = recipeType;
+        this.recipeTime = String.format("%d 분", recipeTime);
+        this.recipeServing = String.format("%d 인분", recipeServing);
+    }
 }

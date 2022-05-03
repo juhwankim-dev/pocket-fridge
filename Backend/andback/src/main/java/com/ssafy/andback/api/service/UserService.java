@@ -1,6 +1,7 @@
 package com.ssafy.andback.api.service;
 
 import com.ssafy.andback.api.dto.UserDto;
+import com.ssafy.andback.api.dto.request.FindUserPasswordRequestDto;
 import com.ssafy.andback.api.dto.request.LoginRequestDto;
 import com.ssafy.andback.api.dto.request.UpdateUserRequestDto;
 import com.ssafy.andback.core.domain.User;
@@ -23,9 +24,11 @@ public interface UserService {
 
     String sendUserEmailNumber(String userEmail);
 
+    String sendNewUserPassword(String userEmail);
+
     String login(LoginRequestDto loginRequestDto);
 
-    String findUserPassword(String userEmail);
+    String findUserPassword(FindUserPasswordRequestDto findUserPasswordRequestDto);
 
     void deleteUser(User user);
 

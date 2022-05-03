@@ -1,6 +1,7 @@
 package com.ssafy.andback.api.controller;
 
 import com.ssafy.andback.api.dto.response.ListResponseDto;
+import com.ssafy.andback.api.dto.response.RecipeIngredientResponseDto;
 import com.ssafy.andback.api.dto.response.RecipeProcessResponseDto;
 import com.ssafy.andback.api.dto.response.RecipeResponseDto;
 import com.ssafy.andback.api.service.RecipeService;
@@ -51,6 +52,16 @@ public class RecipeController {
         List<RecipeProcessResponseDto> response = recipeService.findRecipeProcessByRecipeId(recipeId);
 
         return ResponseEntity.ok(new ListResponseDto<RecipeProcessResponseDto>(200, "success", response));
+    }
+
+
+    @ApiOperation(value = "레시피 재료 정보 조회", notes = "레시피 Id로 레시피 재료를 조회한다")
+    @GetMapping("/ingredient/{recipeId}")
+    ResponseEntity<ListResponseDto<RecipeIngredientResponseDto>> findAllRecipeIngredientByRecipeId(@PathVariable(value = "recipeId", required = true) Long recipeId){
+
+        List<RecipeIngredientResponseDto> response = recipeService.findRecipeIngredientByRecipeId(recipeId);
+
+        return ResponseEntity.ok(new ListResponseDto<RecipeIngredientResponseDto>(200, "success", response));
     }
 
 }
