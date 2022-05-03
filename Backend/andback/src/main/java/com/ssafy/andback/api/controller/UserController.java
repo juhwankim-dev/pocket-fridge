@@ -122,7 +122,6 @@ public class UserController {
     @DeleteMapping
     // Authentication 객체: 인증에 성공한 사용자의 정보를 가지고 있는 객체
     public ResponseEntity<BaseResponseDto> deleteUser(@ApiIgnore Authentication authentication) {
-        System.out.println("authentication.getPrincipal() = " + authentication.getPrincipal());
         User user = (User) authentication.getPrincipal();
 
         // 현재 유저의 모든 Refrigerator 삭제

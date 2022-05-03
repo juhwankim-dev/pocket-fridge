@@ -39,7 +39,7 @@ class TokenServiceTest {
 
         user = userRepository.save(makeUser);
 
-        System.out.println(user.getUserId());
+        .out.println(user.getUserId());
     }
 
 
