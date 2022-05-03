@@ -26,5 +26,9 @@ public interface UserService {
 
     String findUserPassword(String userEmail);
 
+    void deleteUser(User user);
+
+    String checkUserPassword(User user, String userPassword);
+
     String updateUser(String token);
 }

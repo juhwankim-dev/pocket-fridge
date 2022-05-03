@@ -1,11 +1,10 @@
 package com.ssafy.andback.api.controller;
 
+import com.ssafy.andback.api.dto.request.CheckUserPasswordRequestDto;
 import com.ssafy.andback.api.dto.request.LoginRequestDto;
 import com.ssafy.andback.api.dto.response.CheckUserResponseDto;
 import com.ssafy.andback.api.dto.response.SingleResponseDto;
 import com.ssafy.andback.core.domain.User;
-import com.ssafy.andback.core.domain.UserRefrigerator;
-import com.ssafy.andback.core.repository.*;
 import io.swagger.annotations.*;
 import com.ssafy.andback.api.dto.UserDto;
 import com.ssafy.andback.api.dto.response.BaseResponseDto;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * UserController
@@ -40,21 +38,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private UserRefrigeratorRepository userRefrigeratorRepository;
-
-    @Autowired
-    private RefrigeratorRepository refrigeratorRepository;
-
-    @Autowired
-    private FoodIngredientRepository foodIngredientRepository;
-
-    @Autowired
-    private RecipeLikeRepository recipeLikeRepository;
 
     @ApiOperation(value = "회원가입", notes = "유저 정보를 받아 DB에 저장한다.")
     @PostMapping
@@ -122,28 +105,9 @@ public class UserController {
     @DeleteMapping
     // Authentication 객체: 인증에 성공한 사용자의 정보를 가지고 있는 객체
     public ResponseEntity<BaseResponseDto> deleteUser(@ApiIgnore Authentication authentication) {
-        System.out.println("authentication.getPrincipal() = " + authentication.getPrincipal());
         User user = (User) authentication.getPrincipal();
 
-        // 현재 유저의 모든 Refrigerator 삭제
-        List<UserRefrigerator> list;
-        list = userRefrigeratorRepository.findUserRefrigeratorByUser(user); // 유저가 가진 모든 유저냉장고 가져오기
-        // 연관관계 매핑 순서대로 삭제 (FoodIngredient => Refrigerator의 자식, UserRefrigerator => User의 자식 이므로 FoodIngredient와 UserRefrigerator를 먼저 지운다)
-        for (UserRefrigerator userRefrigerator : list) {
-            // 해당 냉장고가 가진 식재료 모두 삭제
-            foodIngredientRepository.deleteFoodIngredientsByRefrigerator(userRefrigerator.getRefrigerator());
-            // 현재 유저의 모든 userRefrigerator 삭제
-            userRefrigeratorRepository.deleteUserRefrigeratorByRefrigerator(userRefrigerator.getRefrigerator());
-            // 해당 냉장고 id 값을 가진 냉장고 삭제
-            refrigeratorRepository.deleteRefrigeratorByRefrigeratorId(userRefrigerator.getUserRefrigeratorId());
-        }
-
-        // 현재 유저의 레시피 좋아요 삭제
-        recipeLikeRepository.deleteRecipeLikeByUser(user);
-
-        // 현재 유저 삭제
-        userRepository.deleteUserByUserId(user.getUserId());
-
+        userService.deleteUser(user);
         return ResponseEntity.ok(BaseResponseDto.of(200, "회원 탈퇴 성공"));
     }
 
@@ -163,11 +127,21 @@ public class UserController {
         return ResponseEntity.ok(new SingleResponseDto<CheckUserResponseDto>(200, "회원 정보 조회 성공", checkUserResponseDto));
     }
 
-//    @ApiOperation(value = "비밀번호 확인", notes = "회원정보 수정 전 비밀번호 확인을 한다.")
-//    @PostMapping(value = "/checkpw")
+    @ApiOperation(value = "비밀번호 확인", notes = "회원정보 수정 전 비밀번호 확인을 한다.")
+    @PostMapping(value = "/update")
+    public ResponseEntity<BaseResponseDto> checkUserPassword(@ApiIgnore Authentication authentication,
+                                                             @RequestBody CheckUserPasswordRequestDto checkUserPasswordRequestDto){
+        User user = (User) authentication.getPrincipal();
+
+        String answer = userService.checkUserPassword(user, checkUserPasswordRequestDto.getUserPassword());
+        if(answer.equals("fail")){
+            return ResponseEntity.status(401).body(BaseResponseDto.of(401, "비밀번호가 틀렸습니다."));
+        }
+        return ResponseEntity.ok(BaseResponseDto.of(200, "비밀번호 확인 완료"));
+    }
 
 //    @ApiOperation(value = "회원정보 수정", notes = "유저의 정보를 수정한다.")
-//    @PutMapping
+//    @PutMapping(value = "/update")
 //    public ResponseEntity<BaseResponseDto> updateUser(@ApiIgnore Authentication authentication, UserDto userDto){
 //        String result = userService
 //    }
