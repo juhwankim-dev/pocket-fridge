@@ -38,8 +38,6 @@ class TokenServiceTest {
                 .build();
 
         user = userRepository.save(makeUser);
-
-        .out.println(user.getUserId());
     }
 
 
