@@ -25,7 +25,7 @@ public interface UserService {
 
     String login(LoginRequestDto loginRequestDto);
 
-    String findUserPassword(User user, String userEmail);
+    String findUserPassword(String userEmail);
 
     void deleteUser(User user);
 
