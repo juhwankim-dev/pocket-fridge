@@ -44,7 +44,7 @@ object SignUpChecker {
     }
 
     fun validateEmail(email: String): CheckResult {
-        val pattern = android.util.Patterns.EMAIL_ADDRESS
+        val pattern = androidx.core.util.PatternsCompat.EMAIL_ADDRESS
 
         return when {
             email.trim().isEmpty() -> {
