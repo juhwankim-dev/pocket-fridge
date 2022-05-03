@@ -1,9 +1,8 @@
 package com.ssafy.andback.core.domain;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -22,6 +21,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class UserRefrigerator {
 
     @Id
@@ -32,11 +32,15 @@ public class UserRefrigerator {
     // 냉장고(냉장고 1 : 유저 냉장고 N)
     @ManyToOne(targetEntity = Refrigerator.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "refrigerator_id")
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ToString.Exclude
     private Refrigerator refrigerator;
 
     // 유저(유저 1 : 유저 냉장고 N)
     @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ToString.Exclude
     private User user;
 
     @Builder

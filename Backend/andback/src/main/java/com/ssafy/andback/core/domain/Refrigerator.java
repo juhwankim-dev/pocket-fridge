@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -35,6 +37,7 @@ public class Refrigerator {
     private String refrigeratorName;
 
     @OneToMany(mappedBy = "refrigerator", fetch = FetchType.LAZY)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<FoodIngredient> foodIngredientList = new ArrayList<FoodIngredient>();
 
     @Builder
