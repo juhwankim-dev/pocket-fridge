@@ -1,11 +1,14 @@
 package com.ssafy.andback.api.service;
 
 import com.ssafy.andback.api.constant.ErrorCode;
+import com.ssafy.andback.api.dto.response.RecipeIngredientResponseDto;
 import com.ssafy.andback.api.dto.response.RecipeProcessResponseDto;
 import com.ssafy.andback.api.dto.response.RecipeResponseDto;
 import com.ssafy.andback.api.exception.CustomException;
 import com.ssafy.andback.core.domain.Recipe;
+import com.ssafy.andback.core.domain.RecipeIngredient;
 import com.ssafy.andback.core.domain.RecipeProcess;
+import com.ssafy.andback.core.repository.RecipeIngredientRepository;
 import com.ssafy.andback.core.repository.RecipeProcessRepository;
 import com.ssafy.andback.core.repository.RecipeRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +35,7 @@ public class RecipeServiceImpl implements RecipeService {
     //@RequiredArgsConstructor 자동 주입
     private final RecipeRepository recipeRepository;
     private final RecipeProcessRepository recipeProcessRepository;
+    private final RecipeIngredientRepository recipeIngredientRepository;
 
     @Override
     public List<RecipeResponseDto> findAllRecipe() {
@@ -42,12 +46,14 @@ public class RecipeServiceImpl implements RecipeService {
 
         for (Recipe temp : recipeList) {
             result.add(RecipeResponseDto.builder()
-                    .recipeImage(temp.getRecipeImage())
-                    .recipeType(temp.getRecipeType())
                     .recipeId(temp.getRecipeId())
-                    .recipeFoodName(temp.getRecipeFoodName())
+                    .recipeAllIngredient(temp.getRecipeAllIngredient())
                     .recipeContent(temp.getRecipeContent())
-                    .recipeFoodSummary(temp.getRecipeFoodSummary())
+                    .recipeImage(temp.getRecipeImage())
+                    .recipeServing(temp.getRecipeServing())
+                    .recipeType(temp.getRecipeType())
+                    .recipeFoodName(temp.getRecipeFoodName())
+                    .recipeTime(temp.getRecipeTime())
                     .build());
         }
 
@@ -77,6 +83,30 @@ public class RecipeServiceImpl implements RecipeService {
                     .build());
         }
 
+
+        return result;
+    }
+
+    @Override
+    public List<RecipeIngredientResponseDto> findRecipeIngredientByRecipeId(Long recipeId) {
+
+        Optional<Recipe> recipe = recipeRepository.findById(recipeId);
+        recipe.orElseThrow(() -> new CustomException(ErrorCode.RECIPE_NOT_FOUND));
+
+        Optional<List<RecipeIngredient>> recipeIngredients = recipeIngredientRepository.findAllByRecipe(recipe);
+
+        if (recipeIngredients.get().size() == 0) {
+            throw new CustomException(ErrorCode.RECIPE_INGREDIENT_NOT_FOUND);
+        }
+
+        List<RecipeIngredientResponseDto> result = new ArrayList<>();
+
+        for (RecipeIngredient temp : recipeIngredients.get()) {
+            result.add(RecipeIngredientResponseDto.builder()
+                    .recipeIngredientName(temp.getRecipeIngredientName())
+                    .recipeIngredientCount(temp.getRecipeIngredientCount())
+                    .build());
+        }
 
         return result;
     }
