@@ -60,6 +60,12 @@ dependencies {
 
 	//jwt (0.9.1 가장 안정된 최신 버전)
 	implementation "io.jsonwebtoken:jjwt:0.9.1"
+
+	//firebase 의존성 추가
+	implementation group: 'com.google.firebase', name: 'firebase-admin', version: '8.1.0'
+
+	//okhttp 의존성 추가
+	implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.2.2'
 }
 
 tasks.named('test') {
