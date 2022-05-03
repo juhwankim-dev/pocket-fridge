@@ -94,11 +94,9 @@ public class UserController {
 
     @ApiOperation(value = "비밀번호 찾기", notes = "비밀번호 찾기 시 새 비밀번호를 이메일에 전송한다.")
     @PutMapping(value = "/findpassword/{userEmail}")
-    public ResponseEntity<BaseResponseDto> findUserPassword(@ApiIgnore Authentication authentication,
-                                                            @RequestBody FindUserPasswordRequestDto findUserPasswordRequestDto) {
-        User user = (User) authentication.getPrincipal();
+    public ResponseEntity<BaseResponseDto> findUserPassword(@PathVariable String userEmail) {
 
-        String result = userService.findUserPassword(user, findUserPasswordRequestDto.getUserEmail());
+        String result = userService.findUserPassword(userEmail);
         if (result.equals("fail")) {
             return ResponseEntity.status(401).body(BaseResponseDto.of(401, "이메일을 확인해주세요."));
         }

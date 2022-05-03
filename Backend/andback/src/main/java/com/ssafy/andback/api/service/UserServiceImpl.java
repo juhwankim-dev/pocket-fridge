@@ -178,13 +178,15 @@ public class UserServiceImpl implements UserService {
     // 비밀번호 찾기 (비밀번호 변경)
     @Override
     @Transactional(readOnly = false) // save 없이 자동으로 업데이트
-    public String findUserPassword(User user, String userEmail) {
-        if(user.getUserEmail().equals(userEmail))   // 현재유저와 같지 않은 이메일 입력시 fail
+    public String findUserPassword(String userEmail) {
+
+        Optional<User> user = userRepository.findByUserEmail(userEmail);
+
+        if(!user.isPresent())   // 이메일에 해당하는 유저가 없으면 fail
             return "fail";
 
         String userPassword = sendUserEmailNumber(userEmail);
-
-        user.setUserPassword(passwordEncoder.encode(userPassword));
+        user.get().setUserPassword(passwordEncoder.encode(userPassword));
 
         return "success";
     }
