@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val getLoginUseCase: GetLoginUseCase,
+    private val getLoginUseCase: GetLoginUseCase
 ) : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
     val email = MutableLiveData<String>()
@@ -68,7 +68,7 @@ class LoginViewModel @Inject constructor(
     }
 
     fun onFindPwClick() {
-
+        pageNumber.value = PageSet.FIND_PW
     }
 
     private fun showError(t : Throwable) {
