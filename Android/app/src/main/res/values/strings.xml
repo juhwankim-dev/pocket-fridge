@@ -57,6 +57,7 @@
 
     <string name="ipa_ready">네 말씀해주세요</string>
     <string name="ipa_next">다음 페이지로 이동합니다</string>
+    <string name="left_day_label">잔여기한:</string>
     <string-array name="ipa_name_list">
         <item>영훈아</item>
         <item>영운아</item>
