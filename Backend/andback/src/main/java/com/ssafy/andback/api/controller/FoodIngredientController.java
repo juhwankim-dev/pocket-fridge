@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Api(value = "식재료 API", tags = {"FoodIngredient"})
+@Api(tags = {"02. 식재료 API"})
 @RestController
 @RequestMapping("/foodingredient")
 @RequiredArgsConstructor

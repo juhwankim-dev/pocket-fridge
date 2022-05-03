@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +31,7 @@ import java.util.List;
 **/
 @RequiredArgsConstructor
 @Component
+@Transactional  // Lazy 에러 해결 방법
 public class JwtAuthenticationProvider {
 
     @Value("${spring.jwt.secret}")  // jwt secret key -> application-local.yml에 설정
