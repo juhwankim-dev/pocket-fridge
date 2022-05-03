@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import androidx.lifecycle.MutableLiveData
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.databinding.FragmentRecipeStepsBinding
 import com.andback.pocketfridge.present.config.BaseFragment
@@ -17,10 +18,12 @@ class RecipeStepsFragment : BaseFragment<FragmentRecipeStepsBinding>(R.layout.fr
     lateinit var tts: TTSUtil
     lateinit var stt: STTUtil
     private val assistant = Assistant()
+    val isListening = MutableLiveData<Boolean>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.fragment = this
         checkPermission()
         initEvent()
     }
@@ -56,7 +59,7 @@ class RecipeStepsFragment : BaseFragment<FragmentRecipeStepsBinding>(R.layout.fr
     }
 
     private fun initTTS() {
-        tts = TTSUtil(requireContext(), stt)
+        tts = TTSUtil(requireContext(), stt, isListening)
         tts.initTTS()
     }
 
@@ -71,6 +74,7 @@ class RecipeStepsFragment : BaseFragment<FragmentRecipeStepsBinding>(R.layout.fr
                 val mainHandler = Handler(requireContext().mainLooper)
                 val myRunnable = Runnable {
                     stt.startListening()
+                    isListening.postValue(false)
                 }
                 mainHandler.post(myRunnable)
             }
