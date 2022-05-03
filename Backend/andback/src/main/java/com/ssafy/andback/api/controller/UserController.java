@@ -98,7 +98,7 @@ public class UserController {
 
         String result = userService.findUserPassword(findUserPasswordRequestDto);
         if (result.equals("fail")) {
-            return ResponseEntity.status(401).body(BaseResponseDto.of(401, "이메일을 확인해주세요."));
+            return ResponseEntity.status(401).body(BaseResponseDto.of(401, "이메일과 이름을 확인해주세요."));
         }
         return ResponseEntity.ok(BaseResponseDto.of(200, "새 비밀번호 전송 완료"));
     }
