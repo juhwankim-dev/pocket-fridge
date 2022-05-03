@@ -118,6 +118,7 @@ public class FoodIngredientServiceImpl implements FoodIngredientService {
 
         for (FoodIngredient temp : allByRefrigerator) {
             res.add(FoodIngredientResponseDto.builder()
+                    .foodIngredientId(temp.getFoodIngredientId())
                     .foodIngredientDate(temp.getFoodIngredientDate())
                     .foodIngredientExp(temp.getFoodIngredientExp())
                     .foodIngredientName(temp.getFoodIngredientName())
