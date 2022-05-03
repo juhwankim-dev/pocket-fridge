@@ -27,7 +27,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/fcm")
 @RequiredArgsConstructor
-@Api(tags = {"07. FCM"})
+@Api(tags = {"07. FCM API"})
 public class FcmMessageController {
 
     private final FirebaseCloudMessageService firebaseCloudMessageService;
