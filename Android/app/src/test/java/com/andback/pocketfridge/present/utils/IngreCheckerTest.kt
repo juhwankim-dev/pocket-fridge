@@ -24,8 +24,8 @@ class IngreCheckerTest {
     fun setUp() {
         normalIngre = Ingredient(1, 1, "2022-05-01", "2022-05-10", "가지", 1, Storage.Fridge, 9)
         minusOneFridgeId = Ingredient(1, 1, "2022-05-01", "2022-05-10", "가지", -1, Storage.Fridge, 9)
-        blankName = Ingredient(1, 1, "2022-05-01", "2022-05-10", "", -1, Storage.Fridge, 9)
-        zeroQuantity = Ingredient(1, 0, "2022-05-01", "2022-05-10", "", -1, Storage.Fridge, 9)
+        blankName = Ingredient(1, 1, "2022-05-01", "2022-05-10", "", 1, Storage.Fridge, 9)
+        zeroQuantity = Ingredient(1, 0, "2022-05-01", "2022-05-10", "가지", 1, Storage.Fridge, 9)
         minusCategory = Ingredient(-1, 1, "2022-05-01", "2022-05-10", "가지", 1, Storage.Fridge, 9)
         nonFormatDateString = "20220501"
         normalDateString = "2022-05-01"
