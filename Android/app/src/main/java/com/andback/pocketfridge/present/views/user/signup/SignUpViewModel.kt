@@ -185,7 +185,7 @@ class SignUpViewModel @Inject constructor (
             val jsonObject = JSONObject(responseBody!!.trim())
             var message = jsonObject.getString("message")
             _toastMsg.value = message
-            Log.d("UserViewModel", "${t.code()}")
+            Log.d("SignUpViewModel", "${t.code()}")
         } else {
             _toastMsg.value = t.message
         }
