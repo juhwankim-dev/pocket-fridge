@@ -5,10 +5,7 @@ import com.ssafy.andback.api.dto.response.CheckUserResponseDto;
 import com.ssafy.andback.api.dto.response.SingleResponseDto;
 import com.ssafy.andback.core.domain.User;
 import com.ssafy.andback.core.domain.UserRefrigerator;
-import com.ssafy.andback.core.repository.FoodIngredientRepository;
-import com.ssafy.andback.core.repository.RefrigeratorRepository;
-import com.ssafy.andback.core.repository.UserRefrigeratorRepository;
-import com.ssafy.andback.core.repository.UserRepository;
+import com.ssafy.andback.core.repository.*;
 import io.swagger.annotations.*;
 import com.ssafy.andback.api.dto.UserDto;
 import com.ssafy.andback.api.dto.response.BaseResponseDto;
@@ -55,6 +52,9 @@ public class UserController {
 
     @Autowired
     private FoodIngredientRepository foodIngredientRepository;
+
+    @Autowired
+    private RecipeLikeRepository recipeLikeRepository;
 
     @ApiOperation(value = "회원가입", notes = "유저 정보를 받아 DB에 저장한다.")
     @PostMapping
@@ -137,6 +137,9 @@ public class UserController {
             // 해당 냉장고 id 값을 가진 냉장고 삭제
             refrigeratorRepository.deleteRefrigeratorByRefrigeratorId(userRefrigerator.getUserRefrigeratorId());
         }
+
+        // 현재 유저의 레시피 좋아요 삭제
+        recipeLikeRepository.deleteRecipeLikeByUser(user);
 
         // 현재 유저 삭제
         userRepository.deleteUserByUserId(user.getUserId());
