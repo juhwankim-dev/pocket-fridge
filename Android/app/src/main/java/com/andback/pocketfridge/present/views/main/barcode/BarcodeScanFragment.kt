@@ -2,9 +2,12 @@ package com.andback.pocketfridge.present.views.main.barcode
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.EditText
+import android.widget.TextView
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
@@ -78,8 +81,32 @@ class BarcodeScanFragment : BaseFragment<FragmentBarcodeScanBinding>(R.layout.fr
     }
 
     private fun setEvent() {
-        binding.tvBarcodeFCancel.setOnClickListener {
+        binding.tvBarcodeScanFCancel.setOnClickListener {
             // TODO 뒤로가기
+        }
+        binding.tvBarcodeScanFSelfInput.setOnClickListener {
+            AlertDialog.Builder(requireContext())
+                .setView(R.layout.fragment_barcode_self_input)
+                .show()
+                .also { alertDialog ->
+                    if (alertDialog == null) {
+                        return@also
+                    }
+
+                    val etInput = alertDialog.findViewById<EditText>(R.id.et_barcode_inputF)
+                    val tvCancel = alertDialog.findViewById<TextView>(R.id.tv_barcode_inputF_cancel)
+                    val tvAccept = alertDialog.findViewById<TextView>(R.id.tv_barcode_inputF_accept)
+
+                    tvCancel.setOnClickListener {
+                        alertDialog.dismiss()
+                    }
+                    tvAccept.setOnClickListener {
+                        if (etInput.text.isNotBlank()) {
+                            loadIngresFromBarcodes(listOf(etInput.text.toString()))
+                            alertDialog.dismiss()
+                        }
+                    }
+                }
         }
     }
 

@@ -37,7 +37,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tv_barcodeF_cancel"
+                android:id="@+id/tv_barcode_scanF_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -45,9 +45,7 @@
                 android:paddingTop="@dimen/activity_margin_default"
                 android:paddingBottom="@dimen/activity_margin_default"
                 android:text="@string/cancel"
-                android:textAppearance="@style/button_text_big_white"
-                android:textColor="@color/white"
-                android:textSize="@dimen/button_text_size_big" />
+                android:textAppearance="@style/button_text_big_white" />
 
             <TextView
                 android:id="@+id/tv_barcode_scanF_self_input"
@@ -59,9 +57,7 @@
                 android:paddingBottom="@dimen/activity_margin_default"
                 android:text="@string/self_input"
                 android:textAlignment="viewEnd"
-                android:textAppearance="@style/button_text_big_white"
-                android:textColor="@color/white"
-                android:textSize="@dimen/button_text_size_big" />
+                android:textAppearance="@style/button_text_big_white" />
         </LinearLayout>
 
     </LinearLayout>
