@@ -145,6 +145,39 @@ public class UserServiceImpl implements UserService {
         return tempEmailNumber;
     }
 
+    // 비밀번호 찾기에서 새 비밀번호 전송
+    @Override
+    public String sendNewUserPassword(String userEmail) {
+        // 이메일 인증번호 생성
+        String tempEmailNumber = getRamdomNumber(10);
+
+        // 수신 대상을 담을 ArrayList 생성
+        ArrayList<String> toUserList = new ArrayList<>();
+
+        // 수신 대상 추가
+        toUserList.add(userEmail);
+
+        // 수신 대상 개수
+        int toUserSize = toUserList.size();
+
+        // SimpleMailMessage (단순 텍스트 구성 메일 메시지 생성할 때 이용)
+        SimpleMailMessage simpleMessage = new SimpleMailMessage();
+
+        // 수신자 설정
+        simpleMessage.setTo((String[]) toUserList.toArray(new String[toUserSize]));
+
+        // 메일 제목
+        simpleMessage.setSubject("[임시 비밀번호 변경 안내] 포켓프리지 입니다.");
+
+        // 메일 내용
+        simpleMessage.setText("임시 비밀번호는\n\n" + tempEmailNumber + "\n\n입니다.");
+
+        // 메일 발송
+        javaMailSender.send(simpleMessage);
+
+        return tempEmailNumber;
+    }
+
     // 인증번호 생성
     public static String getRamdomNumber(int len) {
         char[] charSet = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
@@ -191,7 +224,7 @@ public class UserServiceImpl implements UserService {
         if(!user.get().getUserName().equals(findUserPasswordRequestDto.getUserName()))
             return "fail";
 
-        String userPassword = sendUserEmailNumber(userEmail);
+        String userPassword = sendNewUserPassword(userEmail);
         user.get().setUserPassword(passwordEncoder.encode(userPassword));
 
         return "success";

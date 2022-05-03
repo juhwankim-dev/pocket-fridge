@@ -24,6 +24,8 @@ public interface UserService {
 
     String sendUserEmailNumber(String userEmail);
 
+    String sendNewUserPassword(String userEmail);
+
     String login(LoginRequestDto loginRequestDto);
 
     String findUserPassword(FindUserPasswordRequestDto findUserPasswordRequestDto);
