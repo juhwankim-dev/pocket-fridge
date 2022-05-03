@@ -3,7 +3,9 @@ package com.andback.pocketfridge.present.views.main.fridge
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.databinding.FragmentFridgeBinding
@@ -32,6 +34,7 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
                 override fun onClick(data: Ingredient) {
                     Log.d(TAG, "onClick: ${data}")
                     // TODO: 디테일 fragment로 이동
+                    findNavController().navigate(R.id.action_fridgeFragment_to_ingreDetailFragment, bundleOf("data" to data))
                 }
             }
             itemLongClickListener = object : IngreRVAdapter.ItemLongClickListener {
