@@ -1,7 +1,7 @@
 package com.andback.pocketfridge.data.api
 
 import com.andback.pocketfridge.data.model.BaseResponse
-import io.reactivex.Observable
+import com.andback.pocketfridge.data.model.UserForFindEntity
 import io.reactivex.Single
 import org.jetbrains.annotations.NotNull
 import retrofit2.http.*
@@ -19,6 +19,9 @@ interface UserApi {
 
     @GET("user/checknickname/{userNickname}")
     fun checkNickname(@Path("userNickname") @NotNull nickname: String): Single<BaseResponse<Any>>
+
+    @PUT("user/findpassword/{userEmail}")
+    fun findPW(@Body userForFind: UserForFindEntity): Single<BaseResponse<Any>>
 
     @FormUrlEncoded
     @POST("user/login")
