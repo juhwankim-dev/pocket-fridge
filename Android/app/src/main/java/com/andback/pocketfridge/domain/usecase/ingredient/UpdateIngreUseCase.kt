@@ -10,6 +10,6 @@ class UpdateIngreUseCase @Inject constructor(
     private val ingreRepository: IngreRepository
 ) {
     operator fun invoke(ingredient: Ingredient): Single<BaseResponse<Any>> {
-        return ingreRepository.updateIngre(ingredient.id, ingredient)
+        return ingreRepository.updateIngre(ingredient)
     }
 }
