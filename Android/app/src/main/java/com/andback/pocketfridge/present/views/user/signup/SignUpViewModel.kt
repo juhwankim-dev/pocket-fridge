@@ -41,8 +41,8 @@ class SignUpViewModel @Inject constructor (
     val pageNumber = SingleLiveEvent<PageSet>()
 
     // 로딩을 보여줄지 결정하기 위함
-    private val _isShowLoading = MutableLiveData<Boolean>()
-    val isShowLoading: LiveData<Boolean> get() = _isShowLoading
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
 
     // 이메일을 성공적으로 보냈는지 xml에서 확인하기 위함
     val isSentEmail = SingleLiveEvent<Boolean>()
@@ -82,22 +82,15 @@ class SignUpViewModel @Inject constructor (
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                        when(it.status) {
-                            200 -> {
-                                _emailErrorMsg.value = CheckResult(R.string.no_error, true)
-                                sendEmail(email)
-                            }
-                            else -> {
-                                _toastMsg.value = it.message
-                            }
-                        }
+                        _emailErrorMsg.value = CheckResult(R.string.no_error, true)
+                        sendEmail(email)
                     }, { showError(it) }
                 )
         )
     }
 
     private fun sendEmail(email: String) {
-        _isShowLoading.value = true
+        _isLoading.value = true
 
         compositeDisposable.add(
             getSendEmailUseCase.execute(email)
@@ -105,20 +98,13 @@ class SignUpViewModel @Inject constructor (
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                        when(it.status) {
-                            200 -> {
-                                isSentEmail.value = true
-                                _isShowLoading.value = false
-                                sentEmailAuthNumber = it.data!!
-                            }
-                            else -> {
-                                _toastMsg.value = it.message
-                            }
-                        }
+                        isSentEmail.value = true
+                        _isLoading.value = false
+                        sentEmailAuthNumber = it.data!!
                     },
                     {
                         showError(it)
-                        _isShowLoading.value = false
+                        _isLoading.value = false
                     },
                 )
         )
@@ -131,19 +117,15 @@ class SignUpViewModel @Inject constructor (
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                        when(it.status) {
-                            200 -> {
-                                _nicknameErrorMsg.value = R.string.no_error
-                                signUp(getEnteredUserInfo())
-                            }
-                        }
+                        _nicknameErrorMsg.value = R.string.no_error
+                        signUp(getEnteredUserInfo())
                     }, { showError(it) },
                 )
         )
     }
 
     private fun signUp(req: MutableMap<String, String>) {
-        _isShowLoading.value = true
+        _isLoading.value = true
 
         compositeDisposable.add(
             getSignUpUseCase.execute(req)
@@ -152,11 +134,11 @@ class SignUpViewModel @Inject constructor (
                 .subscribe(
                     {
                         _toastMsg.value = it.message
-                        _isShowLoading.value = false
+                        _isLoading.value = false
                         pageNumber.value = PageSet.LOGIN
                     },
                     {
-                        _isShowLoading.value = false
+                        _isLoading.value = false
                         showError(it)
                     },
                 )
