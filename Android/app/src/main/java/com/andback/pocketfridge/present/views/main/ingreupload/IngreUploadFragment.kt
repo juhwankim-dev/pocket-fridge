@@ -9,6 +9,7 @@ import android.widget.AutoCompleteTextView
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.navArgs
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.data.model.FridgeEntity
 import com.andback.pocketfridge.databinding.FragmentIngreUploadBinding
@@ -39,6 +40,7 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
         setPurchasedDateIcon()
         setToolbarButton()
         setCategoryClickListener()
+        setDataFromBarcode()
     }
 
     override fun onStop() {
@@ -185,6 +187,13 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
         }
         binding.ivIngreUploadF.setOnClickListener {
             showCategoryPicker()
+        }
+    }
+
+    private fun setDataFromBarcode() {
+        val args: IngreUploadFragmentArgs by navArgs()
+        if (args.productName.isNullOrBlank() == false) {
+            viewModel.name.value = args.productName
         }
     }
 }

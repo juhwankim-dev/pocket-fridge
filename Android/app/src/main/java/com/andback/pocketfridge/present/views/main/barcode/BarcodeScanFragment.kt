@@ -15,10 +15,10 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.databinding.FragmentBarcodeScanBinding
 import com.andback.pocketfridge.present.config.BaseFragment
-import com.andback.pocketfridge.present.views.main.MainActivity
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
@@ -45,16 +45,6 @@ class BarcodeScanFragment : BaseFragment<FragmentBarcodeScanBinding>(R.layout.fr
         cameraExecutor = Executors.newSingleThreadExecutor()
         setCameraPermission()
         setEvent()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        (requireActivity() as MainActivity).hideBottomNav(true)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        (requireActivity() as MainActivity).hideBottomNav(false)
     }
 
     override fun onDestroyView() {
@@ -87,7 +77,7 @@ class BarcodeScanFragment : BaseFragment<FragmentBarcodeScanBinding>(R.layout.fr
 
     private fun setEvent() {
         binding.tvBarcodeScanFCancel.setOnClickListener {
-            // TODO 뒤로가기
+            findNavController().popBackStack()
         }
         binding.tvBarcodeScanFSelfInput.setOnClickListener {
             AlertDialog.Builder(requireContext())
@@ -120,11 +110,15 @@ class BarcodeScanFragment : BaseFragment<FragmentBarcodeScanBinding>(R.layout.fr
             binding.lifecycleOwner?.let { owner ->
                 productName.observe(owner) {
                     if (it.isNotBlank()) {
-                        // TODO : 상품명을 등록페이지로 전달
-                        showToastMessage(it)
+                        findNavController().navigate(
+                            BarcodeScanFragmentDirections.actionBarcodeScanFragmentToIngreUploadFragment(it)
+                        )
+
                     } else {
-                        // TODO : 실패메시지 띄우고 등록페이지로 이동
                         showToastMessage(resources.getString(R.string.barcode_scan_fail))
+                        findNavController().navigate(
+                            BarcodeScanFragmentDirections.actionBarcodeScanFragmentToIngreUploadFragment("")
+                        )
                     }
                 }
                 networkError.observe(owner) {
