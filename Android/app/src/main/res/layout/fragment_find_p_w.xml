@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_margin_wide"
             android:layout_marginHorizontal="@dimen/activity_margin_wide"
-            android:hint="이름"
+            android:hint="@string/userName"
             app:errorEnabled="true"
             app:layout_constraintTop_toBottomOf="@+id/cv_email_authF_guide">
 
@@ -72,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/activity_margin_wide"
-            android:hint="이메일"
+            android:hint="@string/email"
             app:errorEnabled="true"
             app:layout_constraintTop_toBottomOf="@+id/til_find_pwF_name">
 
@@ -92,7 +92,7 @@
             android:background="@drawable/bg_ellipse_filled_main_color_32"
             android:enabled="false"
             android:onClick="@{()->vm.onSendEmailClick()}"
-            android:text="다음"
+            android:text="@string/next"
             android:textColor="@color/white"
             app:backgroundTint="@color/gray_non_clickable_button"
             app:layout_constraintTop_toBottomOf="@+id/til_find_pwF_email" />

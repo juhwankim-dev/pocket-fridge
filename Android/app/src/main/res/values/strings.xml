@@ -32,6 +32,10 @@
     <string name="self_input">직접 입력</string>
     <string name="self_input_title">바코드번호 입력</string>
 
+    <string name="email">이메일</string>
+    <string name="next">다음</string>
+    <string name="userName">이름</string>
+
     <!-- Error Messages -->
     <string name="name_empty_error">"이름은 필수 입력 값입니다."</string>
     <string name="name_pattern_error">"이름은 특수문자를 제외한 2~20자리여야 합니다."</string>
