@@ -1,9 +1,9 @@
 package com.andback.pocketfridge.data.repository
 
 import com.andback.pocketfridge.data.model.BaseResponse
+import com.andback.pocketfridge.data.model.UserForFindEntity
 import com.andback.pocketfridge.data.repository.user.UserRemoteDataSource
 import com.andback.pocketfridge.domain.repository.UserRepository
-import io.reactivex.Observable
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -25,6 +25,10 @@ class UserRepositoryImpl @Inject constructor(
 
     override fun checkNickname(nickname: String): Single<BaseResponse<Any>> {
         return userRemoteDataSource.checkNickname(nickname)
+    }
+
+    override fun findPW(userForFind: UserForFindEntity): Single<BaseResponse<Any>> {
+        return userRemoteDataSource.findPW(userForFind)
     }
 
     override fun login(req: MutableMap<String, String>): Single<BaseResponse<String>> {

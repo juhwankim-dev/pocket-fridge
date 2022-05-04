@@ -1,12 +1,12 @@
 /**
-* RecipeBasic
-* 레시비 기본정보 Entity
-*
-* @author 문관필
-* @version 1.0.0
-* 생성일 2022/04/27
-* 마지막 수정일 2022/04/27
-**/
+ * RecipeBasic
+ * 레시비 기본정보 Entity
+ *
+ * @author 문관필
+ * @version 1.0.0
+ * 생성일 2022/04/27
+ * 마지막 수정일 2022/04/27
+ **/
 package com.ssafy.andback.core.domain;
 
 import com.ssafy.andback.api.constant.RecipeType;
@@ -24,7 +24,8 @@ import java.util.List;
 public class Recipe {
 
     // 레시피 아이디
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "recipe_id", nullable = false)
     private Long recipeId;
 
@@ -32,13 +33,14 @@ public class Recipe {
     @Column(name = "recipe_food_name", nullable = false)
     private String recipeFoodName;
 
-    // 요리 요약
-    @Column(name = "recipe_food_summary", nullable = false)
-    private String recipeFoodSummary;
-
     // 내용
     @Column(name = "recipe_content", nullable = false)
     private String recipeContent;
+
+
+    // 요리 재료 요약
+    @Column(name = "recipe_all_ingredient", nullable = false)
+    private String recipeAllIngredient;
 
     // 이미지
     @Column(name = "recipe_image")
@@ -48,6 +50,14 @@ public class Recipe {
     @Enumerated(EnumType.STRING)
     @Column(name = "recipe_type", nullable = false)
     private RecipeType recipeType;
+
+    // 음식 조리 시간 분
+    @Column(name = "recipe_time", nullable = false)
+    private int recipeTime;
+
+    // 음식 인분
+    @Column(name = "recipe_serving", nullable = false)
+    private int recipeServing;
 
     // 레시피 재료
     @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY)

@@ -6,6 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Ingredient(
+    var id: Int = -1,
     var category: Int,
     var quantity: Int = 0,
     var purchasedDate: String,

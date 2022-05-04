@@ -64,7 +64,6 @@ public class JwtAuthenticationProvider {
     // JWT 토큰으로 인증 정보 조회
     public Authentication getAuthentication(String token){
         UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));
-        System.out.println("userDetails = " + userDetails);
         return new UsernamePasswordAuthenticationToken(userDetails,
                 "", userDetails.getAuthorities());
     }
@@ -76,7 +75,6 @@ public class JwtAuthenticationProvider {
 
     // Request의 Header에서 token 값을 파싱해서 가져온다. "X-AUTH-TOKEN" : "TOKEN 값"
     public String resolveToken(HttpServletRequest request) {
-//        return request.getHeader("X-AUTH-TOKEN");
         return request.getHeader("JWT");
     }
 
