@@ -28,9 +28,8 @@ class BarcodeScanViewModel @Inject constructor(
                 {
                     val code = it.serviceName.result.code
                     val totalCnt = it.serviceName.totalCount.toInt()
-                    val currentBarcode = it.serviceName.data[0].barcode
 
-                    if (code == SUCCESS && totalCnt > 0 && barcode == currentBarcode) {
+                    if (code == SUCCESS && totalCnt > 0) {
                         _productName.value = it.serviceName.data[0].name
                     } else {
                         _productName.value = ""
