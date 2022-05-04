@@ -5,25 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.andback.pocketfridge.R
+import com.andback.pocketfridge.data.model.CookingIngreEntity
+import com.andback.pocketfridge.data.model.RecipeEntity
 import com.andback.pocketfridge.databinding.ItemDetailRecipeBodyListBinding
 import com.andback.pocketfridge.databinding.ItemDetailRecipeHeaderListBinding
-import com.andback.pocketfridge.domain.model.Recipe
-import com.andback.pocketfridge.present.views.main.recipe.RecipeItemDecoration
 
 class DetailRecipeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    val CONTENT_TYPE_CNT = 2
     val TYPE_HEADER = 0
     val TYPE_BODY = 1
 
-    // 임시로 아무거나 넣어둔 리스트
-    private val recipeList: ArrayList<Recipe> = ArrayList()
+    lateinit var recipe: RecipeEntity
+    private val cookingIngreList = arrayListOf<CookingIngreEntity>()
 
     inner class HeadViewHolder(private val binding: ItemDetailRecipeHeaderListBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bindInfo(recipe: Recipe) {
+        fun bindInfo() {
+            binding.recipe = recipe
             binding.ivDetailRecipeHeaderIHeart.setOnClickListener {
                 if(!it.isSelected) {
                     binding.lottieDetailRecipeHeartIHeart.visibility = View.VISIBLE
@@ -64,13 +64,10 @@ class DetailRecipeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             }
         }
 
-        fun bindInfo(recipe: Recipe) {
-//            binding.emptyLikeTextView.isGone = true
-//            binding.recyclerView.isVisible = true
+        fun bindInfo() {
+            binding.serving = recipe.serving
             (binding.rvRecipeDetailBodyI.adapter as RecipeIngreAdapter).apply {
-                notifyDataSetChanged()
-                setList(listOf(Recipe(""), Recipe(""), Recipe(""), Recipe(""),
-                    Recipe(""), Recipe(""), Recipe(""), Recipe(""), Recipe("")))
+                setList(cookingIngreList)
             }
         }
     }
@@ -95,17 +92,22 @@ class DetailRecipeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when {
-            (holder is HeadViewHolder) -> holder.bindInfo(recipeList[position])
-            (holder is BodyViewHolder) -> holder.bindInfo(recipeList[position])
+            (holder is HeadViewHolder) -> holder.bindInfo()
+            (holder is BodyViewHolder) -> holder.bindInfo()
             else -> Unit
         }
     }
 
-    override fun getItemCount(): Int = recipeList.size
+    override fun getItemCount(): Int = CONTENT_TYPE_CNT
 
-    fun setList(list: List<Recipe>) {
-        recipeList.clear()
-        recipeList.addAll(list)
+    fun setHeaderContent(recipe: RecipeEntity) {
+        this.recipe = recipe
         notifyDataSetChanged()
+    }
+
+    fun setBodyContent(cookingIngres: List<CookingIngreEntity>) {
+        //cookingIngreList.clear()
+        cookingIngreList.addAll(cookingIngres)
+        //notifyDataSetChanged()
     }
 }
