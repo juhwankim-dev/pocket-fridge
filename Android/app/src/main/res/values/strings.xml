@@ -49,6 +49,7 @@
 
     <!-- Success Messages -->
     <string name="email_auth_success">"이메일 인증이 완료되었습니다."</string>
+    <string name="ingre_delete_success">식재료를 삭제했습니다.</string>
     <string name="filter">필터</string>
 
     <string name="delete_ingre_title">"식재료를 삭제하시겠습니까?"</string>
