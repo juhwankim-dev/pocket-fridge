@@ -28,6 +28,9 @@ class IngreDetailViewModel @Inject constructor(
     private val _isDeleteSuccess = MutableLiveData(false)
     val isDeleteSuccess: LiveData<Boolean> = _isDeleteSuccess
 
+    private val _isDeleteFail = MutableLiveData(false)
+    val isDeleteFail: LiveData<Boolean> = _isDeleteFail
+
     private lateinit var subCategories: List<SubCategoryEntity>
 
     init {
@@ -36,6 +39,7 @@ class IngreDetailViewModel @Inject constructor(
 
     fun init() {
         _isDeleteSuccess.value = false
+        _isDeleteFail.value = false
     }
 
     /**
@@ -55,11 +59,10 @@ class IngreDetailViewModel @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                        // TODO: 삭제 성공 알림, 뒤로 이동
                         _isDeleteSuccess.postValue(true)
                     },
                     {
-                        // TODO: 예외 처리 
+                        _isDeleteFail.postValue(true)
                     }
                 )
         }
