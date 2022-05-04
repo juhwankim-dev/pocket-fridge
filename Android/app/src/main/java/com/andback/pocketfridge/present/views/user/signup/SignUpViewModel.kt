@@ -64,6 +64,17 @@ class SignUpViewModel @Inject constructor (
     val EmailAuthNumber = MutableLiveData<String>()
     var sentEmailAuthNumber = "THISISPRIVATEKEY"
 
+    fun init() {
+        email.value = ""
+        name.value = ""
+        nickname.value = ""
+        pw.value = ""
+        pwConfirm.value = ""
+        isSentEmail.value = false
+        EmailAuthNumber.value = ""
+        sentEmailAuthNumber = "THISISPRIVATEKEY"
+    }
+
     private fun checkEmail(email: String) {
         compositeDisposable.add(
             getCheckEmailUseCase.execute(email)
