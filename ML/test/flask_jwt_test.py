@@ -1,6 +1,6 @@
 """
-* db_pandas_test
-* mariaDB 유저 식재료 데이터, 레시피 데이터 가져오기
+* flask_jwt_test
+* flask, jwt 테스트
 *
 * @author 김다은
 * @version 1.0.0
@@ -15,8 +15,8 @@ app = Flask(__name__)  # 앱 초기화
 api = Api(
     app,
     version='1.0',
-    title='Flask Test API',
-    description='Flask 테스트를 위한 API'
+    title='Flask, JWT Test API',
+    description='Flask, JWT 테스트를 위한 API'
 )  # Swagger에서 보기 위함 : 앱 초기화, 앱 버전, 제목, 설명
 
 # jwt secret key 설정 (Spring jwt와 같은 secret key)
