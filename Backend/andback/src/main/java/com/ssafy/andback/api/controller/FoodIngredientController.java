@@ -43,7 +43,7 @@ public class FoodIngredientController {
     }
 
     @ApiOperation(value = "식재료 수정", notes = "식재료 정보를 입력받아 해당하는 식재료의 정보를 DB에 수정한다.")
-    @PutMapping("/")
+    @PutMapping
     public ResponseEntity<BaseResponseDto> updateFoodIngredient(@RequestBody UpdateFoodIngredientRequestDto updateFoodIngredientReqDto) {
         String res = foodIngredientService.updateFoodIngredient(updateFoodIngredientReqDto);
 
