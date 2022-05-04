@@ -35,9 +35,6 @@ class IngreDetailFragment : BaseFragment<FragmentIngreDetailBinding>(R.layout.fr
 
     private fun initViewModel() {
         viewModel.init()
-        arguments?.let {
-            viewModel.selectIngre(it["data"] as Ingredient)
-        }?: goBack()
     }
 
     private fun setObserver() {
