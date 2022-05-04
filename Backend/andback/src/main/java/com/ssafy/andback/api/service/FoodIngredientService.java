@@ -11,7 +11,7 @@ import java.util.List;
 public interface FoodIngredientService {
     String saveFoodIngredient(InsertFoodIngredientRequestDto insertFoodIngredientReqDto);
 
-    String updateFoodIngredient(Long foodIngredientId, UpdateFoodIngredientRequestDto updateFoodIngredientReqDto);
+    String updateFoodIngredient(UpdateFoodIngredientRequestDto updateFoodIngredientReqDto);
 
     String deleteFoodIngredient(Long foodIngredientId);
 

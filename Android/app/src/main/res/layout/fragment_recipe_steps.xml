@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View"/>
+        <variable
+            name="fragment"
+            type="com.andback.pocketfridge.present.views.main.recipe.detail.RecipeStepsFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -94,6 +97,28 @@
             app:layout_constraintEnd_toEndOf="@+id/iv_recipe_stepsF_circle"
             app:layout_constraintStart_toStartOf="@+id/iv_recipe_stepsF_circle"
             app:layout_constraintTop_toTopOf="@+id/iv_recipe_stepsF_circle" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black_opaque_screen"
+            android:elevation="6dp"
+            android:visibility="@{fragment.isListening() ? View.VISIBLE : View.GONE}"
+            tools:visibility="gone" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            setLottiePlay="@{fragment.isListening()}"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:elevation="8dp"
+            android:visibility="@{fragment.isListening() ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/lottie_waveform"
+            tools:visibility="gone"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

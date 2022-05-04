@@ -70,9 +70,9 @@ public class FoodIngredientServiceImpl implements FoodIngredientService {
     }
 
     @Override
-    public String updateFoodIngredient(Long foodIngredientId, UpdateFoodIngredientRequestDto updateFoodIngredientReqDto) {
+    public String updateFoodIngredient(UpdateFoodIngredientRequestDto updateFoodIngredientReqDto) {
 
-        FoodIngredient foodIngredient = foodIngredientRepository.findByFoodIngredientId(foodIngredientId);
+        FoodIngredient foodIngredient = foodIngredientRepository.findByFoodIngredientId(updateFoodIngredientReqDto.getFoodIngredientId());
         Refrigerator refrigerator;
 
         // 식재료 수정

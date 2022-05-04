@@ -22,4 +22,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByUserEmail(String userEmail);   // 유저 이메일로 검색
 
     void deleteUserByUserId(Long userId); // 회원 탈퇴
+
 }

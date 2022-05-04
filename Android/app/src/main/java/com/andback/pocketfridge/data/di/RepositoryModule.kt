@@ -1,6 +1,7 @@
 package com.andback.pocketfridge.data.di
 
 import com.andback.pocketfridge.data.repository.*
+import com.andback.pocketfridge.data.repository.barcode.ProductRemoteDataSource
 import com.andback.pocketfridge.data.repository.Recipe.RecipeRemoteDataSource
 import com.andback.pocketfridge.data.repository.category.CategoryRemoteDataSource
 import com.andback.pocketfridge.data.repository.fridge.FridgeRemoteDataSource
@@ -38,6 +39,12 @@ class RepositoryModule {
     @Singleton
     fun provideCategoryRepository(categoryRemoteDataSource: CategoryRemoteDataSource): CategoryRepository {
         return CategoryRepositoryImpl(categoryRemoteDataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideBarcodeRepository(productRemoteDataSource: ProductRemoteDataSource): BarcodeRepository {
+        return BarcodeRepositoryImpl(productRemoteDataSource)
     }
 
     @Provides

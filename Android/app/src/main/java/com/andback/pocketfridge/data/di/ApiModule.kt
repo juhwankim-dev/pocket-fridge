@@ -1,6 +1,9 @@
 package com.andback.pocketfridge.data.di
 
-import com.andback.pocketfridge.data.api.*
+import com.andback.pocketfridge.data.api.CategoryApi
+import com.andback.pocketfridge.data.api.FridgeApi
+import com.andback.pocketfridge.data.api.IngreApi
+import com.andback.pocketfridge.data.api.UserApi
 import com.andback.pocketfridge.present.utils.RetrofitUtil
 import dagger.Module
 import dagger.Provides
@@ -39,5 +42,11 @@ class ApiModule {
     @Singleton
     fun provideRecipeApiInterface(): RecipeApi {
         return RetrofitUtil.recipeService
+    }
+
+    @Provides
+    @Singleton
+    fun provideBarcodeApiInterface(): BarcodeApi {
+        return RetrofitUtil.barcodeService
     }
 }

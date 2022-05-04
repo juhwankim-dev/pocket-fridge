@@ -1,14 +1,12 @@
 package com.ssafy.andback.api.controller;
 
+import com.ssafy.andback.api.dto.request.CheckUserPasswordRequestDto;
+import com.ssafy.andback.api.dto.request.FindUserPasswordRequestDto;
 import com.ssafy.andback.api.dto.request.LoginRequestDto;
+import com.ssafy.andback.api.dto.request.UpdateUserRequestDto;
 import com.ssafy.andback.api.dto.response.CheckUserResponseDto;
 import com.ssafy.andback.api.dto.response.SingleResponseDto;
 import com.ssafy.andback.core.domain.User;
-import com.ssafy.andback.core.domain.UserRefrigerator;
-import com.ssafy.andback.core.repository.FoodIngredientRepository;
-import com.ssafy.andback.core.repository.RefrigeratorRepository;
-import com.ssafy.andback.core.repository.UserRefrigeratorRepository;
-import com.ssafy.andback.core.repository.UserRepository;
 import io.swagger.annotations.*;
 import com.ssafy.andback.api.dto.UserDto;
 import com.ssafy.andback.api.dto.response.BaseResponseDto;
@@ -23,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * UserController
@@ -44,19 +41,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private UserRefrigeratorRepository userRefrigeratorRepository;
-
-    @Autowired
-    private RefrigeratorRepository refrigeratorRepository;
-
-    @Autowired
-    private FoodIngredientRepository foodIngredientRepository;
-
-    @ApiOperation(value = "회원가입", notes = "유저 정보를 받아 DB에 저장한다.")
+    @ApiOperation(value = "회원가입", notes = "유저 정보를 받아 DB에 저장한다. " +
+            "이메일: 이메일 형식, 이름: 2~20자, 닉네임: 2~10자(특수문자 제외), 비밀번호(영문자 포함 5~15자), 사진: null 허용")
     @PostMapping
     public ResponseEntity<BaseResponseDto> signUp(@RequestBody @Valid UserDto userDto, @ApiIgnore Errors errors) {
         String result = userService.insertUser(userDto);
@@ -97,7 +83,7 @@ public class UserController {
 
     @ApiOperation(value = "로그인", notes = "이메일, 비밀번호로 로그인")
     @PostMapping(value = "/login")
-    public ResponseEntity<SingleResponseDto<String>> login(@RequestBody LoginRequestDto loginRequestDto){
+    public ResponseEntity<SingleResponseDto<String>> login(@RequestBody LoginRequestDto loginRequestDto) {
         String result = userService.login(loginRequestDto);
         if (result.equals("fail")) {
             return ResponseEntity.status(401).body(new SingleResponseDto<String>(401, "아이디와 비밀번호를 확인해주세요.", null));
@@ -108,10 +94,11 @@ public class UserController {
 
     @ApiOperation(value = "비밀번호 찾기", notes = "비밀번호 찾기 시 새 비밀번호를 이메일에 전송한다.")
     @PutMapping(value = "/findpassword/{userEmail}")
-    public ResponseEntity<BaseResponseDto> findUserPassword(@PathVariable String userEmail) {
-        String result = userService.findUserPassword(userEmail);
+    public ResponseEntity<BaseResponseDto> findUserPassword(@RequestBody FindUserPasswordRequestDto findUserPasswordRequestDto) {
+
+        String result = userService.findUserPassword(findUserPasswordRequestDto);
         if (result.equals("fail")) {
-            return ResponseEntity.status(401).body(BaseResponseDto.of(401, "이메일을 확인해주세요."));
+            return ResponseEntity.status(401).body(BaseResponseDto.of(401, "이메일과 이름을 확인해주세요."));
         }
         return ResponseEntity.ok(BaseResponseDto.of(200, "새 비밀번호 전송 완료"));
     }
@@ -122,27 +109,15 @@ public class UserController {
     @DeleteMapping
     // Authentication 객체: 인증에 성공한 사용자의 정보를 가지고 있는 객체
     public ResponseEntity<BaseResponseDto> deleteUser(@ApiIgnore Authentication authentication) {
-        System.out.println("authentication.getPrincipal() = " + authentication.getPrincipal());
         User user = (User) authentication.getPrincipal();
 
-        // 현재 유저의 모든 Refrigerator 삭제
-        List<UserRefrigerator> list;
-        list = userRefrigeratorRepository.findUserRefrigeratorByUser(user); // 유저가 가진 모든 냉장고 가져오기
-        for(UserRefrigerator userRefrigerator : list){
-            foodIngredientRepository.deleteFoodIngredientsByRefrigerator(userRefrigerator.getRefrigerator());   // 해당 냉장고가 가진 식재료 모두 삭제
-            refrigeratorRepository.deleteRefrigeratorByRefrigeratorId(userRefrigerator.getUserRefrigeratorId());    // 해당 냉장고 id 값을 가진 냉장고 삭제
-        }
-        // 현재 유저의 모든 userRefrigerator 삭제
-        userRefrigeratorRepository.deleteUserRefrigeratorByUser(user);
-        // 현재 유저 삭제
-        userRepository.deleteUserByUserId(user.getUserId());
-
+        userService.deleteUser(user);
         return ResponseEntity.ok(BaseResponseDto.of(200, "회원 탈퇴 성공"));
     }
 
     @ApiOperation(value = "회원정보 조회", notes = "유저의 정보를 조회한다.")
     @GetMapping
-    public ResponseEntity<SingleResponseDto<CheckUserResponseDto>> checkUser(@ApiIgnore Authentication authentication){
+    public ResponseEntity<SingleResponseDto<CheckUserResponseDto>> checkUser(@ApiIgnore Authentication authentication) {
         User user = (User) authentication.getPrincipal();
 
         CheckUserResponseDto checkUserResponseDto = CheckUserResponseDto.builder()
@@ -156,14 +131,32 @@ public class UserController {
         return ResponseEntity.ok(new SingleResponseDto<CheckUserResponseDto>(200, "회원 정보 조회 성공", checkUserResponseDto));
     }
 
-//    @ApiOperation(value = "회원정보 수정", notes = "유저의 정보를 수정한다.")
-//    @PutMapping
-//    public ResponseEntity<BaseResponseDto> updateUser(@ApiIgnore Authentication authentication, UserDto userDto){
-//        String result = userService
-//    }
+    @ApiOperation(value = "비밀번호 확인", notes = "회원정보 수정 전 비밀번호 확인을 한다.")
+    @PostMapping(value = "/update")
+    public ResponseEntity<BaseResponseDto> checkUserPassword(@ApiIgnore Authentication authentication,
+                                                             @RequestBody CheckUserPasswordRequestDto checkUserPasswordRequestDto){
+        User user = (User) authentication.getPrincipal();
 
-//    @ApiOperation(value = "비밀번호 확인", notes = "회원정보 수정 전 비밀번호 확인을 한다.")
-//    @PostMapping(value = "/checkpw")
+        String answer = userService.checkUserPassword(user, checkUserPasswordRequestDto.getUserPassword());
+        if(answer.equals("fail")){
+            return ResponseEntity.status(401).body(BaseResponseDto.of(401, "비밀번호가 틀렸습니다."));
+        }
+        return ResponseEntity.ok(BaseResponseDto.of(200, "비밀번호 확인 완료"));
+    }
+
+    @ApiOperation(value = "회원정보 수정", notes = "유저의 정보를 수정한다.")
+    @PutMapping(value = "/update")
+    public ResponseEntity<BaseResponseDto> updateUser(@ApiIgnore Authentication authentication,
+                                                      @RequestBody @Valid UpdateUserRequestDto updateUserRequestDto,
+                                                      @ApiIgnore Errors errors){
+        User user = (User) authentication.getPrincipal();
+
+        String answer = userService.updateUser(user, updateUserRequestDto);
+        if(answer.equals("fail")){
+            return ResponseEntity.status(401).body(BaseResponseDto.of(401, "닉네임 중복을 확인하세요."));
+        }
+        return ResponseEntity.ok(BaseResponseDto.of(200, "회원 정보 수정 완료"));
+    }
 
 
 

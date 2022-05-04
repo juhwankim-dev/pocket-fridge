@@ -15,6 +15,7 @@ object IngreMapper {
 
     operator fun invoke(entity: IngreEntity): Ingredient {
         return Ingredient(
+            id = entity.foodIngredientId,
             category = entity.subCategoryId,
             purchasedDate = entity.foodIngredientDate,
             expiryDate = entity.foodIngredientExp,
@@ -27,6 +28,7 @@ object IngreMapper {
 
     operator fun invoke(ingredient: Ingredient): IngreEntity {
         return IngreEntity(
+            foodIngredientId = ingredient.id,
             subCategoryId = ingredient.category,
             foodIngredientDate = ingredient.purchasedDate,
             foodIngredientExp = ingredient.expiryDate,
@@ -39,7 +41,7 @@ object IngreMapper {
     private fun getLeftDay(stringDate: String, nowStringDate: String): Int {
         val inputDate = DateConverter.toDate(stringDate).time
         val nowDate = DateConverter.toDate(nowStringDate).time
-        val result = ceil((inputDate - nowDate) / (24 * 60 * 60 * 1000).toDouble()).toInt()
+        val result = ceil((nowDate - inputDate) / (24 * 60 * 60 * 1000).toDouble()).toInt()
         Log.d(TAG, "getLeftDay: ${result}")
         return result
     }
