@@ -1,6 +1,7 @@
 package com.andback.pocketfridge.data.api
 
 import com.andback.pocketfridge.data.model.BaseResponse
+import com.andback.pocketfridge.data.model.CookingIngreEntity
 import com.andback.pocketfridge.data.model.RecipeEntity
 import com.andback.pocketfridge.data.model.RecipeStepEntity
 import io.reactivex.Single
@@ -14,4 +15,7 @@ interface RecipeApi {
 
     @GET("recipe/{recipeId}")
     fun getRecipeSteps(@Path("recipeId") @NotNull recipeId: Int): Single<BaseResponse<List<RecipeStepEntity>>>
+
+    @GET("recipe/ingredient/{recipeId}")
+    fun getCookingIngres(@Path("recipeId") @NotNull recipeId: Int): Single<BaseResponse<List<CookingIngreEntity>>>
 }

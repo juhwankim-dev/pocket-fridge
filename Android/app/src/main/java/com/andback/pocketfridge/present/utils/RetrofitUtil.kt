@@ -9,6 +9,7 @@ class RetrofitUtil {
         val ingreService = ApplicationClass.retrofit.create(IngreApi::class.java)
         val fridgeService = ApplicationClass.retrofit.create(FridgeApi::class.java)
         val categoryService = ApplicationClass.retrofit.create(CategoryApi::class.java)
+        val recipeService = ApplicationClass.retrofit.create(RecipeApi::class.java)
         val barcodeService = ApplicationClass.barcodeRetrofit.create(BarcodeApi::class.java)
     }
 }
