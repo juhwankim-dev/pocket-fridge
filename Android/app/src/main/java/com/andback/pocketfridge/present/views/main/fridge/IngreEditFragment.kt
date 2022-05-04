@@ -60,11 +60,15 @@ class IngreEditFragment: BaseFragment<FragmentIngreEditBinding>(R.layout.fragmen
                 }
 
                 isServerError.observe(owner) {
-                    // TODO: 서버 통신 실패 ui 처리
+                    if(it == true) {
+                        showToastMessage(resources.getString(R.string.ingre_edit_error))
+                    }
                 }
 
                 isNetworkError.observe(owner) {
-                    // TODO: 네트워크 이용 불가 ui 처리
+                    if(it == true) {
+                        showToastMessage(resources.getString(R.string.network_error))
+                    }
                 }
 
                 isUpdateSuccess.observe(owner) {
