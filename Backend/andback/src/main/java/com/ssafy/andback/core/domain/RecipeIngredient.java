@@ -9,6 +9,7 @@
  **/
 package com.ssafy.andback.core.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -40,9 +41,15 @@ public class RecipeIngredient {
     private Recipe recipe;
 
     // 서브 카테고리 아이디 (서브 카테고리 1 : 레시피 식재료 N)
-    @ManyToOne(targetEntity = SubCategory.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = SubCategory.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "sub_category_id")
     private SubCategory subCategory;
 
-
+    @Builder
+    public RecipeIngredient(Long recipeIngredientId, String recipeIngredientName, Recipe recipe, SubCategory subCategory) {
+        this.recipeIngredientId = recipeIngredientId;
+        this.recipeIngredientName = recipeIngredientName;
+        this.recipe = recipe;
+        this.subCategory = subCategory;
+    }
 }
