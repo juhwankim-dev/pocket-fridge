@@ -23,7 +23,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/tb_email_auth"
+                android:id="@+id/tb_email_authF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title="@string/sign_up"
