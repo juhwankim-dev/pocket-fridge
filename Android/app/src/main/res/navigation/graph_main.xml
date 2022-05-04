@@ -37,5 +37,9 @@
         android:id="@+id/ingreEditFragment"
         android:name="com.andback.pocketfridge.present.views.main.fridge.IngreEditFragment"
         android:label="IngreEditFragment"
-        tools:layout="@layout/fragment_ingre_edit"/>
+        tools:layout="@layout/fragment_ingre_edit">
+        <action
+            android:id="@+id/action_ingreEditFragment_to_ingreDetailFragment"
+            app:destination="@id/ingreDetailFragment" />
+    </fragment>
 </navigation>
