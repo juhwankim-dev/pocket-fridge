@@ -43,10 +43,9 @@ public class FoodIngredientController {
     }
 
     @ApiOperation(value = "식재료 수정", notes = "식재료 정보를 입력받아 해당하는 식재료의 정보를 DB에 수정한다.")
-    @PutMapping("/{foodIngredientId}")
-    public ResponseEntity<BaseResponseDto> updateFoodIngredient(@PathVariable Long foodIngredientId,
-                                                                UpdateFoodIngredientRequestDto updateFoodIngredientReqDto) {
-        String res = foodIngredientService.updateFoodIngredient(foodIngredientId, updateFoodIngredientReqDto);
+    @PutMapping
+    public ResponseEntity<BaseResponseDto> updateFoodIngredient(@RequestBody UpdateFoodIngredientRequestDto updateFoodIngredientReqDto) {
+        String res = foodIngredientService.updateFoodIngredient(updateFoodIngredientReqDto);
 
         if (res.equals("fail")) {
             return ResponseEntity.status(401).body(BaseResponseDto.of(401, "식재료 수정 실패"));

@@ -24,8 +24,19 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         val navController = navHostFragment.findNavController()
         binding.bnvMain.setupWithNavController(navController)
 
-
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when(destination.id) {
+                R.id.fridgeFragment,
+                R.id.ingreUploadFragment,
+                R.id.recipeFragment -> {
+                    binding.bnvMain.visibility = View.VISIBLE
+                }
+                else -> binding.bnvMain.visibility = View.GONE
+            }
+        }
     }
+
+
 
     fun hideBottomNav(status: Boolean) {
         if (status) binding.bnvMain.visibility = View.GONE

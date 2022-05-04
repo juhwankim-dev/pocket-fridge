@@ -4,5 +4,6 @@ enum class PageSet {
     EMAIL_AUTH,
     SIGN_UP,
     LOGIN,
-    MAIN
+    MAIN,
+    FIND_PW
 }

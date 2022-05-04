@@ -3,7 +3,9 @@ package com.andback.pocketfridge.present.views.main.fridge
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.databinding.FragmentFridgeBinding
@@ -32,6 +34,7 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
                 override fun onClick(data: Ingredient) {
                     Log.d(TAG, "onClick: ${data}")
                     // TODO: 디테일 fragment로 이동
+                    findNavController().navigate(R.id.action_fridgeFragment_to_ingreDetailFragment, bundleOf("data" to data))
                 }
             }
             itemLongClickListener = object : IngreRVAdapter.ItemLongClickListener {
@@ -42,12 +45,6 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
                 }
             }
         }
-        // 더미 데이터
-        val list = mutableListOf(Ingredient(1, 0, "2022-05-01", "2022-05-03", "돼지고기", -1, Storage.Fridge))
-        for(i in 0..5) {
-            list.add(Ingredient(1, 0, "2022-05-01", "2022-05-03", "돼지고기", -1, Storage.Fridge))
-        }
-        rvAdapter.setItems(list)
 
         binding.rvFridgeF.apply {
             adapter = rvAdapter
@@ -71,8 +68,7 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
             .setMessage("${ingre.name}")
             .setCancelable(true)
             .setPositiveButton(resources.getString(R.string.delete_button)) { dialog, which ->
-                // TODO: Ingredient Id 추가되면 주석 해제 
-//                viewModel.deleteIngreById(ingre.id)
+                viewModel.deleteIngreById(ingre.id)
             }
             .show()
     }

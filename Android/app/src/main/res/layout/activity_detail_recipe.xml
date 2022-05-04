@@ -7,57 +7,9 @@
 
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <FrameLayout
+        android:id="@+id/fl_detail_recipeF"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".present.views.main.recipe.detail.DetailRecipeActivity">
-
-        <FrameLayout
-            android:id="@+id/fl_detail_recipeF"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/abl_detail_recipeF"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:fitsSystemWindows="true">
-
-            <com.google.android.material.appbar.CollapsingToolbarLayout
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:fitsSystemWindows="true"
-                app:contentScrim="@color/white"
-                app:expandedTitleTextColor="@color/white"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fitsSystemWindows="true"
-                    android:src="@drawable/bg_food_sample"
-                    android:scaleType="centerCrop" />
-
-                <com.google.android.material.appbar.MaterialToolbar
-                    android:layout_height="?attr/actionBarSize"
-                    android:layout_width="match_parent"
-                    android:background="@android:color/transparent"
-                    android:elevation="0dp"
-                    app:navigationIcon="@drawable/ic_back"
-                    app:layout_collapseMode="pin">
-                </com.google.android.material.appbar.MaterialToolbar>
-
-            </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_detail_recipe"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
-        </androidx.recyclerview.widget.RecyclerView>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        tools:context=".present.views.main.recipe.detail.DetailRecipeActivity"/>
 </layout>

@@ -17,7 +17,8 @@ data class IngreEntity(
     val foodIngredientName: String,
     val foodIngredientWay: String,
     val refrigeratorId: Int,
-    val subCategoryId: Int
+    val subCategoryId: Int,
+    val foodIngredientId: Int = -1,
 )
 
 

@@ -48,8 +48,8 @@ class SignUpViewModel @Inject constructor (
     val isSentEmail = SingleLiveEvent<Boolean>()
 
     // 토스트 메시지 & 에러 메시지
-    private val _toastMsg = MutableLiveData<String>()
-    private val _toastMsgIntType = MutableLiveData<Int>()
+    private val _toastMsg = SingleLiveEvent<String>()
+    private val _toastMsgIntType = SingleLiveEvent<Int>()
     private val _emailErrorMsg = MutableLiveData<CheckResult>()
     private val _emailAuthNumberErrorMsg = MutableLiveData<Int>()
     private val _nicknameErrorMsg = MutableLiveData<Int>()
@@ -97,7 +97,7 @@ class SignUpViewModel @Inject constructor (
                         when(it.status) {
                             200 -> {
                                 isSentEmail.value = true
-                                _isShowLoading.value = true
+                                _isShowLoading.value = false
                                 sentEmailAuthNumber = it.data!!
                             }
                             else -> {
@@ -185,7 +185,7 @@ class SignUpViewModel @Inject constructor (
             val jsonObject = JSONObject(responseBody!!.trim())
             var message = jsonObject.getString("message")
             _toastMsg.value = message
-            Log.d("UserViewModel", "${t.code()}")
+            Log.d("SignUpViewModel", "${t.code()}")
         } else {
             _toastMsg.value = t.message
         }

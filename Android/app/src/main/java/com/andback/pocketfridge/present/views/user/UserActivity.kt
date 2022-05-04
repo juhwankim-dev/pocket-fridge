@@ -8,6 +8,7 @@ import com.andback.pocketfridge.databinding.ActivityUserBinding
 import com.andback.pocketfridge.present.config.BaseActivity
 import com.andback.pocketfridge.present.utils.PageSet
 import com.andback.pocketfridge.present.views.main.MainActivity
+import com.andback.pocketfridge.present.views.user.findpw.FindPWFragment
 import com.andback.pocketfridge.present.views.user.login.LoginFragment
 import com.andback.pocketfridge.present.views.user.signup.EmailAuthFragment
 import com.andback.pocketfridge.present.views.user.signup.SignUpFragment
@@ -48,6 +49,11 @@ class UserActivity : BaseActivity<ActivityUserBinding>(R.layout.activity_user) {
             PageSet.LOGIN -> supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fl_main, LoginFragment())
+                .addToBackStack(null)
+                .commit()
+            PageSet.FIND_PW -> supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fl_main, FindPWFragment())
                 .addToBackStack(null)
                 .commit()
             PageSet.MAIN -> startActivity(Intent(this, MainActivity::class.java))

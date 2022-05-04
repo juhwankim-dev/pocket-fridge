@@ -40,4 +40,8 @@ class ApiModule {
     fun provideRecipeApiInterface(): RecipeApi {
         return RetrofitUtil.recipeService
     }
+
+    fun provideBarcodeApiInterface(): BarcodeApi {
+        return RetrofitUtil.barcodeService
+    }
 }
