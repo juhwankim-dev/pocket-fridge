@@ -19,7 +19,6 @@ class STTUtil(val context: Context, val packageName: String, val assistant: Reci
 
         sttIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
             putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, packageName)
-            putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
             putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR")
         }
 
@@ -29,6 +28,8 @@ class STTUtil(val context: Context, val packageName: String, val assistant: Reci
         }
     }
 
+    // 음성 듣기 시작
+    // 시리와 같은 기능을 위해서 반복해서 호출해줘야 함
     fun startListening() {
         speechRecognizer!!.startListening(sttIntent)
     }
@@ -51,7 +52,7 @@ class STTUtil(val context: Context, val packageName: String, val assistant: Reci
         }
 
         override fun onEndOfSpeech() {
-            Log.d("tst5", "중지")
+            // 음성이 끝났을 때 호출 (결과에 따라 OnError 혹은 onResults 호출)
         }
 
         override fun onError(error: Int) {
@@ -69,20 +70,29 @@ class STTUtil(val context: Context, val packageName: String, val assistant: Reci
                 else -> "알 수 없는 오류임"
             }
             Log.d("STTUtil", "onError: $message")
+
+            // 에러가 나더라도 다시 음성 듣기를 시작한다.
+            // 원래 음성은 한 번 듣기가 기본이지만, 시리처럼 호출하여 쓰기 위해 항시 듣기 상태를 유지시킨다.
             startListening()
         }
 
         override fun onResults(results: Bundle) {
             // 인식 결과가 준비되면 호출
-            // 말을 하면 ArrayList에 단어를 넣고 textView에 단어를 이어줌
+            // 말을 하면 ArrayList에 단어들이 들어감.
+            // ex) 아버지가 / 방에 / 들어가신다.
             val matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+
+            // 띄어쓰기 없이 한 문장으로 이어줌
             var resultStr = ""
             for (i in 0 until matches!!.size) {
                 resultStr += matches[i]
             }
 
+            // 아무말도 하지 않았다면 리턴
             if (resultStr.isEmpty()) return
-            resultStr = resultStr.replace(" ", "")
+
+            // 사용자의 명령어를 관찰하고 있는 Observable인 command에 값을 할당
+            // LiveData로 치면 setValue
             assistant.command = resultStr
         }
 
@@ -95,6 +105,7 @@ class STTUtil(val context: Context, val packageName: String, val assistant: Reci
         }
     }
 
+    // Fragment를 떠날 때 호출할 것
     fun stopListening() {
         if (speechRecognizer != null) {
             speechRecognizer!!.destroy()
