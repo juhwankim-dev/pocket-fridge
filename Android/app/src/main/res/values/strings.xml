@@ -24,12 +24,17 @@
 
     <string name="sign_up">회원가입</string>
     <string name="login">로그인</string>
+    <string name="find_pw">비밀번호 찾기</string>
     <string name="notification">알림</string>
     <string name="profile">프로필</string>
 
     <string name="help_msg_barcode_scan">화면 중앙에 바코드를 스캔해주세요</string>
     <string name="self_input">직접 입력</string>
     <string name="self_input_title">바코드번호 입력</string>
+
+    <string name="email">이메일</string>
+    <string name="next">다음</string>
+    <string name="userName">이름</string>
 
     <!-- Error Messages -->
     <string name="name_empty_error">"이름은 필수 입력 값입니다."</string>
@@ -56,6 +61,9 @@
     <string name="delete_ingre_title">"식재료를 삭제하시겠습니까?"</string>
     <string name="delete_button">삭제하기</string>
     <string name="edit_button">수정하기</string>
+
+    <string name="email_auth_guide">입력하신 이메일 주소로 인증번호가 발송되었습니다.\n인증번호를 확인해 주세요.</string>
+    <string name="find_pw_guide">회원가입 시 등록한 이메일을 입력해주세요.\n입력하신 이메일로 임시 비밀번호를 발급해드립니다.</string>
 
     <string name="ipa_ready">네 말씀해주세요</string>
     <string name="ipa_next">다음 페이지로 이동합니다</string>
