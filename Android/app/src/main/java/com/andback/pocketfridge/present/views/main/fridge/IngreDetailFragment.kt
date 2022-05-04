@@ -21,12 +21,21 @@ class IngreDetailFragment : BaseFragment<FragmentIngreDetailBinding>(R.layout.fr
     }
 
     private fun init() {
-        arguments?.let {
-            viewModel.selectIngre(it["data"] as Ingredient)
-        }?: return
+        initViewModel()
         initView()
         setObserver()
         setToolbar()
+    }
+
+    private fun goBack() {
+        requireActivity().onBackPressed()
+    }
+
+    private fun initViewModel() {
+        viewModel.init()
+        arguments?.let {
+            viewModel.selectIngre(it["data"] as Ingredient)
+        }?: goBack()
     }
 
     private fun setObserver() {
@@ -38,6 +47,18 @@ class IngreDetailFragment : BaseFragment<FragmentIngreDetailBinding>(R.layout.fr
                 subCategory.observe(owner) {
                     binding.tvIngreDetailFCategory.text = it.subCategoryName
                 }
+                isDeleteSuccess.observe(owner) {
+                    if(it == true) {
+                        showToastMessage(resources.getString(R.string.ingre_delete_success))
+                        goBack()
+                    }
+                }
+                isDeleteFail.observe(owner) {
+                    if(it == true) {
+                        showToastMessage(resources.getString(R.string.ingre_delete_error))
+                        viewModel.init()
+                    }
+                }
             }
         }
     }
@@ -47,7 +68,7 @@ class IngreDetailFragment : BaseFragment<FragmentIngreDetailBinding>(R.layout.fr
             viewModel.deleteIngre()
         }
         binding.btnIngreDetailFEdit.setOnClickListener {
-            // TODO: 수정 fragment로 이동 
+            // TODO: 수정 fragment로 이동
         }
     }
 
