@@ -60,4 +60,4 @@ class TokenGet(Resource):
 
 
 if __name__ == '__main__':
-    app.run(host='localhost', port=80, debug=True)  # localhost:8080 접속 시 Swagger
+    app.run(host='localhost', port=80)  # localhost:80 접속 시 Swagger
