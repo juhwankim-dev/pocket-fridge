@@ -1,9 +1,6 @@
 package com.andback.pocketfridge.present.utils
 
-import com.andback.pocketfridge.data.api.CategoryApi
-import com.andback.pocketfridge.data.api.FridgeApi
-import com.andback.pocketfridge.data.api.IngreApi
-import com.andback.pocketfridge.data.api.UserApi
+import com.andback.pocketfridge.data.api.*
 import com.andback.pocketfridge.present.config.ApplicationClass
 
 class RetrofitUtil {
