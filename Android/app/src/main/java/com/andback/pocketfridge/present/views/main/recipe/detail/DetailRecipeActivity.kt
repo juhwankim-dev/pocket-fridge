@@ -28,13 +28,11 @@ class DetailRecipeActivity : BaseActivity<ActivityDetailRecipeBinding>(R.layout.
             supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fl_detail_recipeF, DetailRecipeFragment())
-                .addToBackStack(null)
                 .commit()
         } else {
             supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fl_detail_recipeF, RecipeStepsFragment())
-                .addToBackStack(null)
                 .commit()
         }
     }
