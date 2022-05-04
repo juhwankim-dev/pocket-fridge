@@ -31,7 +31,7 @@ class LoginViewModel @Inject constructor(
     private val _isShowLoading = MutableLiveData<Boolean>()
     val isShowLoading: LiveData<Boolean> get() = _isShowLoading
 
-    private val _toastMsg = MutableLiveData<String>()
+    private val _toastMsg = SingleLiveEvent<String>()
     val toastMsg: LiveData<String> get() = _toastMsg
 
     private fun login(req: MutableMap<String, String>) {

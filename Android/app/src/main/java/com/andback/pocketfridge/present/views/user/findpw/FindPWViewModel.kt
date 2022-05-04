@@ -29,7 +29,7 @@ class FindPWViewModel @Inject constructor(
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
 
-    private val _toastMsg = MutableLiveData<String>()
+    private val _toastMsg = SingleLiveEvent<String>()
     val toastMsg: LiveData<String> get() = _toastMsg
 
     private fun findPW(userForFind: UserForFindEntity) {
