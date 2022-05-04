@@ -18,6 +18,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import okio.IOException
 import retrofit2.HttpException
+import java.net.SocketTimeoutException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -142,6 +143,9 @@ class IngreEditViewModel @Inject constructor(
     private fun handleException(e: Throwable) {
         clearError()
         when(e) {
+            is SocketTimeoutException -> {
+                _isNetworkError.value = true
+            }
             is HttpException -> {
                 _isServerError.value = true
             }
