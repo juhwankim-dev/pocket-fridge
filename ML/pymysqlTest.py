@@ -19,7 +19,7 @@ conn = pymysql.connect(host='k6d206.p.ssafy.io',
 
 sql = "SELECT * from user"  # sql 쿼리문
 
-# 커서로 sql 쿼리문 출력 (with를 통해 conn.commit()과 conn.close() 불필요)
+# 커서로 sql 쿼리문 출력 (with를 사용하기 때문에 conn.commit()과 conn.close() 불필요)
 with conn:
     with conn.cursor() as cur:  # 커서생성 (cursor로 SQL 실행하여 데이터 가져올 수 있음)
         cur.execute(sql)  # 커서로 sql 실행
