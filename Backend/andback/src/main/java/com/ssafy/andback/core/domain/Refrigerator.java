@@ -36,15 +36,13 @@ public class Refrigerator {
     @Column(name = "refrigerator_name")
     private String refrigeratorName;
 
-    @OneToMany(mappedBy = "refrigerator", fetch = FetchType.LAZY)
-//    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToMany(mappedBy = "refrigerator", fetch = FetchType.EAGER)
     private List<FoodIngredient> foodIngredientList = new ArrayList<FoodIngredient>();
 
     @Builder
     public Refrigerator(String refrigeratorName) {
         this.refrigeratorName = refrigeratorName;
     }
-
 
     public void updateName(String refrigeratorName) {
         this.refrigeratorName = refrigeratorName;
