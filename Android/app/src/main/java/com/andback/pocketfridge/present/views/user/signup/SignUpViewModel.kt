@@ -169,6 +169,10 @@ class SignUpViewModel @Inject constructor (
         checkNickname(nickname.value!!)
     }
 
+    fun onCloseClick() {
+        pageNumber.value = PageSet.LOGIN
+    }
+
     private fun getEnteredUserInfo(): MutableMap<String, String>{
         val req = mutableMapOf<String, String>()
         req["userEmail"] = email.value.toString()
