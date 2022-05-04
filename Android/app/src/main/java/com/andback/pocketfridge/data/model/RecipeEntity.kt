@@ -1,10 +1,17 @@
 package com.andback.pocketfridge.data.model
 
+import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class RecipeEntity (
-    val recipeId: Int,
-    val recipeFoodName: String,
-    val recipeFoodSummary: String,
-    val recipeContent: String,
-    val recipeImage: String?,
-    val recipeType: String
-)
+    @SerializedName("recipeId") val id: Int,
+    @SerializedName("recipeAllIngredient") val allIngredients: String,
+    @SerializedName("recipeContent") val content: String,
+    @SerializedName("recipeFoodName") val foodName: String,
+    @SerializedName("recipeImage") val url: String?,
+    @SerializedName("recipeServing") val serving: String,
+    @SerializedName("recipeTime") val time: String,
+    @SerializedName("recipeType") val type: String
+): Parcelable
