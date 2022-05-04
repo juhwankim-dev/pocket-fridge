@@ -60,7 +60,7 @@ public class FoodIngredient {
     private Refrigerator refrigerator;
 
     // (카테고리 1 : 식재료 N)
-    @ManyToOne(targetEntity = SubCategory.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = SubCategory.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "sub_category_id")
     private SubCategory subCategory;
 

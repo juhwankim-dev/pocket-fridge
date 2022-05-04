@@ -12,13 +12,10 @@ import com.andback.pocketfridge.present.views.user.findpw.FindPWFragment
 import com.andback.pocketfridge.present.views.user.login.LoginFragment
 import com.andback.pocketfridge.present.views.user.signup.EmailAuthFragment
 import com.andback.pocketfridge.present.views.user.signup.SignUpFragment
-import com.andback.pocketfridge.present.views.user.signup.SignUpViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class UserActivity : BaseActivity<ActivityUserBinding>(R.layout.activity_user) {
-    private val upViewModel: SignUpViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -39,22 +36,18 @@ class UserActivity : BaseActivity<ActivityUserBinding>(R.layout.activity_user) {
             PageSet.EMAIL_AUTH -> supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fl_main, EmailAuthFragment())
-                .addToBackStack(null)
                 .commit()
             PageSet.SIGN_UP -> supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fl_main, SignUpFragment())
-                .addToBackStack(null)
                 .commit()
             PageSet.LOGIN -> supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fl_main, LoginFragment())
-                .addToBackStack(null)
                 .commit()
             PageSet.FIND_PW -> supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fl_main, FindPWFragment())
-                .addToBackStack(null)
                 .commit()
             PageSet.MAIN -> startActivity(Intent(this, MainActivity::class.java))
         }

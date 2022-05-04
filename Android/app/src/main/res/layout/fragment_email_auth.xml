@@ -26,6 +26,7 @@
                 android:id="@+id/tb_email_authF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:navigationOnClickListener="@{()->vm.onCloseClick()}"
                 app:title="@string/sign_up"
                 app:navigationIcon="@drawable/ic_close"/>
 
@@ -119,7 +120,7 @@
             android:layout_height="match_parent"
             android:background="@color/black_opaque_screen"
             android:elevation="6dp"
-            android:visibility="@{vm.isShowLoading() ? View.VISIBLE : View.GONE}"
+            android:visibility="@{vm.isLoading() ? View.VISIBLE : View.GONE}"
             tools:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -129,9 +130,9 @@
             android:layout_width="140dp"
             android:layout_height="140dp"
             android:elevation="8dp"
-            android:visibility="@{vm.isShowLoading() ? View.VISIBLE : View.GONE}"
+            android:visibility="@{vm.isLoading() ? View.VISIBLE : View.GONE}"
             tools:visibility="gone"
-            setLottiePlay="@{vm.isShowLoading()}"
+            setLottiePlay="@{vm.isLoading()}"
             app:lottie_loop="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -28,6 +28,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
     }
 
     private fun initViewModel() {
+        viewModel.init()
         binding.vm = viewModel
 
         with(viewModel) {
