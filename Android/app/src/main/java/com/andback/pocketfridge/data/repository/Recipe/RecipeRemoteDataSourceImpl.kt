@@ -1,8 +1,8 @@
 package com.andback.pocketfridge.data.repository.Recipe
 
 import com.andback.pocketfridge.data.api.RecipeApi
-import com.andback.pocketfridge.data.api.UserApi
 import com.andback.pocketfridge.data.model.BaseResponse
+import com.andback.pocketfridge.data.model.CookingIngreEntity
 import com.andback.pocketfridge.data.model.RecipeEntity
 import com.andback.pocketfridge.data.model.RecipeStepEntity
 import io.reactivex.Single
@@ -15,5 +15,9 @@ class RecipeRemoteDataSourceImpl @Inject constructor(private val recipeApi: Reci
 
     override fun getRecipeSteps(recipeId: Int): Single<BaseResponse<List<RecipeStepEntity>>> {
         return recipeApi.getRecipeSteps(recipeId)
+    }
+
+    override fun getCookingIngres(recipeId: Int): Single<BaseResponse<List<CookingIngreEntity>>> {
+        return recipeApi.getCookingIngres(recipeId)
     }
 }
