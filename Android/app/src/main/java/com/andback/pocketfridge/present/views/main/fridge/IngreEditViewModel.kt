@@ -28,6 +28,12 @@ class IngreEditViewModel @Inject constructor(
 ): ViewModel() {
     private val compositeDisposable = CompositeDisposable()
 
+    private val _isInitDone = MutableLiveData(0)
+    val isInitDone: LiveData<Int> = _isInitDone
+
+    private val _isUpdateSuccess = MutableLiveData(false)
+    val isUpdateSuccess: LiveData<Boolean> = _isUpdateSuccess
+
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> get() = _isLoading
 
@@ -94,38 +100,7 @@ class IngreEditViewModel @Inject constructor(
     // endregion
 
     init {
-        getCategoryUseCase.getAllCategories()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    if(!it.data.isNullOrEmpty()) {
-                        when {
-                            it.data[0] is MainCategoryEntity -> {
-                                _mainCategories.value = it.data as List<MainCategoryEntity>
-                                setDefaultData()
-                            }
-                            it.data[0] is SubCategoryEntity -> {
-                                _subCategories.value = it.data as List<SubCategoryEntity>
-                                setDefaultData()
-                            }
-                            else -> {
-                                // TODO: error 처리
-                            }
-                        }
-                    }
-                },
-                {
-                    // TODO: 카테고리 에러 처리
-                    Log.d(TAG, "error: ${it.javaClass.canonicalName}")
-                },
-                {
-                    // TODO: complete 처리
-                },
-                {
-                    // TODO: onSubscribe 처리
-                }
-            )
+        getCategories()
         getFridges()
     }
 
@@ -139,6 +114,10 @@ class IngreEditViewModel @Inject constructor(
             val result = it.find { element -> ingredient.category == element.subCategoryId }
             _selectedSubCategory.value = result!!
         }
+        fridges.value?.let { list ->
+            val fridge = list.find { ingredient.fridgeId == it.refrigeratorId }
+            fridge?.let { _selectedFridge.value = it }
+        }
     }
 
     fun onUpdateBtnClick() {
@@ -148,7 +127,7 @@ class IngreEditViewModel @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                        // TODO: 식재료 업데이트 성공
+                        _isUpdateSuccess.value = true
                     },
                     { throwable ->
                         handleException(throwable)
@@ -200,7 +179,24 @@ class IngreEditViewModel @Inject constructor(
     }
 
     private fun getIngredientFromInput(): Ingredient {
-        return Ingredient(quantity = 1, category = selectedSubCategory.value?.subCategoryId?: -1, name = name.value?: "", purchasedDate = datePurchased.value.toString(), expiryDate = dateExpiry.value.toString(), fridgeId = selectedFridge.value?.refrigeratorId?: -1, storage = selectedStorage.value?:Storage.Fridge)
+        val name = name.value?:""
+        val quantity = 1
+        val category = selectedSubCategory.value?.subCategoryId?: -1
+        val purchasedDate = datePurchased.value.toString()
+        val expiryDate = dateExpiry.value.toString()
+        val fridgeId = selectedFridge.value?.refrigeratorId?: -1
+        val storage = selectedStorage.value?:Storage.Fridge
+        val id = ingreId
+        return Ingredient(
+            id = id,
+            category = category,
+            quantity = quantity,
+            purchasedDate = purchasedDate,
+            expiryDate = expiryDate,
+            name = name,
+            fridgeId = fridgeId,
+            storage = storage
+        )
     }
 
     fun setFridge() {
@@ -227,6 +223,7 @@ class IngreEditViewModel @Inject constructor(
         _selectedFridge.value = getDefaultFridge()
         _selectedMainCategory.value = getDefaultMainCategory()
         _selectedSubCategory.value = getDefaultSubCategory()
+        _isUpdateSuccess.value = false
     }
 
     /**
@@ -277,6 +274,43 @@ class IngreEditViewModel @Inject constructor(
         }
     }
 
+    private fun getCategories() {
+        compositeDisposable.add(
+            getCategoryUseCase.getAllCategories()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        if(!it.data.isNullOrEmpty()) {
+                            when {
+                                it.data[0] is MainCategoryEntity -> {
+                                    _mainCategories.value = it.data as List<MainCategoryEntity>
+                                    setDefaultData()
+                                }
+                                it.data[0] is SubCategoryEntity -> {
+                                    _subCategories.value = it.data as List<SubCategoryEntity>
+                                    setDefaultData()
+                                }
+                                else -> {
+                                    // TODO: error 처리
+                                }
+                            }
+                        }
+                    },
+                    {
+                        // TODO: 카테고리 에러 처리
+                        Log.d(TAG, "error: ${it.javaClass.canonicalName}")
+                    },
+                    {
+                        _isInitDone.value = _isInitDone.value?.plus(1)
+                    },
+                    {
+                        // TODO: onSubscribe 처리
+                    }
+                )
+        )
+    }
+
     fun getFridges() {
         if(!isLoading.value!!) {
             compositeDisposable.add(
@@ -287,8 +321,8 @@ class IngreEditViewModel @Inject constructor(
                         {
                             it.data?.let { list ->
                                 _fridges.value = list
+                                _isInitDone.value = _isInitDone.value?.plus(1)
                             }
-                            setDefaultData()
                             _isLoading.value = false
                         },
                         {
