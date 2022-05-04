@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.databinding.FragmentFindPWBinding
 import com.andback.pocketfridge.present.config.BaseFragment
@@ -13,7 +13,7 @@ import com.andback.pocketfridge.present.utils.SignUpChecker
 import com.andback.pocketfridge.present.views.user.UserActivity
 
 class FindPWFragment : BaseFragment<FragmentFindPWBinding>(R.layout.fragment_find_p_w) {
-    private val viewModel: FindPWViewModel by activityViewModels()
+    private val viewModel: FindPWViewModel by viewModels()
     private var isValidName = false
     private var isValidEmail = false
 
