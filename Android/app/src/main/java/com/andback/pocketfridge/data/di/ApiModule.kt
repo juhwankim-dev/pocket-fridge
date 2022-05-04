@@ -39,6 +39,7 @@ class ApiModule {
     @Singleton
     fun provideRecipeApiInterface(): RecipeApi {
         return RetrofitUtil.recipeService
+
     }
 
     @Provides
