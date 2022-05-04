@@ -23,22 +23,27 @@ class SignUpCheckerTest {
     val longName = "가나다라마바사아자차카타파하가나다라마바사아자차카타파하"
     val specialCharName = "!@#$"
     val emptyName = ""
+    val containSpaceName = "아이 디"
 
     val shortNickname = "얍"
     val longNickname = "가나다라마바사아자차카타파하"
     val specialCharNickname = "!@#$"
     val emptyNickname = ""
+    val containSpaceNickname = "닉네 임"
 
     val notEmail = "ThisIsNotEmail"
     val emptyEmail = ""
+    val containSpaceEmail = "ssafy @ google.com"
 
     val shortPw = "a123"
     val longPw = "a123456789123456"
     val onlyNumberPw = "12345"
     val emptyPw = ""
+    val containSpacePw = "ssa fy"
 
     val differntConfirmPw = "ssafyssafy"
     val emptyConfirmPw = ""
+    val containSpaceConfirmPw = "ssa fy"
 
 
     @Test
@@ -122,6 +127,12 @@ class SignUpCheckerTest {
     }
 
     @Test
+    fun `공백이 포함된 이름이면 false`() {
+        val result = SignUpChecker.validateName(containSpaceName)
+        Truth.assertThat(result.isValid).isFalse()
+    }
+
+    @Test
     fun `2자 미만 닉네임이면 false`() {
         val result = SignUpChecker.validateNickname(shortNickname)
         Truth.assertThat(result.isValid).isFalse()
@@ -146,6 +157,12 @@ class SignUpCheckerTest {
     }
 
     @Test
+    fun `공백이 포함된 닉네임이면 false`() {
+        val result = SignUpChecker.validateNickname(containSpaceNickname)
+        Truth.assertThat(result.isValid).isFalse()
+    }
+
+    @Test
     fun `이메일이 아니면 false`() {
         val result = SignUpChecker.validateEmail(notEmail)
         Truth.assertThat(result.isValid).isFalse()
@@ -154,6 +171,12 @@ class SignUpCheckerTest {
     @Test
     fun `빈 이메일이면 false`() {
         val result = SignUpChecker.validateEmail(emptyEmail)
+        Truth.assertThat(result.isValid).isFalse()
+    }
+
+    @Test
+    fun `공백이 포함된 이메일이면 false`() {
+        val result = SignUpChecker.validateEmail(containSpaceEmail)
         Truth.assertThat(result.isValid).isFalse()
     }
 
@@ -182,6 +205,12 @@ class SignUpCheckerTest {
     }
 
     @Test
+    fun `공백이 포함된 비밀번호면 false`() {
+        val result = SignUpChecker.validatePw(containSpacePw)
+        Truth.assertThat(result.isValid).isFalse()
+    }
+
+    @Test
     fun `비밀번호가 다르면 false`() {
         val result = SignUpChecker.validateConfirmPw(normalPw, differntConfirmPw)
         Truth.assertThat(result.isValid).isFalse()
@@ -190,6 +219,12 @@ class SignUpCheckerTest {
     @Test
     fun `빈 확인 비밀번호면 false`() {
         val result = SignUpChecker.validateConfirmPw(normalPw, emptyConfirmPw)
+        Truth.assertThat(result.isValid).isFalse()
+    }
+
+    @Test
+    fun `공백이 포함된 확인 비밀번호면 false`() {
+        val result = SignUpChecker.validateConfirmPw(normalPw, containSpaceConfirmPw)
         Truth.assertThat(result.isValid).isFalse()
     }
 }
