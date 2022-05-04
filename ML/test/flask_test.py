@@ -1,5 +1,5 @@
 """
-* flaskTest
+* flask_test
 * python과 Flask, Swagger 연동 테스트
 *
 * @author 김다은
