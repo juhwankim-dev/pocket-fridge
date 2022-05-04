@@ -96,8 +96,9 @@ class IngreEditViewModel @Inject constructor(
     private val _isServerError = MutableLiveData(false)
     val isServerError: LiveData<Boolean>
         get() = _isServerError
-
     // endregion
+
+    var updatedIngredient: Ingredient? = null
 
     init {
         getCategories()
@@ -121,12 +122,14 @@ class IngreEditViewModel @Inject constructor(
     }
 
     fun onUpdateBtnClick() {
+        val ingredient = getIngredientFromInput()
         compositeDisposable.add(
-            updateIngreUseCase(getIngredientFromInput())
+            updateIngreUseCase(ingredient)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
+                        updatedIngredient = ingredient
                         _isUpdateSuccess.value = true
                     },
                     { throwable ->
@@ -224,6 +227,7 @@ class IngreEditViewModel @Inject constructor(
         _selectedMainCategory.value = getDefaultMainCategory()
         _selectedSubCategory.value = getDefaultSubCategory()
         _isUpdateSuccess.value = false
+        updatedIngredient = null
     }
 
     /**
