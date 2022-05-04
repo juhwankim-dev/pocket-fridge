@@ -41,7 +41,7 @@ object IngreMapper {
     private fun getLeftDay(stringDate: String, nowStringDate: String): Int {
         val inputDate = DateConverter.toDate(stringDate).time
         val nowDate = DateConverter.toDate(nowStringDate).time
-        val result = ceil((inputDate - nowDate) / (24 * 60 * 60 * 1000).toDouble()).toInt()
+        val result = ceil((nowDate - inputDate) / (24 * 60 * 60 * 1000).toDouble()).toInt()
         Log.d(TAG, "getLeftDay: ${result}")
         return result
     }

@@ -4,7 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <import type="com.andback.pocketfridge.present.utils.Storage"/>
+        <variable
+            name="ingredient"
+            type="com.andback.pocketfridge.domain.model.Ingredient" />
+        <variable
+            name="leftDay"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,7 +29,8 @@
                 android:id="@+id/tb_ingre_detailF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:navigationIcon="@drawable/ic_back" />
+                app:navigationIcon="@drawable/ic_back"
+                app:title="@{ingredient.name}" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -55,16 +62,19 @@
                     <TextView
                         style="@style/body_text"
                         android:text="@string/storage_fridge"
-                        android:layout_marginEnd="@dimen/activity_margin_narrow"/>
+                        android:layout_marginEnd="@dimen/activity_margin_narrow"
+                        android:textColor="@{ingredient.storage == Storage.Fridge? @color/main_color: @color/black_high_emphasis}"/>
 
                     <TextView
                         style="@style/body_text"
                         android:text="@string/storage_freeze"
-                        android:layout_marginEnd="@dimen/activity_margin_narrow"/>
+                        android:layout_marginEnd="@dimen/activity_margin_narrow"
+                        android:textColor="@{ingredient.storage == Storage.Freeze? @color/main_color: @color/black_high_emphasis}"/>
 
                     <TextView
                         style="@style/body_text"
-                        android:text="@string/storage_room"/>
+                        android:text="@string/storage_room"
+                        android:textColor="@{ingredient.storage == Storage.Room? @color/main_color: @color/black_high_emphasis}"/>
 
                 </LinearLayout>
 
@@ -92,7 +102,7 @@
                     android:layout_marginEnd="@dimen/activity_margin_narrow"
                     style="@style/body_text"
                     android:textStyle="bold"
-                    android:text="잔여기한:"/>
+                    android:text="@string/left_day_label"/>
 
                 <TextView
                     android:id="@+id/tv_ingre_detailF_left_day"
@@ -100,6 +110,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     style="@style/body_text"
                     android:textStyle="bold"
+                    android:text="@{leftDay}"
+                    android:textColor="@{(0 > ingredient.leftDay)? @color/main_color : @color/black}"
                     tools:text="D-3" />
 
                 <TextView
@@ -108,6 +120,7 @@
                     app:layout_constraintTop_toBottomOf="@id/iv_ingre_detailF"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginTop="@dimen/activity_margin_wide"
+                    android:text="@{ingredient.purchasedDate.replace('-','.')}"
                     tools:text="2022.05.01"/>
 
                 <TextView
@@ -122,6 +135,7 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_ingre_detailF_purchased_date"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginTop="@dimen/activity_margin_narrow"
+                    android:text="@{ingredient.expiryDate.replace('-','.')}"
                     tools:text="2022.05.02"/>
 
                 <TextView

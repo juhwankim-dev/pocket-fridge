@@ -9,7 +9,11 @@
         android:id="@+id/fridgeFragment"
         android:name="com.andback.pocketfridge.present.views.main.fridge.FridgeFragment"
         android:label="FridgeFragment"
-        tools:layout="@layout/fragment_fridge"/>
+        tools:layout="@layout/fragment_fridge">
+        <action
+            android:id="@+id/action_fridgeFragment_to_ingreDetailFragment"
+            app:destination="@id/ingreDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/ingreUploadFragment"
         android:name="com.andback.pocketfridge.present.views.main.ingreupload.IngreUploadFragment"
@@ -20,4 +24,9 @@
         android:name="com.andback.pocketfridge.present.views.main.recipe.RecipeFragment"
         android:label="RecipeFragment"
         tools:layout="@layout/fragment_recipe"/>
+    <fragment
+        android:id="@+id/ingreDetailFragment"
+        android:name="com.andback.pocketfridge.present.views.main.fridge.IngreDetailFragment"
+        android:label="IngreDetailFragment"
+        tools:layout="@layout/fragment_ingre_detail"/>
 </navigation>
