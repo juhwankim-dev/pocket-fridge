@@ -10,6 +10,7 @@
     <string name="add">추가</string>
     <string name="recipe">레시피</string>
     <string name="ingre_upload">식재료 등록</string>
+    <string name="ingre_edit">식재료 수정</string>
     <string name="merchandise">상품</string>
     <string name="storage_fridge">냉장</string>
     <string name="storage_freeze">냉동</string>
