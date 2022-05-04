@@ -12,10 +12,12 @@ import java.util.concurrent.TimeUnit
 @HiltAndroidApp
 class ApplicationClass : Application() {
     private val baseUrl = "http://k6d206.p.ssafy.io:8080/"
+    private val barcodeUrl = "https://openapi.foodsafetykorea.go.kr/api/"
     private val TIME_OUT = 5000L
 
     companion object {
         lateinit var retrofit: Retrofit
+        lateinit var barcodeRetrofit: Retrofit
     }
 
     override fun onCreate() {
@@ -34,6 +36,13 @@ class ApplicationClass : Application() {
 
         retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
+            .build()
+
+        barcodeRetrofit = Retrofit.Builder()
+            .baseUrl(barcodeUrl)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
