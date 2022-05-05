@@ -1,6 +1,7 @@
 package com.andback.pocketfridge.present.views.main.recipe.detail
 
 import android.animation.Animator
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,9 +15,10 @@ import com.andback.pocketfridge.databinding.ItemDetailRecipeBodyListBinding
 import com.andback.pocketfridge.databinding.ItemDetailRecipeHeaderListBinding
 
 class DetailRecipeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    val CONTENT_TYPE_CNT = 2
-    val TYPE_HEADER = 0
-    val TYPE_BODY = 1
+    private val viewHolderType = mapOf (
+        "HEADER" to 0,
+        "BODY" to 1
+    )
 
     lateinit var recipe: RecipeEntity
     private val cookingIngreList = arrayListOf<CookingIngreEntity>()
@@ -72,14 +74,13 @@ class DetailRecipeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    // position의 최대값이 TYPE의 개수보다 많지 않도록 주의
     override fun getItemViewType(position: Int): Int {
         return position
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType) {
-            TYPE_HEADER -> {
+            viewHolderType["HEADER"] -> {
                 val binding = ItemDetailRecipeHeaderListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 HeadViewHolder(binding)
             }
@@ -98,7 +99,7 @@ class DetailRecipeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    override fun getItemCount(): Int = CONTENT_TYPE_CNT
+    override fun getItemCount(): Int = viewHolderType.size
 
     fun setHeaderContent(recipe: RecipeEntity) {
         this.recipe = recipe
@@ -106,8 +107,8 @@ class DetailRecipeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     fun setBodyContent(cookingIngres: List<CookingIngreEntity>) {
-        //cookingIngreList.clear()
+        cookingIngreList.clear()
         cookingIngreList.addAll(cookingIngres)
-        //notifyDataSetChanged()
+        notifyDataSetChanged()
     }
 }
