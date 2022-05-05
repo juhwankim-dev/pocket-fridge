@@ -15,7 +15,8 @@ interface IngreDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(ingreList: List<IngreEntity>): Completable
 
-    @Delete
+    @Transaction
+    @Query("DELETE FROM $INGRE_TABLE WHERE foodIngredientId = :id")
     fun deleteById(id: Int): Completable
 
     @Transaction
