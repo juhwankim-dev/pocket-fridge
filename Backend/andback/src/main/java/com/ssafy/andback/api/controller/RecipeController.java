@@ -1,9 +1,6 @@
 package com.ssafy.andback.api.controller;
 
-import com.ssafy.andback.api.dto.response.LackRecipeIngredientResponseDto;
-import com.ssafy.andback.api.dto.response.ListResponseDto;
-import com.ssafy.andback.api.dto.response.RecipeProcessResponseDto;
-import com.ssafy.andback.api.dto.response.RecipeResponseDto;
+import com.ssafy.andback.api.dto.response.*;
 import com.ssafy.andback.api.service.RecipeIngredientService;
 import com.ssafy.andback.api.service.RecipeService;
 import com.ssafy.andback.api.service.UserRefrigeratorService;
@@ -61,6 +58,14 @@ public class RecipeController {
         return ResponseEntity.ok(new ListResponseDto<RecipeProcessResponseDto>(200, "success", response));
     }
 
+    @ApiOperation(value = "레시피 재료 정보 조회", notes = "레시피 Id로 레시피 재료를 조회한다")
+    @GetMapping("/ingredient/{recipeId}")
+    ResponseEntity<ListResponseDto<RecipeIngredientResponseDto>> findAllRecipeIngredientByRecipeId(@PathVariable(value = "recipeId", required = true) Long recipeId) {
+        List<RecipeIngredientResponseDto> response = recipeService.findRecipeIngredientByRecipeId(recipeId);
+
+        return ResponseEntity.ok(new ListResponseDto<RecipeIngredientResponseDto>(200, "success", response));
+    }
+
     @ApiOperation(value = "부족한 레시피 재료 조회", notes = "레시피 재료 중 부족한 재료를 보여준다.")
     @GetMapping("/lack/{recipeId}")
     ResponseEntity<ListResponseDto<LackRecipeIngredientResponseDto>> findLackRecipeIngredients(@ApiIgnore Authentication authentication, @PathVariable(value = "recipeId", required = true) Long recipeId) {
@@ -81,5 +86,4 @@ public class RecipeController {
 
         return ResponseEntity.ok(new ListResponseDto<LackRecipeIngredientResponseDto>(200, "success", response));
     }
-
 }
