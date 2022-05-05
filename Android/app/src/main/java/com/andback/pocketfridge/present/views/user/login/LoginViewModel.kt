@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.andback.pocketfridge.data.model.LoginEntity
 import com.andback.pocketfridge.domain.usecase.user.GetLoginUseCase
 import com.andback.pocketfridge.domain.usecase.user.GetSignUpUseCase
 import com.andback.pocketfridge.present.config.SingleLiveEvent
@@ -34,11 +36,11 @@ class LoginViewModel @Inject constructor(
     private val _toastMsg = SingleLiveEvent<String>()
     val toastMsg: LiveData<String> get() = _toastMsg
 
-    private fun login(req: MutableMap<String, String>) {
+    private fun login(loginEntity: LoginEntity) {
         _isLoading.value = true
 
         compositeDisposable.add(
-            getLoginUseCase.execute(req)
+            getLoginUseCase(loginEntity)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -56,7 +58,7 @@ class LoginViewModel @Inject constructor(
     }
 
     fun onLoginClick() {
-        login(getEnteredUserInfo())
+        login(LoginEntity(email.value.toString(), pw.value.toString()))
     }
 
     fun onSocialLoginClick() {
@@ -81,13 +83,5 @@ class LoginViewModel @Inject constructor(
         } else {
             _toastMsg.value = t.message
         }
-    }
-
-    private fun getEnteredUserInfo(): MutableMap<String, String>{
-        val req = mutableMapOf<String, String>()
-        req["userEmail"] = email.value.toString()
-        req["userPassword"] = pw.value.toString()
-
-        return req
     }
 }
