@@ -2,7 +2,6 @@ package com.andback.pocketfridge.present.views.main.recipe.detail
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.data.model.RecipeEntity
@@ -20,8 +19,7 @@ class DetailRecipeActivity : BaseActivity<ActivityDetailRecipeBinding>(R.layout.
         if(intent.hasExtra("recipe")) {
             intent.getParcelableExtra<RecipeEntity>("recipe")!!.let {
                 viewModel.selectedRecipe = it
-                // TODO: 서버 수정될때 까지 일단 안가져옴 
-                //viewModel.getCookingIngres(it.id)
+                viewModel.getCookingIngres(it.id)
                 initFragment()
             }
         } else {
