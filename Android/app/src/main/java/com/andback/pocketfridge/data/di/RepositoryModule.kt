@@ -1,5 +1,6 @@
 package com.andback.pocketfridge.data.di
 
+import android.content.Context
 import com.andback.pocketfridge.data.repository.*
 import com.andback.pocketfridge.data.repository.barcode.ProductRemoteDataSource
 import com.andback.pocketfridge.data.repository.Recipe.RecipeRemoteDataSource
@@ -11,6 +12,7 @@ import com.andback.pocketfridge.domain.repository.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -51,5 +53,11 @@ class RepositoryModule {
     @Singleton
     fun provideRecipeRepository(recipeRemoteDataSource: RecipeRemoteDataSource): RecipeRepository {
         return RecipeRepositoryImpl(recipeRemoteDataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDataStore(@ApplicationContext context: Context): DataStoreRepository {
+        return DataStoreRepositoryImpl(context)
     }
 }
