@@ -16,14 +16,33 @@ class DetailRecipeActivity : BaseActivity<ActivityDetailRecipeBinding>(R.layout.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        initViewModel()
+
         if(intent.hasExtra("recipe")) {
             intent.getParcelableExtra<RecipeEntity>("recipe")!!.let {
                 viewModel.selectedRecipe = it
                 viewModel.getCookingIngres(it.id)
-                initFragment()
+                viewModel.getRecipeSteps(it.id)
             }
         } else {
+            showToastMessage(resources.getString(R.string.network_error))
             finish()
+        }
+    }
+
+    private fun initViewModel() {
+        with(viewModel) {
+            isIngresLoaded.observe(this@DetailRecipeActivity) {
+                if(it && isStepsLoaded.value == true) {
+                    initFragment()
+                }
+            }
+
+            isStepsLoaded.observe(this@DetailRecipeActivity) {
+                if(it && isIngresLoaded.value == true) {
+                    initFragment()
+                }
+            }
         }
     }
 
@@ -49,7 +68,7 @@ class DetailRecipeActivity : BaseActivity<ActivityDetailRecipeBinding>(R.layout.
         } else {
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.fl_detail_recipeF, RecipeStepsFragment())
+                .replace(R.id.fl_detail_recipeF, CookModeFragment())
                 .commit()
         }
     }
