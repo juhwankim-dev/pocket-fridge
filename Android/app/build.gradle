@@ -122,4 +122,10 @@ dependencies {
 
     // Barcode Scan
     implementation "com.google.mlkit:barcode-scanning:$barcode_version"
+
+    // DataStore
+    implementation "androidx.datastore:datastore-preferences:$datastore_version"
+
+    // Coroutine
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
 }
