@@ -117,7 +117,7 @@ class BarcodeScanFragment : BaseFragment<FragmentBarcodeScanBinding>(R.layout.fr
                     } else {
                         showToastMessage(resources.getString(R.string.barcode_scan_fail))
                         findNavController().navigate(
-                            BarcodeScanFragmentDirections.actionBarcodeScanFragmentToIngreUploadFragment("")
+                            R.id.action_barcodeScanFragment_to_ingreUploadFragment
                         )
                     }
                 }
