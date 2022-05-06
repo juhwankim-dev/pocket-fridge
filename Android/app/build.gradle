@@ -74,7 +74,8 @@ dependencies {
 
     // Room
     implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-rxjava2:$room_version"
 
     // For viewModels()
     implementation 'androidx.activity:activity-ktx:1.4.0'
@@ -88,7 +89,7 @@ dependencies {
 
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.12.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+    kapt 'com.github.bumptech.glide:compiler:4.12.0'
 
     // Rx
     implementation "io.reactivex.rxjava2:rxandroid:$rx_android_version"
