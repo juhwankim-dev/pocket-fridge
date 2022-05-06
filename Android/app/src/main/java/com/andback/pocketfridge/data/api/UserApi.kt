@@ -9,7 +9,6 @@ import org.jetbrains.annotations.NotNull
 import retrofit2.http.*
 
 interface UserApi {
-    @FormUrlEncoded
     @POST("user")
     fun signUp(@Body userEntity: UserEntity): Single<BaseResponse<Any>>
 
