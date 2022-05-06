@@ -1,6 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext {
+        nav_version = "2.4.2"
         retrofit_version = "2.9.0"
         gson_version = "2.9.0"
         okhttp_version = "4.9.0"
@@ -17,6 +18,7 @@ buildscript {
     }
     dependencies {
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
     }
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 

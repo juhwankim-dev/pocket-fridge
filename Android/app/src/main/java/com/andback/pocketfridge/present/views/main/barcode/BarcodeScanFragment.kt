@@ -14,26 +14,30 @@ import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.databinding.FragmentBarcodeScanBinding
 import com.andback.pocketfridge.present.config.BaseFragment
-import com.andback.pocketfridge.present.views.main.MainActivity
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
 import com.gun0912.tedpermission.rx2.TedPermission
+import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-
+@AndroidEntryPoint
 class BarcodeScanFragment : BaseFragment<FragmentBarcodeScanBinding>(R.layout.fragment_barcode_scan) {
     private val TAG = "BarcodeFragment_debuk"
     private var cameraExecutor: ExecutorService? = null
     private var cameraProviderFuture: ListenableFuture<ProcessCameraProvider>? = null
     private var cameraProvider: ProcessCameraProvider? = null
+
+    private val viewModel: BarcodeScanViewModel by viewModels()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,16 +45,6 @@ class BarcodeScanFragment : BaseFragment<FragmentBarcodeScanBinding>(R.layout.fr
         cameraExecutor = Executors.newSingleThreadExecutor()
         setCameraPermission()
         setEvent()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        (context as MainActivity).hideBottomNav(true)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        (context as MainActivity).hideBottomNav(false)
     }
 
     override fun onDestroyView() {
@@ -68,6 +62,7 @@ class BarcodeScanFragment : BaseFragment<FragmentBarcodeScanBinding>(R.layout.fr
             .subscribe(
                 { tedPermissionResult ->
                     if (tedPermissionResult.isGranted) {
+                        setObserve()
                         setUpCamera()
                     } else {
                         // TODO : 권한 얻기에 실패했을 때 동작처리
@@ -75,14 +70,14 @@ class BarcodeScanFragment : BaseFragment<FragmentBarcodeScanBinding>(R.layout.fr
                     }
                 },
                 { throwable ->
-                    showToastMessage("문제가 발생하였습니다. 종료 후 다시 실행해주세요.")
+                    showToastMessage(resources.getString(R.string.permission_error))
                     Log.e(TAG, "setCameraPermission: ${throwable.message}")
                 })
     }
 
     private fun setEvent() {
         binding.tvBarcodeScanFCancel.setOnClickListener {
-            // TODO 뒤로가기
+            findNavController().popBackStack()
         }
         binding.tvBarcodeScanFSelfInput.setOnClickListener {
             AlertDialog.Builder(requireContext())
@@ -102,11 +97,36 @@ class BarcodeScanFragment : BaseFragment<FragmentBarcodeScanBinding>(R.layout.fr
                     }
                     tvAccept.setOnClickListener {
                         if (etInput.text.isNotBlank()) {
-                            loadIngresFromBarcodes(listOf(etInput.text.toString()))
+                            loadIngresFromBarcodes(etInput.text.toString())
                             alertDialog.dismiss()
                         }
                     }
                 }
+        }
+    }
+
+    private fun setObserve() {
+        with(viewModel) {
+            binding.lifecycleOwner?.let { owner ->
+                productName.observe(owner) {
+                    if (it.isNotBlank()) {
+                        findNavController().navigate(
+                            BarcodeScanFragmentDirections.actionBarcodeScanFragmentToIngreUploadFragment(it)
+                        )
+
+                    } else {
+                        showToastMessage(resources.getString(R.string.barcode_scan_fail))
+                        findNavController().navigate(
+                            BarcodeScanFragmentDirections.actionBarcodeScanFragmentToIngreUploadFragment("")
+                        )
+                    }
+                }
+                networkError.observe(owner) {
+                    if (it == true) {
+                        showToastMessage(resources.getString(R.string.network_error))
+                    }
+                }
+            }
         }
     }
 
@@ -175,26 +195,14 @@ class BarcodeScanFragment : BaseFragment<FragmentBarcodeScanBinding>(R.layout.fr
     }
 
     private fun readBarcodeData(barcodes: List<Barcode>) {
-        val list = mutableListOf<String>()
-        for (barcode in barcodes) {
-            when (barcode.format) {
-                Barcode.FORMAT_EAN_8 -> {
-
-                }
-                Barcode.FORMAT_EAN_13 -> {
-
-                }
-            }
-            list.add(barcode.rawValue.toString())
-            Log.d(TAG, "scanBarcodes: ${barcode.rawValue}")
+        // TODO : 이후에 여러개 처리하도록 구현
+        if (barcodes.isNotEmpty()) {
+            loadIngresFromBarcodes(barcodes[0].rawValue.toString())
         }
-        if (list.size > 0)
-            loadIngresFromBarcodes(list)
     }
 
-    // TODO : 제품 정보 가져와서 식재료 등록으로 전달
-    private fun loadIngresFromBarcodes(barcodes: List<String>) {
-        showToastMessage(barcodes.toString())
+    private fun loadIngresFromBarcodes(barcode: String) {
+        viewModel.getProductNameFromBarcode(barcode)
         cameraExecutor!!.shutdownNow()
     }
 }
