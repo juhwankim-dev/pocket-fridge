@@ -44,5 +44,15 @@
         android:id="@+id/ingreDetailFragment"
         android:name="com.andback.pocketfridge.present.views.main.fridge.IngreDetailFragment"
         android:label="IngreDetailFragment"
-        tools:layout="@layout/fragment_ingre_detail"/>
+        tools:layout="@layout/fragment_ingre_detail">
+        <action
+            android:id="@+id/action_ingreDetailFragment_to_ingreEditFragment"
+            app:destination="@id/ingreEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ingreEditFragment"
+        android:name="com.andback.pocketfridge.present.views.main.fridge.IngreEditFragment"
+        android:label="IngreEditFragment"
+        tools:layout="@layout/fragment_ingre_edit">
+    </fragment>
 </navigation>

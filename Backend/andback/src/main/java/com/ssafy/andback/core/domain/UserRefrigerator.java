@@ -30,7 +30,7 @@ public class UserRefrigerator {
     private Long userRefrigeratorId;
 
     // 냉장고(냉장고 1 : 유저 냉장고 N)
-    @ManyToOne(targetEntity = Refrigerator.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Refrigerator.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "refrigerator_id")
 //    @OnDelete(action = OnDeleteAction.CASCADE)
     @ToString.Exclude

@@ -25,7 +25,7 @@
                 android:id="@+id/tb_find_pwF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="@{()->vm.onCloseClick()}"
+                app:navigationOnClickListener="@{()->vm.onCloseClick()}"
                 app:title="@string/find_pw"
                 app:navigationIcon="@drawable/ic_close"/>
 
