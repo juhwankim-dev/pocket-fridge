@@ -10,4 +10,5 @@ interface IngreLocalDataSource {
     fun deleteById(id: Int): Completable
     fun getIngreListByDateBetween(from: String, to: String): Single<List<IngreEntity>>
     fun getIngreListByFridgeId(id: Int): Single<List<IngreEntity>>
+    fun dropByFridgeId(id: Int): Completable
 }
