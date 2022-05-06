@@ -7,7 +7,7 @@
 * 생성일 2022.05.03
 * 마지막 수정일 2022.05.03
 """
-import pymysql  # pymysql: python + MySQL 라이브러리
+import pymysql.cursors  # pymysql: python + MySQL 라이브러리
 
 # MariaDB 서버에 접속하기
 conn = pymysql.connect(
@@ -16,7 +16,8 @@ conn = pymysql.connect(
     user='andback',
     password='Ssafy6!',
     db='pocket_fridge',
-    charset='utf8'
+    charset='utf8',
+    cursorclass=pymysql.cursors.DictCursor  # DB를 조회한 결과를 Column 명이 Key 인 Dictionary로 저장
 )  # 접속 정보
 
 sql = "SELECT * from user"  # sql 쿼리문
