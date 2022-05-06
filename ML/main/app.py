@@ -1,11 +1,11 @@
 """
-* db_pandas_test
-* mariaDB 유저 식재료 데이터, 레시피 데이터 가져오기
+* app.py
+* docker에서 실행하기 위한 파일
 *
 * @author 김다은
 * @version 1.0.0
-* 생성일 2022.05.04
-* 마지막 수정일 2022.05.04
+* 생성일 2022.05.06
+* 마지막 수정일 2022.05.06
 """
 from flask import Flask, request, json
 from flask_restx import Resource, Api
