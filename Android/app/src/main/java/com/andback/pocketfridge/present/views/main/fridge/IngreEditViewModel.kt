@@ -1,4 +1,4 @@
-package com.andback.pocketfridge.present.views.main.ingreupload
+package com.andback.pocketfridge.present.views.main.fridge
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -10,30 +10,36 @@ import com.andback.pocketfridge.data.model.SubCategoryEntity
 import com.andback.pocketfridge.domain.model.Ingredient
 import com.andback.pocketfridge.domain.usecase.category.GetCategoryUseCase
 import com.andback.pocketfridge.domain.usecase.fridge.GetFridgesUseCase
-import com.andback.pocketfridge.domain.usecase.ingredient.UploadIngreUseCase
+import com.andback.pocketfridge.domain.usecase.ingredient.UpdateIngreUseCase
 import com.andback.pocketfridge.present.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import okio.IOException
 import retrofit2.HttpException
-import java.io.IOException
+import java.net.SocketTimeoutException
 import javax.inject.Inject
 
-private const val TAG = "IngreUploadViewModel_debuk"
 @HiltViewModel
-class IngreUploadViewModel @Inject constructor(
-    private val uploadIngreUseCase: UploadIngreUseCase,
+class IngreEditViewModel @Inject constructor(
+    private val updateIngreUseCase: UpdateIngreUseCase,
     private val getCategoryUseCase: GetCategoryUseCase,
     private val getFridgesUseCase: GetFridgesUseCase
 ): ViewModel() {
     private val compositeDisposable = CompositeDisposable()
 
+    private val _isInitDone = MutableLiveData(0)
+    val isInitDone: LiveData<Int> = _isInitDone
+
+    private val _isUpdateSuccess = MutableLiveData(false)
+    val isUpdateSuccess: LiveData<Boolean> = _isUpdateSuccess
+
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> get() = _isLoading
 
     // region view 상태
-    // 데이터를 바탕으로 업로드할 식재료 객체 생성
+    // 데이터를 바탕으로 수정할 식재료 객체 생성
     private val _selectedFridge = MutableLiveData<FridgeEntity>()
     val selectedFridge: LiveData<FridgeEntity> get() = _selectedFridge
     private val _selectedStorage = MutableLiveData<Storage>()
@@ -47,6 +53,7 @@ class IngreUploadViewModel @Inject constructor(
     val name = MutableLiveData<String>()
     val datePurchased = MutableLiveData<String>()
     val dateExpiry = MutableLiveData<String>()
+    private var ingreId: Int = -1
     // endregion
 
     // region 카테고리 리스트 라이브 데이터
@@ -90,53 +97,41 @@ class IngreUploadViewModel @Inject constructor(
     private val _isServerError = MutableLiveData(false)
     val isServerError: LiveData<Boolean>
         get() = _isServerError
-
     // endregion
 
+    var updatedIngredient: Ingredient? = null
+
     init {
-        getCategoryUseCase.getAllCategories()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    if(!it.data.isNullOrEmpty()) {
-                        when {
-                            it.data[0] is MainCategoryEntity -> {
-                                _mainCategories.value = it.data as List<MainCategoryEntity>
-                                setDefaultData()
-                            }
-                            it.data[0] is SubCategoryEntity -> {
-                                _subCategories.value = it.data as List<SubCategoryEntity>
-                                setDefaultData()
-                            }
-                            else -> {
-                                // TODO: error 처리
-                            }
-                        }
-                    }
-                },
-                {
-                    // TODO: 카테고리 에러 처리
-                    Log.d(TAG, "error: ${it.javaClass.canonicalName}")
-                },
-                {
-                    // TODO: complete 처리
-                },
-                {
-                    // TODO: onSubscribe 처리
-                }
-            )
+        getCategories()
         getFridges()
     }
 
-    fun onUploadBtnClick() {
+    fun init(ingredient: Ingredient) {
+        name.value = ingredient.name
+        _selectedStorage.value = ingredient.storage
+        datePurchased.value = ingredient.purchasedDate
+        dateExpiry.value = ingredient.expiryDate
+        ingreId = ingredient.id
+        subCategories.value?.let {
+            val result = it.find { element -> ingredient.category == element.subCategoryId }
+            _selectedSubCategory.value = result!!
+        }
+        fridges.value?.let { list ->
+            val fridge = list.find { ingredient.fridgeId == it.refrigeratorId }
+            fridge?.let { _selectedFridge.value = it }
+        }
+    }
+
+    fun onUpdateBtnClick() {
+        val ingredient = getIngredientFromInput()
         compositeDisposable.add(
-            uploadIngreUseCase.uploadIngre(getIngredientFromInput())
+            updateIngreUseCase(ingredient)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                        // TODO: 식재료 등록 성공      
+                        updatedIngredient = ingredient
+                        _isUpdateSuccess.value = true
                     },
                     { throwable ->
                         handleException(throwable)
@@ -148,6 +143,9 @@ class IngreUploadViewModel @Inject constructor(
     private fun handleException(e: Throwable) {
         clearError()
         when(e) {
+            is SocketTimeoutException -> {
+                _isNetworkError.value = true
+            }
             is HttpException -> {
                 _isServerError.value = true
             }
@@ -188,9 +186,24 @@ class IngreUploadViewModel @Inject constructor(
     }
 
     private fun getIngredientFromInput(): Ingredient {
-        // TODO: 수량 data가 필요해지면 추가
-        // TODO: mapper 필요
-        return Ingredient(quantity = 1, category = selectedSubCategory.value?.subCategoryId?: -1, name = name.value?: "", purchasedDate = datePurchased.value.toString(), expiryDate = dateExpiry.value.toString(), fridgeId = selectedFridge.value?.refrigeratorId?: -1, storage = selectedStorage.value?:Storage.Fridge)
+        val name = name.value?:""
+        val quantity = 1
+        val category = selectedSubCategory.value?.subCategoryId?: -1
+        val purchasedDate = datePurchased.value.toString()
+        val expiryDate = dateExpiry.value.toString()
+        val fridgeId = selectedFridge.value?.refrigeratorId?: -1
+        val storage = selectedStorage.value?:Storage.Fridge
+        val id = ingreId
+        return Ingredient(
+            id = id,
+            category = category,
+            quantity = quantity,
+            purchasedDate = purchasedDate,
+            expiryDate = expiryDate,
+            name = name,
+            fridgeId = fridgeId,
+            storage = storage
+        )
     }
 
     fun setFridge() {
@@ -217,6 +230,8 @@ class IngreUploadViewModel @Inject constructor(
         _selectedFridge.value = getDefaultFridge()
         _selectedMainCategory.value = getDefaultMainCategory()
         _selectedSubCategory.value = getDefaultSubCategory()
+        _isUpdateSuccess.value = false
+        updatedIngredient = null
     }
 
     /**
@@ -243,11 +258,8 @@ class IngreUploadViewModel @Inject constructor(
     }
 
     fun updateSelectedSubCategories() {
-        val result = subCategories.value?.filter {
+        _selectedSubCategories.value = subCategories.value?.filter {
             it.mainCategoryId == selectedMainCategory.value?.mainCategoryId
-        }
-        result?.let {
-            _selectedSubCategories.value = it
         }
     }
 
@@ -270,6 +282,43 @@ class IngreUploadViewModel @Inject constructor(
         }
     }
 
+    private fun getCategories() {
+        compositeDisposable.add(
+            getCategoryUseCase.getAllCategories()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        if(!it.data.isNullOrEmpty()) {
+                            when {
+                                it.data[0] is MainCategoryEntity -> {
+                                    _mainCategories.value = it.data as List<MainCategoryEntity>
+                                    setDefaultData()
+                                }
+                                it.data[0] is SubCategoryEntity -> {
+                                    _subCategories.value = it.data as List<SubCategoryEntity>
+                                    setDefaultData()
+                                }
+                                else -> {
+                                    // TODO: error 처리
+                                }
+                            }
+                        }
+                    },
+                    {
+                        // TODO: 카테고리 에러 처리
+                        Log.d(TAG, "error: ${it.javaClass.canonicalName}")
+                    },
+                    {
+                        _isInitDone.value = _isInitDone.value?.plus(1)
+                    },
+                    {
+                        // TODO: onSubscribe 처리
+                    }
+                )
+        )
+    }
+
     fun getFridges() {
         if(!isLoading.value!!) {
             compositeDisposable.add(
@@ -280,8 +329,8 @@ class IngreUploadViewModel @Inject constructor(
                         {
                             it.data?.let { list ->
                                 _fridges.value = list
+                                _isInitDone.value = _isInitDone.value?.plus(1)
                             }
-                            setDefaultData()
                             _isLoading.value = false
                         },
                         {
@@ -304,5 +353,9 @@ class IngreUploadViewModel @Inject constructor(
     fun clearData() {
         clearError()
         setDefaultData()
+    }
+
+    companion object {
+        private const val TAG = "IngreEditViewModel_debuk"
     }
 }

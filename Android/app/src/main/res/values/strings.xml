@@ -10,6 +10,7 @@
     <string name="add">추가</string>
     <string name="recipe">레시피</string>
     <string name="ingre_upload">식재료 등록</string>
+    <string name="ingre_edit">식재료 수정</string>
     <string name="merchandise">상품</string>
     <string name="storage_fridge">냉장</string>
     <string name="storage_freeze">냉동</string>
@@ -51,6 +52,8 @@
     <string name="email_auth_len_error">"인증번호는 10자리 입니다."</string>
     <string name="email_auth_match_error">"인증번호를 확인해주세요."</string>
     <string name="ingre_delete_error">식재료 삭제에 실패했습니다.</string>
+    <string name="ingre_edit_error">식재료 수정에 실패했습니다.</string>
+    <string name="network_error">네트워크 상태를 확인해 주세요.</string>
     <string name="no_error">""</string>
 
     <!-- Success Messages -->

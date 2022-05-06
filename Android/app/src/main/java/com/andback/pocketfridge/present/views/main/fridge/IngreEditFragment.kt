@@ -1,4 +1,4 @@
-package com.andback.pocketfridge.present.views.main.ingreupload
+package com.andback.pocketfridge.present.views.main.fridge
 
 import android.app.DatePickerDialog
 import android.os.Bundle
@@ -7,26 +7,19 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.core.content.ContextCompat
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.data.model.FridgeEntity
-import com.andback.pocketfridge.databinding.FragmentIngreUploadBinding
+import com.andback.pocketfridge.databinding.FragmentIngreEditBinding
+import com.andback.pocketfridge.domain.model.Ingredient
 import com.andback.pocketfridge.present.config.BaseFragment
 import com.andback.pocketfridge.present.utils.DateConverter
 import com.andback.pocketfridge.present.utils.Storage
 import com.andback.pocketfridge.present.views.main.DatePickerFragment
-import com.andback.pocketfridge.present.views.main.fridge.IngreEditFragment
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
-class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fragment_ingre_upload) {
-    companion object {
-        private const val TAG = "IngreUploadFragment_debuk"
-    }
-    private val viewModel: IngreUploadViewModel by activityViewModels()
-    // TODO: upload
-    // TODO: 입력값 에러처리
+class IngreEditFragment: BaseFragment<FragmentIngreEditBinding>(R.layout.fragment_ingre_edit) {
+    private val viewModel: IngreEditViewModel by activityViewModels()
+    private val detailViewModel: IngreDetailViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,6 +28,7 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
 
     private fun init() {
         binding.vm = viewModel
+        initViewModel()
         setObserver()
         setExpiryDateIcon()
         setPurchasedDateIcon()
@@ -42,37 +36,51 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
         setCategoryClickListener()
     }
 
-    override fun onStop() {
-        super.onStop()
-        viewModel.clearData()
+    private fun initViewModel() {
+        arguments?.let {
+            viewModel.init(it["data"] as Ingredient)
+        }?: goBack()
     }
-    
+
     private fun setObserver() {
         with(viewModel) {
             binding.lifecycleOwner?.let { owner ->
 
-            // 에러 관련 live data
+                // 에러 관련 live data
                 isNameError.observe(owner) {
-                    binding.tilIngreUploadFName.error = if(it) getString(R.string.error_msg_ingre_name) else null 
-                }
-                
-                isDateExpiryError.observe(owner) {
-                    binding.tilIngreUploadFExpiryDate.error = if(it) getString(R.string.error_msg_ingre_date_expiry) else null
-                }
-                
-                isDatePurchasedError.observe(owner) {
-                    binding.tilIngreUploadFPurchasedDate.error = if(it) getString(R.string.error_msg_ingre_date_purchased) else null
-                }
-                
-                isServerError.observe(owner) {
-                    // TODO: 서버 통신 실패 ui 처리
-                }
-                
-                isNetworkError.observe(owner) {
-                    // TODO: 네트워크 이용 불가 ui 처리
+                    binding.tilIngreEditFName.error = if(it) getString(R.string.error_msg_ingre_name) else null
                 }
 
-            // 식재료 정보관련 live data
+                isDateExpiryError.observe(owner) {
+                    binding.tilIngreEditFExpiryDate.error = if(it) getString(R.string.error_msg_ingre_date_expiry) else null
+                }
+
+                isDatePurchasedError.observe(owner) {
+                    binding.tilIngreEditFPurchasedDate.error = if(it) getString(R.string.error_msg_ingre_date_purchased) else null
+                }
+
+                isServerError.observe(owner) {
+                    if(it == true) {
+                        showToastMessage(resources.getString(R.string.ingre_edit_error))
+                    }
+                }
+
+                isNetworkError.observe(owner) {
+                    if(it == true) {
+                        showToastMessage(resources.getString(R.string.network_error))
+                    }
+                }
+
+                isUpdateSuccess.observe(owner) {
+                    if(it == true) {
+                        viewModel.updatedIngredient?.let { ingre ->
+                            detailViewModel.selectIngre(ingre)
+                        }
+                        goBack()
+                    }
+                }
+
+                // 식재료 정보관련 live data
                 selectedStorage.observe(owner) {
                     clearStorageTextView()
                     setBrandColorOnText(it)
@@ -80,23 +88,27 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
 
                 selectedSubCategory.observe(owner) {
                     it?.let {
-                        binding.tvIngreUploadFCategory.text = it.subCategoryName    
-                    }
-                }
-                
-                selectedMainCategory.observe(owner) {
-                    it?.let {
-                        // TODO: 이미지 반영 
+                        binding.tvIngreEditFCategory.text = it.subCategoryName
                     }
                 }
 
-//                // 서브카테고리 리스트가 있으면 첫 값을 기본으로 세팅
-//                subCategories.observe(owner) {
-//                    ingreCategory.value = it[0].subCategoryName
-//                }
-            // 냉장고 리스트 세팅
+                selectedMainCategory.observe(owner) {
+                    it?.let {
+                        // TODO: 이미지 반영
+                    }
+                }
+
+                // 냉장고 리스트 세팅
                 fridges.observe(owner) {
                     setDropDownAdapter(it)
+                }
+
+                isInitDone.observe(owner) {
+                    if(it == 2) {
+                        arguments?.let { bundle ->
+                            viewModel.init(bundle["data"] as Ingredient)
+                        }
+                    }
                 }
             }
         }
@@ -104,22 +116,22 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
 
     private fun clearStorageTextView() {
         val color = ContextCompat.getColor(requireContext(), R.color.gray)
-        binding.tvIngreUploadFStorageFridge.setTextColor(color)
-        binding.tvIngreUploadFStorageFreeze.setTextColor(color)
-        binding.tvIngreUploadFStorageRoom.setTextColor(color)
+        binding.tvIngreEditFStorageFridge.setTextColor(color)
+        binding.tvIngreEditFStorageFreeze.setTextColor(color)
+        binding.tvIngreEditFStorageRoom.setTextColor(color)
     }
 
     private fun setBrandColorOnText(storage: Storage) {
         val color = ContextCompat.getColor(requireContext(), R.color.main_color)
         when(storage) {
-            Storage.Fridge -> binding.tvIngreUploadFStorageFridge.setTextColor(color)
-            Storage.Freeze -> binding.tvIngreUploadFStorageFreeze.setTextColor(color)
-            Storage.Room -> binding.tvIngreUploadFStorageRoom.setTextColor(color)
+            Storage.Fridge -> binding.tvIngreEditFStorageFridge.setTextColor(color)
+            Storage.Freeze -> binding.tvIngreEditFStorageFreeze.setTextColor(color)
+            Storage.Room -> binding.tvIngreEditFStorageRoom.setTextColor(color)
         }
     }
 
     private fun setExpiryDateIcon() {
-        binding.tilIngreUploadFExpiryDate.setStartIconOnClickListener {
+        binding.tilIngreEditFExpiryDate.setStartIconOnClickListener {
             showDatePickerWith { _, year, month, day ->
                 val result = DateConverter.toStringDate(year, month, day)
                 viewModel.dateExpiry.value = result
@@ -129,7 +141,7 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
     }
 
     private fun setPurchasedDateIcon() {
-        binding.tilIngreUploadFPurchasedDate.setStartIconOnClickListener {
+        binding.tilIngreEditFPurchasedDate.setStartIconOnClickListener {
             showDatePickerWith { _, year, month, day ->
                 val result = DateConverter.toStringDate(year, month, day)
                 viewModel.datePurchased.value = result
@@ -144,17 +156,17 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
     }
 
     private fun showCategoryPicker() {
-        val categorySelectFragment = CategorySelectFragment()
+        val categorySelectFragment = EditCategorySelectFragment()
         categorySelectFragment.show(childFragmentManager, "categoryPicker")
     }
 
     private fun setDropDownAdapter(list: List<FridgeEntity>) {
         val stringList = list.map { it.refrigeratorName }
         val adapter = ArrayAdapter(requireContext(), R.layout.item_fridge_list, stringList)
-        (binding.tvIngreUploadFSelectFridge as? AutoCompleteTextView)?.let { tv ->
+        (binding.tvIngreEditFSelectFridge as? AutoCompleteTextView)?.let { tv ->
             tv.setText(stringList[0])
             tv.setAdapter(adapter)
-            // 아이템 클릭 시 냉장고 업데이트
+            // 아이템 클릭 시 mainCategory 업데이트
             tv.setOnItemClickListener { _, _, i, l ->
                 Log.d(TAG, "setDropdownAdapter: $i, $l")
                 val fridge = list.find { it.refrigeratorName == stringList[i] }
@@ -163,28 +175,31 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
         }
     }
 
-    private fun setToolbarButton() {
-        binding.tbIngreUploadF.setNavigationOnClickListener {
-            // TODO: 바코드 찍는 화면으로 돌아가기
+    private fun setCategoryClickListener() {
+        binding.tvIngreEditFCategory.setOnClickListener {
+            showCategoryPicker()
         }
-
-        binding.tbIngreUploadF.setOnMenuItemClickListener {
-            when(it.itemId) {
-                R.id.accept_menu_toolbar -> {
-                    viewModel.onUploadBtnClick()
-                    true
-                }
-                else -> false
-            }
+        binding.ivIngreEditF.setOnClickListener {
+            showCategoryPicker()
         }
     }
 
-    private fun setCategoryClickListener() {
-        binding.tvIngreUploadFCategory.setOnClickListener {
-            showCategoryPicker()
+    private fun setToolbarButton() {
+        binding.tbIngreEditF.setNavigationOnClickListener {
+            goBack()
         }
-        binding.ivIngreUploadF.setOnClickListener {
-            showCategoryPicker()
-        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.clearData()
+    }
+
+    private fun goBack() {
+        requireActivity().onBackPressed()
+    }
+
+    companion object {
+        private const val TAG = "IngreEditFragment_debuk"
     }
 }
