@@ -7,9 +7,9 @@
 * 생성일 2022.05.04
 * 마지막 수정일 2022.05.04
 """
-from flask import Flask, request, json
+from flask import Flask, request
 from flask_restx import Resource, Api
-import pymysql
+import pymysql.cursors
 import pandas as pd
 
 # DB 연동
@@ -20,7 +20,7 @@ conn = pymysql.connect(
     password='Ssafy6!',
     db='pocket_fridge',
     charset='utf8',
-    # cursorclass=pymysql.cursors.DictCursor
+    cursorclass=pymysql.cursors.DictCursor  # DB를 조회한 결과를 Column 명이 Key 인 Dictionary로 저장
 )
 
 sql = "SELECT * from recipe"  # sql 쿼리문
@@ -33,11 +33,10 @@ with conn:
     with conn.cursor() as cur:  # 커서생성 (cursor로 SQL 실행하여 데이터 가져올 수 있음)
         cur.execute(sql)  # 커서로 sql 실행
         # ['recipe_id', 'recipe_all_ingredient', 'recipe_content', 'recipe_food_name', 'recipe_image', 'recipe_serving', 'recipe_time', 'recipe_type', 'recipe_food_summary']
-        columns_name = [i[0] for i in cur.description]  # 컬럼명 리스트
         records = cur.fetchall()  # 모든 레코드 가져오기
         for record in records:  # 각 레코드 가져와서 출력
-            dictionary = dict(zip(columns_name, record))  # key: 컬럼명, value: 데이터값
-            recipes_temp.append(dictionary)
+            print(record)
+        recipes_temp.append(records)
         print(recipes_temp)
 
 # Flask 연동
