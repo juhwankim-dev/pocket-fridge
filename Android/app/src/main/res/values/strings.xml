@@ -12,6 +12,9 @@
     <string name="add">추가</string>
     <string name="recipe">레시피</string>
 
+    <string name="select_text_barcode">바코드 스캔</string>
+    <string name="select_texxt_input">직접 등록</string>
+
 
     <string name="filter">필터</string>
 
