@@ -2,6 +2,7 @@ package com.andback.pocketfridge.data.api
 
 import com.andback.pocketfridge.data.model.BaseResponse
 import com.andback.pocketfridge.data.model.UserEntity
+import com.andback.pocketfridge.data.model.LoginEntity
 import com.andback.pocketfridge.data.model.UserForFindEntity
 import io.reactivex.Single
 import org.jetbrains.annotations.NotNull
@@ -24,7 +25,6 @@ interface UserApi {
     @PUT("user/findpassword/{userEmail}")
     fun findPW(@Body userForFind: UserForFindEntity): Single<BaseResponse<Any>>
 
-    @FormUrlEncoded
     @POST("user/login")
-    fun login(@FieldMap req: MutableMap<String, String>): Single<BaseResponse<String>>
+    fun login(@Body loginEntity: LoginEntity): Single<BaseResponse<String>>
 }

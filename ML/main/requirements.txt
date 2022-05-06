@@ -1,0 +1,7 @@
+pymysql
+flask
+flask-restx
+numpy
+pandas
+matplotlib
+seaborn

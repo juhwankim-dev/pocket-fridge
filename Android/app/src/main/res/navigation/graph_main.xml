@@ -15,10 +15,26 @@
             app:destination="@id/ingreDetailFragment" />
     </fragment>
     <fragment
+        android:id="@+id/barcodeScanFragment"
+        android:name="com.andback.pocketfridge.present.views.main.barcode.BarcodeScanFragment"
+        android:label="BarcodeScanFragment"
+        tools:layout="@layout/fragment_barcode_scan">
+        <action
+            android:id="@+id/action_barcodeScanFragment_to_ingreUploadFragment"
+            app:destination="@id/ingreUploadFragment"
+            app:popUpTo="@id/barcodeScanFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
         android:id="@+id/ingreUploadFragment"
         android:name="com.andback.pocketfridge.present.views.main.ingreupload.IngreUploadFragment"
         android:label="IngreUploadFragment"
-        tools:layout="@layout/fragment_ingre_upload"/>
+        tools:layout="@layout/fragment_ingre_upload">
+        <argument
+            android:name="productName"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
     <fragment
         android:id="@+id/recipeFragment"
         android:name="com.andback.pocketfridge.present.views.main.recipe.RecipeFragment"
@@ -28,5 +44,15 @@
         android:id="@+id/ingreDetailFragment"
         android:name="com.andback.pocketfridge.present.views.main.fridge.IngreDetailFragment"
         android:label="IngreDetailFragment"
-        tools:layout="@layout/fragment_ingre_detail"/>
+        tools:layout="@layout/fragment_ingre_detail">
+        <action
+            android:id="@+id/action_ingreDetailFragment_to_ingreEditFragment"
+            app:destination="@id/ingreEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ingreEditFragment"
+        android:name="com.andback.pocketfridge.present.views.main.fridge.IngreEditFragment"
+        android:label="IngreEditFragment"
+        tools:layout="@layout/fragment_ingre_edit">
+    </fragment>
 </navigation>

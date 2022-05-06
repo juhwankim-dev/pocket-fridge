@@ -3,7 +3,10 @@ package com.andback.pocketfridge.data.repository.user
 import com.andback.pocketfridge.data.api.UserApi
 import com.andback.pocketfridge.data.model.BaseResponse
 import com.andback.pocketfridge.data.model.UserEntity
+import com.andback.pocketfridge.data.model.LoginEntity
 import com.andback.pocketfridge.data.model.UserForFindEntity
+import io.reactivex.Flowable
+import io.reactivex.Observable
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -28,7 +31,7 @@ class UserRemoteDataSourceImpl @Inject constructor(private val userApi: UserApi)
         return userApi.findPW(userForFind)
     }
 
-    override fun login(req: MutableMap<String, String>): Single<BaseResponse<String>> {
-        return userApi.login(req)
+    override fun login(loginEntity: LoginEntity): Single<BaseResponse<String>> {
+        return userApi.login(loginEntity)
     }
 }

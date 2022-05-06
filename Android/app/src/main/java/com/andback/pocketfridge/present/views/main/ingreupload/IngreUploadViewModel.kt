@@ -243,8 +243,11 @@ class IngreUploadViewModel @Inject constructor(
     }
 
     fun updateSelectedSubCategories() {
-        _selectedSubCategories.value = subCategories.value?.filter {
+        val result = subCategories.value?.filter {
             it.mainCategoryId == selectedMainCategory.value?.mainCategoryId
+        }
+        result?.let {
+            _selectedSubCategories.value = it
         }
     }
 
