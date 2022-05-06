@@ -7,10 +7,9 @@ import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.util.Log
-import com.andback.pocketfridge.present.views.main.recipe.detail.RecipeStepsFragment
-import java.util.*
+import com.andback.pocketfridge.present.views.main.recipe.detail.CookModeFragment
 
-class STTUtil(val context: Context, val packageName: String, val assistant: RecipeStepsFragment.Assistant) {
+class STTUtil(val context: Context, val packageName: String, val assistant: CookModeFragment.Assistant) {
     var speechRecognizer: SpeechRecognizer? = null
     lateinit var sttIntent: Intent
 
