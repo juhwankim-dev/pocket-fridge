@@ -6,7 +6,7 @@
         android:icon="@drawable/selector_fridge_bottom_nav"/>
     <item
         android:id="@+id/select_regi_ingre"
-        android:title="@string/add"/>
+        android:title=""/>
     <item
         android:id="@+id/recipeFragment"
         android:title="@string/recipe"
