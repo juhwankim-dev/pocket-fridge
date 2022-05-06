@@ -16,6 +16,6 @@ interface IngreApi {
     @DELETE("foodingredient/{ingreId}")
     fun deleteIngreById(@Path("ingreId") ingreId: Int): Single<BaseResponse<Any>>
 
-    @PUT("foodingredient/{ingreId}")
-    fun updateIngre(@Path("ingreId") ingreId: Int, @Body ingre: IngreEntity): Single<BaseResponse<Any>>
+    @PUT("foodingredient")
+    fun updateIngre(@Body ingre: IngreEntity): Single<BaseResponse<Any>>
 }

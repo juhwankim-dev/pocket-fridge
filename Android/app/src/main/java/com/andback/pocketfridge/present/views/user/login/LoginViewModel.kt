@@ -28,14 +28,14 @@ class LoginViewModel @Inject constructor(
     val pageNumber = SingleLiveEvent<PageSet>()
 
     // 로딩을 보여줄지 결정하기 위함
-    private val _isShowLoading = MutableLiveData<Boolean>()
-    val isShowLoading: LiveData<Boolean> get() = _isShowLoading
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
 
     private val _toastMsg = SingleLiveEvent<String>()
     val toastMsg: LiveData<String> get() = _toastMsg
 
     private fun login(req: MutableMap<String, String>) {
-        _isShowLoading.value = true
+        _isLoading.value = true
 
         compositeDisposable.add(
             getLoginUseCase.execute(req)
@@ -44,11 +44,11 @@ class LoginViewModel @Inject constructor(
                 .subscribe(
                     {
                         _toastMsg.value = it.message
-                        _isShowLoading.value = false
+                        _isLoading.value = false
                         pageNumber.value = PageSet.MAIN
                     },
                     {
-                        _isShowLoading.value = false
+                        _isLoading.value = false
                         showError(it)
                     },
                 )

@@ -1,20 +1,21 @@
 package com.ssafy.andback.api.service;
 
 import com.ssafy.andback.api.constant.ErrorCode;
+import com.ssafy.andback.api.dto.response.LackRecipeIngredientResponseDto;
 import com.ssafy.andback.api.dto.response.RecipeIngredientResponseDto;
 import com.ssafy.andback.api.dto.response.RecipeProcessResponseDto;
 import com.ssafy.andback.api.dto.response.RecipeResponseDto;
 import com.ssafy.andback.api.exception.CustomException;
-import com.ssafy.andback.core.domain.Recipe;
-import com.ssafy.andback.core.domain.RecipeIngredient;
-import com.ssafy.andback.core.domain.RecipeProcess;
+import com.ssafy.andback.core.domain.*;
 import com.ssafy.andback.core.repository.RecipeIngredientRepository;
 import com.ssafy.andback.core.repository.RecipeProcessRepository;
 import com.ssafy.andback.core.repository.RecipeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +30,7 @@ import java.util.Optional;
  **/
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class RecipeServiceImpl implements RecipeService {
 
@@ -83,6 +85,32 @@ public class RecipeServiceImpl implements RecipeService {
                     .build());
         }
 
+        return result;
+    }
+
+    @Override
+    @Transactional
+    public List<LackRecipeIngredientResponseDto> findLackRecipeIngredient(List<RecipeIngredient> recipeIngredientList, List<FoodIngredient> foodIngredientList) {
+
+        List<LackRecipeIngredientResponseDto> result = new ArrayList<>();
+        HashSet<String> recipeIngredientSubCategoryNames = new HashSet<>();
+        HashSet<String> foodIngredientSubCategoryNames = new HashSet<>();
+
+        for (int i = 0; i < recipeIngredientList.size(); i++) {
+            recipeIngredientSubCategoryNames.add(recipeIngredientList.get(i).getSubCategory().getSubCategoryName());
+        }
+
+        for(int i=0; i < foodIngredientList.size(); i++) {
+            foodIngredientSubCategoryNames.add(foodIngredientList.get(i).getSubCategory().getSubCategoryName());
+        }
+
+        recipeIngredientSubCategoryNames.removeAll(foodIngredientSubCategoryNames);
+
+        for (String foodName : recipeIngredientSubCategoryNames) {
+            result.add(LackRecipeIngredientResponseDto.builder()
+                    .RecipeIngredientName(foodName)
+                    .build());
+        }
 
         return result;
     }

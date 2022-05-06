@@ -1,5 +1,6 @@
 package com.andback.pocketfridge.present.views.user.findpw
 
+import android.content.ContextWrapper
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
@@ -11,7 +12,9 @@ import com.andback.pocketfridge.databinding.FragmentFindPWBinding
 import com.andback.pocketfridge.present.config.BaseFragment
 import com.andback.pocketfridge.present.utils.SignUpChecker
 import com.andback.pocketfridge.present.views.user.UserActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FindPWFragment : BaseFragment<FragmentFindPWBinding>(R.layout.fragment_find_p_w) {
     private val viewModel: FindPWViewModel by viewModels()
     private var isValidName = false
@@ -29,7 +32,7 @@ class FindPWFragment : BaseFragment<FragmentFindPWBinding>(R.layout.fragment_fin
 
         with(viewModel) {
             pageNumber.observe(viewLifecycleOwner) {
-                (context as UserActivity).onChangeFragement(it)
+                ((context as ContextWrapper).baseContext as UserActivity).onChangeFragement(it)
             }
 
             toastMsg.observe(viewLifecycleOwner) {
