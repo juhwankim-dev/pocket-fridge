@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.andback.pocketfridge.domain.usecase.barcode.GetProductFromBarcodeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
@@ -14,6 +15,7 @@ class BarcodeScanViewModel @Inject constructor(
     private val getProductFromBarcodeUseCase: GetProductFromBarcodeUseCase
 ) : ViewModel() {
     private val SUCCESS = "INFO-000"
+    private val compositeDisposable = CompositeDisposable()
 
     private val _productName = MutableLiveData<String>()
     val productName: LiveData<String> get() = _productName
@@ -22,24 +24,31 @@ class BarcodeScanViewModel @Inject constructor(
 
 
     fun getProductNameFromBarcode(barcode: String) {
-        getProductFromBarcodeUseCase(barcode).subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    val code = it.serviceName.result.code
-                    val totalCnt = it.serviceName.totalCount.toInt()
+        compositeDisposable.add(
+            getProductFromBarcodeUseCase(barcode).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        val code = it.serviceName.result.code
+                        val totalCnt = it.serviceName.totalCount.toInt()
 
-                    if (code == SUCCESS && totalCnt > 0) {
-                        _productName.value = it.serviceName.data[0].name
-                    } else {
-                        _productName.value = ""
+                        if (code == SUCCESS && totalCnt > 0) {
+                            _productName.value = it.serviceName.data[0].name
+                        } else {
+                            _productName.value = ""
+                        }
+                        _networkError.value = false
+                    },
+                    {
+                        _networkError.value = true
                     }
-                    _networkError.value = false
-                },
-                {
-                    _networkError.value = true
-                }
-            )
+                )
+        )
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.dispose()
     }
 
 }
