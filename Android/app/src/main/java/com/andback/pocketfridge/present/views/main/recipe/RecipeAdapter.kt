@@ -5,16 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.andback.pocketfridge.data.model.RecipeEntity
 import com.andback.pocketfridge.databinding.ItemRecipeListBinding
-import com.andback.pocketfridge.domain.model.Recipe
 
 class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
     private lateinit var itemClickListener: ItemClickListener
-    private val recipeList: ArrayList<Recipe> = ArrayList()
+    private val recipeList: ArrayList<RecipeEntity> = ArrayList()
 
     inner class RecipeViewHolder(private val binding: ItemRecipeListBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bindInfo(recipe: Recipe) {
-            binding.recipe = recipe
+        fun bindInfo(recipeEntity: RecipeEntity) {
+            binding.recipeEntity = recipeEntity
 
             binding.ivRecipeIHeart.setOnClickListener {
                 if(!it.isSelected) {
@@ -64,14 +64,14 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
 
     override fun getItemCount(): Int = recipeList.size
 
-    fun setList(list: List<Recipe>) {
+    fun setList(list: List<RecipeEntity>) {
         recipeList.clear()
         recipeList.addAll(list)
         notifyDataSetChanged()
     }
 
     interface ItemClickListener {
-        fun onClick(recipe: Recipe)
+        fun onClick(recipeId: RecipeEntity)
     }
 
     fun setItemClickListener(itemClickListener: ItemClickListener) {

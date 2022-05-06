@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.andback.pocketfridge.present.views.main.fridge.IngreEditViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".present.views.main.ingreupload.IngreEditFragment">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/al_ingre_editF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/tb_ingre_editF"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="@string/ingre_edit"
+                app:navigationIcon="@drawable/ic_left_arrow_24"/>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <TextView
+            android:id="@+id/tv_ingre_editF_fridge_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/al_ingre_editF"
+            android:text="@string/fridge"
+            android:layout_marginHorizontal="@dimen/activity_margin_24"
+            android:layout_marginTop="@dimen/activity_margin_default"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_ingre_editF_fridge_label"
+            android:id="@+id/tl_ingre_editF_select_fridge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_margin_narrow"
+            android:layout_marginHorizontal="@dimen/activity_margin_24"
+            app:boxCornerRadiusBottomEnd="@dimen/et_radius"
+            app:boxCornerRadiusBottomStart="@dimen/et_radius"
+            app:boxCornerRadiusTopEnd="@dimen/et_radius"
+            app:boxCornerRadiusTopStart="@dimen/et_radius">
+
+            <AutoCompleteTextView
+                android:id="@+id/tv_ingre_editF_select_fridge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_ingre_editF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tl_ingre_editF_select_fridge"
+            android:layout_marginHorizontal="@dimen/activity_margin_24"
+            android:layout_marginTop="@dimen/activity_margin_default">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tl_ingre_editF_select_fridge"
+                android:text="@string/merchandise"/>
+            <TextView
+                android:id="@+id/tv_ingre_editF_total_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_margin_narrow"
+                tools:text="1"/>
+        </LinearLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_ingre_editF_input"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_ingre_editF"
+            android:layout_marginHorizontal="@dimen/activity_margin_24"
+            android:layout_marginTop="@dimen/activity_margin_default"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/gray_non_clickable_button"
+            app:cardElevation="0dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/activity_margin_default">
+
+                <LinearLayout
+                    android:id="@+id/ll_ingre_editF_storage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tv_ingre_editF_storage_fridge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/activity_margin_narrow"
+                        android:text="@string/storage_fridge"
+                        android:onClick="@{() -> vm.setFridge()}"/>
+
+                    <TextView
+                        android:id="@+id/tv_ingre_editF_storage_freeze"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/activity_margin_narrow"
+                        android:text="@string/storage_freeze"
+                        android:onClick="@{() -> vm.setFreeze()}"/>
+
+                    <TextView
+                        android:id="@+id/tv_ingre_editF_storage_room"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/storage_room"
+                        android:onClick="@{() -> vm.setRoom()}"/>
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/iv_ingre_editF"
+                    android:layout_width="@dimen/ingre_image_size"
+                    android:layout_height="@dimen/ingre_image_size"
+                    android:layout_marginTop="@dimen/activity_margin_narrow"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ll_ingre_editF_storage"
+                    tools:src="@color/black" />
+
+                <TextView
+                    android:id="@+id/tv_ingre_editF_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/noto_sans_bold"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_ingre_editF"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/iv_ingre_editF"
+                    tools:text="사과" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:id="@+id/til_ingre_editF_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_margin_default"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_ingre_editF"
+                    android:hint="@string/name"
+                    app:endIconMode="clear_text"
+                    app:errorEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_ingre_editF_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:text="@={vm.name}"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:id="@+id/til_ingre_editF_purchased_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/til_ingre_editF_name"
+                    android:hint="@string/purchased_date"
+                    app:startIconDrawable="@drawable/ic_calendar_month_24"
+                    app:endIconMode="clear_text"
+                    app:errorEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_ingre_editF_purchased_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:text="@={vm.datePurchased}"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:id="@+id/til_ingre_editF_expiry_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/til_ingre_editF_purchased_date"
+                    android:hint="@string/expiry_date"
+                    app:startIconDrawable="@drawable/ic_calendar_month_24"
+                    app:endIconMode="clear_text"
+                    app:errorEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_ingre_editF_expiry_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:text="@={vm.dateExpiry}"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_ingre_editF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginHorizontal="@dimen/activity_margin_24"
+            android:layout_marginBottom="@dimen/activity_margin_24"
+            android:text="@string/edit_button"
+            android:textColor="@color/white"
+            android:background="@drawable/bg_ellipse_filled_main_color_32"
+            android:onClick="@{() -> vm.onUpdateBtnClick()}"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

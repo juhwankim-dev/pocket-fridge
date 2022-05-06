@@ -22,7 +22,7 @@ class IngreRemoteDataSourceImpl @Inject constructor(
         return ingreApi.deleteIngreById(ingreId)
     }
 
-    override fun updateIngre(ingreId: Int, ingre: IngreEntity): Single<BaseResponse<Any>> {
-        return ingreApi.updateIngre(ingreId, ingre)
+    override fun updateIngre(ingre: IngreEntity): Single<BaseResponse<Any>> {
+        return ingreApi.updateIngre(ingre)
     }
 }
