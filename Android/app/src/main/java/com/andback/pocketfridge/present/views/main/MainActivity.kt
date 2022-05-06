@@ -35,11 +35,4 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             }
         }
     }
-
-
-
-    fun hideBottomNav(status: Boolean) {
-        if (status) binding.bnvMain.visibility = View.GONE
-        else binding.bnvMain.visibility = View.VISIBLE
-    }
 }

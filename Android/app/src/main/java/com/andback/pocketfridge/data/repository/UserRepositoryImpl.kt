@@ -1,6 +1,7 @@
 package com.andback.pocketfridge.data.repository
 
 import com.andback.pocketfridge.data.model.BaseResponse
+import com.andback.pocketfridge.data.model.LoginEntity
 import com.andback.pocketfridge.data.model.UserForFindEntity
 import com.andback.pocketfridge.data.repository.user.UserRemoteDataSource
 import com.andback.pocketfridge.domain.repository.UserRepository
@@ -31,7 +32,7 @@ class UserRepositoryImpl @Inject constructor(
         return userRemoteDataSource.findPW(userForFind)
     }
 
-    override fun login(req: MutableMap<String, String>): Single<BaseResponse<String>> {
-        return userRemoteDataSource.login(req)
+    override fun login(loginEntity: LoginEntity): Single<BaseResponse<String>> {
+        return userRemoteDataSource.login(loginEntity)
     }
 }

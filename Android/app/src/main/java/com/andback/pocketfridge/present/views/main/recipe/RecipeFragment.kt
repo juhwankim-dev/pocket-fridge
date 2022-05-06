@@ -1,34 +1,47 @@
 package com.andback.pocketfridge.present.views.main.recipe
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andback.pocketfridge.R
+import com.andback.pocketfridge.data.model.RecipeEntity
 import com.andback.pocketfridge.databinding.FragmentRecipeBinding
-import com.andback.pocketfridge.domain.model.Recipe
 import com.andback.pocketfridge.present.config.BaseFragment
 import com.andback.pocketfridge.present.views.main.recipe.detail.DetailRecipeActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RecipeFragment : BaseFragment<FragmentRecipeBinding>(R.layout.fragment_recipe) {
     lateinit var recipeAdapter: RecipeAdapter
-    
+    private val viewModel: RecipeViewModel by viewModels()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initView()
+        initViewModel()
         initEvent()
     }
-    
+
+    private fun initViewModel() {
+        with(viewModel) {
+            toastMsg.observe(viewLifecycleOwner) {
+                showToastMessage(it)
+            }
+
+            recipes.observe(viewLifecycleOwner) {
+                recipeAdapter.setList(it)
+            }
+        }
+
+        viewModel.getRecipes()
+    }
+
     private fun initView() {
-        // API 만들어지기 전까지 임시
         recipeAdapter = RecipeAdapter()
-        recipeAdapter.setList(listOf(Recipe(""), Recipe(""), Recipe(""), Recipe("")))
 
         binding.rvRecipeF.apply {
             layoutManager = LinearLayoutManager(context)
@@ -39,8 +52,11 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding>(R.layout.fragment_rec
     
     private fun initEvent() {
         recipeAdapter.setItemClickListener(object : RecipeAdapter.ItemClickListener{
-            override fun onClick(recipe: Recipe) {
-                startActivity(Intent(requireContext(), DetailRecipeActivity::class.java))
+            override fun onClick(recipe: RecipeEntity) {
+                Intent(requireContext(), DetailRecipeActivity::class.java).let {
+                    it.putExtra("recipe", recipe)
+                    startActivity(it)
+                }
             }
         })
     }

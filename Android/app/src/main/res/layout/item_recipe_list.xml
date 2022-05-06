@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="recipe"
-            type="com.andback.pocketfridge.domain.model.Recipe" />
+            name="recipeEntity"
+            type="com.andback.pocketfridge.data.model.RecipeEntity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,8 +17,9 @@
         <TextView
             android:id="@+id/tv_recipeI_name"
             style="@style/menu_text_18"
-            android:text="매콤달콤 떡볶이"
             android:layout_margin="@dimen/activity_margin_default"
+            android:text="@{recipeEntity.foodName}"
+            tools:text="매콤달콤 떡볶이"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -66,8 +67,9 @@
                 android:id="@+id/tv_recipeI_time"
                 style="@style/body_text"
                 android:layout_marginHorizontal="@dimen/activity_margin_narrow"
-                android:text="30분"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:text="@{recipeEntity.time}"
+                tools:text="30분"/>
 
             <TextView
                 style="@style/body_text"
@@ -100,18 +102,19 @@
                 android:id="@+id/tv_recipeI_ingre"
                 style="@style/body_text"
                 android:layout_marginStart="@dimen/activity_margin_narrow"
-                android:text="대패삽겹살, 숙주나물, 굴소스, 설탕, 간장"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:text="@{recipeEntity.allIngredients}"
+                tools:text="대패삽겹살, 숙주나물, 굴소스, 설탕, 간장"/>
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textView6"
             style="@style/body_text"
             android:background="@drawable/bg_ellipse_outline_black_4"
-            android:text="1인분"
             android:layout_marginEnd="@dimen/activity_margin_default"
             android:paddingVertical="6dp"
             android:paddingHorizontal="@dimen/activity_margin_default"
+            android:text="@{recipeEntity.serving}"
+            tools:text="1인분"
             app:layout_constraintBottom_toBottomOf="@+id/iv_recipeI_heart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_recipeI_picture" />

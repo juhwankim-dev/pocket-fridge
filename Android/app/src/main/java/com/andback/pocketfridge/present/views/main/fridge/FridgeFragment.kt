@@ -17,6 +17,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fridge) {
     private lateinit var rvAdapter: IngreRVAdapter
     private val viewModel: FridgeViewModel by activityViewModels()
+    private val detailViewModel: IngreDetailViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,7 +35,8 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
                 override fun onClick(data: Ingredient) {
                     Log.d(TAG, "onClick: ${data}")
                     // TODO: 디테일 fragment로 이동
-                    findNavController().navigate(R.id.action_fridgeFragment_to_ingreDetailFragment, bundleOf("data" to data))
+                    detailViewModel.selectIngre(data)
+                    findNavController().navigate(R.id.action_fridgeFragment_to_ingreDetailFragment)
                 }
             }
             itemLongClickListener = object : IngreRVAdapter.ItemLongClickListener {

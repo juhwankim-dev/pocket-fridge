@@ -2,7 +2,6 @@ package com.andback.pocketfridge.present.views.user
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.viewModels
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.databinding.ActivityUserBinding
 import com.andback.pocketfridge.present.config.BaseActivity
@@ -49,7 +48,13 @@ class UserActivity : BaseActivity<ActivityUserBinding>(R.layout.activity_user) {
                 .beginTransaction()
                 .replace(R.id.fl_main, FindPWFragment())
                 .commit()
-            PageSet.MAIN -> startActivity(Intent(this, MainActivity::class.java))
+            PageSet.MAIN -> {
+                Intent(this, MainActivity::class.java).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    startActivity(this)
+                }
+            }
         }
     }
 }

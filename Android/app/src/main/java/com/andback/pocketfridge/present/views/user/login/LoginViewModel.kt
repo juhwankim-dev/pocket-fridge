@@ -4,21 +4,25 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.andback.pocketfridge.data.model.LoginEntity
 import com.andback.pocketfridge.domain.usecase.user.GetLoginUseCase
-import com.andback.pocketfridge.domain.usecase.user.GetSignUpUseCase
+import com.andback.pocketfridge.domain.usecase.datastore.WriteDataStoreUseCase
 import com.andback.pocketfridge.present.config.SingleLiveEvent
 import com.andback.pocketfridge.present.utils.PageSet
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 import retrofit2.HttpException
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val getLoginUseCase: GetLoginUseCase
+    private val getLoginUseCase: GetLoginUseCase,
+    private val writeDataStoreUseCase: WriteDataStoreUseCase
 ) : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
     val email = MutableLiveData<String>()
@@ -34,15 +38,18 @@ class LoginViewModel @Inject constructor(
     private val _toastMsg = SingleLiveEvent<String>()
     val toastMsg: LiveData<String> get() = _toastMsg
 
-    private fun login(req: MutableMap<String, String>) {
+    private fun login(loginEntity: LoginEntity) {
         _isLoading.value = true
 
         compositeDisposable.add(
-            getLoginUseCase.execute(req)
+            getLoginUseCase(loginEntity)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
+                        if(it.data != null) {
+                            saveJWT(it.data)
+                        }
                         _toastMsg.value = it.message
                         _isLoading.value = false
                         pageNumber.value = PageSet.MAIN
@@ -55,8 +62,14 @@ class LoginViewModel @Inject constructor(
         )
     }
 
+    fun saveJWT(jwt: String) {
+        viewModelScope.launch {
+            writeDataStoreUseCase.execute("JWT", jwt)
+        }
+    }
+
     fun onLoginClick() {
-        login(getEnteredUserInfo())
+        login(LoginEntity(email.value.toString(), pw.value.toString()))
     }
 
     fun onSocialLoginClick() {
@@ -81,13 +94,5 @@ class LoginViewModel @Inject constructor(
         } else {
             _toastMsg.value = t.message
         }
-    }
-
-    private fun getEnteredUserInfo(): MutableMap<String, String>{
-        val req = mutableMapOf<String, String>()
-        req["userEmail"] = email.value.toString()
-        req["userPassword"] = pw.value.toString()
-
-        return req
     }
 }

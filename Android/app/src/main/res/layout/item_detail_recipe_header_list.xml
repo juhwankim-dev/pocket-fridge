@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="recipe"
+            type="com.andback.pocketfridge.data.model.RecipeEntity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,9 +17,10 @@
         <TextView
             android:id="@+id/tv_recipe_detail_headerI_name"
             style="@style/page_title_text"
-            android:text="추억의 분식집 맛 그대로\n매콤달콤 떡볶이 레시피"
             android:textStyle="bold"
             android:layout_margin="@dimen/activity_margin_default"
+            android:text="@{recipe.foodName}"
+            tools:text="추억의 분식집 맛 그대로\n매콤달콤 떡볶이 레시피"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -59,8 +63,9 @@
                 android:id="@+id/tv_recipe_detail_headerI_time"
                 style="@style/body_text"
                 android:layout_marginHorizontal="@dimen/activity_margin_narrow"
-                android:text="30분"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:text="@{recipe.time}"
+                tools:text="30분"/>
 
             <TextView
                 style="@style/body_text"
