@@ -26,4 +26,8 @@ interface IngreDao {
     @Transaction
     @Query("SELECT * FROM $INGRE_TABLE WHERE refrigeratorId = :id")
     fun getIngreListByFridgeId(id: Int): Single<List<IngreEntity>>
+
+    @Transaction
+    @Query("DELETE FROM $INGRE_TABLE")
+    fun dropAll(): Completable
 }
