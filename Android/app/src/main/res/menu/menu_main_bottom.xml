@@ -4,11 +4,8 @@
         android:id="@+id/fridgeFragment"
         android:title="@string/fridge"
         android:icon="@drawable/selector_fridge_bottom_nav"/>
-<!--    <item-->
-<!--        android:id="@+id/ingreUploadFragment"-->
-<!--        android:title="@string/add"/>-->
     <item
-        android:id="@+id/barcodeScanFragment"
+        android:id="@+id/select_regi_ingre"
         android:title="@string/add"/>
     <item
         android:id="@+id/recipeFragment"

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.databinding.ActivityMainBinding
@@ -24,10 +25,20 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         val navController = navHostFragment.findNavController()
         binding.bnvMain.setupWithNavController(navController)
 
+        binding.bnvMain.setOnItemSelectedListener { menuItem ->
+            if (menuItem.itemId == R.id.select_regi_ingre) {
+                val modalBottomSheet = SelectRegiIngreBottomSheet()
+                modalBottomSheet.show(supportFragmentManager, SelectRegiIngreBottomSheet.TAG)
+
+                return@setOnItemSelectedListener false
+            }
+            onNavDestinationSelected(menuItem, navController)
+            true
+        }
+
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when(destination.id) {
                 R.id.fridgeFragment,
-                R.id.ingreUploadFragment,
                 R.id.recipeFragment -> {
                     binding.bnvMain.visibility = View.VISIBLE
                 }
