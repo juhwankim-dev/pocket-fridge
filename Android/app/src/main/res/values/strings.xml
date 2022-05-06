@@ -4,7 +4,7 @@
     <string name="cancel">취소</string>
     <string name="accept">확인</string>
 
-    <string name="permission_error">권한 처리 중 문제가 발생하였습니다\n종료 후 다시 실행해주세요</string>
+    <string name="permission_error">권한 처리 중 문제가 발생하였습니다</string>
     <string name="network_error">네트워크 상태를 확인해 주세요.</string>
 
 
