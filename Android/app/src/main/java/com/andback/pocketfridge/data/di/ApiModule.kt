@@ -47,4 +47,11 @@ class ApiModule {
     fun provideBarcodeApiInterface(): BarcodeApi {
         return RetrofitUtil.barcodeService
     }
+
+    @Provides
+    @Singleton
+    fun provideLikeApiInterface(): LikeApi {
+        return RetrofitUtil.likeService
+
+    }
 }

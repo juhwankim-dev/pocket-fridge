@@ -11,5 +11,6 @@ class RetrofitUtil {
         val categoryService = ApplicationClass.retrofit.create(CategoryApi::class.java)
         val recipeService = ApplicationClass.retrofit.create(RecipeApi::class.java)
         val barcodeService = ApplicationClass.barcodeRetrofit.create(BarcodeApi::class.java)
+        val likeService = ApplicationClass.retrofit.create(LikeApi::class.java)
     }
 }
