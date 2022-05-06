@@ -1,20 +1,17 @@
 package com.andback.pocketfridge.present.views.main.recipe.detail
 
-import android.animation.Animator
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.andback.pocketfridge.data.model.CookingIngreEntity
 import com.andback.pocketfridge.databinding.ItemRecipeDetailIngreListBinding
-import com.andback.pocketfridge.databinding.ItemRecipeListBinding
-import com.andback.pocketfridge.domain.model.Recipe
 
 class RecipeIngreAdapter : RecyclerView.Adapter<RecipeIngreAdapter.RecipeIngreViewHolder>() {
-    private val recipeList: ArrayList<Recipe> = ArrayList()
+    private val cookingIngreList = arrayListOf<CookingIngreEntity>()
 
     inner class RecipeIngreViewHolder(private val binding: ItemRecipeDetailIngreListBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bindInfo(recipe: Recipe) {
-
+        fun bindInfo(cookingIngre: CookingIngreEntity) {
+            binding.cookingIngre = cookingIngre
         }
     }
 
@@ -25,16 +22,15 @@ class RecipeIngreAdapter : RecyclerView.Adapter<RecipeIngreAdapter.RecipeIngreVi
 
     override fun onBindViewHolder(holder: RecipeIngreViewHolder, position: Int) {
         holder.apply {
-            bindInfo(recipeList[position])
-
+            bindInfo(cookingIngreList[position])
         }
     }
 
-    override fun getItemCount(): Int = recipeList.size
+    override fun getItemCount(): Int = cookingIngreList.size
 
-    fun setList(list: List<Recipe>) {
-        recipeList.clear()
-        recipeList.addAll(list)
+    fun setList(list: List<CookingIngreEntity>) {
+        cookingIngreList.clear()
+        cookingIngreList.addAll(list)
         notifyDataSetChanged()
     }
 }
