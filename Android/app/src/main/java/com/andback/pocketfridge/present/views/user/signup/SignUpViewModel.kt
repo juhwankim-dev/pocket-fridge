@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.andback.pocketfridge.R
+import com.andback.pocketfridge.data.model.UserEntity
 import com.andback.pocketfridge.domain.model.CheckResult
 import com.andback.pocketfridge.domain.usecase.user.GetCheckEmailUseCase
 import com.andback.pocketfridge.domain.usecase.user.GetCheckNicknameUseCase
@@ -118,17 +119,25 @@ class SignUpViewModel @Inject constructor (
                 .subscribe(
                     {
                         _nicknameErrorMsg.value = R.string.no_error
-                        signUp(getEnteredUserInfo())
+                        signUp(
+                            UserEntity(
+                                email.value.toString(),
+                                name.value.toString(),
+                                nickname,
+                                pw.value.toString(),
+                                null
+                            )
+                        )
                     }, { showError(it) },
                 )
         )
     }
 
-    private fun signUp(req: MutableMap<String, String>) {
+    private fun signUp(userEntity: UserEntity) {
         _isLoading.value = true
 
         compositeDisposable.add(
-            getSignUpUseCase.execute(req)
+            getSignUpUseCase(userEntity)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -164,16 +173,6 @@ class SignUpViewModel @Inject constructor (
 
     fun onCloseClick() {
         pageNumber.value = PageSet.LOGIN
-    }
-
-    private fun getEnteredUserInfo(): MutableMap<String, String>{
-        val req = mutableMapOf<String, String>()
-        req["userEmail"] = email.value.toString()
-        req["userName"] = name.value.toString()
-        req["userNickname"] = nickname.value.toString()
-        req["userPassword"] = pw.value.toString()
-
-        return req
     }
 
     private fun showError(t : Throwable) {

@@ -1,6 +1,7 @@
 package com.andback.pocketfridge.data.repository
 
 import com.andback.pocketfridge.data.model.BaseResponse
+import com.andback.pocketfridge.data.model.UserEntity
 import com.andback.pocketfridge.data.model.UserForFindEntity
 import com.andback.pocketfridge.data.repository.user.UserRemoteDataSource
 import com.andback.pocketfridge.domain.repository.UserRepository
@@ -11,8 +12,8 @@ class UserRepositoryImpl @Inject constructor(
     private val userRemoteDataSource: UserRemoteDataSource
 ) : UserRepository {
 
-    override fun signUp(req: MutableMap<String, String>): Single<BaseResponse<Any>> {
-        return userRemoteDataSource.signUp(req)
+    override fun signUp(userEntity: UserEntity): Single<BaseResponse<Any>> {
+        return userRemoteDataSource.signUp(userEntity)
     }
 
     override fun sendEmail(email: String): Single<BaseResponse<String>> {
