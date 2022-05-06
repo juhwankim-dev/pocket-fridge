@@ -7,13 +7,15 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.andback.pocketfridge.domain.repository.DataStoreRepository
+import com.andback.pocketfridge.present.config.DATASTORE_NAME
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 class DataStoreRepositoryImpl @Inject constructor(
-    private val context: Context
+    @ApplicationContext private val context: Context
 ): DataStoreRepository {
-    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name =  "pocket_fridge")
+    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = DATASTORE_NAME)
 
     override suspend fun readDataStore(key: String): String? {
         val dataStoreKey = stringPreferencesKey(key)
