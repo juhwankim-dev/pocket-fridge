@@ -13,8 +13,8 @@ class UserRemoteDataSourceImpl @Inject constructor(private val userApi: UserApi)
         return userApi.getUser()
     }
 
-    override fun signUp(req: MutableMap<String, String>): Single<BaseResponse<Any>> {
-        return userApi.signUp(req)
+    override fun signUp(userEntity: UserEntity): Single<BaseResponse<Any>> {
+        return userApi.signUp(userEntity)
     }
 
     override fun sendEmail(email: String): Single<BaseResponse<String>> {

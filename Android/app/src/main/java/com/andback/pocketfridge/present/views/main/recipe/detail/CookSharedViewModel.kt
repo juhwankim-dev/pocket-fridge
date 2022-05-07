@@ -6,7 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.andback.pocketfridge.data.model.CookingIngreEntity
 import com.andback.pocketfridge.data.model.RecipeEntity
+import com.andback.pocketfridge.data.model.RecipeStepEntity
 import com.andback.pocketfridge.domain.usecase.recipe.GetCookingIngresUseCase
+import com.andback.pocketfridge.domain.usecase.recipe.GetRecipeStepsUseCase
 import com.andback.pocketfridge.present.config.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -18,7 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CookSharedViewModel @Inject constructor(
-    private val getCookingIngresUseCase: GetCookingIngresUseCase
+    private val getCookingIngresUseCase: GetCookingIngresUseCase,
+    private val getRecipeStepsUseCase: GetRecipeStepsUseCase
 ): ViewModel() {
     private val compositeDisposable = CompositeDisposable()
 
@@ -26,23 +29,50 @@ class CookSharedViewModel @Inject constructor(
     private val _cookingIngres = MutableLiveData<List<CookingIngreEntity>>()
     val cookingIngres: LiveData<List<CookingIngreEntity>> get() = _cookingIngres
 
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> get() = _isLoading
+    private val _recipeSteps = MutableLiveData<List<RecipeStepEntity>>()
+    val recipeSteps: LiveData<List<RecipeStepEntity>> get() = _recipeSteps
+
+    private val _isIngresLoaded = MutableLiveData<Boolean>()
+    val isIngresLoaded: LiveData<Boolean> get() = _isIngresLoaded
+
+    private val _isStepsLoaded = MutableLiveData<Boolean>()
+    val isStepsLoaded: LiveData<Boolean> get() = _isStepsLoaded
 
     private val _toastMsg = SingleLiveEvent<String>()
     val toastMsg: LiveData<String> get() = _toastMsg
 
     fun getCookingIngres(id: Int) {
+        _isIngresLoaded.value = false
         compositeDisposable.add(
             getCookingIngresUseCase(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
+                        _isIngresLoaded.value = true
                         _cookingIngres.value = it.data!!
                     },
                     {
-                        _isLoading.value = false
+                        _isIngresLoaded.value = false
+                        showError(it)
+                    },
+                )
+        )
+    }
+
+    fun getRecipeSteps(id: Int) {
+        _isStepsLoaded.value = false
+        compositeDisposable.add(
+            getRecipeStepsUseCase(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        _isStepsLoaded.value = true
+                        _recipeSteps.value = it.data!!
+                    },
+                    {
+                        _isStepsLoaded.value = false
                         showError(it)
                     },
                 )

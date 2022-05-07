@@ -1,8 +1,8 @@
 package com.andback.pocketfridge.data.api
 
 import com.andback.pocketfridge.data.model.BaseResponse
-import com.andback.pocketfridge.data.model.LoginEntity
 import com.andback.pocketfridge.data.model.UserEntity
+import com.andback.pocketfridge.data.model.LoginEntity
 import com.andback.pocketfridge.data.model.UserForFindEntity
 import io.reactivex.Single
 import org.jetbrains.annotations.NotNull
@@ -14,7 +14,7 @@ interface UserApi {
 
     @FormUrlEncoded
     @POST("user")
-    fun signUp(@FieldMap req: MutableMap<String, String>): Single<BaseResponse<Any>>
+    fun signUp(@Body userEntity: UserEntity): Single<BaseResponse<Any>>
 
     @GET("user/{userEmail}")
     fun sendEmail(@Path("userEmail") @NotNull email: String): Single<BaseResponse<String>>

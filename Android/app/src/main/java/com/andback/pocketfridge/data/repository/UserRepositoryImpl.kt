@@ -17,8 +17,8 @@ class UserRepositoryImpl @Inject constructor(
         return userRemoteDataSource.getUser()
     }
 
-    override fun signUp(req: MutableMap<String, String>): Single<BaseResponse<Any>> {
-        return userRemoteDataSource.signUp(req)
+    override fun signUp(userEntity: UserEntity): Single<BaseResponse<Any>> {
+        return userRemoteDataSource.signUp(userEntity)
     }
 
     override fun sendEmail(email: String): Single<BaseResponse<String>> {

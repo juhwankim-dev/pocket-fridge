@@ -8,7 +8,7 @@ import io.reactivex.Single
 
 interface UserRepository {
     fun getUser(): Single<BaseResponse<UserEntity>>
-    fun signUp(req: MutableMap<String, String>): Single<BaseResponse<Any>>
+    fun signUp(userEntity: UserEntity): Single<BaseResponse<Any>>
     fun sendEmail(email: String): Single<BaseResponse<String>>
     fun checkEmail(email: String): Single<BaseResponse<Any>>
     fun checkNickname(nickname: String): Single<BaseResponse<Any>>

@@ -28,4 +28,8 @@ class IngreLocalDataSourceImpl @Inject constructor(
     override fun getIngreListByFridgeId(id: Int): Single<List<IngreEntity>> {
         return dao.getIngreListByFridgeId(id)
     }
+
+    override fun dropByFridgeId(id: Int): Completable {
+        return dao.dropByFridgeId(id)
+    }
 }
