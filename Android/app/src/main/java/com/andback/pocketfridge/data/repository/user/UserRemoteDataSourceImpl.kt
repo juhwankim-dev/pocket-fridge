@@ -3,11 +3,16 @@ package com.andback.pocketfridge.data.repository.user
 import com.andback.pocketfridge.data.api.UserApi
 import com.andback.pocketfridge.data.model.BaseResponse
 import com.andback.pocketfridge.data.model.LoginEntity
+import com.andback.pocketfridge.data.model.UserEntity
 import com.andback.pocketfridge.data.model.UserForFindEntity
 import io.reactivex.Single
 import javax.inject.Inject
 
 class UserRemoteDataSourceImpl @Inject constructor(private val userApi: UserApi) : UserRemoteDataSource {
+    override fun getUser(): Single<BaseResponse<UserEntity>> {
+        return userApi.getUser()
+    }
+
     override fun signUp(req: MutableMap<String, String>): Single<BaseResponse<Any>> {
         return userApi.signUp(req)
     }
