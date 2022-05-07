@@ -28,6 +28,6 @@ interface IngreDao {
     fun getIngreListByFridgeId(id: Int): Single<List<IngreEntity>>
 
     @Transaction
-    @Query("DELETE FROM $INGRE_TABLE")
-    fun dropAll(): Completable
+    @Query("DELETE FROM $INGRE_TABLE WHERE refrigeratorId = :id")
+    fun dropByFridgeId(id: Int): Completable
 }
