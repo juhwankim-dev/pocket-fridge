@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="vm"
+            type="com.andback.pocketfridge.present.views.main.mypage.MyPageViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,7 +25,6 @@
                 android:id="@+id/tb_my_pageF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:navigationOnClickListener="@{()->vm.onCloseClick()}"
                 app:title="@string/mypage"
                 app:navigationIcon="@drawable/ic_close"/>
 
@@ -46,6 +47,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_my_pageF_picture"
+            android:text="@{vm.personalInfo.nickname}"
             tools:text="닉네임" />
 
         <LinearLayout
