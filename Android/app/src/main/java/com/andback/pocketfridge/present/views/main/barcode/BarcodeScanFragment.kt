@@ -65,8 +65,7 @@ class BarcodeScanFragment : BaseFragment<FragmentBarcodeScanBinding>(R.layout.fr
                         setObserve()
                         setUpCamera()
                     } else {
-                        // TODO : 권한 얻기에 실패했을 때 동작처리
-                        requireActivity().supportFragmentManager.popBackStack()
+                        showToastMessage(resources.getString(R.string.permission_error))
                     }
                 },
                 { throwable ->
@@ -117,7 +116,7 @@ class BarcodeScanFragment : BaseFragment<FragmentBarcodeScanBinding>(R.layout.fr
                     } else {
                         showToastMessage(resources.getString(R.string.barcode_scan_fail))
                         findNavController().navigate(
-                            BarcodeScanFragmentDirections.actionBarcodeScanFragmentToIngreUploadFragment("")
+                            R.id.action_barcodeScanFragment_to_ingreUploadFragment
                         )
                     }
                 }
