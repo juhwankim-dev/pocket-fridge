@@ -4,8 +4,6 @@ package com.andback.pocketfridge.present.views.main
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import androidx.core.view.forEach
-import androidx.core.view.size
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -52,7 +50,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         midMenu.addView(itemView)
 
         binding.bnvMain.setOnItemSelectedListener { menuItem ->
-            if (menuItem.itemId == R.id.select_regi_ingre) {
+            if (menuItem.itemId == R.id.selectRegiIngre) {
                 val modalBottomSheet = SelectRegiIngreBottomSheet()
                 modalBottomSheet.show(supportFragmentManager, SelectRegiIngreBottomSheet.TAG)
 

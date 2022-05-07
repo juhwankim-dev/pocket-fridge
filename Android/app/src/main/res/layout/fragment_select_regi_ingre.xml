@@ -22,8 +22,6 @@
 
             <TextView
                 style="@style/page_title_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/ingre_upload"
                 android:textStyle="bold" />
@@ -51,8 +49,6 @@
 
             <TextView
                 style="@style/body_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/activity_margin_wide"
                 android:layout_weight="1"
                 android:text="@string/select_text_barcode" />
@@ -64,7 +60,8 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="@dimen/activity_margin_default">
+            android:padding="@dimen/activity_margin_default"
+            android:layout_marginBottom="56dp">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -73,16 +70,10 @@
 
             <TextView
                 style="@style/body_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/activity_margin_wide"
                 android:layout_weight="1"
-                android:text="@string/select_texxt_input" />
+                android:text="@string/select_text_input" />
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="56dp" />
 
     </LinearLayout>
 </layout>
