@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.andback.pocketfridge.R
-import com.andback.pocketfridge.data.model.UserEntity
+import com.andback.pocketfridge.data.model.SignUpEntity
 import com.andback.pocketfridge.domain.model.CheckResult
 import com.andback.pocketfridge.domain.usecase.user.GetCheckEmailUseCase
 import com.andback.pocketfridge.domain.usecase.user.GetCheckNicknameUseCase
@@ -120,7 +120,7 @@ class SignUpViewModel @Inject constructor (
                     {
                         _nicknameErrorMsg.value = R.string.no_error
                         signUp(
-                            UserEntity(
+                            SignUpEntity(
                                 email.value.toString(),
                                 name.value.toString(),
                                 nickname,
@@ -133,11 +133,11 @@ class SignUpViewModel @Inject constructor (
         )
     }
 
-    private fun signUp(userEntity: UserEntity) {
+    private fun signUp(signUpEntity: SignUpEntity) {
         _isLoading.value = true
 
         compositeDisposable.add(
-            getSignUpUseCase(userEntity)
+            getSignUpUseCase(signUpEntity)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
