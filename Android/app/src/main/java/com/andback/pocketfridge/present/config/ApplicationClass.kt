@@ -5,15 +5,11 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.andback.pocketfridge.present.utils.XAccessTokenInterceptor
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import com.andback.pocketfridge.domain.usecase.datastore.ReadDataStoreUseCase
-import com.andback.pocketfridge.present.workmanager.DailyNotiWorker
+import com.andback.pocketfridge.present.utils.XAccessTokenInterceptor
 import dagger.hilt.android.HiltAndroidApp
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -66,11 +62,6 @@ class ApplicationClass : Application(), Configuration.Provider {
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
-
-        // Notification 알림 WorkManager
-        CoroutineScope(Dispatchers.Default).launch {
-            DailyNotiWorker.runAt(applicationContext, readDataStoreUseCase)
-        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createNotificationChannel()
