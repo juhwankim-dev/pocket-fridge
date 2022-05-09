@@ -1,7 +1,12 @@
 package com.andback.pocketfridge.present.config
 
 import android.app.Application
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.andback.pocketfridge.present.utils.XAccessTokenInterceptor
+import com.gun0912.tedpermission.provider.TedPermissionProvider.context
 import dagger.hilt.android.HiltAndroidApp
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -10,6 +15,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+
 
 @HiltAndroidApp
 class ApplicationClass : Application() {
@@ -51,5 +57,21 @@ class ApplicationClass : Application() {
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createNotificationChannel()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createNotificationChannel() {
+        // 채널 생성
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val channel = NotificationChannel(INGRE_EXPIRY_NOTI_ID, INGRE_EXPIRY_NOTI_NAME, importance)
+
+        // 채널 등록
+        val notificationManager =
+            context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
     }
 }
