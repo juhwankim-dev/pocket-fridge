@@ -1,6 +1,7 @@
 package com.andback.pocketfridge.present.config
 
 import android.app.Application
+import com.andback.pocketfridge.present.utils.XAccessTokenInterceptor
 import dagger.hilt.android.HiltAndroidApp
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -8,12 +9,15 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 @HiltAndroidApp
 class ApplicationClass : Application() {
     private val baseUrl = "http://k6d206.p.ssafy.io:8080/"
     private val barcodeUrl = "https://openapi.foodsafetykorea.go.kr/api/"
     private val TIME_OUT = 5000L
+    @Inject
+    lateinit var interceptor: XAccessTokenInterceptor
 
     companion object {
         lateinit var retrofit: Retrofit
@@ -31,7 +35,7 @@ class ApplicationClass : Application() {
                 HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS).setLevel(
                     HttpLoggingInterceptor.Level.BODY)
             )
-//            .addNetworkInterceptor(XAccessTokenInterceptor())  // JWT 헤더 전송(추가한 부분)
+            .addNetworkInterceptor(interceptor)  // JWT 헤더 전송(추가한 부분)
             .build()
 
         retrofit = Retrofit.Builder()

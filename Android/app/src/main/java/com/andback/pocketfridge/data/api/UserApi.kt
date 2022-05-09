@@ -1,16 +1,16 @@
 package com.andback.pocketfridge.data.api
 
-import com.andback.pocketfridge.data.model.BaseResponse
-import com.andback.pocketfridge.data.model.UserEntity
-import com.andback.pocketfridge.data.model.LoginEntity
-import com.andback.pocketfridge.data.model.UserForFindEntity
+import com.andback.pocketfridge.data.model.*
 import io.reactivex.Single
 import org.jetbrains.annotations.NotNull
 import retrofit2.http.*
 
 interface UserApi {
+    @GET("user")
+    fun getUser(): Single<BaseResponse<UserEntity>>
+
     @POST("user")
-    fun signUp(@Body userEntity: UserEntity): Single<BaseResponse<Any>>
+    fun signUp(@Body signUpEntity: SignUpEntity): Single<BaseResponse<Any>>
 
     @GET("user/{userEmail}")
     fun sendEmail(@Path("userEmail") @NotNull email: String): Single<BaseResponse<String>>

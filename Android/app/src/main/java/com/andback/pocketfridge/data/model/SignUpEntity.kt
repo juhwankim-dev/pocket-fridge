@@ -2,13 +2,13 @@ package com.andback.pocketfridge.data.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
+import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class UserEntity(
-    @SerializedName("userId") val id: Int,
+data class SignUpEntity(
     @SerializedName("userEmail") val email: String,
     @SerializedName("userName") val name: String,
     @SerializedName("userNickname") val nickname: String,
+    @SerializedName("userPassword") val pw: String,
     @SerializedName("userPicture") val picture: String?,
 ) : Parcelable

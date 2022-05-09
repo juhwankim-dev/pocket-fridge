@@ -7,7 +7,8 @@ import com.andback.pocketfridge.data.db.AppDatabase
 import com.andback.pocketfridge.data.db.dao.IngreDao
 import com.andback.pocketfridge.data.repository.ingredient.IngreLocalDataSource
 import com.andback.pocketfridge.data.repository.ingredient.IngreLocalDataSourceImpl
-import com.andback.pocketfridge.data.repository.ingredient.IngreRemoteDataSourceImpl
+import com.andback.pocketfridge.domain.repository.DataStoreRepository
+import com.andback.pocketfridge.domain.usecase.datastore.ReadDataStoreUseCase
 import com.andback.pocketfridge.present.config.DB_NAME
 import dagger.Module
 import dagger.Provides
@@ -43,4 +44,9 @@ class LocalDataModule {
         return IngreLocalDataSourceImpl(ingreDao)
     }
 
+    @Provides
+    @Singleton
+    fun provideDataSourceUseCase(repository: DataStoreRepository): ReadDataStoreUseCase {
+        return ReadDataStoreUseCase(repository)
+    }
 }
