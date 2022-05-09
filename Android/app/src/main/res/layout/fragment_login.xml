@@ -74,9 +74,10 @@
             android:layout_marginHorizontal="@dimen/activity_margin_wide"
             android:background="@drawable/bg_ellipse_filled_main_color_32"
             android:onClick="@{()->vm.onLoginClick()}"
-            android:text="로그인"
+            android:text="@string/login"
             android:textColor="@color/white"
-            app:layout_constraintTop_toBottomOf="@+id/til_loginF_pw" />
+            app:layout_constraintTop_toBottomOf="@+id/til_loginF_pw"
+            tools:layout_editor_absoluteX="32dp" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_loginF_social_login"
@@ -86,8 +87,10 @@
             android:layout_marginTop="@dimen/activity_margin_default"
             android:background="@drawable/bg_ellipse_outline_main_color_32"
             android:onClick="@{()->vm.onSocialLoginClick()}"
-            android:text="SNS로 로그인"
+            android:text="@string/sns_login"
             android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_loginF_login" />
 
         <TextView
