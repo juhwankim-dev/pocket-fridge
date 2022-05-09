@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.andback.pocketfridge">
 
     <uses-feature android:name="android.hardware.camera.any" />
@@ -35,6 +36,13 @@
         <activity
             android:name=".present.views.main.MainActivity"
             android:exported="true"/>
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            tools:node="remove">
+        </provider>
+
     </application>
 
 </manifest>
