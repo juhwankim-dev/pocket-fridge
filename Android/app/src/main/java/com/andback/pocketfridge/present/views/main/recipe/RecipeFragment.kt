@@ -20,7 +20,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding>(R.layout.fragment_rec
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        
         initView()
         initViewModel()
         initEvent()
@@ -36,8 +36,6 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding>(R.layout.fragment_rec
                 recipeAdapter.setList(it)
             }
         }
-
-        viewModel.getRecipes()
     }
 
     private fun initView() {
@@ -57,6 +55,14 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding>(R.layout.fragment_rec
                     it.putExtra("recipe", recipe)
                     startActivity(it)
                 }
+            }
+
+            override fun onAddLikeClick(recipeId: Int) {
+                viewModel.addLike(recipeId)
+            }
+
+            override fun onDeleteLikeClick(recipeId: Int) {
+                viewModel.deleteLike(recipeId)
             }
         })
     }
