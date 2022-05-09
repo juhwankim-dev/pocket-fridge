@@ -1,6 +1,7 @@
 package com.ssafy.andback.api.dto.response;
 
 import com.ssafy.andback.api.constant.RecipeType;
+import com.ssafy.andback.core.domain.RecipeLike;
 import lombok.Builder;
 import lombok.Data;
 
@@ -42,9 +43,12 @@ public class RecipeResponseDto {
     // 음식 인분
     private String recipeServing;
 
+    // 좋아요
+    private boolean recipeLike;
+
 
     @Builder
-    public RecipeResponseDto(Long recipeId, String recipeFoodName, String recipeAllIngredient, String recipeContent, String recipeImage, RecipeType recipeType, int recipeTime, int recipeServing) {
+    public RecipeResponseDto(Long recipeId, String recipeFoodName, String recipeAllIngredient, String recipeContent, String recipeImage, RecipeType recipeType, int recipeTime, int recipeServing, boolean recipeLike) {
         this.recipeId = recipeId;
         this.recipeFoodName = recipeFoodName;
         this.recipeAllIngredient = recipeAllIngredient;
@@ -53,5 +57,6 @@ public class RecipeResponseDto {
         this.recipeType = recipeType;
         this.recipeTime = String.format("%d 분", recipeTime);
         this.recipeServing = String.format("%d 인분", recipeServing);
+        this.recipeLike = recipeLike;
     }
 }

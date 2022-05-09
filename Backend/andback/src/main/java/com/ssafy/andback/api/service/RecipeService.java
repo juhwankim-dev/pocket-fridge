@@ -6,6 +6,7 @@ import com.ssafy.andback.api.dto.response.RecipeProcessResponseDto;
 import com.ssafy.andback.api.dto.response.RecipeResponseDto;
 import com.ssafy.andback.core.domain.FoodIngredient;
 import com.ssafy.andback.core.domain.RecipeIngredient;
+import com.ssafy.andback.core.domain.User;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ import java.util.List;
 
 public interface RecipeService {
 
-    List<RecipeResponseDto> findAllRecipe();
+    List<RecipeResponseDto> findAllRecipe(User user);
     List<RecipeProcessResponseDto> findRecipeProcessByRecipeId(Long recipeId);
     List<RecipeIngredientResponseDto> findRecipeIngredientByRecipeId(Long recipeId);
     List<LackRecipeIngredientResponseDto> findLackRecipeIngredient(List<RecipeIngredient> recipeIngredientList, List<FoodIngredient> foodIngredientList);

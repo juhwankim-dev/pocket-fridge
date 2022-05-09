@@ -79,4 +79,20 @@ public class RefrigeratorServiceImpl implements RefrigeratorService {
         return response;
     }
 
+    @Override
+    public String createShareGroup(User user, Long refrigeratorId) {
+
+        Refrigerator refrigerator = refrigeratorRepository.findByRefrigeratorId(refrigeratorId);
+
+        List<UserRefrigerator> shareList = new ArrayList<>();
+
+        shareList.add(UserRefrigerator.builder()
+                .user(user)
+                .refrigerator(refrigerator)
+                .refrigeratorOwner(true)
+                .build());
+
+        return "success";
+    }
+
 }

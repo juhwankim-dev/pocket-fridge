@@ -41,9 +41,11 @@ public class RecipeController {
     //모든 레시피 출력
     @ApiOperation(value = "모든 레시피 조회", notes = "모든 레시피 리스트를 보여준다")
     @GetMapping
-    ResponseEntity<ListResponseDto<RecipeResponseDto>> findAllRecipe(){
+    ResponseEntity<ListResponseDto<RecipeResponseDto>> findAllRecipe(@ApiIgnore Authentication authentication){
 
-        List<RecipeResponseDto> response = recipeService.findAllRecipe();
+        User user = (User) authentication.getPrincipal();
+
+        List<RecipeResponseDto> response = recipeService.findAllRecipe(user);
 
         return ResponseEntity.ok(new ListResponseDto<RecipeResponseDto>(200, "success", response));
     }
