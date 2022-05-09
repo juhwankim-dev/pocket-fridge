@@ -23,6 +23,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "BARCODE_SERVICE_KEY", properties['barcode_service_key']
+        buildConfigField "String", "GOOGLE_AUTH_SERVER_ID", properties['google_auth_server_id']
     }
 
     buildTypes {
