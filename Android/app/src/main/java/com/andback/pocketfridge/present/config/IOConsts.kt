@@ -11,3 +11,6 @@ const val INGRE_EXPIRY_NOTI_NAME = "식재료 유통기한 알림"
 
 //preference
 const val EXPIRY_DATE_PREFERENCE = "ingre_expiry_preference"
+const val EXPIRY_DATE_NOTIFIED = "isNotified"
+const val EXPIRY_NOTI_HOUR = "hour"
+const val EXPIRY_NOTI_MINUTE = "minute"
