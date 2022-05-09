@@ -17,6 +17,7 @@ buildscript {
         barcode_version = "17.0.2"
         datastore_version = "1.0.0"
         coroutine_version = "1.4.2"
+        google_auth_version = "20.1.0"
     }
     dependencies {
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"

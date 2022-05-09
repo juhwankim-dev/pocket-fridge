@@ -128,4 +128,7 @@ dependencies {
 
     // Coroutine
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
+
+    // sns Login
+    implementation "com.google.android.gms:play-services-auth:$google_auth_version"
 }
