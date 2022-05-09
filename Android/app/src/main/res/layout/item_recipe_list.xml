@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="recipeEntity"
+            name="recipe"
             type="com.andback.pocketfridge.data.model.RecipeEntity" />
     </data>
 
@@ -18,7 +18,7 @@
             android:id="@+id/tv_recipeI_name"
             style="@style/menu_text_18"
             android:layout_margin="@dimen/activity_margin_default"
-            android:text="@{recipeEntity.foodName}"
+            android:text="@{recipe.foodName}"
             tools:text="매콤달콤 떡볶이"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -37,9 +37,9 @@
             android:layout_width="52dp"
             android:layout_height="52dp"
             android:padding="@dimen/activity_margin_default"
+            android:src="@{recipe.like ? @drawable/ic_heart_filled : @drawable/ic_heart_outline}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_recipeI_picture"
-            android:src="@drawable/selector_heart_recipe" />
+            app:layout_constraintTop_toBottomOf="@+id/iv_recipeI_picture"/>
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottie_recipeI_heart"
@@ -68,7 +68,7 @@
                 style="@style/body_text"
                 android:layout_marginHorizontal="@dimen/activity_margin_narrow"
                 android:textStyle="bold"
-                android:text="@{recipeEntity.time}"
+                android:text="@{recipe.time}"
                 tools:text="30분"/>
 
             <TextView
@@ -103,7 +103,7 @@
                 style="@style/body_text"
                 android:layout_marginStart="@dimen/activity_margin_narrow"
                 android:textStyle="bold"
-                android:text="@{recipeEntity.allIngredients}"
+                android:text="@{recipe.allIngredients}"
                 tools:text="대패삽겹살, 숙주나물, 굴소스, 설탕, 간장"/>
         </LinearLayout>
 
@@ -113,7 +113,7 @@
             android:layout_marginEnd="@dimen/activity_margin_default"
             android:paddingVertical="6dp"
             android:paddingHorizontal="@dimen/activity_margin_default"
-            android:text="@{recipeEntity.serving}"
+            android:text="@{recipe.serving}"
             tools:text="1인분"
             app:layout_constraintBottom_toBottomOf="@+id/iv_recipeI_heart"
             app:layout_constraintEnd_toEndOf="parent"
