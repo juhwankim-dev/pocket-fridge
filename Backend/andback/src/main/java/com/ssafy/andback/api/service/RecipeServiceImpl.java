@@ -8,16 +8,14 @@ import com.ssafy.andback.api.dto.response.RecipeResponseDto;
 import com.ssafy.andback.api.exception.CustomException;
 import com.ssafy.andback.core.domain.*;
 import com.ssafy.andback.core.repository.RecipeIngredientRepository;
+import com.ssafy.andback.core.repository.RecipeLikeRepository;
 import com.ssafy.andback.core.repository.RecipeProcessRepository;
 import com.ssafy.andback.core.repository.RecipeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * RecipeServiceImpl
@@ -38,25 +36,48 @@ public class RecipeServiceImpl implements RecipeService {
     private final RecipeRepository recipeRepository;
     private final RecipeProcessRepository recipeProcessRepository;
     private final RecipeIngredientRepository recipeIngredientRepository;
+    private final RecipeLikeRepository recipeLikeRepository;
 
     @Override
-    public List<RecipeResponseDto> findAllRecipe() {
+    public List<RecipeResponseDto> findAllRecipe(User user) {
 
         List<Recipe> recipeList = recipeRepository.findAll();
-
+        List<RecipeLike> recipeLikeList = recipeLikeRepository.findAllByUser(user);
         List<RecipeResponseDto> result = new ArrayList<>();
 
-        for (Recipe temp : recipeList) {
-            result.add(RecipeResponseDto.builder()
-                    .recipeId(temp.getRecipeId())
-                    .recipeAllIngredient(temp.getRecipeAllIngredient())
-                    .recipeContent(temp.getRecipeContent())
-                    .recipeImage(temp.getRecipeImage())
-                    .recipeServing(temp.getRecipeServing())
-                    .recipeType(temp.getRecipeType())
-                    .recipeFoodName(temp.getRecipeFoodName())
-                    .recipeTime(temp.getRecipeTime())
-                    .build());
+        Set<Long> set = new HashSet<>();
+        for (RecipeLike recipeLike : recipeLikeList) {
+            set.add(recipeLike.getRecipe().getRecipeId());
+        }
+
+        for(int i=0; i<recipeList.size(); i++) {
+            Recipe temp = recipeList.get(i);
+
+            if(set.contains(temp.getRecipeId())) {
+                result.add(RecipeResponseDto.builder()
+                        .recipeId(temp.getRecipeId())
+                        .recipeAllIngredient(temp.getRecipeAllIngredient())
+                        .recipeContent(temp.getRecipeContent())
+                        .recipeImage(temp.getRecipeImage())
+                        .recipeServing(temp.getRecipeServing())
+                        .recipeType(temp.getRecipeType())
+                        .recipeFoodName(temp.getRecipeFoodName())
+                        .recipeTime(temp.getRecipeTime())
+                        .recipeLike(true)
+                        .build());
+            } else {
+                result.add(RecipeResponseDto.builder()
+                        .recipeId(temp.getRecipeId())
+                        .recipeAllIngredient(temp.getRecipeAllIngredient())
+                        .recipeContent(temp.getRecipeContent())
+                        .recipeImage(temp.getRecipeImage())
+                        .recipeServing(temp.getRecipeServing())
+                        .recipeType(temp.getRecipeType())
+                        .recipeFoodName(temp.getRecipeFoodName())
+                        .recipeTime(temp.getRecipeTime())
+                        .recipeLike(false)
+                        .build());
+            }
         }
 
         return result;

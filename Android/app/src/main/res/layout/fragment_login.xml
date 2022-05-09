@@ -38,6 +38,8 @@
             android:layout_marginTop="@dimen/activity_margin_wide"
             android:hint="이메일"
             app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/al_loginF">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -57,6 +59,8 @@
             android:hint="비밀번호"
             app:endIconMode="password_toggle"
             app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/til_loginF_email">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -74,8 +78,10 @@
             android:layout_marginHorizontal="@dimen/activity_margin_wide"
             android:background="@drawable/bg_ellipse_filled_main_color_32"
             android:onClick="@{()->vm.onLoginClick()}"
-            android:text="로그인"
+            android:text="@string/login"
             android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/til_loginF_pw" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -85,9 +91,10 @@
             android:layout_marginHorizontal="@dimen/activity_margin_wide"
             android:layout_marginTop="@dimen/activity_margin_default"
             android:background="@drawable/bg_ellipse_outline_main_color_32"
-            android:onClick="@{()->vm.onSocialLoginClick()}"
-            android:text="SNS로 로그인"
+            android:text="@string/sns_login"
             android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_loginF_login" />
 
         <TextView
