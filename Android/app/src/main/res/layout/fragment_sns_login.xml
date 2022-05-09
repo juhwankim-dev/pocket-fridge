@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_margin_default">
+
+
+        <TextView
+            android:id="@+id/tv_sns_dialog_title"
+            style="@style/page_title_text"
+            android:text="@string/sns_login"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/ll_login_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_sns_dialog_title"
+            android:paddingTop="@dimen/activity_margin_default"
+            android:paddingBottom="@dimen/activity_margin_default"
+            android:orientation="vertical">
+
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/btn_sns_loginF_google"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <!-- TODO: 다른 sns login 버튼도 구현할 것       -->
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_sns_loginF_cancel"
+            style="@style/button_text"
+            android:text="@string/cancel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_login_list" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
