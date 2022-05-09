@@ -20,10 +20,16 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding>(R.layout.fragment_rec
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
+
         initView()
         initViewModel()
         initEvent()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.getRecipes()
     }
 
     private fun initViewModel() {
