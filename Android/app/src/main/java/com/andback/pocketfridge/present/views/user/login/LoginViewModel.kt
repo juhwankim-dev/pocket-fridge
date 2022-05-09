@@ -72,10 +72,6 @@ class LoginViewModel @Inject constructor(
         login(LoginEntity(email.value.toString(), pw.value.toString()))
     }
 
-    fun onSocialLoginClick() {
-
-    }
-
     fun onSignUpClick() {
         pageNumber.value = PageSet.EMAIL_AUTH
     }
