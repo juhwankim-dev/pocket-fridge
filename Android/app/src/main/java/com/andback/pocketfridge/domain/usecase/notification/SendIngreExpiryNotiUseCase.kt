@@ -8,7 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class SendIngreExpiryNoti @Inject constructor(
+class SendIngreExpiryNotiUseCase @Inject constructor(
     private val readDataStoreUseCase: ReadDataStoreUseCase,
     private val ingreExpiryNotiManager: IngreExpiryNotiManager
 ) {

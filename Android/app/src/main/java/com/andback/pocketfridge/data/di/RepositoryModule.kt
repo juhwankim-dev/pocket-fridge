@@ -8,6 +8,7 @@ import com.andback.pocketfridge.data.repository.category.CategoryRemoteDataSourc
 import com.andback.pocketfridge.data.repository.fridge.FridgeRemoteDataSource
 import com.andback.pocketfridge.data.repository.ingredient.IngreLocalDataSource
 import com.andback.pocketfridge.data.repository.ingredient.IngreRemoteDataSource
+import com.andback.pocketfridge.data.repository.like.LikeRemoteDataSource
 import com.andback.pocketfridge.data.repository.user.UserRemoteDataSource
 import com.andback.pocketfridge.domain.repository.*
 import dagger.Module
@@ -54,6 +55,12 @@ class RepositoryModule {
     @Singleton
     fun provideRecipeRepository(recipeRemoteDataSource: RecipeRemoteDataSource): RecipeRepository {
         return RecipeRepositoryImpl(recipeRemoteDataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLikeRepository(likeRemoteDataSource: LikeRemoteDataSource): LikeRepository {
+        return LikeRepositoryImpl(likeRemoteDataSource)
     }
 
     @Provides

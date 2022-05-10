@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.andback.pocketfridge.data.model.RecipeEntity
+import com.andback.pocketfridge.domain.usecase.like.DeleteLikeUseCase
+import com.andback.pocketfridge.domain.usecase.like.UploadLikeUseCase
 import com.andback.pocketfridge.domain.usecase.recipe.GetRecipesUseCase
 import com.andback.pocketfridge.present.config.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +19,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RecipeViewModel @Inject constructor(
-    private val getRecipesUseCase: GetRecipesUseCase
+    private val getRecipesUseCase: GetRecipesUseCase,
+    private val deleteLikeUseCase: DeleteLikeUseCase,
+    private val uploadLikeUseCase: UploadLikeUseCase
 ): ViewModel() {
     private val compositeDisposable = CompositeDisposable()
 
@@ -44,6 +48,38 @@ class RecipeViewModel @Inject constructor(
                     },
                     {
                         _isLoading.value = false
+                        showError(it)
+                    },
+                )
+        )
+    }
+
+    fun addLike(recipeId: Int) {
+        compositeDisposable.add(
+            uploadLikeUseCase(recipeId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        getRecipes()
+                    },
+                    {
+                        showError(it)
+                    },
+                )
+        )
+    }
+
+    fun deleteLike(recipeId: Int) {
+        compositeDisposable.add(
+            deleteLikeUseCase(recipeId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        getRecipes()
+                    },
+                    {
                         showError(it)
                     },
                 )

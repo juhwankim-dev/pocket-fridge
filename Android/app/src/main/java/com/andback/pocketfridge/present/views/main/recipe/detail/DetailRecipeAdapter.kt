@@ -9,12 +9,14 @@ import android.widget.LinearLayout
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.andback.pocketfridge.R
 import com.andback.pocketfridge.data.model.CookingIngreEntity
 import com.andback.pocketfridge.data.model.RecipeEntity
 import com.andback.pocketfridge.databinding.ItemDetailRecipeBodyListBinding
 import com.andback.pocketfridge.databinding.ItemDetailRecipeHeaderListBinding
 
 class DetailRecipeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private lateinit var itemClickListener: ItemClickListener
     private val viewHolderType = mapOf (
         "HEADER" to 0,
         "BODY" to 1
@@ -27,12 +29,19 @@ class DetailRecipeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         fun bindInfo() {
             binding.recipe = recipe
             binding.ivDetailRecipeHeaderIHeart.setOnClickListener {
-                if(!it.isSelected) {
-                    binding.lottieDetailRecipeHeartIHeart.visibility = View.VISIBLE
-                    binding.lottieDetailRecipeHeartIHeart.playAnimation()
+                // 좋아요 -> 안좋아요
+                if(recipe.like) {
+                    binding.ivDetailRecipeHeaderIHeart.setImageResource(R.drawable.ic_heart_outline)
+                    itemClickListener.onDeleteLikeClick(recipe.id)
                 }
 
-                it.isSelected = !it.isSelected
+                // 안좋아요 -> 좋아요
+                else {
+                    binding.ivDetailRecipeHeaderIHeart.setImageResource(R.drawable.ic_heart_filled)
+                    binding.lottieDetailRecipeHeartIHeart.visibility = View.VISIBLE
+                    binding.lottieDetailRecipeHeartIHeart.playAnimation()
+                    itemClickListener.onAddLikeClick(recipe.id)
+                }
             }
 
             binding.lottieDetailRecipeHeartIHeart.addAnimatorListener(object : Animator.AnimatorListener{
@@ -110,5 +119,14 @@ class DetailRecipeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         cookingIngreList.clear()
         cookingIngreList.addAll(cookingIngres)
         notifyDataSetChanged()
+    }
+
+    interface ItemClickListener {
+        fun onAddLikeClick(recipeId: Int)
+        fun onDeleteLikeClick(recipeId: Int)
+    }
+
+    fun setItemClickListener(itemClickListener: ItemClickListener) {
+        this.itemClickListener = itemClickListener
     }
 }

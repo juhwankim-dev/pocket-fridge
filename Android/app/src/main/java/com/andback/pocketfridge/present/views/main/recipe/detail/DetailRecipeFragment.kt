@@ -19,6 +19,7 @@ class DetailRecipeFragment : BaseFragment<FragmentDetailRecipeBinding>(R.layout.
 
         initView()
         initViewModel()
+        initEvent()
     }
 
     private fun initView() {
@@ -42,5 +43,17 @@ class DetailRecipeFragment : BaseFragment<FragmentDetailRecipeBinding>(R.layout.
                 detailRecipeAdapter.setBodyContent(it)
             }
         }
+    }
+
+    private fun initEvent() {
+        detailRecipeAdapter.setItemClickListener(object : DetailRecipeAdapter.ItemClickListener{
+            override fun onAddLikeClick(recipeId: Int) {
+                viewModel.addLike(recipeId)
+            }
+
+            override fun onDeleteLikeClick(recipeId: Int) {
+                viewModel.deleteLike(recipeId)
+            }
+        })
     }
 }
