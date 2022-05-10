@@ -18,7 +18,9 @@ class IngreLocalDataSourceImpl @Inject constructor(
     }
 
     override fun deleteById(id: Int): Completable {
-        return dao.deleteById(id)
+        val result = dao.deleteById(id)
+        return if(result >= 0) Completable.complete()
+            else Completable.error(Exception("delete fail"))
     }
 
     override fun getIngreListByDateBetween(from: String, to: String): Single<List<IngreEntity>> {
@@ -30,6 +32,8 @@ class IngreLocalDataSourceImpl @Inject constructor(
     }
 
     override fun dropByFridgeId(id: Int): Completable {
-        return dao.dropByFridgeId(id)
+        val result: Int = dao.dropByFridgeId(id)
+        return if(result >= 0) Completable.complete()
+            else Completable.error(Exception("delete fail"))
     }
 }
