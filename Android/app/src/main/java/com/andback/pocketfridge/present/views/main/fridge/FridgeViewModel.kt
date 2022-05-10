@@ -37,6 +37,10 @@ class FridgeViewModel @Inject constructor(
      * 냉장고 리스트 받기 성공 -> 첫번째 냉장고 id로 식재료 리스트 요청
      */
     init {
+        getFridges()
+    }
+
+    fun getFridges() {
         getFridgesUseCase()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -69,6 +73,13 @@ class FridgeViewModel @Inject constructor(
                     _isLoading.value = false
                 }
             )
+    }
+
+    fun updateSelectedFridgeThenGetIngreList(fridgeId: Int) {
+        if(_fridges.value != null) {
+            _selectedFridge.value = _fridges.value!!.find { it.refrigeratorId == fridgeId }
+            getIngreList(fridgeId)
+        }
     }
 
     /**
