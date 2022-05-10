@@ -71,5 +71,9 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding>(R.layout.fragment_rec
                 viewModel.deleteLike(recipeId)
             }
         })
+
+        binding.cgRecipeF.setOnCheckedChangeListener { group, checkedId ->
+            recipeAdapter.filter?.filter("$checkedId")
+        }
     }
 }
