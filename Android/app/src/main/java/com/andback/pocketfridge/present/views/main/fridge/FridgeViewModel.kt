@@ -37,8 +37,7 @@ class FridgeViewModel @Inject constructor(
      * 냉장고 리스트 받기 성공 -> 첫번째 냉장고 id로 식재료 리스트 요청
      */
     init {
-        // TODO: user 정보 획득 후 이메일 변환
-        getFridgesUseCase.excute("ms001118@gmail.com")
+        getFridgesUseCase()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
