@@ -12,6 +12,7 @@ import com.andback.pocketfridge.databinding.FragmentFridgeBinding
 import com.andback.pocketfridge.domain.model.Ingredient
 import com.andback.pocketfridge.present.config.BaseFragment
 import com.andback.pocketfridge.present.utils.Storage
+import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fridge) {
@@ -25,6 +26,7 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
     }
 
     private fun init() {
+        viewModel.getMainCategory()
         setRecyclerView()
         setObservers()
     }
@@ -59,6 +61,14 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
             binding.lifecycleOwner?.let { owner ->
                 ingreList.observe(owner) {
                     rvAdapter.setItems(it)
+                }
+            }
+            mainCategoryList.observe(viewLifecycleOwner) {
+                it.forEach { category ->
+                    val chip = layoutInflater.inflate(R.layout.custom_chip_view, binding.cgFridgeFFilter, false) as Chip
+                    chip.id = View.generateViewId()
+                    chip.text = category.mainCategoryName
+                    binding.cgFridgeFFilter.addView(chip)
                 }
             }
         }

@@ -5,7 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.andback.pocketfridge.data.model.FridgeEntity
+import com.andback.pocketfridge.data.model.MainCategoryEntity
 import com.andback.pocketfridge.domain.model.Ingredient
+import com.andback.pocketfridge.domain.usecase.category.GetCategoryUseCase
 import com.andback.pocketfridge.domain.usecase.fridge.GetFridgesUseCase
 import com.andback.pocketfridge.domain.usecase.ingredient.DeleteIngreUseCase
 import com.andback.pocketfridge.domain.usecase.ingredient.GetIngreListUseCase
@@ -18,7 +20,8 @@ import javax.inject.Inject
 class FridgeViewModel @Inject constructor(
     private val getFridgesUseCase: GetFridgesUseCase,
     private val getIngreListUseCase: GetIngreListUseCase,
-    private val deleteIngreUseCase: DeleteIngreUseCase
+    private val deleteIngreUseCase: DeleteIngreUseCase,
+    private val getCategoryUseCase: GetCategoryUseCase
 ): ViewModel() {
     // data
     private val _fridges = MutableLiveData<List<FridgeEntity>>()
@@ -27,6 +30,8 @@ class FridgeViewModel @Inject constructor(
     val selectedFridge: LiveData<FridgeEntity> get() = _selectedFridge
     private val _ingreList = MutableLiveData<List<Ingredient>>()
     val ingreList: LiveData<List<Ingredient>> get() = _ingreList
+    private val _mainCategoryList = MutableLiveData<List<MainCategoryEntity>>()
+    val mainCategoryList: LiveData<List<MainCategoryEntity>> get() = _mainCategoryList
 
     // view state
     private val _isLoading = MutableLiveData(false)
@@ -92,6 +97,26 @@ class FridgeViewModel @Inject constructor(
                 {
                     _isLoading.value = false
                     removeIngreFromLiveData(id)
+                },
+                {
+                    _isLoading.value = false
+                    // TODO: 예외 처리
+                }
+            )
+    }
+
+    /**
+     * chip에 띄우기 위해 메인 카테고리 목록을 불러옴
+     */
+    fun getMainCategory() {
+        _isLoading.value = true
+        getCategoryUseCase.getMainCategory()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    _isLoading.value = false
+                    _mainCategoryList.value = it.data!!
                 },
                 {
                     _isLoading.value = false
