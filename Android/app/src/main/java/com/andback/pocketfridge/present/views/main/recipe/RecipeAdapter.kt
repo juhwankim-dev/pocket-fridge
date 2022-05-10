@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.andback.pocketfridge.R
 import com.andback.pocketfridge.data.model.RecipeEntity
 import com.andback.pocketfridge.databinding.ItemRecipeListBinding
 
@@ -13,16 +14,23 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
     private val recipeList: ArrayList<RecipeEntity> = ArrayList()
 
     inner class RecipeViewHolder(private val binding: ItemRecipeListBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bindInfo(recipeEntity: RecipeEntity) {
-            binding.recipeEntity = recipeEntity
+        fun bindInfo(recipe: RecipeEntity) {
+            binding.recipe = recipe
 
             binding.ivRecipeIHeart.setOnClickListener {
-                if(!it.isSelected) {
-                    binding.lottieRecipeIHeart.visibility = View.VISIBLE
-                    binding.lottieRecipeIHeart.playAnimation()
+                // 좋아요 -> 안좋아요
+                if(recipe.like) {
+                    binding.ivRecipeIHeart.setImageResource(R.drawable.ic_heart_outline)
+                    itemClickListener.onDeleteLikeClick(recipe.id)
                 }
 
-                it.isSelected = !it.isSelected
+                // 안좋아요 -> 좋아요
+                else {
+                    binding.ivRecipeIHeart.setImageResource(R.drawable.ic_heart_filled)
+                    binding.lottieRecipeIHeart.visibility = View.VISIBLE
+                    binding.lottieRecipeIHeart.playAnimation()
+                    itemClickListener.onAddLikeClick(recipe.id)
+                }
             }
 
             binding.lottieRecipeIHeart.addAnimatorListener(object : Animator.AnimatorListener{
@@ -71,7 +79,9 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
     }
 
     interface ItemClickListener {
-        fun onClick(recipeId: RecipeEntity)
+        fun onClick(recipe: RecipeEntity)
+        fun onAddLikeClick(recipeId: Int)
+        fun onDeleteLikeClick(recipeId: Int)
     }
 
     fun setItemClickListener(itemClickListener: ItemClickListener) {
