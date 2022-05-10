@@ -19,12 +19,12 @@ class IngreRVAdapter: RecyclerView.Adapter<IngreRVAdapter.ViewHolder>(), Filtera
         init {
             itemView.setOnClickListener {
                 if(::itemClickListener.isInitialized) {
-                    itemClickListener.onClick(list[adapterPosition])
+                    itemClickListener.onClick(filteredList[adapterPosition])
                 }
             }
             itemView.setOnLongClickListener {
                 return@setOnLongClickListener if(::itemLongClickListener.isInitialized) {
-                    itemLongClickListener.onLongClick(list[adapterPosition])
+                    itemLongClickListener.onLongClick(filteredList[adapterPosition])
                     true
                 } else false
             }
@@ -52,14 +52,16 @@ class IngreRVAdapter: RecyclerView.Adapter<IngreRVAdapter.ViewHolder>(), Filtera
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(list[position])
+        holder.bind(filteredList[position])
     }
 
-    override fun getItemCount() = list.size
+    override fun getItemCount() = filteredList.size
 
     fun setItems(list: List<Ingredient>) {
         this.list.clear()
+        this.filteredList.clear()
         this.list.addAll(list)
+        this.filteredList.addAll(list)
         notifyDataSetChanged()
     }
 
