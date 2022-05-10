@@ -20,7 +20,7 @@ public interface RefrigeratorService {
 
     public String insertRefrigerator(InsertRefrigeratorRequestDto reqDto);
 
-    public List<RefrigeratorResponseDto> findAllRefrigeratorByUser(String userEmail);
+    public List<RefrigeratorResponseDto> findAllRefrigeratorByUser(User user);
 
     public String createShareGroup(User user, Long refrigeratorId);
 

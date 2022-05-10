@@ -32,6 +32,7 @@ public enum ErrorCode {
     INVALID_USER(HttpStatus.UNAUTHORIZED, "권한이 없는 사용자입니다."),
 
     /* 404 NOT_FOUND : resource 를 찾을 수 없음 */
+    NOT_AUTH_TOKEN(HttpStatus.NOT_FOUND, "토큰 정보가 없습니다"),
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 정보의 사용자를 찾을 수 없습니다."),
     RECIPE_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 정보의 레시피를 찾을 수 없습니다."),
     RECIPE_PROCESS_NOT_FOUND(HttpStatus.NOT_FOUND, "레시피 과정 정보를 찾을 수 없습니다."),
