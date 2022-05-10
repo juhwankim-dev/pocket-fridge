@@ -68,4 +68,10 @@ class IngreRepositoryImpl @Inject constructor(
         val ingreEntity = IngreMapper.invoke(ingredient)
         return ingreRemoteDataSource.updateIngre(ingreEntity)
     }
+
+    override fun getIngreListByDateBetween(from: String, to: String): Single<List<Ingredient>> {
+        return ingreLocalDataSource.getIngreListByDateBetween(from, to).map { list ->
+            list.map { IngreMapper(it) }
+        }
+    }
 }
