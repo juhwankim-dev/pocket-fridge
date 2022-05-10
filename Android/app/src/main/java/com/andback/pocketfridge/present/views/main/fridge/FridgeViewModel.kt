@@ -5,10 +5,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.andback.pocketfridge.data.model.FridgeEntity
+import com.andback.pocketfridge.data.model.UserEntity
 import com.andback.pocketfridge.domain.model.Ingredient
 import com.andback.pocketfridge.domain.usecase.fridge.GetFridgesUseCase
 import com.andback.pocketfridge.domain.usecase.ingredient.DeleteIngreUseCase
 import com.andback.pocketfridge.domain.usecase.ingredient.GetIngreListUseCase
+import com.andback.pocketfridge.domain.usecase.user.GetUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -18,7 +20,8 @@ import javax.inject.Inject
 class FridgeViewModel @Inject constructor(
     private val getFridgesUseCase: GetFridgesUseCase,
     private val getIngreListUseCase: GetIngreListUseCase,
-    private val deleteIngreUseCase: DeleteIngreUseCase
+    private val deleteIngreUseCase: DeleteIngreUseCase,
+    private val getUserUseCase: GetUserUseCase
 ): ViewModel() {
     // data
     private val _fridges = MutableLiveData<List<FridgeEntity>>()
@@ -27,6 +30,8 @@ class FridgeViewModel @Inject constructor(
     val selectedFridge: LiveData<FridgeEntity> get() = _selectedFridge
     private val _ingreList = MutableLiveData<List<Ingredient>>()
     val ingreList: LiveData<List<Ingredient>> get() = _ingreList
+    private val _user = MutableLiveData<UserEntity>()
+    val user: LiveData<UserEntity> = _user
 
     // view state
     private val _isLoading = MutableLiveData(false)
@@ -38,6 +43,19 @@ class FridgeViewModel @Inject constructor(
      */
     init {
         // TODO: user 정보 획득 후 이메일 변환
+        getUserUseCase().subscribeOn(Schedulers.io())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    if(it.data != null) {
+                        _user.postValue(it.data!!)
+                    }
+                },
+                {
+                    // TODO: 회원정보 받기 실패
+                }
+            )
         getFridgesUseCase.excute("ms001118@gmail.com")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
