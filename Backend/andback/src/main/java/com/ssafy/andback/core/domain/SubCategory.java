@@ -30,7 +30,7 @@ public class SubCategory {
     @Column(name = "sub_category_name")
     private String subCategoryName;
 
-    @ManyToOne(targetEntity = MainCategory.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = MainCategory.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "main_category_id")
     private MainCategory mainCategory;
 

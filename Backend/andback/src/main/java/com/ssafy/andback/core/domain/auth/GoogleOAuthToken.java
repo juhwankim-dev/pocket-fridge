@@ -1,14 +1,12 @@
 package com.ssafy.andback.core.domain.auth;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class GoogleOAuthToken {
     private String access_token;
     private int expires_in;
