@@ -23,7 +23,52 @@
                 android:id="@+id/tb_recipeF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:elevation="0dp"
                 app:title="@string/recipe" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                android:scrollbars="none">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/cg_recipeF"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@color/white"
+                    app:singleLine="true"
+                    app:singleSelection="true"
+                    app:selectionRequired="true"
+                    app:checkedChip="@+id/chip_recipeF_default">
+
+                    <com.google.android.material.chip.Chip
+                        style="@style/Colors_Widget.MaterialComponents.Chip.Choice"
+                        android:id="@+id/chip_recipeF_default"
+                        android:layout_marginStart="@dimen/activity_margin_default"
+                        android:text="전체보기" />
+
+                    <com.google.android.material.chip.Chip
+                        style="@style/Colors_Widget.MaterialComponents.Chip.Choice"
+                        android:text="즐겨찾기" />
+
+                    <com.google.android.material.chip.Chip
+                        style="@style/Colors_Widget.MaterialComponents.Chip.Choice"
+                        android:text="추천메뉴" />
+
+                    <com.google.android.material.chip.Chip
+                        style="@style/Colors_Widget.MaterialComponents.Chip.Choice"
+                        android:text="한식" />
+
+                    <com.google.android.material.chip.Chip
+                        style="@style/Colors_Widget.MaterialComponents.Chip.Choice"
+                        android:text="양식" />
+
+                    <com.google.android.material.chip.Chip
+                        style="@style/Colors_Widget.MaterialComponents.Chip.Choice"
+                        android:text="일식" />
+                </com.google.android.material.chip.ChipGroup>
+            </HorizontalScrollView>
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.recyclerview.widget.RecyclerView
