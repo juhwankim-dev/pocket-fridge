@@ -41,11 +41,17 @@ public class RefrigeratorController {
 
     private final RefrigeratorService refrigeratorService;
 
-    @ApiOperation(value = "냉장고 조회", notes = "사용자의 냉장고 리스트를 보여준다")
-    @GetMapping("/{userEmail}")
-    public ResponseEntity<ListResponseDto<RefrigeratorResponseDto>> findRefrigeratorList(@ApiParam(value = "유저 이메일", required = true, example = "test@google") @PathVariable String userEmail) {
+    @ApiOperation(value = "냉장고 조회", notes = "사용자의 JWT 토큰값을 받아 냉장고 리스트를 보여준다")
+    @GetMapping
+    public ResponseEntity<ListResponseDto<RefrigeratorResponseDto>> findRefrigeratorList(@ApiIgnore Authentication authentication) {
 
-        List<RefrigeratorResponseDto> response = refrigeratorService.findAllRefrigeratorByUser(userEmail);
+        if (authentication == null) {
+            throw new CustomException(ErrorCode.NOT_AUTH_TOKEN);
+        }
+
+        User user = (User) authentication.getPrincipal();
+
+        List<RefrigeratorResponseDto> response = refrigeratorService.findAllRefrigeratorByUser(user);
 
         return ResponseEntity.ok(new ListResponseDto<RefrigeratorResponseDto>(200, "success", response));
     }
@@ -72,7 +78,7 @@ public class RefrigeratorController {
 
         String result = refrigeratorService.createShareGroup(user, refrigeratorId);
 
-        if(result.equals("success")) {
+        if (result.equals("success")) {
             return ResponseEntity.ok().body(BaseResponseDto.of(200, "냉장고 공유 그룹 생성 성공"));
         }
 

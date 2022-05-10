@@ -59,14 +59,9 @@ public class RefrigeratorServiceImpl implements RefrigeratorService {
     }
 
     @Override
-    public List<RefrigeratorResponseDto> findAllRefrigeratorByUser(String userEmail) {
+    public List<RefrigeratorResponseDto> findAllRefrigeratorByUser(User user) {
 
-        Optional<User> user = userRepository.findByUserEmail(userEmail);
-        //에러코드 추가
-        user.orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
-
-
-        List<Refrigerator> refrigeratorByUser = refrigeratorQueryRepository.findAllRefrigeratorByUser(user.get());
+        List<Refrigerator> refrigeratorByUser = refrigeratorQueryRepository.findAllRefrigeratorByUser(user);
         List<RefrigeratorResponseDto> response = new ArrayList<>();
 
         for (Refrigerator temp : refrigeratorByUser) {
