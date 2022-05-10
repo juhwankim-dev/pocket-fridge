@@ -6,7 +6,7 @@ import androidx.hilt.work.HiltWorker
 import androidx.work.*
 import com.andback.pocketfridge.domain.usecase.datastore.ReadDataStoreUseCase
 import com.andback.pocketfridge.domain.usecase.datastore.WriteDataStoreUseCase
-import com.andback.pocketfridge.domain.usecase.notification.SendIngreExpiryNoti
+import com.andback.pocketfridge.domain.usecase.notification.SendIngreExpiryNotiUseCase
 import com.andback.pocketfridge.present.config.EXPIRY_DATE_NOTIFIED
 import com.andback.pocketfridge.present.config.EXPIRY_NOTI_HOUR
 import com.andback.pocketfridge.present.config.EXPIRY_NOTI_MINUTE
@@ -22,7 +22,7 @@ class DailyNotiWorker @AssistedInject constructor(
     @Assisted workerParams: WorkerParameters,
     private val readDataStoreUseCase: ReadDataStoreUseCase,
     private val writeDataStoreUseCase: WriteDataStoreUseCase,
-    private val sendIngreExpiryNoti: SendIngreExpiryNoti
+    private val sendIngreExpiryNoti: SendIngreExpiryNotiUseCase
 ) : CoroutineWorker(applicationContext, workerParams) {
 
     companion object {

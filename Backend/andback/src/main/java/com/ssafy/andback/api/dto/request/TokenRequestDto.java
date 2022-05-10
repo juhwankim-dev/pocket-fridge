@@ -2,8 +2,10 @@ package com.ssafy.andback.api.dto.request;
 
 import com.sun.istack.NotNull;
 import io.swagger.annotations.ApiParam;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * TokenDto
@@ -17,15 +19,13 @@ import lombok.Data;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class TokenRequestDto {
 
     @NotNull
     @ApiParam(value = "디바이스 고유 번호", required = true)
     private String tokenDeviceNum;
-
-    @NotNull
-    @ApiParam(value = "유저 이메일", required = true)
-    private String userEmail;
 
     @NotNull
     @ApiParam(value = "FCM 토큰 번호", required = true)

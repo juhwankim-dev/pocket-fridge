@@ -13,15 +13,14 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
-*
-* JwtAuthenticationFilter
-* 유효한 토큰인지 인증하기 위한 파일
-*
-* @author 김다은
-* @version 1.0.0
-* 생성일 2022-04-30
-* 마지막 수정일 2022-05-02
-**/
+ * JwtAuthenticationFilter
+ * 유효한 토큰인지 인증하기 위한 파일
+ *
+ * @author 김다은
+ * @version 1.0.0
+ * 생성일 2022-04-30
+ * 마지막 수정일 2022-05-02
+ **/
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends GenericFilterBean {
 
@@ -35,7 +34,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         String token = jwtAuthenticationProvider.resolveToken((HttpServletRequest) request);  // Header에서 토큰값 가져오기
 
         // 유효한 토큰인지 확인
-        if(token != null && jwtAuthenticationProvider.validateToken(token)){
+        if (token != null && jwtAuthenticationProvider.validateToken(token)) {
             // 토큰이 유효하면 토큰으로부터 유저 정보 받아오기
             Authentication authentication = jwtAuthenticationProvider.getAuthentication(token);
 

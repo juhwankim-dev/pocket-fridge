@@ -1,6 +1,7 @@
 package com.ssafy.andback.api.service;
 
 import com.ssafy.andback.api.dto.request.InsertRefrigeratorRequestDto;
+import com.ssafy.andback.api.dto.request.InsertShareMemberRequestDto;
 import com.ssafy.andback.api.dto.response.RefrigeratorResponseDto;
 import com.ssafy.andback.core.domain.User;
 
@@ -20,8 +21,10 @@ public interface RefrigeratorService {
 
     public String insertRefrigerator(InsertRefrigeratorRequestDto reqDto);
 
-    public List<RefrigeratorResponseDto> findAllRefrigeratorByUser(String userEmail);
+    public List<RefrigeratorResponseDto> findAllRefrigeratorByUser(User user);
 
     public String createShareGroup(User user, Long refrigeratorId);
+
+    public String createShareGroup(User user, InsertShareMemberRequestDto insertShareMemberRequestDto);
 
 }
