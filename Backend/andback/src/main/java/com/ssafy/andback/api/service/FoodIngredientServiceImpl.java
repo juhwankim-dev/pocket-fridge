@@ -125,6 +125,7 @@ public class FoodIngredientServiceImpl implements FoodIngredientService {
                     .foodIngredientWay(temp.getFoodIngredientWay())
                     .refrigeratorId(temp.getRefrigerator().getRefrigeratorId())
                     .subCategoryId(temp.getSubCategory().getSubCategory())
+                    .mainCategoryId(temp.getSubCategory().getMainCategory().getMainCategory())
                     .build());
         }
 
