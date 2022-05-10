@@ -98,16 +98,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ll_fridgeF_sort"
             app:layout_constraintBottom_toTopOf="@id/ll_fridgeF_storage"
-            android:visibility="gone"
-            android:layout_marginVertical="@dimen/activity_margin_narrow"
-            tools:visibility="visible">
+            android:paddingEnd="@dimen/activity_margin_default"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            android:layout_marginVertical="@dimen/activity_margin_narrow">
 
             <com.google.android.material.chip.ChipGroup
-                android:id="@+id/chip_group_fridgeF_filter"
+                android:id="@+id/cg_fridgeF_filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:singleLine="true">
+                android:background="@color/white"
+                app:singleSelection="true"
+                app:selectionRequired="true"
+                app:singleLine="true"
+                app:checkedChip="@id/chip_recipeF_default">
 
+                <com.google.android.material.chip.Chip
+                    style="@style/Colors_Widget.MaterialComponents.Chip.Choice"
+                    android:id="@+id/chip_recipeF_default"
+                    android:layout_marginStart="@dimen/activity_margin_default"
+                    android:text="전체" />
             </com.google.android.material.chip.ChipGroup>
         </HorizontalScrollView>
 
