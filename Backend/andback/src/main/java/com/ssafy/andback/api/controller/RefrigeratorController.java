@@ -2,9 +2,8 @@ package com.ssafy.andback.api.controller;
 
 import com.ssafy.andback.api.constant.ErrorCode;
 import com.ssafy.andback.api.dto.request.InsertRefrigeratorRequestDto;
-import com.ssafy.andback.api.dto.response.ListResponseDto;
-import com.ssafy.andback.api.dto.response.RefrigeratorResponseDto;
-import com.ssafy.andback.api.dto.response.BaseResponseDto;
+import com.ssafy.andback.api.dto.request.InsertShareMemberRequestDto;
+import com.ssafy.andback.api.dto.response.*;
 import com.ssafy.andback.api.exception.CustomException;
 import com.ssafy.andback.api.service.RefrigeratorService;
 import com.ssafy.andback.core.domain.User;
@@ -70,7 +69,7 @@ public class RefrigeratorController {
         return ResponseEntity.ok(BaseResponseDto.of(200, "success"));
     }
 
-    @ApiOperation(value = "냉장고 그룹", notes = "냉장고 그룹을 생성한다.")
+    @ApiOperation(value = "공유 냉장고 생성", notes = "공유 냉장고를 생성한다.")
     @PostMapping("/share/{refrigeratorId}")
     public ResponseEntity<BaseResponseDto> createShareGroup(@ApiIgnore Authentication authentication, @PathVariable Long refrigeratorId) {
 
@@ -80,6 +79,32 @@ public class RefrigeratorController {
 
         if (result.equals("success")) {
             return ResponseEntity.ok().body(BaseResponseDto.of(200, "냉장고 공유 그룹 생성 성공"));
+        }
+
+        throw new CustomException(ErrorCode.FAIL_SHARE_GROUP);
+    }
+
+    @ApiOperation(value = "공유 냉장고 그릅원 초대를 위한 냉장고 아이디 전달", notes = "공유 냉장고 그룹원 초대를 위해 해당 냉장고 아이디를 넘겨준다.")
+    @GetMapping("/share/{refrigeratorId}")
+    public ResponseEntity<SingleResponseDto<InviteShareMemberResponseDto>> inviteShareMember(@PathVariable Long refrigeratorId) {
+
+        InviteShareMemberResponseDto inviteShareMemberResponseDto = InviteShareMemberResponseDto.builder()
+                .refrigeratorId(refrigeratorId)
+                .build();
+
+        return ResponseEntity.ok(new SingleResponseDto<InviteShareMemberResponseDto>(200, "초대 요청 성공", inviteShareMemberResponseDto));
+    }
+
+    @ApiOperation(value = "공유 그룹원 초대 수락", notes = "공유 그릅원을 추가한다.")
+    @PostMapping("/share/insertmember")
+    public ResponseEntity<BaseResponseDto> insertShareMember(@ApiIgnore Authentication authentication, @RequestBody  InsertShareMemberRequestDto insertShareMemberRequestDto) {
+
+        User user = (User) authentication.getPrincipal();
+
+        String result = refrigeratorService.createShareGroup(user, insertShareMemberRequestDto);
+
+        if(result.equals("success")) {
+            return ResponseEntity.ok().body(BaseResponseDto.of(200, "냉장고 공유 그룹원 추가 성공"));
         }
 
         throw new CustomException(ErrorCode.FAIL_SHARE_GROUP);
