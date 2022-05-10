@@ -31,6 +31,10 @@ public class GoogleOauth implements SocialOauth {
 
     private final RestTemplate restTemplate;
 
+    private final String GOOGLE_TOKEN_REQUEST_URL = "https://oauth2.googleapis.com/token";
+    private final String GOOGLE_USERINFO_REQUEST_URL = "https://www.googleapis.com/oauth2/v1/userinfo";
+
+
     //applications.yml 에서 value annotation을 통해서 값을 받아온다.
     @Value("${spring.OAuth2.google.url}")
     private String GOOGLE_SNS_LOGIN_URL;
@@ -46,6 +50,7 @@ public class GoogleOauth implements SocialOauth {
 
     @Value("${spring.OAuth2.google.scope}")
     private String GOOGLE_DATA_ACCESS_SCOPE;
+
 
     private final ObjectMapper objectMapper;
 
@@ -74,7 +79,7 @@ public class GoogleOauth implements SocialOauth {
     }
 
     public ResponseEntity<String> requestAccessToken(String code) {
-        String GOOGLE_TOKEN_REQUEST_URL = "https://oauth2.googleapis.com/token";
+
         RestTemplate restTemplate = new RestTemplate();
         Map<String, Object> params = new HashMap<>();
         params.put("code", code);
@@ -100,7 +105,6 @@ public class GoogleOauth implements SocialOauth {
     }
 
     public ResponseEntity<String> requestUserInfo(GoogleOAuthToken oAuthToken) {
-        String GOOGLE_USERINFO_REQUEST_URL = "https://www.googleapis.com/oauth2/v1/userinfo";
 
         //header에 accessToken을 담는다.
         HttpHeaders headers = new HttpHeaders();
