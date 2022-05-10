@@ -6,11 +6,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.andback.pocketfridge.data.model.FridgeEntity
 import com.andback.pocketfridge.data.model.MainCategoryEntity
+import com.andback.pocketfridge.data.model.UserEntity
 import com.andback.pocketfridge.domain.model.Ingredient
 import com.andback.pocketfridge.domain.usecase.category.GetCategoryUseCase
 import com.andback.pocketfridge.domain.usecase.fridge.GetFridgesUseCase
 import com.andback.pocketfridge.domain.usecase.ingredient.DeleteIngreUseCase
 import com.andback.pocketfridge.domain.usecase.ingredient.GetIngreListUseCase
+import com.andback.pocketfridge.domain.usecase.user.GetUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -21,6 +23,7 @@ class FridgeViewModel @Inject constructor(
     private val getFridgesUseCase: GetFridgesUseCase,
     private val getIngreListUseCase: GetIngreListUseCase,
     private val deleteIngreUseCase: DeleteIngreUseCase,
+    private val getUserUseCase: GetUserUseCase,
     private val getCategoryUseCase: GetCategoryUseCase
 ): ViewModel() {
     // data
@@ -30,6 +33,8 @@ class FridgeViewModel @Inject constructor(
     val selectedFridge: LiveData<FridgeEntity> get() = _selectedFridge
     private val _ingreList = MutableLiveData<List<Ingredient>>()
     val ingreList: LiveData<List<Ingredient>> get() = _ingreList
+    private val _user = MutableLiveData<UserEntity>()
+    val user: LiveData<UserEntity> = _user
     private val _mainCategoryList = MutableLiveData<List<MainCategoryEntity>>()
     val mainCategoryList: LiveData<List<MainCategoryEntity>> get() = _mainCategoryList
 
@@ -42,8 +47,12 @@ class FridgeViewModel @Inject constructor(
      * 냉장고 리스트 받기 성공 -> 첫번째 냉장고 id로 식재료 리스트 요청
      */
     init {
-        // TODO: user 정보 획득 후 이메일 변환
-        getFridgesUseCase.excute("ms001118@gmail.com")
+        getUser()
+        getFridges()
+    }
+
+    fun getFridges() {
+        getFridgesUseCase()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -55,6 +64,21 @@ class FridgeViewModel @Inject constructor(
                 },
                 {
                     // TODO: 예외 ui 처리
+                }
+            )
+    }
+
+    private fun getUser() {
+        getUserUseCase().subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    if(it.data != null) {
+                        _user.value = it.data!!
+                    }
+                },
+                {
+
                 }
             )
     }
@@ -75,6 +99,13 @@ class FridgeViewModel @Inject constructor(
                     _isLoading.value = false
                 }
             )
+    }
+
+    fun updateSelectedFridgeThenGetIngreList(fridgeId: Int) {
+        if(_fridges.value != null) {
+            _selectedFridge.value = _fridges.value!!.find { it.refrigeratorId == fridgeId }
+            getIngreList(fridgeId)
+        }
     }
 
     /**

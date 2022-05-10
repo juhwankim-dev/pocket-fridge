@@ -3,7 +3,8 @@ package com.andback.pocketfridge.present.views.main.fridge
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.core.os.bundleOf
+import androidx.core.widget.addTextChangedListener
+import android.widget.ImageView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -13,12 +14,14 @@ import com.andback.pocketfridge.domain.model.Ingredient
 import com.andback.pocketfridge.present.config.BaseFragment
 import com.andback.pocketfridge.present.utils.Storage
 import com.google.android.material.chip.Chip
+import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fridge) {
     private lateinit var rvAdapter: IngreRVAdapter
     private val viewModel: FridgeViewModel by activityViewModels()
     private val detailViewModel: IngreDetailViewModel by activityViewModels()
+    private lateinit var profileImageView: ImageView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -26,9 +29,36 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
     }
 
     private fun init() {
+        viewModel.getFridges()
         viewModel.getMainCategory()
+        setToolbar()
         setRecyclerView()
         setObservers()
+        setSearchBar()
+    }
+
+    private fun setToolbar() {
+        val menu = binding.tbFridgeF.menu
+        val menuItem = menu.getItem(1)
+
+        // 프로필 이미지 뷰 초기화, 클릭 리스너 할당
+        profileImageView = menuItem.actionView.findViewById<ImageView?>(R.id.iv_menu_fridge_profile).apply {
+            setOnClickListener {
+                findNavController().navigate(R.id.action_fridgeFragment_to_myPageFragment)
+            }
+        }
+
+        // 알림 아이콘 클릭 처리
+        binding.tbFridgeF.setOnMenuItemClickListener { menuItem ->
+            when(menuItem.itemId) {
+                R.id.notification_menu_fridge -> {
+                    // TODO: 알림 fragment로 이동
+                    true
+                }
+                else -> false
+            }
+        }
+
     }
 
     private fun setRecyclerView() {
@@ -36,7 +66,6 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
             itemClickListener = object : IngreRVAdapter.ItemClickListener {
                 override fun onClick(data: Ingredient) {
                     Log.d(TAG, "onClick: ${data}")
-                    // TODO: 디테일 fragment로 이동
                     detailViewModel.selectIngre(data)
                     findNavController().navigate(R.id.action_fridgeFragment_to_ingreDetailFragment)
                 }
@@ -44,7 +73,6 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
             itemLongClickListener = object : IngreRVAdapter.ItemLongClickListener {
                 override fun onLongClick(data: Ingredient) {
                     Log.d(TAG, "onLongClick: ${data}")
-                    // TODO: 삭제 다이얼로그 호출
                     showDeleteDialog(data)
                 }
             }
@@ -62,6 +90,12 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
                 ingreList.observe(owner) {
                     rvAdapter.setItems(it)
                 }
+                // toolbar의 imageView에 프로필 이미지 적용
+                user.observe(owner) {
+                    if(::profileImageView.isInitialized) {
+                        Glide.with(profileImageView).load(it.picture).circleCrop().into(profileImageView)
+                    }
+                }
             }
             mainCategoryList.observe(viewLifecycleOwner) {
                 it.forEach { category ->
@@ -71,6 +105,12 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
                     binding.cgFridgeFFilter.addView(chip)
                 }
             }
+        }
+    }
+
+    private fun setSearchBar() {
+        binding.tilFridgeF.editText?.addTextChangedListener {
+            rvAdapter.filter.filter(it.toString())
         }
     }
 

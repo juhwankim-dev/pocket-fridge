@@ -10,7 +10,7 @@ import javax.inject.Inject
 class FridgeRepositoryImpl @Inject constructor(
     private val dataSource: FridgeRemoteDataSource
 ): FridgeRepository {
-    override fun getFridges(email: String): Single<BaseResponse<List<FridgeEntity>>> {
-        return dataSource.getFridges(email)
+    override fun getFridges(): Single<BaseResponse<List<FridgeEntity>>> {
+        return dataSource.getFridges()
     }
 }
