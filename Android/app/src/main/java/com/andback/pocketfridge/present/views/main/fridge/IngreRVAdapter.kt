@@ -2,14 +2,18 @@ package com.andback.pocketfridge.present.views.main.fridge
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.andback.pocketfridge.databinding.ItemIngreListBinding
 import com.andback.pocketfridge.domain.model.Ingredient
 
-class IngreRVAdapter: RecyclerView.Adapter<IngreRVAdapter.ViewHolder>() {
+class IngreRVAdapter: RecyclerView.Adapter<IngreRVAdapter.ViewHolder>(), Filterable {
     private val list = arrayListOf<Ingredient>()
     lateinit var itemClickListener: ItemClickListener
     lateinit var itemLongClickListener: ItemLongClickListener
+    private var filteredList = arrayListOf<Ingredient>()
+
 
     inner class ViewHolder(val binding: ItemIngreListBinding): RecyclerView.ViewHolder(binding.root) {
         init {
@@ -65,5 +69,32 @@ class IngreRVAdapter: RecyclerView.Adapter<IngreRVAdapter.ViewHolder>() {
 
     interface ItemLongClickListener {
         fun onLongClick(data: Ingredient)
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(p0: CharSequence?): FilterResults {
+                val strKey = p0.toString()
+
+                if (strKey.isBlank()) {
+                    filteredList = list
+                } else {
+                    val newFilteredList = arrayListOf<Ingredient>()
+
+                    for (item in list) {
+                        if (item.name.contains(strKey)) {
+                            newFilteredList.add(item)
+                        }
+                    }
+                    filteredList = newFilteredList
+                }
+                return FilterResults().apply { values = filteredList }
+            }
+
+            override fun publishResults(p0: CharSequence?, results: FilterResults) {
+                filteredList = results.values as ArrayList<Ingredient>
+                notifyDataSetChanged()
+            }
+        }
     }
 }

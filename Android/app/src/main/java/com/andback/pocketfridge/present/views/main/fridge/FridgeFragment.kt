@@ -3,7 +3,7 @@ package com.andback.pocketfridge.present.views.main.fridge
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.core.os.bundleOf
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -11,7 +11,6 @@ import com.andback.pocketfridge.R
 import com.andback.pocketfridge.databinding.FragmentFridgeBinding
 import com.andback.pocketfridge.domain.model.Ingredient
 import com.andback.pocketfridge.present.config.BaseFragment
-import com.andback.pocketfridge.present.utils.Storage
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fridge) {
@@ -27,6 +26,7 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
     private fun init() {
         setRecyclerView()
         setObservers()
+        setSearchBar()
     }
 
     private fun setRecyclerView() {
@@ -61,6 +61,12 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
                     rvAdapter.setItems(it)
                 }
             }
+        }
+    }
+
+    private fun setSearchBar() {
+        binding.tilFridgeF.editText?.addTextChangedListener {
+            rvAdapter.filter.filter(it.toString())
         }
     }
 
