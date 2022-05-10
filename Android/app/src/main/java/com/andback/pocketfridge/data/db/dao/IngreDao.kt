@@ -17,7 +17,7 @@ interface IngreDao {
 
     @Transaction
     @Query("DELETE FROM $INGRE_TABLE WHERE foodIngredientId = :id")
-    fun deleteById(id: Int): Completable
+    fun deleteById(id: Int): Int
 
     @Transaction
     @Query("SELECT * FROM $INGRE_TABLE WHERE foodIngredientExp BETWEEN :from AND :to")
@@ -27,7 +27,6 @@ interface IngreDao {
     @Query("SELECT * FROM $INGRE_TABLE WHERE refrigeratorId = :id")
     fun getIngreListByFridgeId(id: Int): Single<List<IngreEntity>>
 
-    @Transaction
     @Query("DELETE FROM $INGRE_TABLE WHERE refrigeratorId = :id")
-    fun dropByFridgeId(id: Int): Completable
+    fun dropByFridgeId(id: Int): Int
 }

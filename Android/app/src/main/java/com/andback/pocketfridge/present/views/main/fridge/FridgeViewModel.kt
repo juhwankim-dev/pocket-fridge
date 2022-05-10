@@ -42,21 +42,12 @@ class FridgeViewModel @Inject constructor(
      * 냉장고 리스트 받기 성공 -> 첫번째 냉장고 id로 식재료 리스트 요청
      */
     init {
-        // TODO: user 정보 획득 후 이메일 변환
-        getUserUseCase().subscribeOn(Schedulers.io())
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    if(it.data != null) {
-                        _user.postValue(it.data!!)
-                    }
-                },
-                {
-                    // TODO: 회원정보 받기 실패
-                }
-            )
-        getFridgesUseCase.excute("ms001118@gmail.com")
+        getUser()
+        getFridges()
+    }
+
+    fun getFridges() {
+        getFridgesUseCase()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -68,6 +59,21 @@ class FridgeViewModel @Inject constructor(
                 },
                 {
                     // TODO: 예외 ui 처리
+                }
+            )
+    }
+
+    private fun getUser() {
+        getUserUseCase().subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    if(it.data != null) {
+                        _user.value = it.data!!
+                    }
+                },
+                {
+
                 }
             )
     }
@@ -88,6 +94,13 @@ class FridgeViewModel @Inject constructor(
                     _isLoading.value = false
                 }
             )
+    }
+
+    fun updateSelectedFridgeThenGetIngreList(fridgeId: Int) {
+        if(_fridges.value != null) {
+            _selectedFridge.value = _fridges.value!!.find { it.refrigeratorId == fridgeId }
+            getIngreList(fridgeId)
+        }
     }
 
     /**

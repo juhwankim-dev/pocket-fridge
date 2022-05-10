@@ -27,6 +27,7 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
     }
 
     private fun init() {
+        viewModel.getFridges()
         setToolbar()
         setRecyclerView()
         setObservers()
