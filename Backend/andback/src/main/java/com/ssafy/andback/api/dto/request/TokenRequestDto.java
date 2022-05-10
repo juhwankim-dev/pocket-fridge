@@ -2,8 +2,10 @@ package com.ssafy.andback.api.dto.request;
 
 import com.sun.istack.NotNull;
 import io.swagger.annotations.ApiParam;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * TokenDto
@@ -17,6 +19,8 @@ import lombok.Data;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class TokenRequestDto {
 
     @NotNull
