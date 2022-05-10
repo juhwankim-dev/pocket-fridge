@@ -15,15 +15,14 @@ import java.util.List;
 import java.util.Optional;
 
 /**
-*
-* TokenServiceImpl
-* 토큰 서비스 구현체
-*
-* @author hoony
-* @version 1.0.0
-* 생성일 2022-04-29
-* 마지막 수정일 2022-04-29
-**/
+ * TokenServiceImpl
+ * 토큰 서비스 구현체
+ *
+ * @author hoony
+ * @version 1.0.0
+ * 생성일 2022-04-29
+ * 마지막 수정일 2022-04-29
+ **/
 
 @Service
 @RequiredArgsConstructor
@@ -34,12 +33,9 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     @Transactional(readOnly = false)
-    public String insertToken(TokenRequestDto tokenDto) {
-        Optional<User> user = userRepository.findByUserEmail(tokenDto.getUserEmail());
-        user.orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+    public String insertToken(User user, TokenRequestDto tokenDto) {
 
-
-        Optional<List<Token>> tokenList = tokenRepository.findAllByUser(user.get());
+        Optional<List<Token>> tokenList = tokenRepository.findAllByUser(user);
 
         for (Token temp : tokenList.get()) {
             if (temp.getTokenDevice().equals(tokenDto.getTokenDeviceNum())) {
@@ -51,9 +47,8 @@ public class TokenServiceImpl implements TokenService {
         Token token = Token.builder().tokenNum(tokenDto.getTokenNum())
                 .tokenDevice(tokenDto.getTokenDeviceNum())
                 .tokenNum(tokenDto.getTokenNum())
-                .user(user.get())
+                .user(user)
                 .build();
-
 
         tokenRepository.save(token);
 

@@ -24,10 +24,6 @@ public class TokenRequestDto {
     private String tokenDeviceNum;
 
     @NotNull
-    @ApiParam(value = "유저 이메일", required = true)
-    private String userEmail;
-
-    @NotNull
     @ApiParam(value = "FCM 토큰 번호", required = true)
     private String tokenNum;
 
