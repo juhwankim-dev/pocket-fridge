@@ -12,6 +12,7 @@ import com.andback.pocketfridge.present.config.EXPIRY_NOTI_HOUR
 import com.andback.pocketfridge.present.config.EXPIRY_NOTI_MINUTE
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -40,8 +41,20 @@ class NotiSettingViewModel @Inject constructor(
         val accepted = readDataStoreUseCase.execute(EXPIRY_NOTI_ACCEPTED)
         val offset = readDataStoreUseCase.execute(EXPIRY_DATE_PREFERENCE)
 
-        if(hour != null) _savedHour.postValue(hour.toInt())
-        if(minute != null) _savedMinute.postValue(minute.toInt())
+        val now = Calendar.getInstance()
+
+        if(hour != null) {
+            _savedHour.postValue(hour.toInt())
+        } else {
+            _savedHour.postValue(now.get(Calendar.HOUR_OF_DAY))
+        }
+
+        if(minute != null) {
+            _savedMinute.postValue(minute.toInt())
+        } else {
+            _savedMinute.postValue(now.get(Calendar.MINUTE))
+        }
+
         if(accepted != null) _savedAccepted.postValue(accepted.toBoolean())
         if(offset != null) _savedOffset.postValue(offset.toInt())
     }
@@ -59,6 +72,7 @@ class NotiSettingViewModel @Inject constructor(
     }
 
     fun updateOffset(offset: Int) {
+        if(offset == _savedOffset.value) return
         _savedOffset.value = offset
     }
 
