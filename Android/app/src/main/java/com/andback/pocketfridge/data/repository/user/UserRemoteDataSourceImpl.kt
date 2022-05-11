@@ -33,4 +33,8 @@ class UserRemoteDataSourceImpl @Inject constructor(private val userApi: UserApi)
     override fun login(loginEntity: LoginEntity): Single<BaseResponse<String>> {
         return userApi.login(loginEntity)
     }
+
+    override fun socialLogin(socialType: String, code: String): Single<BaseResponse<String>> {
+        return userApi.socialLogin(socialType, code)
+    }
 }
