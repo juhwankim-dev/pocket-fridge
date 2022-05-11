@@ -23,6 +23,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "BARCODE_SERVICE_KEY", properties['barcode_service_key']
+        buildConfigField "String", "GOOGLE_AUTH_SERVER_ID", properties['google_auth_server_id']
     }
 
     buildTypes {
@@ -128,6 +129,9 @@ dependencies {
 
     // Coroutine
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
+
+    // sns Login
+    implementation "com.google.android.gms:play-services-auth:$google_auth_version"
 
     // WorkManager
     // Kotlin + coroutines

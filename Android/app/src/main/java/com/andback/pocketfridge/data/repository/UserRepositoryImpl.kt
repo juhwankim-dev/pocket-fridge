@@ -37,4 +37,8 @@ class UserRepositoryImpl @Inject constructor(
     override fun login(loginEntity: LoginEntity): Single<BaseResponse<String>> {
         return userRemoteDataSource.login(loginEntity)
     }
+
+    override fun socialLogin(socialType: String, code: String): Single<BaseResponse<String>> {
+        return userRemoteDataSource.socialLogin(socialType, code)
+    }
 }

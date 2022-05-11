@@ -26,4 +26,10 @@ interface UserApi {
 
     @POST("user/login")
     fun login(@Body loginEntity: LoginEntity): Single<BaseResponse<String>>
+
+    @GET("auth/{socialLoginType}/callback")
+    fun socialLogin(
+        @Path("socialLoginType") @NotNull socialType: String,
+        @Query("code") @NotNull code: String
+    ): Single<BaseResponse<String>>
 }
