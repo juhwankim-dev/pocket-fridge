@@ -322,7 +322,7 @@ class IngreEditViewModel @Inject constructor(
     fun getFridges() {
         if(!isLoading.value!!) {
             compositeDisposable.add(
-                getFridgesUseCase.excute(getEmail())
+                getFridgesUseCase()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
@@ -341,9 +341,6 @@ class IngreEditViewModel @Inject constructor(
             )
         }
     }
-
-    // TODO: 회원정보 가져오는 usecase 생성 후 처리
-    fun getEmail(): String = "ms001118@gmail.com"
 
     override fun onCleared() {
         super.onCleared()

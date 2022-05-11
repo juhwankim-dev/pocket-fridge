@@ -44,17 +44,22 @@ class IngreRepositoryImpl @Inject constructor(
 
         val result = ingreRemoteDataSource.getIngreListByFridgeId(fridgeId)
             .doOnSuccess { response ->
-                if(response.data != null && response.data.isNotEmpty()) {
+                if(response.data != null) {
                     listFromServer = response.data
                     dtoList = listFromServer.map { entity -> IngreMapper(entity) }
                 } else {
-                    throw Exception("null or empty list from server")
+                    throw Exception("get null from server")
                 }
             }.map {
                 // completable의 완료를 기다린 후 결과는 Single 객체로 반환
-                ingreLocalDataSource.dropByFridgeId(fridgeId).andThen(Single.just(true))
+                ingreLocalDataSource.dropByFridgeId(fridgeId)
+                    .andThen(Single.just(true))
             }.flatMap {
-                ingreLocalDataSource.insertAll(listFromServer).andThen(Single.just(BaseResponse(data = dtoList)))
+                ingreLocalDataSource.insertAll(listFromServer).andThen(Single.just(dtoList))
+            }.flatMap {
+                ingreLocalDataSource.getIngreListByFridgeId(fridgeId)
+            }.flatMap {
+                Single.just(BaseResponse(data = it.map { ingreEntity -> IngreMapper(ingreEntity) }))
             }
 
         return result
@@ -67,5 +72,11 @@ class IngreRepositoryImpl @Inject constructor(
     override fun updateIngre(ingredient: Ingredient): Single<BaseResponse<Any>> {
         val ingreEntity = IngreMapper.invoke(ingredient)
         return ingreRemoteDataSource.updateIngre(ingreEntity)
+    }
+
+    override fun getIngreListByDateBetween(from: String, to: String): Single<List<Ingredient>> {
+        return ingreLocalDataSource.getIngreListByDateBetween(from, to).map { list ->
+            list.map { IngreMapper(it) }
+        }
     }
 }

@@ -132,4 +132,13 @@ dependencies {
 
     // sns Login
     implementation "com.google.android.gms:play-services-auth:$google_auth_version"
+
+    // WorkManager
+    // Kotlin + coroutines
+    // hilt
+    implementation "androidx.work:work-runtime-ktx:$work_version"
+    implementation "androidx.work:work-rxjava2:$work_version"
+    implementation "androidx.hilt:hilt-work:$work_hilt"
+    kapt "androidx.hilt:hilt-compiler:$work_hilt"
+
 }

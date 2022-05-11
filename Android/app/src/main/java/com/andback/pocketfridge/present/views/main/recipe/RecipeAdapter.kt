@@ -4,25 +4,36 @@ import android.animation.Animator
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
+import com.andback.pocketfridge.R
 import com.andback.pocketfridge.data.model.RecipeEntity
 import com.andback.pocketfridge.databinding.ItemRecipeListBinding
 
-class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
+class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>(), Filterable {
     private lateinit var itemClickListener: ItemClickListener
-    private val recipeList: ArrayList<RecipeEntity> = ArrayList()
+    private var recipeList: ArrayList<RecipeEntity> = ArrayList()
+    private var recipeListFiltered: ArrayList<RecipeEntity> = ArrayList()
 
     inner class RecipeViewHolder(private val binding: ItemRecipeListBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bindInfo(recipeEntity: RecipeEntity) {
-            binding.recipeEntity = recipeEntity
+        fun bindInfo(recipe: RecipeEntity) {
+            binding.recipe = recipe
 
             binding.ivRecipeIHeart.setOnClickListener {
-                if(!it.isSelected) {
-                    binding.lottieRecipeIHeart.visibility = View.VISIBLE
-                    binding.lottieRecipeIHeart.playAnimation()
+                // 좋아요 -> 안좋아요
+                if(recipe.like) {
+                    binding.ivRecipeIHeart.setImageResource(R.drawable.ic_heart_outline)
+                    itemClickListener.onDeleteLikeClick(recipe.id)
                 }
 
-                it.isSelected = !it.isSelected
+                // 안좋아요 -> 좋아요
+                else {
+                    binding.ivRecipeIHeart.setImageResource(R.drawable.ic_heart_filled)
+                    binding.lottieRecipeIHeart.visibility = View.VISIBLE
+                    binding.lottieRecipeIHeart.playAnimation()
+                    itemClickListener.onAddLikeClick(recipe.id)
+                }
             }
 
             binding.lottieRecipeIHeart.addAnimatorListener(object : Animator.AnimatorListener{
@@ -53,7 +64,7 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
 
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
         holder.apply {
-            bindInfo(recipeList[position])
+            bindInfo(recipeListFiltered[position])
 
             //클릭연결
             itemView.setOnClickListener{
@@ -62,16 +73,65 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
         }
     }
 
-    override fun getItemCount(): Int = recipeList.size
+    override fun getItemCount(): Int = recipeListFiltered.size
+
+    override fun getFilter(): Filter? {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val category = constraint?.toString()?.toInt()
+                val filteredList = ArrayList<RecipeEntity>()
+
+                recipeListFiltered = when(category) {
+                    1 -> {
+                        recipeList.filter{ it.like }.forEach{ filteredList.add(it) }
+                        filteredList
+                    }
+                    2 -> {
+                        // TODO: 나중에 API 완성되면 추가
+                        recipeList
+                    }
+                    3 -> {
+                        recipeList.filter{ it.type == "한식" }.forEach{ filteredList.add(it) }
+                        filteredList
+                    }
+                    4 -> {
+                        recipeList.filter{ it.type == "양식" }.forEach{ filteredList.add(it) }
+                        filteredList
+                    }
+                    5 -> {
+                        recipeList.filter{ it.type == "일식" }.forEach{ filteredList.add(it) }
+                        filteredList
+                    }
+                    else -> {
+                        recipeList
+                    }
+                }
+
+                return FilterResults().apply { values = recipeListFiltered }
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                recipeListFiltered = if (results?.values == null)
+                    ArrayList()
+                else
+                    results.values as ArrayList<RecipeEntity>
+                notifyDataSetChanged()
+            }
+        }
+    }
 
     fun setList(list: List<RecipeEntity>) {
         recipeList.clear()
         recipeList.addAll(list)
+        recipeListFiltered.clear()
+        recipeListFiltered.addAll(list)
         notifyDataSetChanged()
     }
 
     interface ItemClickListener {
-        fun onClick(recipeId: RecipeEntity)
+        fun onClick(recipe: RecipeEntity)
+        fun onAddLikeClick(recipeId: Int)
+        fun onDeleteLikeClick(recipeId: Int)
     }
 
     fun setItemClickListener(itemClickListener: ItemClickListener) {

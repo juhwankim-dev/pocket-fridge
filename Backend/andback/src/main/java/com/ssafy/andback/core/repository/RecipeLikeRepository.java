@@ -15,10 +15,12 @@ import com.ssafy.andback.core.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface RecipeLikeRepository extends JpaRepository<RecipeLike, Long> {
 
     Optional<RecipeLike> findByUserAndRecipe(User user, Recipe recipe);
     void deleteRecipeLikeByUser(User user);
+    List<RecipeLike> findAllByUser(User user);
 }

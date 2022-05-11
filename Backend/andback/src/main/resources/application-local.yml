@@ -56,6 +56,13 @@ spring:
       location: C:\Develop\projects\ssafy\upload
       max-file-size: 100MB
       max-request-size: 100MB
+  OAuth2:
+    google:
+      url: https://accounts.google.com/o/oauth2/v2/auth
+      client-id: 786724909280-0ltkrud04i9s2pipnhs5vta3jnfdb959.apps.googleusercontent.com
+      client-secret: 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
+      callback-url: http://localhost:8080/auth/google/callback
+      scope: https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile
 
 
   # 메일 전송 시 사용할 설정값
@@ -113,4 +120,3 @@ notification:
     author-name: Back-End Exception # attachment의 상단에 나오는 이름
     author-icon: https://media.vlpt.us/images/ayoung0073/post/2db5c70c-d494-4cca-ad58-7b4eaabc3c9a/springboot.jpeg # author-icon 왼쪽에 나올 아이콘의 url링크
     footer: # attachment에 하단에 나올 부분. default=현재 시간
-

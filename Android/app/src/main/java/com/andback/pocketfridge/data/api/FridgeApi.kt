@@ -7,6 +7,6 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface FridgeApi {
-    @GET("refrigerator/{userEmail}")
-    fun getFridges(@Path("userEmail") email: String): Single<BaseResponse<List<FridgeEntity>>>
+    @GET("refrigerator")
+    fun getFridges(): Single<BaseResponse<List<FridgeEntity>>>
 }

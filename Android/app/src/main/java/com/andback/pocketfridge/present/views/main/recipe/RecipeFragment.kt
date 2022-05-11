@@ -26,6 +26,12 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding>(R.layout.fragment_rec
         initEvent()
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.getRecipes()
+    }
+
     private fun initViewModel() {
         with(viewModel) {
             toastMsg.observe(viewLifecycleOwner) {
@@ -36,8 +42,6 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding>(R.layout.fragment_rec
                 recipeAdapter.setList(it)
             }
         }
-
-        viewModel.getRecipes()
     }
 
     private fun initView() {
@@ -58,6 +62,18 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding>(R.layout.fragment_rec
                     startActivity(it)
                 }
             }
+
+            override fun onAddLikeClick(recipeId: Int) {
+                viewModel.addLike(recipeId)
+            }
+
+            override fun onDeleteLikeClick(recipeId: Int) {
+                viewModel.deleteLike(recipeId)
+            }
         })
+
+        binding.cgRecipeF.setOnCheckedChangeListener { group, checkedId ->
+            recipeAdapter.filter?.filter("$checkedId")
+        }
     }
 }

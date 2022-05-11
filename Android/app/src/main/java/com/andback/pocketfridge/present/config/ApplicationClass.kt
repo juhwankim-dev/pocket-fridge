@@ -1,6 +1,13 @@
 package com.andback.pocketfridge.present.config
 
 import android.app.Application
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.hilt.work.HiltWorkerFactory
+import androidx.work.Configuration
+import com.andback.pocketfridge.domain.usecase.datastore.ReadDataStoreUseCase
 import com.andback.pocketfridge.present.utils.XAccessTokenInterceptor
 import dagger.hilt.android.HiltAndroidApp
 import okhttp3.OkHttpClient
@@ -12,12 +19,16 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltAndroidApp
-class ApplicationClass : Application() {
+class ApplicationClass : Application(), Configuration.Provider {
     private val baseUrl = "http://k6d206.p.ssafy.io:8080/"
     private val barcodeUrl = "https://openapi.foodsafetykorea.go.kr/api/"
     private val TIME_OUT = 5000L
     @Inject
     lateinit var interceptor: XAccessTokenInterceptor
+    @Inject
+    lateinit var workerFactory: HiltWorkerFactory
+    @Inject
+    lateinit var readDataStoreUseCase: ReadDataStoreUseCase
 
     companion object {
         lateinit var retrofit: Retrofit
@@ -51,5 +62,27 @@ class ApplicationClass : Application() {
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createNotificationChannel()
+        }
     }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createNotificationChannel() {
+        // 채널 생성
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val channel = NotificationChannel(INGRE_EXPIRY_NOTI_ID, INGRE_EXPIRY_NOTI_NAME, importance)
+
+        // 채널 등록
+        val notificationManager =
+            this.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
+    }
+
+    // hilt work manager Configuration
+    override fun getWorkManagerConfiguration() =
+        Configuration.Builder()
+            .setWorkerFactory(workerFactory)
+            .build()
 }

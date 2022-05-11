@@ -30,7 +30,7 @@
             android:layout_height="64dp"
             android:layout_marginEnd="@dimen/activity_margin_default"
             android:padding="@dimen/activity_margin_default"
-            android:src="@drawable/selector_heart_recipe"
+            android:src="@{recipe.like ? @drawable/ic_heart_filled : @drawable/ic_heart_outline}"
             app:layout_constraintBottom_toBottomOf="@+id/tv_recipe_detail_headerI_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_recipe_detail_headerI_name" />

@@ -5,6 +5,8 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * UserRefrigerator
@@ -43,9 +45,13 @@ public class UserRefrigerator {
     @ToString.Exclude
     private User user;
 
+    @Column(name = "refrigerator_owner")
+    private boolean refrigeratorOwner;
+
     @Builder
-    public UserRefrigerator(Refrigerator refrigerator, User user) {
+    public UserRefrigerator(Refrigerator refrigerator, User user, boolean refrigeratorOwner) {
         this.refrigerator = refrigerator;
         this.user = user;
+        this.refrigeratorOwner = refrigeratorOwner;
     }
 }

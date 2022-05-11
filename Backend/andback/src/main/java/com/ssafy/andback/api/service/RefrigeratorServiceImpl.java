@@ -2,6 +2,7 @@ package com.ssafy.andback.api.service;
 
 import com.ssafy.andback.api.constant.ErrorCode;
 import com.ssafy.andback.api.dto.request.InsertRefrigeratorRequestDto;
+import com.ssafy.andback.api.dto.request.InsertShareMemberRequestDto;
 import com.ssafy.andback.api.dto.response.RefrigeratorResponseDto;
 import com.ssafy.andback.api.exception.CustomException;
 import com.ssafy.andback.core.domain.Refrigerator;
@@ -59,14 +60,9 @@ public class RefrigeratorServiceImpl implements RefrigeratorService {
     }
 
     @Override
-    public List<RefrigeratorResponseDto> findAllRefrigeratorByUser(String userEmail) {
+    public List<RefrigeratorResponseDto> findAllRefrigeratorByUser(User user) {
 
-        Optional<User> user = userRepository.findByUserEmail(userEmail);
-        //에러코드 추가
-        user.orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
-
-
-        List<Refrigerator> refrigeratorByUser = refrigeratorQueryRepository.findAllRefrigeratorByUser(user.get());
+        List<Refrigerator> refrigeratorByUser = refrigeratorQueryRepository.findAllRefrigeratorByUser(user);
         List<RefrigeratorResponseDto> response = new ArrayList<>();
 
         for (Refrigerator temp : refrigeratorByUser) {
@@ -77,6 +73,34 @@ public class RefrigeratorServiceImpl implements RefrigeratorService {
         }
 
         return response;
+    }
+
+    @Override
+    public String createShareGroup(User user, Long refrigeratorId) {
+
+        Refrigerator refrigerator = refrigeratorRepository.findByRefrigeratorId(refrigeratorId);
+
+        UserRefrigerator shareRefrigerator = new UserRefrigerator();
+
+        shareRefrigerator.setRefrigerator(refrigerator);
+        shareRefrigerator.setUser(user);
+        shareRefrigerator.setRefrigeratorOwner(true);
+
+        return "success";
+    }
+
+    @Override
+    public String createShareGroup(User user, InsertShareMemberRequestDto insertShareMemberRequestDto) {
+
+        Refrigerator refrigerator = refrigeratorRepository.findByRefrigeratorId(insertShareMemberRequestDto.getRefrigeratorId());
+
+        UserRefrigerator shareRefrigerator = new UserRefrigerator();
+
+        shareRefrigerator.setRefrigerator(refrigerator);
+        shareRefrigerator.setUser(user);
+        shareRefrigerator.setRefrigeratorOwner(false);
+
+        return "success";
     }
 
 }

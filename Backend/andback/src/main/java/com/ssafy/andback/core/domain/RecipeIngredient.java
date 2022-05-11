@@ -35,6 +35,10 @@ public class RecipeIngredient {
     @Column(name = "recipe_ingredient_count")
     private String recipeIngredientCount;
 
+    // 레시피 필수 재료 정보
+    @Column(name = "recipe_ingredient_required")
+    private Boolean recipeIngredientRequired;
+
     // 레시피 아이디 (레시피 1 : 레시피 재료 N)
     @ManyToOne(targetEntity = Recipe.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "recipe_id")

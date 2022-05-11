@@ -74,6 +74,13 @@ spring:
     init:
       data-locations: classpath:data.sql
       mode: always
+  OAuth2:
+    google:
+      url: https://accounts.google.com/o/oauth2/v2/auth
+      client-id: 786724909280-0ltkrud04i9s2pipnhs5vta3jnfdb959.apps.googleusercontent.com
+      client-secret: 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
+      callback-url: http://localhost:8080/auth/google/callback
+      scope: https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile
 
 
 server:

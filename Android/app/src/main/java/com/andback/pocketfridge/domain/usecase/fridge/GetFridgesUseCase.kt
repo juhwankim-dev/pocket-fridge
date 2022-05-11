@@ -10,5 +10,5 @@ import javax.inject.Inject
 class GetFridgesUseCase @Inject constructor(
     private val fridgeRepository: FridgeRepository
 ) {
-    fun excute(email: String): Single<BaseResponse<List<FridgeEntity>>> = fridgeRepository.getFridges(email)
+    operator fun invoke(): Single<BaseResponse<List<FridgeEntity>>> = fridgeRepository.getFridges()
 }

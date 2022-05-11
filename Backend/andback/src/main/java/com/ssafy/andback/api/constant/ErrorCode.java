@@ -23,6 +23,7 @@ public enum ErrorCode {
     FAIL_SAVE_TOKEN(HttpStatus.BAD_REQUEST, "토큰 저장에 실패했습니다"),
     FAIL_LIKE(HttpStatus.BAD_REQUEST, "좋아요 저장 실패"),
     FAIL_REMOVE_LIKE(HttpStatus.BAD_REQUEST, "좋아요 삭제 실패"),
+    FAIL_SHARE_GROUP(HttpStatus.BAD_REQUEST, "냉장고 공유 그룹 생성 실패"),
 
 
     /* 401 UNAUTHORIZED : 인증되지 않은 사용자 */
@@ -31,6 +32,7 @@ public enum ErrorCode {
     INVALID_USER(HttpStatus.UNAUTHORIZED, "권한이 없는 사용자입니다."),
 
     /* 404 NOT_FOUND : resource 를 찾을 수 없음 */
+    NOT_AUTH_TOKEN(HttpStatus.NOT_FOUND, "토큰 정보가 없습니다"),
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 정보의 사용자를 찾을 수 없습니다."),
     RECIPE_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 정보의 레시피를 찾을 수 없습니다."),
     RECIPE_PROCESS_NOT_FOUND(HttpStatus.NOT_FOUND, "레시피 과정 정보를 찾을 수 없습니다."),
