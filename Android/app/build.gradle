@@ -5,6 +5,7 @@ plugins {
     id 'kotlin-parcelize'
     id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'com.google.gms.google-services'
 }
 
 Properties properties = new Properties()
@@ -140,5 +141,9 @@ dependencies {
     implementation "androidx.work:work-rxjava2:$work_version"
     implementation "androidx.hilt:hilt-work:$work_hilt"
     kapt "androidx.hilt:hilt-compiler:$work_hilt"
+
+    // firebase
+    implementation platform('com.google.firebase:firebase-bom:30.0.0')
+    implementation "com.google.firebase:firebase-messaging-ktx:$fcm"
 
 }
