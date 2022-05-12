@@ -94,4 +94,10 @@
         <item>여훈아</item>
         <item>영후나</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="save">저장</string>
+    <string name="noti_setting_offset">일 전</string>
+    <string name="noti_setting_offset_label">유통기한 임박 알림 일</string>
+    <string name="noti_setting_activation_label">유통기한 임박 알림 받기</string>
 </resources>
