@@ -37,4 +37,8 @@ class UserRemoteDataSourceImpl @Inject constructor(private val userApi: UserApi)
     override fun socialLogin(socialType: String, code: String): Single<BaseResponse<String>> {
         return userApi.socialLogin(socialType, code)
     }
+
+    override fun updateFcmToken(tokenEntity: FcmTokenEntity): Single<BaseResponse<Any>> {
+        return userApi.updateFcmToken(tokenEntity)
+    }
 }

@@ -41,4 +41,8 @@ class UserRepositoryImpl @Inject constructor(
     override fun socialLogin(socialType: String, code: String): Single<BaseResponse<String>> {
         return userRemoteDataSource.socialLogin(socialType, code)
     }
+
+    override fun updateFcmToken(tokenEntity: FcmTokenEntity): Single<BaseResponse<Any>> {
+        return userRemoteDataSource.updateFcmToken(tokenEntity)
+    }
 }
