@@ -91,6 +91,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                     (getChildAt(0) as TextView).text = getString(R.string.google_login)
                 }.setOnClickListener {
                     googleSignIn()
+                    alertDialog.dismiss()
                 }
             }
     }
