@@ -20,493 +20,388 @@ INSERT INTO main_category (main_category_id, main_category_name)
 VALUES (10, '난류');
 INSERT INTO main_category (main_category_id, main_category_name)
 VALUES (11, '조미료 소스');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (1, 1, '가지');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (2, 1, '감자');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (3, 1, '고구마');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (4, 1, '고사리');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (5, 1, '고추');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (6, 1, '곤드레');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (7, 1, '깻잎');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (8, 1, '나물');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (9, 1, '단호박');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (10, 1, '당근');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (11, 1, '도라지');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (12, 1, '마늘');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (13, 1, '무');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (14, 1, '미나리');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (15, 1, '배추');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (16, 1, '버섯');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (17, 1, '부추');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (18, 1, '브로콜리');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (19, 1, '상추');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (20, 1, '새송이버섯');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (21, 1, '새싹채소');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (22, 1, '생강');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (23, 1, '숙주');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (24, 1, '시금치');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (25, 1, '아스파라거스');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (26, 1, '애호박');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (27, 1, '양배추');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (28, 1, '양상추');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (29, 1, '양송이버섯');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (30, 1, '양파');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (31, 1, '연근');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (32, 1, '오이');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (33, 1, '옥수수');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (34, 1, '우엉');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (35, 1, '청경채');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (36, 1, '콩나물');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (37, 1, '토마토');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (38, 1, '파');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (39, 1, '파프리카');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (40, 1, '팽이버섯');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (41, 1, '표고버섯');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (42, 1, '피망');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (43, 1, '호박');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (44, 2, '닭');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (45, 2, '닭-정육');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (46, 2, '닭-가슴살');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (47, 2, '돼지고기');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (48, 2, '돼지고기-삼겹살');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (49, 2, '돼지고기-목살');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (50, 2, '돼지고기-앞다리');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (51, 2, '돼지고기-뒷다리');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (52, 2, '돼지고기-안심');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (53, 2, '돼지고기-등심');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (54, 2, '소고기');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (55, 2, '소고기-안심');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (56, 2, '소고기-등심');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (57, 2, '소고기-채끝');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (58, 2, '국거리');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (59, 2, '양고기');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (60, 2, '오리고기');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (61, 3, '게');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (62, 3, '미역');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (63, 3, '새우');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (64, 3, '생선');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (65, 3, '고등어');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (66, 3, '갈치');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (67, 3, '꽁치');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (68, 3, '멸치');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (69, 3, '오징어');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (70, 3, '문어');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (71, 3, '조개');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (72, 3, '굴');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (73, 3, '다시마');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (74, 3, '바지락');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (75, 3, '전복');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (76, 3, '주꾸미');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (77, 3, '조기');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (78, 3, '회');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (79, 4, '햄');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (80, 4, '소세지');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (81, 4, '닭꼬치');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (82, 4, '양꼬치');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (83, 4, '불고기');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (84, 4, '제육');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (85, 4, '베이컨');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (86, 4, '육포');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (87, 4, '양념육류');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (88, 4, '튀김');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (89, 4, '돈까스');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (90, 4, '치킨까스');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (91, 4, '생선까스');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (92, 4, '사골');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (93, 5, '참치캔');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (94, 5, '꽁치캔');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (95, 5, '골뱅이');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (96, 5, '어묵');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (97, 5, '젓갈');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (98, 5, '건어물');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (99, 5, '조미김');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (100, 5, '한천');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (101, 6, '면');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (102, 6, '라면');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (103, 6, '소면');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (104, 6, '파스타면');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (105, 6, '당면');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (106, 6, '냉면');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (107, 6, '쫄면');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (108, 6, '두부');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (109, 6, '떡');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (110, 6, '가래떡');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (111, 6, '밀가루');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (112, 6, '부침가루');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (113, 6, '튀김가루');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (114, 6, '김치');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (115, 6, '배추김치');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (116, 6, '깍두기');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (117, 6, '총각김치');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (118, 6, '파김치');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (119, 6, '밀키트');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (120, 6, '만두');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (121, 6, '만두피');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (122, 6, '또띠아');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (123, 6, '과일통조림');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (124, 6, '복숭아통조림');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (125, 6, '건조과일');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (126, 6, '미숫가루');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (127, 6, '절임');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (128, 6, '단무지');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (129, 6, '피클');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (130, 6, '장아찌');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (131, 6, '핫도그');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (132, 6, '치킨');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (133, 6, '피자');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (134, 6, '씨리얼');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (135, 6, '빵');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (136, 7, '쌀');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (137, 7, '찹쌀');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (138, 7, '보리');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (139, 7, '조');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (140, 7, '수수');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (141, 7, '콩');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (142, 7, '검은콩');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (143, 7, '팥');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (144, 7, '땅콩');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (145, 7, '밤');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (146, 7, '아몬드');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (147, 7, '호두');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (148, 7, '피스타치오');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (149, 7, '견과류');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (150, 7, '깨');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (151, 7, '잣');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (152, 7, '캐슈넛');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (153, 7, '은행');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (154, 7, '대추');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (155, 7, '해바라기씨');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (156, 8, '사과');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (157, 8, '배');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (158, 8, '포도');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (159, 8, '파인애플');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (160, 8, '감');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (161, 8, '참외');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (162, 8, '수박');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (163, 8, '딸기');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (164, 8, '멜론');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (165, 8, '복숭아');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (166, 8, '망고');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (167, 8, '체리');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (168, 8, '블루베리');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (169, 8, '아보카도');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (170, 8, '귤');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (171, 8, '오렌지');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (172, 8, '레몬');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (173, 8, '바나나');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (174, 8, '키위');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (175, 8, '자몽');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (176, 8, '유자');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (177, 8, '청포도');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (178, 8, '살구');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (179, 8, '석류');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (180, 9, '우유');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (181, 9, '버터');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (182, 9, '치즈');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (183, 9, '모짜렐라치즈');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (184, 9, '체다치즈');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (185, 9, '슈레드치즈');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (186, 9, '요거트');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (187, 9, '연유');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (188, 9, '요구르트');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (189, 9, '가당크림');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (190, 9, '무가당크림');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (191, 9, '분유');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (192, 9, '두유');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (193, 10, '계란');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (194, 10, '메추리알');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (195, 10, '오리알');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (196, 11, '소금');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (197, 11, '설탕');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (198, 11, '고춧가루');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (199, 11, '간장');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (200, 11, '된장');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (201, 11, '고추장');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (202, 11, '식초');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (203, 11, '물엿');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (204, 11, '꿀');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (205, 11, '마요네즈');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (206, 11, '잼');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (207, 11, '딸기잼');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (208, 11, '유자청');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (209, 11, '겨자');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (210, 11, '와사비');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (211, 11, '케찹');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (212, 11, '식용유');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (213, 11, '올리브유');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (214, 11, '참기름');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (215, 11, '들기름');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (216, 11, '쌈장');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (217, 11, '청국장');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (218, 11, '고추기름');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (219, 11, '맛소금');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (220, 11, '콩가루');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (221, 11, '카레가루');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (222, 11, '후추');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (223, 11, '들깨가루');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (224, 11, '깨소금');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (225, 11, '드레싱');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (226, 11, '짜장가루');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (227, 11, '허니머스타드');
-INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name)
-VALUES (228, 11, '돈까스소스');
 
 
--- 레시피 정보 // 아이디 값, 이름, 내용, 요약, 이미지, 타입 //한식 일식 중식 양식
-INSERT INTO recipe (recipe_id, recipe_food_name, recipe_content, recipe_all_ingredient, recipe_image, recipe_type, recipe_time, recipe_serving)
-values (1, "라면", "지글지글 보글보글 맛있는 라면~이다", "라면 라면스프 고추가루 순두부", null, "한식", 30, 1);
-INSERT INTO recipe (recipe_id, recipe_food_name, recipe_content, recipe_all_ingredient, recipe_image, recipe_type, recipe_time, recipe_serving)
-values (2, "라면", "지글지글 보글보글 맛있는 라면~이다", "라면 라면스프 고추가루 순두부", null, "한식", 30, 1);
-INSERT INTO recipe (recipe_id, recipe_food_name, recipe_content, recipe_all_ingredient, recipe_image, recipe_type, recipe_time, recipe_serving)
-values (3, "라면", "지글지글 보글보글 맛있는 라면~이다", "라면 라면스프 고추가루 순두부", null, "한식", 30, 1);
-INSERT INTO recipe (recipe_id, recipe_food_name, recipe_content, recipe_all_ingredient, recipe_image, recipe_type, recipe_time, recipe_serving)
-values (4, "라면", "지글지글 보글보글 맛있는 라면~이다", "라면 라면스프 고추가루 순두부", null, "한식", 30, 1);
-INSERT INTO recipe (recipe_id, recipe_food_name, recipe_content, recipe_all_ingredient, recipe_image, recipe_type, recipe_time, recipe_serving)
-values (5, "라면", "지글지글 보글보글 맛있는 라면~이다", "라면 라면스프 고추가루 순두부", null, "한식", 30, 1);
-InsERT INTO recipe (recipe_id, recipe_food_name, recipe_content, recipe_all_ingredient, recipe_image, recipe_type, recipe_time, recipe_serving)
-values (6, "라면", "지글지글 보글보글 맛있는 라면~이다", "라면 라면스프 고추가루 순두부", null, "한식", 30, 1);
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (1,1,'가지');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (2,1,'감자');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (3,1,'고구마');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (4,1,'고사리');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (5,1,'고추');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (6,1,'곤드레');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (7,1,'깻잎');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (8,1,'나물');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (9,1,'단호박');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (10,1,'당근');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (11,1,'도라지');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (12,1,'마늘');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (13,1,'무');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (14,1,'미나리');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (15,1,'배추');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (16,1,'버섯');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (17,1,'부추');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (18,1,'브로콜리');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (19,1,'상추');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (20,1,'새송이버섯');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (21,1,'새싹채소');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (22,1,'생강');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (23,1,'숙주');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (24,1,'시금치');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (25,1,'아스파라거스');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (26,1,'애호박');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (27,1,'양배추');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (28,1,'양상추');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (29,1,'양송이버섯');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (30,1,'양파');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (31,1,'연근');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (32,1,'오이');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (33,1,'옥수수');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (34,1,'우엉');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (35,1,'청경채');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (36,1,'콩나물');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (37,1,'토마토');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (38,1,'파');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (39,1,'파프리카');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (40,1,'팽이버섯');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (41,1,'표고버섯');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (42,1,'피망');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (43,1,'호박');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (44,1,'대파');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (45,1,'건고추');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (46,1,'청양고추');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (47,1,'쪽파');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (48,2,'닭');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (49,2,'닭-정육');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (50,2,'닭-가슴살');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (51,2,'돼지고기');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (52,2,'돼지고기-삼겹살');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (53,2,'돼지고기-목살');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (54,2,'돼지고기-앞다리');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (55,2,'돼지고기-뒷다리');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (56,2,'돼지고기-안심');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (57,2,'돼지고기-등심');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (58,2,'소고기');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (59,2,'소고기-안심');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (60,2,'소고기-등심');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (61,2,'소고기-채끝');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (62,2,'소고기-국거리');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (63,2,'양고기');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (64,2,'오리고기');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (65,2,'소고기-불고기');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (66,2,'돼지고기-불고기');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (67,2,'대패삼겹살');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (68,3,'게');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (69,3,'미역');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (70,3,'새우');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (71,3,'생선');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (72,3,'고등어');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (73,3,'갈치');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (74,3,'꽁치');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (75,3,'멸치');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (76,3,'오징어');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (77,3,'문어');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (78,3,'조개');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (79,3,'굴');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (80,3,'다시마');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (81,3,'바지락');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (82,3,'전복');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (83,3,'주꾸미');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (84,3,'조기');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (85,3,'회');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (86,3,'연어');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (87,4,'햄');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (88,4,'소세지');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (89,4,'닭꼬치');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (90,4,'양꼬치');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (91,4,'불고기');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (92,4,'제육');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (93,4,'베이컨');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (94,4,'육포');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (95,4,'양념육류');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (96,4,'튀김');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (97,4,'돈까스');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (98,4,'치킨까스');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (99,4,'생선까스');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (100,4,'사골');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (101,4,'미트볼');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (102,5,'참치캔');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (103,5,'꽁치캔');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (104,5,'골뱅이');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (105,5,'어묵');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (106,5,'젓갈');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (107,5,'건어물');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (108,5,'조미김');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (109,5,'한천');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (110,6,'면');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (111,6,'라면');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (112,6,'소면');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (113,6,'파스타면');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (114,6,'당면');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (115,6,'냉면');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (116,6,'쫄면');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (117,6,'두부');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (118,6,'떡');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (119,6,'가래떡');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (120,6,'밀가루');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (121,6,'부침가루');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (122,6,'튀김가루');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (123,6,'김치');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (124,6,'배추김치');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (125,6,'깍두기');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (126,6,'총각김치');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (127,6,'파김치');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (128,6,'밀키트');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (129,6,'만두');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (130,6,'만두피');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (131,6,'또띠아');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (132,6,'과일통조림');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (133,6,'복숭아통조림');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (134,6,'건조과일');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (135,6,'미숫가루');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (136,6,'절임');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (137,6,'단무지');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (138,6,'피클');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (139,6,'장아찌');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (140,6,'핫도그');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (141,6,'치킨');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (142,6,'피자');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (143,6,'씨리얼');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (144,6,'빵');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (145,6,'옥수수통조림');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (146,6,'모닝빵');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (147,6,'국수');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (148,6,'떡볶이 떡');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (149,6,'스파게티면');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (150,7,'쌀');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (151,7,'찹쌀');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (152,7,'보리');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (153,7,'조');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (154,7,'수수');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (155,7,'콩');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (156,7,'검은콩');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (157,7,'팥');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (158,7,'땅콩');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (159,7,'밤');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (160,7,'아몬드');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (161,7,'호두');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (162,7,'피스타치오');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (163,7,'견과류');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (164,7,'깨');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (165,7,'잣');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (166,7,'캐슈넛');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (167,7,'은행');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (168,7,'대추');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (169,7,'해바라기씨');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (170,8,'사과');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (171,8,'배');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (172,8,'포도');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (173,8,'파인애플');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (174,8,'감');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (175,8,'참외');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (176,8,'수박');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (177,8,'딸기');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (178,8,'멜론');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (179,8,'복숭아');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (180,8,'망고');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (181,8,'체리');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (182,8,'블루베리');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (183,8,'아보카도');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (184,8,'귤');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (185,8,'오렌지');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (186,8,'레몬');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (187,8,'바나나');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (188,8,'키위');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (189,8,'자몽');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (190,8,'유자');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (191,8,'청포도');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (192,8,'살구');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (193,8,'석류');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (194,9,'우유');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (195,9,'버터');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (196,9,'치즈');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (197,9,'모짜렐라치즈');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (198,9,'체다치즈');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (199,9,'슈레드치즈');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (200,9,'요거트');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (201,9,'연유');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (202,9,'요구르트');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (203,9,'가당크림');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (204,9,'무가당크림');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (205,9,'분유');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (206,9,'두유');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (207,10,'계란');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (208,10,'메추리알');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (209,10,'오리알');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (210,11,'소금');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (211,11,'설탕');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (212,11,'고춧가루');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (213,11,'간장');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (214,11,'된장');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (215,11,'고추장');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (216,11,'식초');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (217,11,'물엿');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (218,11,'꿀');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (219,11,'마요네즈');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (220,11,'잼');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (221,11,'딸기잼');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (222,11,'유자청');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (223,11,'겨자');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (224,11,'와사비');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (225,11,'케찹');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (226,11,'식용유');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (227,11,'올리브유');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (228,11,'참기름');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (229,11,'들기름');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (230,11,'쌈장');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (231,11,'청국장');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (232,11,'고추기름');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (233,11,'맛소금');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (234,11,'콩가루');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (235,11,'카레가루');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (236,11,'후추');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (237,11,'들깨가루');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (238,11,'깨소금');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (239,11,'드레싱');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (240,11,'짜장가루');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (241,11,'허니머스타드');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (242,11,'돈까스소스');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (243,11,'다진마늘');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (244,11,'순후추');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (245,11,'소주');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (246,11,'미림');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (247,11,'맛술');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (248,11,'액젓');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (249,11,'토마토소스');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (250,11,'양조간장');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (251,11,'국간장');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (252,11,'파마산치즈가루');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (253,11,'매실액기스');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (254,11,'파슬리');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (255,5,'스팸');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (256,6,'전분가루');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (257,5,'크래미');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (258,11,'올리고당');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (259,1,'마늘쫑');
+INSERT INTO sub_category (sub_category_id, main_category_id, sub_category_name) VALUES (260,11,'굴소스');
 
-insert into recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count)
-values (1, 1, 1, "라면", "1개");
-insert into recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count)
-values (2, 1, 2, "라면스프", "1개");
-insert into recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count)
-values (3, 1, 3, "고추가루", "한 스푼");
-insert into recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count)
-values (4, 1, 3, "순두부", "100g");
+
+INSERT INTO recipe (recipe_id,recipe_content, recipe_food_name, recipe_all_ingredient, recipe_image, recipe_type, recipe_time, recipe_serving) VALUES (1,'라면으로 만들어 먹는 고기 짬뽕 라면','고기 짬뽕 라면','라면, 양배추, 배추, 대패삼겹살, 양파, 간장, 고춧가루, 대파','thumbnail_고기_짬뽕_라면.png','한식',20,1);
+INSERT INTO recipe (recipe_id,recipe_content, recipe_food_name, recipe_all_ingredient, recipe_image, recipe_type, recipe_time, recipe_serving) VALUES (2,'참치 김치 볶음밥','참치 김치 볶음밥','김치, 참치통조림, 소세지, 고춧가루, 물엿, 소금, 참기름, 밥','thumbnail_참치_김치_볶음밥.png','한식',20,1);
+INSERT INTO recipe (recipe_id,recipe_content, recipe_food_name, recipe_all_ingredient, recipe_image, recipe_type, recipe_time, recipe_serving) VALUES (3,'옥수수전','옥수수전','옥수수, 통조림, 파프리카, 피자치즈, 튀김가루, 물','thumbnail_옥수수전.png','한식',20,1);
+INSERT INTO recipe (recipe_id,recipe_content, recipe_food_name, recipe_all_ingredient, recipe_image, recipe_type, recipe_time, recipe_serving) VALUES (4,'삽겹살과 김치를 이용한 볶음요리','삼겹살 김치볶음','김치, 삼겹살, 설탕, 간장, 고춧가루','thumbnail_삼겹살_김치볶음.png','한식',20,1);
+INSERT INTO recipe (recipe_id,recipe_content, recipe_food_name, recipe_all_ingredient, recipe_image, recipe_type, recipe_time, recipe_serving) VALUES (5,'달달한 바싹 불고기','바싹 불고기','대패삼겹살, 간장, 소주, 다진 마늘, 물엿','thumbnail_바싹_불고기.png','한식',20,1);
+INSERT INTO recipe (recipe_id,recipe_content, recipe_food_name, recipe_all_ingredient, recipe_image, recipe_type, recipe_time, recipe_serving) VALUES (6,'달달한 밥도둑 연어장','연어장','연어, 양파, 간장, 설탕','thumbnail_연어장.png','한식',20,1);
+INSERT INTO recipe (recipe_id,recipe_content, recipe_food_name, recipe_all_ingredient, recipe_image, recipe_type, recipe_time, recipe_serving) VALUES (7,'아침에 먹으면 더욱 좋은 모닝계란빵','모닝계란빵','모닝빵, 계란, 베이컨, 파슬리','thumbnail_모닝계란빵.png','한식',20,1);
+INSERT INTO recipe (recipe_id,recipe_content, recipe_food_name, recipe_all_ingredient, recipe_image, recipe_type, recipe_time, recipe_serving) VALUES (8,'짜고 달달한 밥도둑 계란장조림','계란장조림','계란, 다시마, 간장, 설탕, 술, 양파, 대파','thumbnail_계란장조림.png','한식',60,1);
+INSERT INTO recipe (recipe_id,recipe_content, recipe_food_name, recipe_all_ingredient, recipe_image, recipe_type, recipe_time, recipe_serving) VALUES (9,'돼지고기와 케첩을 이용한 간장조림','돼지고기 케첩 간장조림','돼지고기, 대파, 다진마늘, 후추, 간장, 소주, 설탕, 다진마늘, 케첩','thumbnail_돼지고기_케첩_간장조림.png','한식',60,1);
+INSERT INTO recipe (recipe_id,recipe_content, recipe_food_name, recipe_all_ingredient, recipe_image, recipe_type, recipe_time, recipe_serving) VALUES (10,'맥주 안주로 너무 좋은 콘치즈','콘치즈','캔옥수수, 설탕, 마요네즈, 모짜렐라 치즈','thumbnail_콘치즈.png','한식',20,1);
 
 
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (1,1,1,'양파, 양배추, 대파를 썰어 주세요 ','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (2,1,2,'냄비에 오일 3스푼을 두르고 달달 볶다가 양파를 고기를 넣고 볶아주세요','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (3,1,3,'고추가루를 넣고 볶아 주세요','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (4,1,4,'1분 정도 볶고 물 550ml를 넣고 라면 사리 1개를 넣고 팔팔 끓여주세요 라면 스프도 1개 넣어주세요','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (5,1,5,'팔팔 끓이면 완성','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (6,2,1,'먼저 김치를 작은 접시 1그릇만 작게 잘라주세요','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (7,2,2,'소세지도 잘게 잘라 주세요','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (8,2,3,'달군 팬에 기름을 둘러 김치를 먼저 넣어주세요','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (9,2,4,'볶다가 참치 한캔과 햄 소세지 고춧가루를 넣고 볶아 주세요','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (10,2,5,'소금 1ts 물엿 한 스푼을 넣고 볶다가 참기름 1스푼과 밥 한공기를 넣고 볶아주세요','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (11,3,1,'옥수수콘의 물기를 빼 주세요, 파프리카를 다져주세요','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (12,3,2,'피자 치즈와 튀김가루를 반컵씩 넣어주세요','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (13,3,3,'물은 조금만, 약간 걸쭉할 정도로 부어주세요','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (14,3,4,'이제 달군 팬에 오일 넉넉히 반죽을 올려 펴줍니다','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (15,3,5,'중불로 구워 주세요 80%정도 익었을때 뒤집어줍니다','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (16,3,6,'뒤집고 2~3분만 익히면 그릇에 담아주세요 ','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (17,4,1,'김치는 잘게 잘라주고 달군 팬에 올리브유 1스푼 넣고 김치를 넣어 볶아주세요 ','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (18,4,2,'설탕을 1스푼 넣고 볶아주세요','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (19,4,3,'살짝 볶아주고 삼겹살을 넣어 같이 볶아주세요','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (20,4,4,'간장을 2스푼 넣어주세요 ','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (21,4,5,'마지막으로 고춧가루 2ts을 넣어주면 완성됩니다','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (22,5,1,'먼저 대패 삼겹살을 양념을 합니다 간장 1 / 3컵, 소주 1 / 2컵, 후추 조금 넣고 주물러주기','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (23,5,2,'이제 팬에 양념한 고기를 넣고 15분간 중불에서 조려주세요 물이 없어지면 완성입니다','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (24,6,1,'연어를 한 입 크기로 썰어주세요','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (25,6,2,'연어장을 만들어 줄게요 먼저 종이컵 기준으로 간장 1컵을 넣어주고 설탕 반컵을 넣어주고 설탕이 녹을 정도로만 중불로 살짝 끓여주세요','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (26,6,3,'절임물이 식을 동안 양파를 잘게 썰어주세요','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (27,6,4,'이젠 통 안에 썰어둔 연어들을 차곡차곡 쌓아줍니다 ','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (28,6,5,'연어를 다 넣었으면 양파를 위에 다 올려주세요','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (29,6,6,'장이 다 식었으면 통에 가득 차도록 부어줍니다','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (30,6,7,'통 뚜껑을 닫고 냉장고에 넣어 8시간정도 두고 먹어주세요 ','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (31,7,1,'먼저 베이컨을 잘게 조각내주세요','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (32,7,2,'사각치즈도 조각내줍니다','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (33,7,3,'모닝빵 속을 동그랗게 파내어 주세요','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (34,7,4,'빵 속안에 계란을 하나씩 깨드려 넣어주세요','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (35,7,5,'노른자를 포크로 콕콕 찔러 떠뜨려주세요','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (36,7,6,'조각냈던 베이컨과 치즈를 계란 위에 올려주세요','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (37,7,7,'전자레인지에 넣고  3개 기준 2분 30초 돌려주면 완성됩니다','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (38,7,8,'기호에 맞게 파슬리를 뿌려주세요','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (39,8,1,'제일 먼저 계란을 삶고 소금 1ts를 같이 넣어주세요','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (40,8,2,'10분간 삶고 찬물에 여러 번 헹군 다음 모두 껍질을 벗겨주세요','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (41,8,3,'물과 다시마를 넣고 육수를 만들어 주세요','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (42,8,4,'간장 6큰술 술(미림) 2큰술 설탕 1큰술 ','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (43,8,5,'이제 계란을 넣어주고 양파 반개, 대파 반쪽을 넣어줍니다','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (44,8,6,'약한 불에 40분정도 끓여주면 옅은 갈색으로 변합니다','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (45,9,1,'돼지고기에 후추, 다진마늘 1스푼을 넣고 재여주세요','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (46,9,2,'간장3스푼, 설탕 1스푼, 소주 2스푼, 다진마늘 1스푼, 케첩 1스푼','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (47,9,3,'대파를 잘게 썰어주세요','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (48,9,4,'재여둔 고기에 전분 1스푼을 넣어 버부려준 다음 팬에 오일을 둘러 완전히 익혀줍니다','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (49,9,5,'다 익은 고기를 덜어놓고 대파를 3분 정도 볶아주세요','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (50,9,6,'파가 투명해지면 고기와 잠깐 볶고 소스를 넣고 중불에 조려줍니다','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (51,10,1,'옥수수 한캔의 물을 빼줍니다','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (52,10,2,'옥수수와 마요네즈 설탕을 넣고 잘 섞어 줍니다','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (53,10,3,'후라이팬에 기름을 두르고 섞어놓은 옥수수를 구워줍니다','null');
+INSERT INTO recipe_process (recipe_process_id, recipe_id, recipe_process_sequence, recipe_process_description, recipe_process_image) VALUES (54,10,4,'옥수수위에 치즈를 솔솔 뿌려줍니다','null');
 
-insert into recipe_process (recipe_process_id, recipe_process_description, recipe_process_image, recipe_process_sequence, recipe_id)
-values (1, "물을 끓인다", null, 1, 1);
-insert into recipe_process (recipe_process_id, recipe_process_description, recipe_process_image, recipe_process_sequence, recipe_id)
-values (2, "끓는 물에 라면과 스프를 넣고 3분 끓인다", null, 2, 1);
-insert into recipe_process (recipe_process_id, recipe_process_description, recipe_process_image, recipe_process_sequence, recipe_id)
-values (3, "맛있게 먹는다", null, 3, 1);
-
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (1,1,111,'라면','1개');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (2,1,27,'양배추','1장');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (3,1,15,'배추','1장');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (4,1,67,'대패삼겹살','작은 접시 1그릇');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (5,1,30,'양파','반개');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (6,1,213,'간장','1스푼');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (7,1,212,'고춧가루','1스푼');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (8,1,44,'대파','1개');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (9,2,123,'김치','작은 1접시');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (10,2,102,'참치캔','1캔');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (11,2,88,'소세지','1개');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (12,2,217,'물엿','1스푼');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (13,2,210,'소금','1ts');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (14,2,228,'참기름','1스푼');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (15,3,145,'옥수수통조림','1캔');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (16,3,39,'파프리카','조금');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (17,3,122,'튀김가루','반컵');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (18,3,197,'모짜렐라치즈','반컵');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (19,4,123,'김치','1인분');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (20,4,52,'돼지고기-삼겹살','1인분');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (21,4,211,'설탕','1스푼');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (22,4,213,'간장','2스푼');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (23,4,212,'고춧가루','2ts');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (24,5,67,'대패삼겹살','400g');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (25,5,213,'간장','1/3컵');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (26,5,243,'다진마늘','1스푼');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (27,5,217,'물엿','2스푼');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (28,6,86,'연어','150g');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (29,6,30,'양파','1/2개');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (30,6,213,'간장','1컵');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (31,6,211,'설탕','1/2컵');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (32,7,146,'모닝빵','3개');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (33,7,207,'계란','3개');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (34,7,93,'베이컨','한 접시');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (35,7,254,'파슬리','조금');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (36,8,207,'계란','4개');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (37,8,80,'다시마','한조각');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (38,8,213,'간장','6스푼');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (39,8,211,'설탕','1스푼');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (40,8,246,'미림','2스푼');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (41,8,30,'양파','1/2개');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (42,8,44,'대파','반쪽');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (43,9,53,'돼지고기-목살','300g');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (44,9,44,'대파','1개');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (45,9,243,'다진마늘','1스푼');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (46,9,236,'후추','조금');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (47,9,213,'간장','3스푼');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (48,9,245,'소주','2스푼');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (49,9,243,'다진마늘','1스푼');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (50,9,225,'케찹','1스푼');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (51,10,145,'옥수수통조림','한캔');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (52,10,211,'설탕','1스푼');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (53,10,219,'마요네즈','2스푼');
+INSERT INTO recipe_ingredient (recipe_ingredient_id, recipe_id, sub_category_id, recipe_ingredient_name, recipe_ingredient_count) VALUES (54,10,197,'모짜렐라치즈','종이컵 반컵');

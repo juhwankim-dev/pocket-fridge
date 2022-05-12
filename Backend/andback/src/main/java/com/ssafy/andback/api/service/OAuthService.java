@@ -71,6 +71,8 @@ public class OAuthService {
                 //응답 객체가 JSON형식으로 되어 있으므로, 이를 deserialization해서 자바 객체에 담을 것이다.
                 GoogleOAuthToken oAuthToken = googleOauth.getAccessToken(accessTokenResponse);
 
+                System.out.println(oAuthToken);
+
                 //액세스 토큰을 다시 구글로 보내 구글에 저장된 사용자 정보가 담긴 응답 객체를 받아온다.
                 ResponseEntity<String> userInfoResponse = googleOauth.requestUserInfo(oAuthToken);
                 //다시 JSON 형식의 응답 객체를 자바 객체로 역직렬화한다.
@@ -84,9 +86,10 @@ public class OAuthService {
 
                 Optional<User> user = userRepository.findByUserEmail(user_id);
 
+                User result = null;
 
                 if (user.isEmpty()) {
-                    user.orElse(User.builder()
+                    result = User.builder()
                             .userNickname("google_" + googleUser.getId())
                             .userLoginType(true)
                             .userName(googleUser.getName())
@@ -94,10 +97,14 @@ public class OAuthService {
                             .userPassword(passwordEncoder.encode(getRamdomNumber(12)))
                             .userEmail(googleUser.getEmail())
                             .roles(Collections.singletonList("USER"))  // 최초 가입시 USER로 설정
-                            .build());
-                    userRepository.save(user.get());
+                            .build();
+
+                    userRepository.save(result);
+                } else {
+                    result = user.get();
                 }
-                Token = jwtAuthenticationProvider.createToken(user.get().getUserEmail(), user.get().getRoles());
+
+                Token = jwtAuthenticationProvider.createToken(result.getUserEmail(), result.getRoles());
             }
             break;
             default: {

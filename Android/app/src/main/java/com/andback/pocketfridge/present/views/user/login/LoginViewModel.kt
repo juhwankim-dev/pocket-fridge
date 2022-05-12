@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.andback.pocketfridge.data.model.LoginEntity
 import com.andback.pocketfridge.domain.usecase.user.GetLoginUseCase
 import com.andback.pocketfridge.domain.usecase.datastore.WriteDataStoreUseCase
+import com.andback.pocketfridge.domain.usecase.user.SocialLoginUseCase
 import com.andback.pocketfridge.present.config.SingleLiveEvent
 import com.andback.pocketfridge.present.utils.PageSet
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,6 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val getLoginUseCase: GetLoginUseCase,
+    private val socialLoginUseCase: SocialLoginUseCase,
     private val writeDataStoreUseCase: WriteDataStoreUseCase
 ) : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
@@ -62,6 +64,30 @@ class LoginViewModel @Inject constructor(
         )
     }
 
+    fun socialLogin(socialType: String, code: String) {
+        _isLoading.value = true
+
+        compositeDisposable.add(
+            socialLoginUseCase(socialType, code)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        if (it.data != null) {
+                            saveJWT(it.data)
+                        }
+                        _toastMsg.value = it.message
+                        _isLoading.value = false
+                        pageNumber.value = PageSet.MAIN
+                    },
+                    {
+                        _isLoading.value = false
+                        showError(it)
+                    }
+                )
+        )
+    }
+
     fun saveJWT(jwt: String) {
         viewModelScope.launch {
             writeDataStoreUseCase.execute("JWT", jwt)
@@ -82,13 +108,18 @@ class LoginViewModel @Inject constructor(
 
     private fun showError(t : Throwable) {
         if (t is HttpException && (t.code() in 400 until 500)){
-            var responseBody = t.response()?.errorBody()?.string()
+            val responseBody = t.response()?.errorBody()?.string()
             val jsonObject = JSONObject(responseBody!!.trim())
-            var message = jsonObject.getString("message")
+            val message = jsonObject.getString("message")
             _toastMsg.value = message
             Log.d("LoginViewModel", "${t.code()}")
         } else {
             _toastMsg.value = t.message
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.dispose()
     }
 }

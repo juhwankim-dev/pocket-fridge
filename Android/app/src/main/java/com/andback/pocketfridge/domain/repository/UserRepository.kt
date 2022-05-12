@@ -11,4 +11,5 @@ interface UserRepository {
     fun checkNickname(nickname: String): Single<BaseResponse<Any>>
     fun findPW(userForFind: UserForFindEntity): Single<BaseResponse<Any>>
     fun login(loginEntity: LoginEntity): Single<BaseResponse<String>>
+    fun socialLogin(socialType: String, code: String): Single<BaseResponse<String>>
 }

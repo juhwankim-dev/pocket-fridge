@@ -50,6 +50,7 @@
     <string name="mypage">마이페이지</string>
 
     <string name="google_login">Google 계정으로 로그인</string>
+    <string name="login_fail">로그인에 실패했습니다.</string>
 
     <string name="email">이메일</string>
     <string name="next">다음</string>
@@ -99,4 +100,9 @@
         <item>가나다순</item>
         <item>가나다역순</item>
     </string-array>
+
+    <string name="save">저장</string>
+    <string name="noti_setting_offset">일 전</string>
+    <string name="noti_setting_offset_label">유통기한 임박 알림 일</string>
+    <string name="noti_setting_activation_label">유통기한 임박 알림 받기</string>
 </resources>

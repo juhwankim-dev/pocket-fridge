@@ -49,8 +49,13 @@ public class FoodIngredientResponseDto {
     @ApiParam(value = "카테고리 아이디", required = true)
     private Long subCategoryId;
 
+    //메인 카테고리 아이디
+    @ApiParam(value = "메인 카데고리 아이디", required = true)
+    private Long mainCategoryId;
+
+
     @Builder
-    public FoodIngredientResponseDto(Long foodIngredientId, String foodIngredientName, LocalDate foodIngredientExp, LocalDate foodIngredientDate, WayStatus foodIngredientWay, Long refrigeratorId, Long subCategoryId) {
+    public FoodIngredientResponseDto(Long foodIngredientId, String foodIngredientName, LocalDate foodIngredientExp, LocalDate foodIngredientDate, WayStatus foodIngredientWay, Long refrigeratorId, Long subCategoryId, Long mainCategoryId) {
         this.foodIngredientId = foodIngredientId;
         this.foodIngredientName = foodIngredientName;
         this.foodIngredientExp = foodIngredientExp.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -58,5 +63,6 @@ public class FoodIngredientResponseDto {
         this.foodIngredientWay = foodIngredientWay;
         this.refrigeratorId = refrigeratorId;
         this.subCategoryId = subCategoryId;
+        this.mainCategoryId = mainCategoryId;
     }
 }

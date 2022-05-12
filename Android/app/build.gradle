@@ -5,6 +5,7 @@ plugins {
     id 'kotlin-parcelize'
     id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'com.google.gms.google-services'
 }
 
 Properties properties = new Properties()
@@ -23,6 +24,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "BARCODE_SERVICE_KEY", properties['barcode_service_key']
+        buildConfigField "String", "GOOGLE_AUTH_SERVER_ID", properties['google_auth_server_id']
     }
 
     buildTypes {
@@ -129,6 +131,9 @@ dependencies {
     // Coroutine
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
 
+    // sns Login
+    implementation "com.google.android.gms:play-services-auth:$google_auth_version"
+
     // WorkManager
     // Kotlin + coroutines
     // hilt
@@ -136,5 +141,9 @@ dependencies {
     implementation "androidx.work:work-rxjava2:$work_version"
     implementation "androidx.hilt:hilt-work:$work_hilt"
     kapt "androidx.hilt:hilt-compiler:$work_hilt"
+
+    // firebase
+    implementation platform('com.google.firebase:firebase-bom:30.0.0')
+    implementation "com.google.firebase:firebase-messaging-ktx:$fcm"
 
 }

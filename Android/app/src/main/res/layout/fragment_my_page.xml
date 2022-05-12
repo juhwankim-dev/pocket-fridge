@@ -98,12 +98,11 @@
                 style="@style/body_text"
                 android:layout_weight="1"
                 android:text="알림설정" />
-
-            <Switch
-                android:id="@+id/switch_my_pageF_alarm_setting"
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:src="@drawable/ic_next" />
+
         </LinearLayout>
 
         <TextView
