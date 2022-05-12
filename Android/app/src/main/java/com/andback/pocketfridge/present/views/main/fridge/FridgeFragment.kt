@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.andback.pocketfridge.R
+import com.andback.pocketfridge.data.model.FridgeEntity
 import com.andback.pocketfridge.databinding.FragmentFridgeBinding
 import com.andback.pocketfridge.domain.model.Ingredient
 import com.andback.pocketfridge.present.config.BaseFragment
@@ -57,7 +58,17 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
         }
 
         binding.tvFridgeFName.setOnClickListener {
-            // TODO : 냉장고 목록 보여주기
+            FridgeListBottomSheet(
+                viewModel.fridges.value!!,
+                viewModel.selectedFridge.value!!.refrigeratorId
+            ).apply {
+                fridgeAdapter.itemClickListener = object : FridgeListAdapter.ItemClickListener {
+                    override fun onClick(data: FridgeEntity) {
+                        viewModel.updateSelectedFridgeThenGetIngreList(data.refrigeratorId)
+                        dismiss()
+                    }
+                }
+            }.show(requireActivity().supportFragmentManager, FridgeListBottomSheet.TAG)
         }
     }
 
