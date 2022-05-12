@@ -93,4 +93,10 @@
         <item>여훈아</item>
         <item>영후나</item>
     </string-array>
+    <string-array name="spinner_list">
+        <item>기한임박순</item>
+        <item>기한여유순</item>
+        <item>가나다순</item>
+        <item>가나다역순</item>
+    </string-array>
 </resources>
