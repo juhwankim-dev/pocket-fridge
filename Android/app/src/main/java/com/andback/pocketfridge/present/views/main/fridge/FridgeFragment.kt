@@ -56,6 +56,9 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
             }
         }
 
+        binding.tvFridgeFName.setOnClickListener {
+            // TODO : 냉장고 목록 보여주기
+        }
     }
 
     private fun setRecyclerView() {
@@ -92,6 +95,9 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
                     if(::profileImageView.isInitialized) {
                         Glide.with(profileImageView).load(it.picture).circleCrop().into(profileImageView)
                     }
+                }
+                selectedFridge.observe(owner) {
+                    binding.tvFridgeFName.setText(it.refrigeratorName)
                 }
             }
         }
