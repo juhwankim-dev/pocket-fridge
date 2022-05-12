@@ -117,6 +117,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                 viewModel.socialLogin(GOOGLE, accessToken)
             } catch (e: ApiException) {
                 Log.w(TAG, "signInResult:failed code=" + e.statusCode)
+                showToastMessage(resources.getString(R.string.login_fail))
             }
         } else {
             showToastMessage(resources.getString(R.string.login_fail))
