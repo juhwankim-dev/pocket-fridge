@@ -162,7 +162,7 @@ class IngreEditFragment: BaseFragment<FragmentIngreEditBinding>(R.layout.fragmen
 
     private fun setDropDownAdapter(list: List<FridgeEntity>) {
         val stringList = list.map { it.refrigeratorName }
-        val adapter = ArrayAdapter(requireContext(), R.layout.item_fridge_list, stringList)
+        val adapter = ArrayAdapter(requireContext(), R.layout.item_dropdown_list, stringList)
         (binding.tvIngreEditFSelectFridge as? AutoCompleteTextView)?.let { tv ->
             tv.setText(stringList[0])
             tv.setAdapter(adapter)
