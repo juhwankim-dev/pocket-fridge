@@ -46,58 +46,12 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <LinearLayout
-            android:id="@+id/ll_fridgeF_sort"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/ll_fridgeF_filter"
-            app:layout_constraintEnd_toStartOf="@id/ll_fridgeF_filter"
-            android:layout_marginEnd="@dimen/activity_margin_narrow"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <ImageView
-                android:layout_width="@dimen/default_icon_size"
-                android:layout_height="@dimen/default_icon_size"
-                android:src="@drawable/ic_sort_24"/>
-            <TextView
-                style="@style/body_text"
-                android:id="@+id/tv_fridgeF_sort"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="유통기한 순"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_fridgeF_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/til_fridgeF"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/activity_margin_narrow"
-            android:layout_marginEnd="@dimen/activity_margin_default"
-            android:gravity="center_vertical">
-
-            <ImageView
-                android:layout_width="@dimen/default_icon_size"
-                android:layout_height="@dimen/default_icon_size"
-                android:src="@drawable/ic_slider_24"/>
-            <TextView
-                style="@style/body_text"
-                android:id="@+id/tv_fridgeF_filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/filter"/>
-
-        </LinearLayout>
-
         <HorizontalScrollView
             android:id="@+id/sv_fridgeF_filter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ll_fridgeF_sort"
+            app:layout_constraintTop_toBottomOf="@id/til_fridgeF"
             app:layout_constraintBottom_toTopOf="@id/ll_fridgeF_storage"
             android:paddingEnd="@dimen/activity_margin_default"
             android:overScrollMode="never"
@@ -124,13 +78,14 @@
 
         <LinearLayout
             android:id="@+id/ll_fridgeF_storage"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="start"
             android:orientation="horizontal"
             android:layout_marginHorizontal="@dimen/activity_margin_default"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/sv_fridgeF_filter">
+            app:layout_constraintTop_toTopOf="@id/spinner_fridgeF"
+            app:layout_constraintBottom_toBottomOf="@id/spinner_fridgeF">
 
             <TextView
                 android:id="@+id/tv_fridgeF_storage_fridge"
@@ -152,6 +107,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/storage_room" />
         </LinearLayout>
+
+        <Spinner
+            android:id="@+id/spinner_fridgeF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/rv_fridgeF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sv_fridgeF_filter"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_fridgeF"
