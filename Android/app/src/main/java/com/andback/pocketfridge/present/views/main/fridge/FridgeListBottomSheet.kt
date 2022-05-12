@@ -42,10 +42,6 @@ class FridgeListBottomSheet(private val list: List<FridgeEntity>, private val cu
         binding.ibFridgeListFClose.setOnClickListener {
             dismiss()
         }
-        binding.ibFridgeListFAddFridge.setOnClickListener {
-            // TODO : 냉장고 추가
-            dismiss()
-        }
     }
 
     companion object {
