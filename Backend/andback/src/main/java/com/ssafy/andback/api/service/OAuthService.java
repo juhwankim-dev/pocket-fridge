@@ -3,10 +3,14 @@ package com.ssafy.andback.api.service;
 import com.ssafy.andback.api.constant.SocialLoginType;
 import com.ssafy.andback.config.auth.GoogleOauth;
 import com.ssafy.andback.config.jwt.JwtAuthenticationProvider;
+import com.ssafy.andback.core.domain.Refrigerator;
 import com.ssafy.andback.core.domain.Token;
 import com.ssafy.andback.core.domain.User;
+import com.ssafy.andback.core.domain.UserRefrigerator;
 import com.ssafy.andback.core.domain.auth.GoogleOAuthToken;
 import com.ssafy.andback.core.domain.auth.GoogleUser;
+import com.ssafy.andback.core.repository.RefrigeratorRepository;
+import com.ssafy.andback.core.repository.UserRefrigeratorRepository;
 import com.ssafy.andback.core.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +39,8 @@ public class OAuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtAuthenticationProvider jwtAuthenticationProvider;
+    private final RefrigeratorRepository refrigeratorRepository;
+    private final UserRefrigeratorRepository userRefrigeratorRepository;
 
 
     public String request(SocialLoginType socialLoginType) throws Exception {
@@ -98,6 +104,11 @@ public class OAuthService {
                             .userEmail(googleUser.getEmail())
                             .roles(Collections.singletonList("USER"))  // 최초 가입시 USER로 설정
                             .build();
+
+                    Refrigerator refrigerator = Refrigerator.builder().refrigeratorName("냉장고").build();
+                    Refrigerator saveRefrigerator = refrigeratorRepository.save(refrigerator);
+                    UserRefrigerator userRefrigerator = UserRefrigerator.builder().user(result).refrigerator(saveRefrigerator).build();
+                    userRefrigeratorRepository.save(userRefrigerator);
 
                     userRepository.save(result);
                 } else {
