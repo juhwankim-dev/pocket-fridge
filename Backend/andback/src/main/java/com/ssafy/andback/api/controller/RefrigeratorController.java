@@ -50,16 +50,27 @@ public class RefrigeratorController {
 
         User user = (User) authentication.getPrincipal();
 
+        if (user == null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
+
+
         List<RefrigeratorResponseDto> response = refrigeratorService.findAllRefrigeratorByUser(user);
 
         return ResponseEntity.ok(new ListResponseDto<RefrigeratorResponseDto>(200, "success", response));
     }
 
     @ApiOperation(value = "냉장고 생성", notes = "사용자의 새로운 냉장고를 생성한다")
-    @PostMapping
-    public ResponseEntity<BaseResponseDto> insertRefrigerator(@RequestBody InsertRefrigeratorRequestDto reqDto) {
+    @PostMapping("/{refrigeratorName}")
+    public ResponseEntity<BaseResponseDto> insertRefrigerator(@ApiIgnore Authentication authentication, @PathVariable String refrigeratorName) {
 
-        String response = refrigeratorService.insertRefrigerator(reqDto);
+        if (authentication == null) {
+            throw new CustomException(ErrorCode.NOT_AUTH_TOKEN);
+        }
+
+        User user = (User) authentication.getPrincipal();
+
+        String response = refrigeratorService.insertRefrigerator(user, refrigeratorName);
 
 
         if (response.equals("fail")) {
@@ -97,13 +108,13 @@ public class RefrigeratorController {
 
     @ApiOperation(value = "공유 그룹원 초대 수락", notes = "공유 그릅원을 추가한다.")
     @PostMapping("/share/insertmember")
-    public ResponseEntity<BaseResponseDto> insertShareMember(@ApiIgnore Authentication authentication, @RequestBody  InsertShareMemberRequestDto insertShareMemberRequestDto) {
+    public ResponseEntity<BaseResponseDto> insertShareMember(@ApiIgnore Authentication authentication, @RequestBody InsertShareMemberRequestDto insertShareMemberRequestDto) {
 
         User user = (User) authentication.getPrincipal();
 
         String result = refrigeratorService.createShareGroup(user, insertShareMemberRequestDto);
 
-        if(result.equals("success")) {
+        if (result.equals("success")) {
             return ResponseEntity.ok().body(BaseResponseDto.of(200, "냉장고 공유 그룹원 추가 성공"));
         }
 
