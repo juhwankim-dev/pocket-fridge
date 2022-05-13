@@ -10,15 +10,20 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.databinding.FragmentNotiSettingBinding
+import com.andback.pocketfridge.domain.usecase.datastore.ReadDataStoreUseCase
 import com.andback.pocketfridge.present.config.BaseFragment
+import com.andback.pocketfridge.present.workmanager.DailyNotiWorker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class NotiSettingFragment : BaseFragment<FragmentNotiSettingBinding>(R.layout.fragment_noti_setting) {
     private val viewModel: NotiSettingViewModel by viewModels()
+    @Inject
+    lateinit var readDataStoreUseCase: ReadDataStoreUseCase
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -64,6 +69,8 @@ class NotiSettingFragment : BaseFragment<FragmentNotiSettingBinding>(R.layout.fr
         binding.btnNotiSettingFSave.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
                 viewModel.save()
+                DailyNotiWorker.cancel(requireActivity())
+                DailyNotiWorker.runAt(requireActivity(), readDataStoreUseCase)
                 requireActivity().runOnUiThread {
                     goBack()
                 }

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.data.model.FridgeEntity
 import com.andback.pocketfridge.databinding.FragmentFridgeListBinding
+import com.andback.pocketfridge.present.views.main.FridgeListAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class FridgeListBottomSheet(private val list: List<FridgeEntity>, private val curId: Int) : BottomSheetDialogFragment() {
