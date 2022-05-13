@@ -37,23 +37,20 @@ import java.util.Optional;
 public class RefrigeratorServiceImpl implements RefrigeratorService {
 
     private final RefrigeratorRepository refrigeratorRepository;
-    private final RefrigeratorQueryRepository refrigeratorQueryRepository;
     private final UserRepository userRepository;
     private final UserRefrigeratorRepository userRefrigeratorRepository;
 
-    public String insertRefrigerator(InsertRefrigeratorRequestDto reqDto) {
+    public String insertRefrigerator(User user, String refrigeratorName) {
 
-        Optional<User> user = userRepository.findByUserEmail(reqDto.getUserEmail());
-        //에러코드 추가
-        user.orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         Refrigerator refrigerator = refrigeratorRepository.save(Refrigerator.builder()
-                .refrigeratorName(reqDto.getRefrigeratorName())
+                .refrigeratorName(refrigeratorName)
                 .build());
 
         UserRefrigerator save = userRefrigeratorRepository.save(UserRefrigerator.builder()
                 .refrigerator(refrigerator)
-                .user(user.get())
+                .refrigeratorOwner(true)
+                .user(user)
                 .build());
 
         return "success";
@@ -62,14 +59,16 @@ public class RefrigeratorServiceImpl implements RefrigeratorService {
     @Override
     public List<RefrigeratorResponseDto> findAllRefrigeratorByUser(User user) {
 
-        List<Refrigerator> refrigeratorByUser = refrigeratorQueryRepository.findAllRefrigeratorByUser(user);
+        List<UserRefrigerator> userRefrigeratorByUser = userRefrigeratorRepository.findUserRefrigeratorByUser(user);
         List<RefrigeratorResponseDto> response = new ArrayList<>();
 
-        for (Refrigerator temp : refrigeratorByUser) {
-            response.add(RefrigeratorResponseDto.builder()
-                    .refrigeratorId(temp.getRefrigeratorId())
-                    .refrigeratorName(temp.getRefrigeratorName())
-                    .build());
+        for (UserRefrigerator temp : userRefrigeratorByUser) {
+            response.add(
+                    RefrigeratorResponseDto.builder()
+                            .refrigeratorId(temp.getUserRefrigeratorId())
+                            .refrigeratorName(temp.getRefrigerator().getRefrigeratorName())
+                            .refrigeratorOwner(temp.isRefrigeratorOwner()) // 주인 여부 추가 2022-05-13
+                            .build());
         }
 
         return response;

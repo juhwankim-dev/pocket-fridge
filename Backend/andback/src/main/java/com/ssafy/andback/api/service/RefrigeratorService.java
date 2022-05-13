@@ -19,7 +19,7 @@ import java.util.List;
 
 public interface RefrigeratorService {
 
-    public String insertRefrigerator(InsertRefrigeratorRequestDto reqDto);
+    public String insertRefrigerator(User user, String refrigeratorName);
 
     public List<RefrigeratorResponseDto> findAllRefrigeratorByUser(User user);
 
