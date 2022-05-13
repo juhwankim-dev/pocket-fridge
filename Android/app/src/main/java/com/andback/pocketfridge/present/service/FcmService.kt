@@ -25,7 +25,10 @@ class FcmService: FirebaseMessagingService() {
 
         // 서버에 업데이트
         sendFcmTokenUseCase(FcmTokenEntity(androidId, token)).subscribeOn(Schedulers.io())
-            .subscribe()
+            .subscribe(
+                {},
+                {}
+            )
     }
 
 
