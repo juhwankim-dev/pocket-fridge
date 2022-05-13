@@ -29,10 +29,6 @@ api = Api(
 # flask_restx의 api.namespace로 api 생성
 recommend_np = api.namespace('recommend', description='레시피 추천 API')
 
-# jwt secret key 설정 (Spring jwt와 같은 secret key)
-JWT_SECRET_KEY = 'SSAFYPocketFridge'
-algorithm = 'HS256'
-
 
 @recommend_np.route('')
 class TokenGet(Resource):
@@ -44,7 +40,9 @@ class TokenGet(Resource):
         if header is None:
             return {'message': 'Please Login'}, 404
         data = jwt.decode(header, JWT_SECRET_KEY, algorithms=algorithm)
+        global user_id
         user_id = data.get('JWT')
+        # user_id = 9
 
         # 2. 추천 알고리즘
         recipes = recommend(user_id)
@@ -54,6 +52,35 @@ class TokenGet(Resource):
             'status': 200,
             'data': recipes
         }
+
+
+# JWT 토큰 인증 테스트
+# jwt secret key 설정 (Spring jwt와 같은 secret key)
+JWT_SECRET_KEY = 'SSAFYPocketFridge'
+algorithm = 'HS256'
+json = {
+    "user_id": 9,
+    "email": "ekdms42132@gmail.com",
+    "password": "ssafy"
+}
+encoded = jwt.encode(json, JWT_SECRET_KEY, algorithm=algorithm)
+decoded = jwt.decode(encoded, JWT_SECRET_KEY, algorithms=algorithm)
+# user_id = decoded.get('user_id')
+
+# flask_restx의 api.namespace로 api 생성
+jwt_np = api.namespace('jwt', description='jwt 토큰 디코딩 테스트')
+
+
+@jwt_np.route('')
+class TokenGet(Resource):
+    @jwt_np.doc(responses={200: 'jwt 토큰 확인 완료'})
+    @jwt_np.doc(responses={404: 'jwt 토큰 확인 실패'})
+    def get(self):
+        header = encoded  # Authorization 헤더로 담음
+        if header is None:
+            return {'message': 'Please Login'}, 404
+        data = jwt.decode(header, JWT_SECRET_KEY, algorithms=algorithm)
+        return data, 200
 
 
 def recommend(user_id):
@@ -69,6 +96,7 @@ def recommend(user_id):
     )
 
     sql_recipe = "SELECT * from recipe;"  # 레시피 sql 쿼리문
+    # sql_recipe_like = "SELECT * from recipe right join recipe_like on user_id = %s and recipe.recipe_id = recipe_like.recipe_id"
     sql_like = "SELECT * from recipe_like"  # 레시피 좋아요 sql 쿼리문
 
     # 커서로 sql 쿼리문 출력 (with를 사용하기 때문에 conn.commit()과 conn.close() 불필요)
@@ -76,6 +104,7 @@ def recommend(user_id):
         with conn.cursor() as cur:  # 커서생성 (cursor로 SQL 실행하여 데이터 가져올 수 있음)
             # 레시피 select 커서 실행
             cur.execute(sql_recipe)
+            # ['recipe_id', 'recipe_all_ingredient', 'recipe_content', 'recipe_food_name', 'recipe_image', 'recipe_serving', 'recipe_time', 'recipe_type', 'recipe_food_summary']
             recipes = cur.fetchall()  # 모든 레시피 레코드 가져오기
 
             # 레시피 좋아요 select 커서 실행
@@ -84,9 +113,13 @@ def recommend(user_id):
 
     # 레시피 DataFrame
     df_recipes = pd.DataFrame(recipes)
+    # with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # DataFrame 깔끔하게 출력
+    #     print(df_recipes)
 
     # 레시피 좋아요 DataFrame
     df_likes = pd.DataFrame(likes)
+    # with pd.option_context('display.max_rows', None, 'display.max_columns', None):
+    #     print(df_likes)
 
     # 좋아요가 비어있으면, 랜덤 추천
     if df_likes.empty:
@@ -98,6 +131,7 @@ def recommend(user_id):
     else:
         # 레시피와 좋아요 데이터 결합
         recipes_likes_merge = pd.merge(df_recipes, df_likes, on="recipe_id")
+        # print(recipes_likes_merge)
 
         # 사용자-아이템 행렬 생성
         likes_matrix = df_likes.pivot_table("recipe_like_id", "user_id", "recipe_id")
@@ -110,6 +144,8 @@ def recommend(user_id):
             for column in likes_matrix:  # 컬럼
                 if likes_matrix[column][i] > 0.0:  # 0 이상이면 1로 변경(좋아요 체크)
                     likes_matrix[column][i] = 1.0
+        # with pd.option_context('display.max_rows', None, 'display.max_columns', None):
+        #     print('<사용자-아이템 행렬>\n', likes_matrix)
 
         # 아이템-사용자 행렬로 전치
         likes_matrix_T = likes_matrix.T
@@ -119,10 +155,13 @@ def recommend(user_id):
         # 레시피 간 유사도 산출
         # 아이템 유사도 행렬 : 코사인 유사도 (좋아요에 따른 유사도이므로, 다른 종류의 레시피도 유사도가 비슷할수 있다)
         item_sim = cosine_similarity(likes_matrix_T, likes_matrix_T)
+        # print(item_sim)
 
         # 데이터 프레임 형태로 저장
         item_sim_df = pd.DataFrame(item_sim, index=likes_matrix_T.index, columns=likes_matrix_T.index)
 
+        # item_sim_df.shape
+        # print('<아이템 유사도 행렬>\n', item_sim_df.iloc[:, :])
 
         # 사용자별 예측 함수
         # 인수로 사용자-아이템 행렬(NaN은 0으로 대체), 아이템 유사도 행렬 사용
@@ -159,6 +198,9 @@ def recommend(user_id):
         print(f'아이템 기반 모든 인접 이웃 MSE: {get_mse(likes_pred, likes_matrix.values):.4f}')
 
         def predict_likes_topsim(likes_arr, recipes_arr, N):
+            # 특정 아이템과 유사도가 높은 상위 N개 (5개 넘으면 5개까지만)
+            # if N > 5:
+            #     N = 5
 
             # 사용자-아이템 행렬 크기만큼 0으로 채운 예측 행렬 초기화
             pred = np.zeros(likes_arr.shape)
@@ -186,6 +228,7 @@ def recommend(user_id):
             return pred
 
         # 사용자별 예측 좋아요 (matrix_T.shape[0] : 레시피개수)
+        # likes_pred = predict_likes_topsim(likes_matrix.values, item_sim_df.values, likes_matrix_T.shape[0])
         likes_pred = predict_likes_topsim(likes_matrix.values, item_sim_df.values, 5)
 
         # 성능 평가
@@ -195,6 +238,7 @@ def recommend(user_id):
         likes_pred_matrix = pd.DataFrame(data=likes_pred, index=likes_matrix.index,
                                          columns=likes_matrix.columns)
 
+        ################### 여기부터 jwt로 디코딩한 user_id 값 가져오기 ########################
         # 현재 user가 좋아요한 레시피
         user_likes_id = likes_matrix.loc[user_id, :]
         var = user_likes_id[user_likes_id > 0].sort_values(ascending=False)[:]
