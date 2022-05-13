@@ -50,7 +50,7 @@ class LoginViewModel @Inject constructor(
                 .subscribe(
                     {
                         if(it.data != null) {
-                            saveJWT(it.data)
+                            saveJWT(it.data.token, it.data.loginType)
                         }
                         _toastMsg.value = it.message
                         _isLoading.value = false
@@ -74,7 +74,8 @@ class LoginViewModel @Inject constructor(
                 .subscribe(
                     {
                         if (it.data != null) {
-                            saveJWT(it.data)
+                            // TODO: 나중에 구글 or 카카오에 따라 다르게 넣어줘 
+                            saveJWT(it.data, "GOOGLE")
                         }
                         _toastMsg.value = it.message
                         _isLoading.value = false
@@ -88,9 +89,10 @@ class LoginViewModel @Inject constructor(
         )
     }
 
-    fun saveJWT(jwt: String) {
+    fun saveJWT(jwt: String, loginType: String) {
         viewModelScope.launch {
             writeDataStoreUseCase.execute("JWT", jwt)
+            writeDataStoreUseCase.execute("LOGIN_TYPE", loginType)
         }
     }
 
