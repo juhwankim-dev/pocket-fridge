@@ -46,9 +46,6 @@ class FridgeViewModel @Inject constructor(
     }
 
     fun getFridges() {
-
-        val no = if (_selectedFridge.value != null) _selectedFridge.value!!.id else -1
-
         getFridgesUseCase()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -57,8 +54,8 @@ class FridgeViewModel @Inject constructor(
                     // emptyList 처리는 보장 못함
                     it.data?.let { list ->
                         _fridges.value = list
-                        if (no >= 0)
-                            setFridgeForChangingIngreList(no)
+                        if (_selectedFridge.value != null && list.contains(_selectedFridge.value))
+                            setFridgeForChangingIngreList(_selectedFridge.value!!.id)
                         else
                             setFridgeForChangingIngreList(list[0].id)
                     }
