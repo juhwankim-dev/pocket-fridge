@@ -34,6 +34,10 @@ class UserRemoteDataSourceImpl @Inject constructor(private val userApi: UserApi)
         return userApi.login(loginEntity)
     }
 
+    override fun updateUser(userEditEntity: UserEditEntity): Single<BaseResponse<Any>> {
+        return userApi.updateUser(userEditEntity)
+    }
+
     override fun socialLogin(socialType: String, code: String): Single<BaseResponse<String>> {
         return userApi.socialLogin(socialType, code)
     }

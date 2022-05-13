@@ -38,6 +38,10 @@ class UserRepositoryImpl @Inject constructor(
         return userRemoteDataSource.login(loginEntity)
     }
 
+    override fun updateUser(userEditEntity: UserEditEntity): Single<BaseResponse<Any>> {
+        return userRemoteDataSource.updateUser(userEditEntity)
+    }
+
     override fun socialLogin(socialType: String, code: String): Single<BaseResponse<String>> {
         return userRemoteDataSource.socialLogin(socialType, code)
     }

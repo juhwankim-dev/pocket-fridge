@@ -27,6 +27,9 @@ interface UserApi {
     @POST("user/login")
     fun login(@Body loginEntity: LoginEntity): Single<BaseResponse<String>>
 
+    @PUT("user/update")
+    fun updateUser(@Body userEditEntity: UserEditEntity): Single<BaseResponse<Any>>
+
     @GET("auth/{socialLoginType}/callback")
     fun socialLogin(
         @Path("socialLoginType") @NotNull socialType: String,

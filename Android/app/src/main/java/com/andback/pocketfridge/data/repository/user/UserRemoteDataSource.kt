@@ -5,7 +5,6 @@ import io.reactivex.Single
 import org.jetbrains.annotations.NotNull
 import retrofit2.http.Body
 import retrofit2.http.Path
-import retrofit2.http.Query
 
 interface UserRemoteDataSource {
     fun getUser(): Single<BaseResponse<UserEntity>>
@@ -15,6 +14,7 @@ interface UserRemoteDataSource {
     fun checkNickname(@Path("userNickname") @NotNull nickname: String): Single<BaseResponse<Any>>
     fun findPW(@Body userForFind: UserForFindEntity): Single<BaseResponse<Any>>
     fun login(@Body loginEntity: LoginEntity): Single<BaseResponse<String>>
+    fun updateUser(@Body userEditEntity: UserEditEntity): Single<BaseResponse<Any>>
     fun socialLogin(
         @NotNull socialType: String,
         @NotNull code: String
