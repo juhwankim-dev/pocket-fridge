@@ -1,6 +1,5 @@
 package com.ssafy.andback.core.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,15 +18,14 @@ import javax.persistence.*;
  **/
 
 @Entity
+@Table(name = "notification")
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Notification extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "notification_id")
-    @NotNull
     private Long notificationId;
 
     @Column(name = "check_read")

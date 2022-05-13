@@ -87,12 +87,14 @@ public class TokenServiceImpl implements TokenService {
 
         String message = refrigerator.get().getRefrigeratorName() + "을 공유 받으시겠습니까?";
 
-        notificationRepository.save(Notification.builder()
+        Notification notification = Notification.builder()
                 .notificationMessage(message)
                 .notificationRead(false)
                 .refrigeratorId(refrigeratorId)
                 .user(user.get())
-                .build());
+                .build();
+
+        notificationRepository.save(notification);
 
         Optional<List<Token>> TokenList = tokenRepository.findAllByUser(user.get());
         for (Token temp : TokenList.get()) {
