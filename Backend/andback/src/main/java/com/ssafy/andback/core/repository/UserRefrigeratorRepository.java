@@ -23,5 +23,9 @@ public interface UserRefrigeratorRepository extends JpaRepository<UserRefrigerat
 
     void deleteUserRefrigeratorByRefrigerator(Refrigerator refrigeratorId);
 
-    Optional<UserRefrigerator> findAllByRefrigeratorAndUserAndRefrigeratorOwner(Refrigerator refrigerator, User user, Boolean owner);
+    Optional<UserRefrigerator> findByRefrigeratorAndUserAndRefrigeratorOwner(Refrigerator refrigerator, User user, Boolean owner);
+
+    Optional<UserRefrigerator> findByRefrigeratorAndUser(Refrigerator refrigerator, User user);
+
+    List<UserRefrigerator> findAllByRefrigerator(Refrigerator refrigerator);
 }

@@ -102,6 +102,27 @@ public class RefrigeratorController {
         return ResponseEntity.ok(BaseResponseDto.of(200, "success"));
     }
 
+    @ApiOperation(value = "냉장고 삭제", notes = "냉장고를 삭제한다")
+    @DeleteMapping("/{refrigeratorId}")
+    public ResponseEntity<BaseResponseDto>
+    deleteRefrigerator(@ApiIgnore Authentication authentication, @PathVariable Long refrigeratorId) throws CustomException {
+        if (authentication == null) {
+            throw new CustomException(ErrorCode.NOT_AUTH_TOKEN);
+        }
+
+        User user = (User) authentication.getPrincipal();
+
+        if (user == null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
+
+
+        refrigeratorService.deleteRefrigerator(user, refrigeratorId);
+
+
+        return ResponseEntity.ok(BaseResponseDto.of(200, "success"));
+    }
+
     @ApiOperation(value = "공유 냉장고 생성", notes = "공유 냉장고를 생성한다.")
     @PostMapping("/share/{refrigeratorId}")
     public ResponseEntity<BaseResponseDto> createShareGroup(@ApiIgnore Authentication authentication, @PathVariable Long refrigeratorId) {

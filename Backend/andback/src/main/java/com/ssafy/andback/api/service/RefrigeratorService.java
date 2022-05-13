@@ -29,4 +29,6 @@ public interface RefrigeratorService {
 
     public String updateRefrigerator(User user, Long refrigeratorId, String refrigeratorName);
 
+    public String deleteRefrigerator(User user, Long refrigeratorId);
+
 }
