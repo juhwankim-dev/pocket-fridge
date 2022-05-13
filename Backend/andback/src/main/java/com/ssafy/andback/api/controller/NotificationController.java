@@ -1,10 +1,12 @@
 package com.ssafy.andback.api.controller;
 
 import com.ssafy.andback.api.constant.ErrorCode;
+import com.ssafy.andback.api.dto.response.BaseResponseDto;
 import com.ssafy.andback.api.dto.response.ListResponseDto;
 import com.ssafy.andback.api.dto.response.NotificationResponseDto;
 import com.ssafy.andback.api.exception.CustomException;
 import com.ssafy.andback.api.service.NotificationService;
+import com.ssafy.andback.core.domain.BaseEntity;
 import com.ssafy.andback.core.domain.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
@@ -51,10 +54,30 @@ public class NotificationController {
             throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
 
-        List<NotificationResponseDto> response = notificationService.findAllbyUser(user);
+        List<NotificationResponseDto> response = notificationService.findAllByUser(user);
 
         return ResponseEntity.ok(new ListResponseDto<>(200, "success", response));
     }
-    
 
+    @PutMapping()
+    @ApiOperation(value = "알림 읽기", notes = "읽지 않았던 알림은 모두 읽음 표시")
+    ResponseEntity<BaseResponseDto> readNotifiacion(@ApiIgnore Authentication authentication) {
+        if (authentication == null) {
+            throw new CustomException(ErrorCode.NOT_AUTH_TOKEN);
+        }
+
+        User user = (User) authentication.getPrincipal();
+
+        if (user == null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
+
+        String result = notificationService.readNotificationByUser(user);
+
+        if (result != "success") {
+            return ResponseEntity.ok(BaseResponseDto.of(404, "fail"));
+        }
+
+        return ResponseEntity.ok(BaseResponseDto.of(200, "success"));
+    }
 }

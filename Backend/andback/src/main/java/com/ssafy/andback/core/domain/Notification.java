@@ -28,7 +28,7 @@ public class Notification extends BaseEntity {
     @Column(name = "notification_id")
     private Long notificationId;
 
-    @Column(name = "check_read")
+    @Column(name = "notification_read")
     @NotNull
     private Boolean notificationRead;
 

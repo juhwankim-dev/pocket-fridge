@@ -18,8 +18,7 @@ public class NotificationServiceImpl implements NotificationService {
     private final NotificationRepository notificationRepository;
 
     @Override
-    @Transactional(readOnly = true)
-    public List<NotificationResponseDto> findAllbyUser(User user) {
+    public List<NotificationResponseDto> findAllByUser(User user) {
         // 최신순으로 리스트를 받는다
         List<Notification> notificationList = notificationRepository.findAllByUserOrderByCreatedDateDesc(user);
 
@@ -32,11 +31,21 @@ public class NotificationServiceImpl implements NotificationService {
                     .refrigeratorId(temp.getRefrigeratorId())
                     .notificationRead(temp.getNotificationRead())
                     .build());
-
-            //읽음 처리
-            temp.updateNotificationRead();
         }
 
         return result;
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public String readNotificationByUser(User user) {
+
+        List<Notification> notificationList = notificationRepository.findAllByUserAndNotificationRead(user, false);
+
+        for (Notification temp : notificationList) {
+            temp.updateNotificationRead();
+        }
+
+        return "success";
     }
 }
