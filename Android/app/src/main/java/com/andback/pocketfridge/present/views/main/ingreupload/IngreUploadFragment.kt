@@ -149,7 +149,7 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
     }
 
     private fun setDropDownAdapter(list: List<FridgeEntity>) {
-        val stringList = list.map { it.refrigeratorName }
+        val stringList = list.map { it.name }
         val adapter = ArrayAdapter(requireContext(), R.layout.item_dropdown_list, stringList)
         (binding.tvIngreUploadFSelectFridge as? AutoCompleteTextView)?.let { tv ->
             tv.setText(stringList[0])
@@ -157,7 +157,7 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
             // 아이템 클릭 시 냉장고 업데이트
             tv.setOnItemClickListener { _, _, i, l ->
                 Log.d(TAG, "setDropdownAdapter: $i, $l")
-                val fridge = list.find { it.refrigeratorName == stringList[i] }
+                val fridge = list.find { it.name == stringList[i] }
                 fridge?.let { viewModel.setFridge(it) }
             }
         }

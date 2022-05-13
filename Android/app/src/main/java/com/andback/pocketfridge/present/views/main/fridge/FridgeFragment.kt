@@ -60,11 +60,11 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
         binding.tvFridgeFName.setOnClickListener {
             FridgeListBottomSheet(
                 viewModel.fridges.value!!,
-                viewModel.selectedFridge.value!!.refrigeratorId
+                viewModel.selectedFridge.value!!.id
             ).apply {
                 fridgeAdapter.itemClickListener = object : FridgeListAdapter.ItemClickListener {
                     override fun onClick(data: FridgeEntity) {
-                        viewModel.updateSelectedFridgeThenGetIngreList(data.refrigeratorId)
+                        viewModel.updateSelectedFridgeThenGetIngreList(data.id)
                         dismiss()
                     }
                 }
@@ -78,13 +78,19 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
                 override fun onClick(data: Ingredient) {
                     Log.d(TAG, "onClick: ${data}")
                     detailViewModel.selectIngre(data)
-                    findNavController().navigate(R.id.action_fridgeFragment_to_ingreDetailFragment)
+                    findNavController().navigate(
+                        FridgeFragmentDirections.actionFridgeFragmentToIngreDetailFragment(
+                            viewModel.selectedFridge.value!!.isOwner
+                        )
+                    )
                 }
             }
             itemLongClickListener = object : IngreRVAdapter.ItemLongClickListener {
                 override fun onLongClick(data: Ingredient) {
                     Log.d(TAG, "onLongClick: ${data}")
-                    showDeleteDialog(data)
+                    if (viewModel.selectedFridge.value!!.isOwner) {
+                        showDeleteDialog(data)
+                    }
                 }
             }
         }
@@ -108,7 +114,7 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
                     }
                 }
                 selectedFridge.observe(owner) {
-                    binding.tvFridgeFName.setText(it.refrigeratorName)
+                    binding.tvFridgeFName.setText(it.name)
                 }
             }
         }
