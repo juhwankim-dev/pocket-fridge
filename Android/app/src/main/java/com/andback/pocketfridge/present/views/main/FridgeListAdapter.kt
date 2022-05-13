@@ -1,4 +1,4 @@
-package com.andback.pocketfridge.present.views.main.fridge
+package com.andback.pocketfridge.present.views.main
 
 
 import android.view.LayoutInflater
@@ -26,9 +26,10 @@ class FridgeListAdapter : RecyclerView.Adapter<FridgeListAdapter.FridgeViewHolde
                 false -> binding.ivFridgeListINotOwner.visibility = View.VISIBLE
             }
             binding.tvFridgeListIName.text = data.name
-            when(data.id) {
-                id   -> binding.ivFridgeListICurrent.visibility = View.VISIBLE
-                else -> binding.ivFridgeListICurrent.visibility = View.INVISIBLE
+            when {
+                id == -1      -> binding.ivFridgeListICurrent.visibility = View.GONE
+                data.id == id -> binding.ivFridgeListICurrent.visibility = View.VISIBLE
+                data.id != id -> binding.ivFridgeListICurrent.visibility = View.INVISIBLE
             }
         }
     }
