@@ -78,13 +78,19 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
                 override fun onClick(data: Ingredient) {
                     Log.d(TAG, "onClick: ${data}")
                     detailViewModel.selectIngre(data)
-                    findNavController().navigate(R.id.action_fridgeFragment_to_ingreDetailFragment)
+                    findNavController().navigate(
+                        FridgeFragmentDirections.actionFridgeFragmentToIngreDetailFragment(
+                            viewModel.selectedFridge.value!!.isOwner
+                        )
+                    )
                 }
             }
             itemLongClickListener = object : IngreRVAdapter.ItemLongClickListener {
                 override fun onLongClick(data: Ingredient) {
                     Log.d(TAG, "onLongClick: ${data}")
-                    showDeleteDialog(data)
+                    if (viewModel.selectedFridge.value!!.isOwner) {
+                        showDeleteDialog(data)
+                    }
                 }
             }
         }

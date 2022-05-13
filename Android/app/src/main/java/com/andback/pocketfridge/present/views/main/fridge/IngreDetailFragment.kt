@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.databinding.FragmentIngreDetailBinding
 import com.andback.pocketfridge.domain.model.Ingredient
@@ -82,6 +83,18 @@ class IngreDetailFragment : BaseFragment<FragmentIngreDetailBinding>(R.layout.fr
             }
             else -> {
                 "D+${ingredient.leftDay}"
+            }
+        }
+
+        val args: IngreDetailFragmentArgs by navArgs()
+        when(args.isOwner) {
+            true -> {
+                binding.btnIngreDetailFDelete.visibility = View.VISIBLE
+                binding.btnIngreDetailFEdit.visibility = View.VISIBLE
+            }
+            else -> {
+                binding.btnIngreDetailFDelete.visibility = View.GONE
+                binding.btnIngreDetailFEdit.visibility = View.GONE
             }
         }
     }
