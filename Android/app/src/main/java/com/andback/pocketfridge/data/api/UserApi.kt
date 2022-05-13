@@ -34,6 +34,6 @@ interface UserApi {
         @Query("code") @NotNull code: String
     ): Single<BaseResponse<Token>>
 
-    @POST("user/token")
+    @POST("token")
     fun updateFcmToken(@Body tokenEntity: FcmTokenEntity): Single<BaseResponse<Any>>
 }
