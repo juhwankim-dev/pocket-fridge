@@ -40,7 +40,7 @@ class TokenGet(Resource):
     @recommend_np.doc(responses={404: '레시피 추천 실패'})
     def get(self):
         # 1. JWT 토큰 인증
-        header = request.headers.get('JWT')  # Authorization 헤더로 담음
+        header = request.headers.get('JWT')  # JWT 헤더로 담음
         if header is None:
             return {'message': 'Please Login'}, 404
         data = jwt.decode(header, JWT_SECRET_KEY, algorithms=algorithm)
