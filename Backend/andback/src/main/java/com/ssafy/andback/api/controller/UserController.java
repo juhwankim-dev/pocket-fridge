@@ -1,11 +1,13 @@
 package com.ssafy.andback.api.controller;
 
+import com.ssafy.andback.api.constant.LoginType;
 import com.ssafy.andback.api.dto.request.CheckUserPasswordRequestDto;
 import com.ssafy.andback.api.dto.request.FindUserPasswordRequestDto;
 import com.ssafy.andback.api.dto.request.LoginRequestDto;
 import com.ssafy.andback.api.dto.request.UpdateUserRequestDto;
 import com.ssafy.andback.api.dto.response.CheckUserResponseDto;
 import com.ssafy.andback.api.dto.response.SingleResponseDto;
+import com.ssafy.andback.api.dto.response.TokenResponseDto;
 import com.ssafy.andback.api.service.MailService;
 import com.ssafy.andback.core.domain.User;
 import io.swagger.annotations.*;
@@ -84,13 +86,18 @@ public class UserController {
 
     @ApiOperation(value = "로그인", notes = "이메일, 비밀번호로 로그인")
     @PostMapping(value = "/login")
-    public ResponseEntity<SingleResponseDto<String>> login(@RequestBody LoginRequestDto loginRequestDto) {
+    public ResponseEntity<SingleResponseDto<TokenResponseDto>> login(@RequestBody LoginRequestDto loginRequestDto) {
         String result = userService.login(loginRequestDto);
         if (result.equals("fail")) {
-            return ResponseEntity.status(401).body(new SingleResponseDto<String>(401, "아이디와 비밀번호를 확인해주세요.", null));
+            return ResponseEntity.status(401).body(new SingleResponseDto<TokenResponseDto>(401, "아이디와 비밀번호를 확인해주세요.", null));
         }
 
-        return ResponseEntity.ok(new SingleResponseDto<>(200, "로그인 성공", result));
+        TokenResponseDto response = TokenResponseDto.builder()
+                .jwtToken(result)
+                .loginType(LoginType.COMMON)
+                .build();
+
+        return ResponseEntity.ok(new SingleResponseDto<TokenResponseDto>(200, "로그인 성공", response));
     }
 
     @ApiOperation(value = "비밀번호 찾기", notes = "비밀번호 찾기 시 새 비밀번호를 이메일에 전송한다.")
@@ -135,11 +142,11 @@ public class UserController {
     @ApiOperation(value = "비밀번호 확인", notes = "회원정보 수정 전 비밀번호 확인을 한다.")
     @PostMapping(value = "/update")
     public ResponseEntity<BaseResponseDto> checkUserPassword(@ApiIgnore Authentication authentication,
-                                                             @RequestBody CheckUserPasswordRequestDto checkUserPasswordRequestDto){
+                                                             @RequestBody CheckUserPasswordRequestDto checkUserPasswordRequestDto) {
         User user = (User) authentication.getPrincipal();
 
         String answer = userService.checkUserPassword(user, checkUserPasswordRequestDto.getUserPassword());
-        if(answer.equals("fail")){
+        if (answer.equals("fail")) {
             return ResponseEntity.status(401).body(BaseResponseDto.of(401, "비밀번호가 틀렸습니다."));
         }
         return ResponseEntity.ok(BaseResponseDto.of(200, "비밀번호 확인 완료"));
@@ -149,16 +156,15 @@ public class UserController {
     @PutMapping(value = "/update")
     public ResponseEntity<BaseResponseDto> updateUser(@ApiIgnore Authentication authentication,
                                                       @RequestBody @Valid UpdateUserRequestDto updateUserRequestDto,
-                                                      @ApiIgnore Errors errors){
+                                                      @ApiIgnore Errors errors) {
         User user = (User) authentication.getPrincipal();
 
         String answer = userService.updateUser(user, updateUserRequestDto);
-        if(answer.equals("fail")){
+        if (answer.equals("fail")) {
             return ResponseEntity.status(401).body(BaseResponseDto.of(401, "닉네임 중복을 확인하세요."));
         }
         return ResponseEntity.ok(BaseResponseDto.of(200, "회원 정보 수정 완료"));
     }
-
 
 
 }

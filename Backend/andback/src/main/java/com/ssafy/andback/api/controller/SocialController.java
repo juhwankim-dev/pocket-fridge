@@ -1,7 +1,9 @@
 package com.ssafy.andback.api.controller;
 
+import com.ssafy.andback.api.constant.LoginType;
 import com.ssafy.andback.api.constant.SocialLoginType;
 import com.ssafy.andback.api.dto.response.SingleResponseDto;
+import com.ssafy.andback.api.dto.response.TokenResponseDto;
 import com.ssafy.andback.api.service.OAuthService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,11 +31,11 @@ import org.springframework.web.servlet.view.RedirectView;
 public class SocialController {
 
     private final OAuthService oAuthService;
-    
+
     @ApiOperation(value = "소셜 로그인", notes = "소셜 로그인 타입과 code 를 전송받아 소셜로그인을 진행한다")
     @ResponseBody
     @GetMapping(value = "/{socialLoginType}/callback")
-    public ResponseEntity<SingleResponseDto<String>> callback(
+    public ResponseEntity<SingleResponseDto<TokenResponseDto>> callback(
             @PathVariable(name = "socialLoginType") String socialLoginPath,
             @RequestParam(name = "code") String code) throws Exception {
 
@@ -41,10 +43,15 @@ public class SocialController {
 
         String result = oAuthService.oAuthLogin(socialLoginType, code);
 
+        TokenResponseDto response = TokenResponseDto.builder()
+                .loginType(LoginType.valueOf(socialLoginPath.toUpperCase()))
+                .jwtToken(result)
+                .build();
+
         if (result == "fail") {
-            return ResponseEntity.ok(new SingleResponseDto<String>(200, "fail", "소셜 로그인에 실패했습니다"));
+            return ResponseEntity.ok(new SingleResponseDto<TokenResponseDto>(200, "fail", null));
         }
-        return ResponseEntity.ok(new SingleResponseDto<>(200, "로그인 성공", result));
+        return ResponseEntity.ok(new SingleResponseDto<TokenResponseDto>(200, "로그인 성공", response));
     }
 
 }
