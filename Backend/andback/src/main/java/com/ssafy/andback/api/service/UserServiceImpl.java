@@ -183,8 +183,10 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = false) // save 없이 자동으로 업데이트
     public String updateUser(User user, UpdateUserRequestDto updateUserRequestDto) {
+
         // 닉네임 중복검사
-        if (userRepository.existsByUserNickname(updateUserRequestDto.getUserNickname()))
+        if (!user.getUserNickname().equals(updateUserRequestDto.getUserNickname()) &&
+                userRepository.existsByUserNickname(updateUserRequestDto.getUserNickname()))
             return "fail";
         // 공백이면 원래 데이터 그대로, 변경되었으면 변경
         if (!updateUserRequestDto.getUserNickname().equals("") &&
