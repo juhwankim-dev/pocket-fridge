@@ -11,6 +11,7 @@ import com.andback.pocketfridge.domain.usecase.datastore.WriteDataStoreUseCase
 import com.andback.pocketfridge.domain.usecase.user.SocialLoginUseCase
 import com.andback.pocketfridge.present.config.SingleLiveEvent
 import com.andback.pocketfridge.present.utils.PageSet
+import com.andback.pocketfridge.present.workmanager.DailyNotiWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -40,6 +41,9 @@ class LoginViewModel @Inject constructor(
     private val _toastMsg = SingleLiveEvent<String>()
     val toastMsg: LiveData<String> get() = _toastMsg
 
+    private val _isLogin = SingleLiveEvent<Boolean>()
+    val isLogin: LiveData<Boolean> = _isLogin
+
     private fun login(loginEntity: LoginEntity) {
         _isLoading.value = true
 
@@ -52,6 +56,7 @@ class LoginViewModel @Inject constructor(
                         if(it.data != null) {
                             saveJWT(it.data.token, it.data.loginType)
                         }
+                        _isLogin.value = true
                         _toastMsg.value = it.message
                         _isLoading.value = false
                         pageNumber.value = PageSet.MAIN
@@ -77,6 +82,7 @@ class LoginViewModel @Inject constructor(
                             // TODO: 나중에 구글 or 카카오에 따라 다르게 넣어줘 
                             saveJWT(it.data.token, "GOOGLE")
                         }
+                        _isLogin.value = true
                         _toastMsg.value = it.message
                         _isLoading.value = false
                         pageNumber.value = PageSet.MAIN

@@ -16,18 +16,30 @@ import com.andback.pocketfridge.BuildConfig
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.databinding.FragmentLoginBinding
 import com.andback.pocketfridge.databinding.FragmentSnsLoginBinding
+import com.andback.pocketfridge.domain.usecase.datastore.ReadDataStoreUseCase
 import com.andback.pocketfridge.present.config.BaseFragment
+import com.andback.pocketfridge.present.utils.PageSet
 import com.andback.pocketfridge.present.utils.SignUpChecker
 import com.andback.pocketfridge.present.views.user.UserActivity
+import com.andback.pocketfridge.present.workmanager.DailyNotiWorker
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login) {
     private val TAG = "LogiinFragment_debuk"
     private val viewModel: LoginViewModel by activityViewModels()
+
+    @Inject
+    lateinit var readDataStoreUseCase: ReadDataStoreUseCase
 
     var isValidName = false
     var isValidPw = false
@@ -44,11 +56,15 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 
         with(viewModel) {
             pageNumber.observe(viewLifecycleOwner) {
-                (context as UserActivity).onChangeFragement(it)
+                (requireActivity() as UserActivity).onChangeFragement(it)
             }
 
             toastMsg.observe(viewLifecycleOwner) {
                 showToastMessage(it)
+            }
+
+            isLogin.observe(viewLifecycleOwner) {
+                registerNotiWorker()
             }
         }
     }
@@ -122,6 +138,12 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             }
         } else {
             showToastMessage(resources.getString(R.string.login_fail))
+        }
+    }
+
+    private fun registerNotiWorker() {
+        runBlocking {
+            DailyNotiWorker.runAt(requireContext(), readDataStoreUseCase)
         }
     }
 
