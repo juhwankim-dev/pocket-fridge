@@ -73,6 +73,12 @@
         <action
             android:id="@+id/action_myPageFragment_to_notiSettingFragment"
             app:destination="@id/notiSettingFragment" />
+        <action
+            android:id="@+id/action_myPageFragment_to_userEditFragment"
+            app:destination="@id/userEditFragment" />
+        <action
+            android:id="@+id/action_myPageFragment_to_confirmPWFragment"
+            app:destination="@id/confirmPWFragment" />
     </fragment>
     <fragment
         android:id="@+id/fridgeManageFragment"
@@ -84,4 +90,20 @@
         android:name="com.andback.pocketfridge.present.views.main.mypage.NotiSettingFragment"
         android:label="NotiSettingFragment"
         tools:layout="@layout/fragment_noti_setting"/>
+    <fragment
+        android:id="@+id/userEditFragment"
+        android:name="com.andback.pocketfridge.present.views.main.mypage.useredit.UserEditFragment"
+        android:label="UserEditFragment"
+        tools:layout="@layout/fragment_user_edit">
+    </fragment>
+    <fragment
+        android:id="@+id/confirmPWFragment"
+        android:name="com.andback.pocketfridge.present.views.main.mypage.useredit.ConfirmPWFragment"
+        android:label="ConfirmPWFragment"
+        tools:layout="@layout/fragment_confirm_p_w">
+        <action
+            android:id="@+id/action_confirmPWFragment_to_userEditFragment"
+            app:destination="@id/userEditFragment"
+            app:popUpTo="@id/myPageFragment"/>
+    </fragment>
 </navigation>
