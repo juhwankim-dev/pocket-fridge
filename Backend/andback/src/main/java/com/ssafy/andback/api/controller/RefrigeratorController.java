@@ -6,7 +6,9 @@ import com.ssafy.andback.api.dto.request.InsertShareMemberRequestDto;
 import com.ssafy.andback.api.dto.response.*;
 import com.ssafy.andback.api.exception.CustomException;
 import com.ssafy.andback.api.service.RefrigeratorService;
+import com.ssafy.andback.api.service.TokenService;
 import com.ssafy.andback.core.domain.User;
+import com.ssafy.andback.core.repository.TokenRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -40,6 +43,7 @@ import java.util.List;
 public class RefrigeratorController {
 
     private final RefrigeratorService refrigeratorService;
+    private final TokenService tokenService;
 
     @ApiOperation(value = "냉장고 조회", notes = "사용자의 JWT 토큰값을 받아 냉장고 리스트를 보여준다")
     @GetMapping
@@ -139,14 +143,12 @@ public class RefrigeratorController {
     }
 
     @ApiOperation(value = "공유 냉장고 그릅원 초대를 위한 냉장고 아이디 전달", notes = "공유 냉장고 그룹원 초대를 위해 해당 냉장고 아이디를 넘겨준다.")
-    @GetMapping("/share/{refrigeratorId}")
-    public ResponseEntity<SingleResponseDto<InviteShareMemberResponseDto>> inviteShareMember(@PathVariable Long refrigeratorId) {
+    @GetMapping("/share/{userEmail}/{refrigeratorId}")
+    public ResponseEntity<SingleResponseDto<String>> inviteShareMember(@PathVariable String userEmail, @PathVariable Long refrigeratorId) throws CustomException, IOException {
 
-        InviteShareMemberResponseDto inviteShareMemberResponseDto = InviteShareMemberResponseDto.builder()
-                .refrigeratorId(refrigeratorId)
-                .build();
+        tokenService.sendMessage(userEmail, refrigeratorId);
 
-        return ResponseEntity.ok(new SingleResponseDto<InviteShareMemberResponseDto>(200, "초대 요청 성공", inviteShareMemberResponseDto));
+        return ResponseEntity.ok(new SingleResponseDto<String>(200, "success", "메세지 전달 완료"));
     }
 
     @ApiOperation(value = "공유 그룹원 초대 수락", notes = "공유 그릅원을 추가한다.")

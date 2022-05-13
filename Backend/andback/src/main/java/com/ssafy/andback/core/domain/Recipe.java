@@ -21,7 +21,7 @@ import java.util.List;
 @Table(name = "recipe")
 @NoArgsConstructor
 @Getter
-public class Recipe {
+public class Recipe extends BaseEntity {
 
     // 레시피 아이디
     @Id

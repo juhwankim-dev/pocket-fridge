@@ -6,21 +6,20 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 /**
-*
-* SubCategory
-* 소분류 카테고리 Entity
-*
-* @author hoony
-* @version 1.0.0
-* 생성일 2022-04-25
-* 마지막 수정일 2022-04-25
-**/
+ * SubCategory
+ * 소분류 카테고리 Entity
+ *
+ * @author hoony
+ * @version 1.0.0
+ * 생성일 2022-04-25
+ * 마지막 수정일 2022-04-25
+ **/
 
 @Entity
 @Table(name = "sub_category")
 @NoArgsConstructor
 @Getter
-public class SubCategory {
+public class SubCategory extends BaseEntity {
 
     @Id
     @Column(name = "sub_category_id")
