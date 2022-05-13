@@ -1,6 +1,8 @@
 package com.ssafy.andback.api.service;
 
+import com.ssafy.andback.api.constant.ErrorCode;
 import com.ssafy.andback.api.constant.SocialLoginType;
+import com.ssafy.andback.api.exception.CustomException;
 import com.ssafy.andback.config.auth.GoogleOauth;
 import com.ssafy.andback.config.jwt.JwtAuthenticationProvider;
 import com.ssafy.andback.core.domain.Refrigerator;
@@ -39,8 +41,6 @@ public class OAuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtAuthenticationProvider jwtAuthenticationProvider;
-    private final RefrigeratorRepository refrigeratorRepository;
-    private final UserRefrigeratorRepository userRefrigeratorRepository;
 
 
     public String request(SocialLoginType socialLoginType) throws Exception {
@@ -77,19 +77,14 @@ public class OAuthService {
                 //응답 객체가 JSON형식으로 되어 있으므로, 이를 deserialization해서 자바 객체에 담을 것이다.
                 GoogleOAuthToken oAuthToken = googleOauth.getAccessToken(accessTokenResponse);
 
-                System.out.println(oAuthToken);
-
                 //액세스 토큰을 다시 구글로 보내 구글에 저장된 사용자 정보가 담긴 응답 객체를 받아온다.
                 ResponseEntity<String> userInfoResponse = googleOauth.requestUserInfo(oAuthToken);
                 //다시 JSON 형식의 응답 객체를 자바 객체로 역직렬화한다.
                 GoogleUser googleUser = googleOauth.getUserInfo(userInfoResponse);
 
-                System.out.println("googleUser = " + googleUser);
-
                 String user_id = googleUser.getEmail();
 
-                System.out.println("user_id = " + user_id);
-
+                //유저 이메일을 가지고 온다
                 Optional<User> user = userRepository.findByUserEmail(user_id);
 
                 User result = null;
@@ -104,14 +99,14 @@ public class OAuthService {
                             .userEmail(googleUser.getEmail())
                             .roles(Collections.singletonList("USER"))  // 최초 가입시 USER로 설정
                             .build();
-
-                    Refrigerator refrigerator = Refrigerator.builder().refrigeratorName("냉장고").build();
-                    Refrigerator saveRefrigerator = refrigeratorRepository.save(refrigerator);
-                    UserRefrigerator userRefrigerator = UserRefrigerator.builder().user(result).refrigerator(saveRefrigerator).build();
-                    userRefrigeratorRepository.save(userRefrigerator);
-
+                    // 기본 냉장고 생성 부분 삭제
                     userRepository.save(result);
                 } else {
+                    if (!user.get().getUserLoginType()){ // 유저 로그인 타입이 false 이면 소셜로그인이 아니다
+                        throw new CustomException(ErrorCode.EMAIL_DUPLICATION);
+                    }
+
+                    // true이면 반환
                     result = user.get();
                 }
 
@@ -122,7 +117,6 @@ public class OAuthService {
                 throw new IllegalArgumentException("알 수 없는 소셜 로그인 형식입니다.");
             }
         }
-
         return Token;
     }
 
