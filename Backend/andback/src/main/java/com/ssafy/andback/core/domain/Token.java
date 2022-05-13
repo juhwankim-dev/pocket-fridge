@@ -21,7 +21,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Table(name = "token")
-public class Token {
+public class Token extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto increment
