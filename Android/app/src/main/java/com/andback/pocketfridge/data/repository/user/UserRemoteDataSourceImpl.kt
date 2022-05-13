@@ -44,7 +44,6 @@ class UserRemoteDataSourceImpl @Inject constructor(private val userApi: UserApi)
         return userApi.confirmPW(pw)
     }
 
-    override fun socialLogin(socialType: String, code: String): Single<BaseResponse<String>> {
     override fun socialLogin(socialType: String, code: String): Single<BaseResponse<Token>> {
         return userApi.socialLogin(socialType, code)
     }

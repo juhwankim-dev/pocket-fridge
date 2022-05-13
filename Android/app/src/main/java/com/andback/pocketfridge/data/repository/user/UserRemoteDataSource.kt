@@ -15,7 +15,6 @@ interface UserRemoteDataSource {
     fun checkEmail(@Path("userEmail") @NotNull email: String): Single<BaseResponse<Any>>
     fun checkNickname(@Path("userNickname") @NotNull nickname: String): Single<BaseResponse<Any>>
     fun findPW(@Body userForFind: UserForFindEntity): Single<BaseResponse<Any>>
-    fun login(@Body loginEntity: LoginEntity): Single<BaseResponse<String>>
     fun updateUser(@Body userEditEntity: UserEditEntity): Single<BaseResponse<Any>>
     fun confirmPW(@Body pw: Password): Single<BaseResponse<Any>>
     fun login(@Body loginEntity: LoginEntity): Single<BaseResponse<Token>>
