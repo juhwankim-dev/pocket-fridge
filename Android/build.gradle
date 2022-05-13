@@ -22,6 +22,7 @@ buildscript {
         work_hilt="1.0.0"
         google_service="4.3.10"
         fcm="23.0.4"
+        firebase_storage_version="20.0.0"
     }
     dependencies {
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"

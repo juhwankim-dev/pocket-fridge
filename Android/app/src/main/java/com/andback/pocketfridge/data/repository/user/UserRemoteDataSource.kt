@@ -1,12 +1,12 @@
 package com.andback.pocketfridge.data.repository.user
 
 import com.andback.pocketfridge.data.model.*
+import com.andback.pocketfridge.domain.model.Password
 import com.andback.pocketfridge.domain.model.Token
 import io.reactivex.Single
 import org.jetbrains.annotations.NotNull
 import retrofit2.http.Body
 import retrofit2.http.Path
-import retrofit2.http.Query
 
 interface UserRemoteDataSource {
     fun getUser(): Single<BaseResponse<UserEntity>>
@@ -15,6 +15,8 @@ interface UserRemoteDataSource {
     fun checkEmail(@Path("userEmail") @NotNull email: String): Single<BaseResponse<Any>>
     fun checkNickname(@Path("userNickname") @NotNull nickname: String): Single<BaseResponse<Any>>
     fun findPW(@Body userForFind: UserForFindEntity): Single<BaseResponse<Any>>
+    fun updateUser(@Body userEditEntity: UserEditEntity): Single<BaseResponse<Any>>
+    fun confirmPW(@Body pw: Password): Single<BaseResponse<Any>>
     fun login(@Body loginEntity: LoginEntity): Single<BaseResponse<Token>>
     fun socialLogin(
         @NotNull socialType: String,

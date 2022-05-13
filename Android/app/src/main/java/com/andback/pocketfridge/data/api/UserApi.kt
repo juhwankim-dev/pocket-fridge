@@ -1,6 +1,7 @@
 package com.andback.pocketfridge.data.api
 
 import com.andback.pocketfridge.data.model.*
+import com.andback.pocketfridge.domain.model.Password
 import com.andback.pocketfridge.domain.model.Token
 import io.reactivex.Single
 import org.jetbrains.annotations.NotNull
@@ -26,7 +27,13 @@ interface UserApi {
     fun findPW(@Body userForFind: UserForFindEntity): Single<BaseResponse<Any>>
 
     @POST("user/login")
-    fun login(@Body loginEntity: LoginEntity): Single<BaseResponse<Token>>
+    fun login(@Body loginEntity: LoginEntity): Single<BaseResponse<String>>
+
+    @PUT("user/update")
+    fun updateUser(@Body userEditEntity: UserEditEntity): Single<BaseResponse<Any>>
+
+    @POST("user/update")
+    fun confirmPW(@Body pw: Password): Single<BaseResponse<Any>>
 
     @GET("auth/{socialLoginType}/callback")
     fun socialLogin(

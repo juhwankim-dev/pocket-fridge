@@ -9,6 +9,8 @@ import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import com.andback.pocketfridge.domain.usecase.datastore.ReadDataStoreUseCase
 import com.andback.pocketfridge.present.utils.XAccessTokenInterceptor
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import dagger.hilt.android.HiltAndroidApp
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -33,6 +35,7 @@ class ApplicationClass : Application(), Configuration.Provider {
     companion object {
         lateinit var retrofit: Retrofit
         lateinit var barcodeRetrofit: Retrofit
+        lateinit var storageRef: StorageReference
     }
 
     override fun onCreate() {
@@ -66,6 +69,8 @@ class ApplicationClass : Application(), Configuration.Provider {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createNotificationChannel()
         }
+
+        storageRef = FirebaseStorage.getInstance().reference
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
