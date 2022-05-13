@@ -2,7 +2,9 @@ package com.andback.pocketfridge.domain.repository
 
 import com.andback.pocketfridge.data.model.*
 import com.andback.pocketfridge.domain.model.Password
+import com.andback.pocketfridge.domain.model.Token
 import io.reactivex.Single
+import retrofit2.http.Body
 
 interface UserRepository {
     fun getUser(): Single<BaseResponse<UserEntity>>
@@ -14,5 +16,7 @@ interface UserRepository {
     fun login(loginEntity: LoginEntity): Single<BaseResponse<String>>
     fun updateUser(userEditEntity: UserEditEntity): Single<BaseResponse<Any>>
     fun confirmPW(password: Password): Single<BaseResponse<Any>>
-    fun socialLogin(socialType: String, code: String): Single<BaseResponse<String>>
+    fun login(loginEntity: LoginEntity): Single<BaseResponse<Token>>
+    fun socialLogin(socialType: String, code: String): Single<BaseResponse<Token>>
+    fun updateFcmToken(tokenEntity: FcmTokenEntity): Single<BaseResponse<Any>>
 }

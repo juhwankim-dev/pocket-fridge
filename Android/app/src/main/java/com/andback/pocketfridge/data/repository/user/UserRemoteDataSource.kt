@@ -2,6 +2,7 @@ package com.andback.pocketfridge.data.repository.user
 
 import com.andback.pocketfridge.data.model.*
 import com.andback.pocketfridge.domain.model.Password
+import com.andback.pocketfridge.domain.model.Token
 import io.reactivex.Single
 import org.jetbrains.annotations.NotNull
 import retrofit2.http.Body
@@ -17,8 +18,10 @@ interface UserRemoteDataSource {
     fun login(@Body loginEntity: LoginEntity): Single<BaseResponse<String>>
     fun updateUser(@Body userEditEntity: UserEditEntity): Single<BaseResponse<Any>>
     fun confirmPW(@Body pw: Password): Single<BaseResponse<Any>>
+    fun login(@Body loginEntity: LoginEntity): Single<BaseResponse<Token>>
     fun socialLogin(
         @NotNull socialType: String,
         @NotNull code: String
-    ): Single<BaseResponse<String>>
+    ): Single<BaseResponse<Token>>
+    fun updateFcmToken(tokenEntity: FcmTokenEntity): Single<BaseResponse<Any>>
 }

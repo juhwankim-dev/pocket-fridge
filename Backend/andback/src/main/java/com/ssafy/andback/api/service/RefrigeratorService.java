@@ -19,12 +19,16 @@ import java.util.List;
 
 public interface RefrigeratorService {
 
-    public String insertRefrigerator(InsertRefrigeratorRequestDto reqDto);
+    public String insertRefrigerator(User user, String refrigeratorName);
 
     public List<RefrigeratorResponseDto> findAllRefrigeratorByUser(User user);
 
     public String createShareGroup(User user, Long refrigeratorId);
 
     public String createShareGroup(User user, InsertShareMemberRequestDto insertShareMemberRequestDto);
+
+    public String updateRefrigerator(User user, Long refrigeratorId, String refrigeratorName);
+
+    public String deleteRefrigerator(User user, Long refrigeratorId);
 
 }

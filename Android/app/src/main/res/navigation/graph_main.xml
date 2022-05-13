@@ -37,7 +37,7 @@
             android:name="productName"
             app:argType="string"
             app:nullable="true"
-            android:defaultValue=""/>
+            android:defaultValue="" />
     </fragment>
     <fragment
         android:id="@+id/recipeFragment"
@@ -52,6 +52,9 @@
         <action
             android:id="@+id/action_ingreDetailFragment_to_ingreEditFragment"
             app:destination="@id/ingreEditFragment" />
+        <argument
+            android:name="isOwner"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/ingreEditFragment"

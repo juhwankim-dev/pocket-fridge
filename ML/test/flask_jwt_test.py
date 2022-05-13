@@ -31,7 +31,7 @@ np = api.namespace('jwt', description='jwt 테스트')
 class TokenGet(Resource):
     @np.doc(responses={200: 'jwt 토큰 확인 완료'})
     @np.doc(responses={404: 'jwt 토큰 확인 실패'})
-    def post(self):
+    def get(self):
         header = request.headers.get('Authorization')  # Authorization 헤더로 담음
         if header is None:
             return {'message': 'Please Login'}, 404
@@ -40,4 +40,4 @@ class TokenGet(Resource):
 
 
 if __name__ == '__main__':
-    app.run(host='localhost', port=80)  # localhost:80 접속 시 Swagger
+    app.run(host='localhost', port=5000)  # localhost:80 접속 시 Swagger
