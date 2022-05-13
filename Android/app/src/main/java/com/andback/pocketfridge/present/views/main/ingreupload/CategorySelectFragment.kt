@@ -74,7 +74,7 @@ class CategorySelectFragment : DialogFragment() {
     private fun setDropdownAdapter(list: List<MainCategoryEntity>) {
         val stringList = list.map { it.mainCategoryName }
         Log.d(TAG, "setDropdownAdapter: ${stringList.size}")
-        val adapter = ArrayAdapter(requireContext(), R.layout.item_fridge_list, stringList)
+        val adapter = ArrayAdapter(requireContext(), R.layout.item_dropdown_list, stringList)
         (binding.tvCategorySelectFMainCategory as? AutoCompleteTextView)?.let { tv ->
             tv.setText(stringList[0])
             tv.setAdapter(adapter)
