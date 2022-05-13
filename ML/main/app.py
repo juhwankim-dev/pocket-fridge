@@ -241,4 +241,4 @@ def recommend(user_id):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)  # localhost:80 접속 시 Swagger
+    app.run(host='k6d206.p.ssafy.io', port=5000)  # localhost:80 접속 시 Swagger
