@@ -51,7 +51,7 @@
             tools:text="닉네임" />
 
         <LinearLayout
-            android:id="@+id/ll_my_pageF_user_info"
+            android:id="@+id/ll_my_pageF_user_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="100dp"
@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/activity_margin_default"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ll_my_pageF_user_info">
+            app:layout_constraintTop_toBottomOf="@+id/ll_my_pageF_user_edit">
 
             <TextView
                 style="@style/body_text"
