@@ -95,14 +95,14 @@ public class OAuthService {
                             .userLoginType(true)
                             .userName(googleUser.getName())
                             .userPicture(googleUser.getPicture())
-                            .userPassword(passwordEncoder.encode(getRamdomNumber(12)))
+                            .userPassword(passwordEncoder.encode(MailService.getRamdomNumber(12)))
                             .userEmail(googleUser.getEmail())
                             .roles(Collections.singletonList("USER"))  // 최초 가입시 USER로 설정
                             .build();
                     // 기본 냉장고 생성 부분 삭제
                     userRepository.save(result);
                 } else {
-                    if (!user.get().getUserLoginType()){ // 유저 로그인 타입이 false 이면 소셜로그인이 아니다
+                    if (!user.get().getUserLoginType()) { // 유저 로그인 타입이 false 이면 소셜로그인이 아니다
                         throw new CustomException(ErrorCode.EMAIL_DUPLICATION);
                     }
 
@@ -118,20 +118,6 @@ public class OAuthService {
             }
         }
         return Token;
-    }
-
-
-    // 인증번호 생성
-    public static String getRamdomNumber(int len) {
-        char[] charSet = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
-                'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
-        int idx = 0;
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < len; i++) {
-            idx = (int) (charSet.length * Math.random()); // 36 * 생성된 난수를 Int로 추출 (소숫점제거)
-            sb.append(charSet[idx]);
-        }
-        return sb.toString();
     }
 
 }

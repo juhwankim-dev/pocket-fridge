@@ -29,9 +29,9 @@ public class AsyncConfig extends AsyncConfigurerSupport {
         executor.setCorePoolSize(2); // 기본적으로 실행 대기 중인 Thread 개수
         executor.setMaxPoolSize(10); //동시에 작동하는 최대 Thread 개수
         executor.setQueueCapacity(500); // CorePool이 초과될 떄 Queue에 저장했다가 꺼내서 실행한다.
-        executor.setThreadNamePrefix("async-"); // Spring에서 생성하는 Thread 이름의 접두사
+        // 단, MaxPoolSize 가 초과되면 Thread 생성에 실패할 수 있음.
+        executor.setThreadNamePrefix("async-"); // Spring 에서 생성하는 Thread 이름의 접두사
         executor.initialize();
-
         return executor;
     }
 
