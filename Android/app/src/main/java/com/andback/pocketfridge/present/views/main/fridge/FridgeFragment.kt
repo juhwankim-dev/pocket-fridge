@@ -13,6 +13,7 @@ import com.andback.pocketfridge.data.model.FridgeEntity
 import com.andback.pocketfridge.databinding.FragmentFridgeBinding
 import com.andback.pocketfridge.domain.model.Ingredient
 import com.andback.pocketfridge.present.config.BaseFragment
+import com.andback.pocketfridge.present.views.main.FridgeListAdapter
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 

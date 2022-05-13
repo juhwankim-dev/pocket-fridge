@@ -1,4 +1,4 @@
-package com.andback.pocketfridge.present.views.main.fridge
+package com.andback.pocketfridge.present.views.main
 
 
 import android.view.LayoutInflater
