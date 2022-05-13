@@ -1,6 +1,7 @@
 package com.andback.pocketfridge.data.api
 
 import com.andback.pocketfridge.data.model.*
+import com.andback.pocketfridge.domain.model.Password
 import io.reactivex.Single
 import org.jetbrains.annotations.NotNull
 import retrofit2.http.*
@@ -29,6 +30,9 @@ interface UserApi {
 
     @PUT("user/update")
     fun updateUser(@Body userEditEntity: UserEditEntity): Single<BaseResponse<Any>>
+
+    @POST("user/update")
+    fun confirmPW(@Body pw: Password): Single<BaseResponse<Any>>
 
     @GET("auth/{socialLoginType}/callback")
     fun socialLogin(

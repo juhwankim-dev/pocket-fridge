@@ -2,6 +2,7 @@ package com.andback.pocketfridge.data.repository
 
 import com.andback.pocketfridge.data.model.*
 import com.andback.pocketfridge.data.repository.user.UserRemoteDataSource
+import com.andback.pocketfridge.domain.model.Password
 import com.andback.pocketfridge.domain.repository.UserRepository
 import io.reactivex.Single
 import javax.inject.Inject
@@ -40,6 +41,10 @@ class UserRepositoryImpl @Inject constructor(
 
     override fun updateUser(userEditEntity: UserEditEntity): Single<BaseResponse<Any>> {
         return userRemoteDataSource.updateUser(userEditEntity)
+    }
+
+    override fun confirmPW(pw: Password): Single<BaseResponse<Any>> {
+        return userRemoteDataSource.confirmPW(pw)
     }
 
     override fun socialLogin(socialType: String, code: String): Single<BaseResponse<String>> {
