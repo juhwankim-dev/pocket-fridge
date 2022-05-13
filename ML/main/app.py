@@ -94,7 +94,7 @@ def recommend(user_id):
         dic_val = df_dict['recipe_id'].values()  # value 값만 리스트로 저장 후 API 응답
         dic_list = list(dic_val)
         random.shuffle(dic_list)  # 랜덤으로 섞기
-        recipes = dic_list
+        recipes = dic_list[:5]
     else:
         # 레시피와 좋아요 데이터 결합
         recipes_likes_merge = pd.merge(df_recipes, df_likes, on="recipe_id")
