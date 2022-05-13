@@ -98,9 +98,7 @@ public class GoogleOauth implements SocialOauth {
     }
 
     public GoogleOAuthToken getAccessToken(ResponseEntity<String> response) throws JsonProcessingException {
-        System.out.println("response.getBody() = " + response.getBody());
         GoogleOAuthToken googleOAuthToken = objectMapper.readValue(response.getBody(), GoogleOAuthToken.class);
-        System.out.println("googleOAuthToken = " + googleOAuthToken);
         return googleOAuthToken;
     }
 
@@ -113,7 +111,6 @@ public class GoogleOauth implements SocialOauth {
         //HttpEntity를 하나 생성해 헤더를 담아서 restTemplate으로 구글과 통신하게 된다.
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity(headers);
         ResponseEntity<String> response = restTemplate.exchange(GOOGLE_USERINFO_REQUEST_URL, HttpMethod.GET, request, String.class);
-        System.out.println("response.getBody() = " + response.getBody());
         return response;
     }
 

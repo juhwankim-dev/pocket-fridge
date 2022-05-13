@@ -88,10 +88,7 @@ public class UserServiceImpl implements UserService {
                 .build();
 
         User saveUser = userRepository.save(user);
-        Refrigerator refrigerator = Refrigerator.builder().refrigeratorName("냉장고").build();
-        Refrigerator saveRefrigerator = refrigeratorRepository.save(refrigerator);
-        UserRefrigerator userRefrigerator = UserRefrigerator.builder().user(saveUser).refrigerator(saveRefrigerator).build();
-        userRefrigeratorRepository.save(userRefrigerator);
+        // 기본 냉장고 생성 부분 삭제
 
         return "success";
     }
