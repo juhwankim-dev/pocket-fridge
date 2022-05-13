@@ -12,14 +12,14 @@
         android:padding="@dimen/activity_margin_default">
 
         <TextView
+            android:id="@+id/tv_dialog_title"
             style="@style/page_title_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/activity_margin_default"
-            android:text="@string/self_input_title" />
+            android:layout_marginBottom="@dimen/activity_margin_default" />
 
         <EditText
-            android:id="@+id/et_barcode_inputF"
+            android:id="@+id/et_dialog_inputF"
             style="@style/form_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tv_barcode_inputF_cancel"
+                android:id="@+id/tv_dialog_inputF_cancel"
                 style="@style/button_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
                 android:textColor="@color/main_color" />
 
             <TextView
-                android:id="@+id/tv_barcode_inputF_accept"
+                android:id="@+id/tv_dialog_inputF_accept"
                 style="@style/button_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
