@@ -27,7 +27,7 @@ interface UserApi {
     fun findPW(@Body userForFind: UserForFindEntity): Single<BaseResponse<Any>>
 
     @POST("user/login")
-    fun login(@Body loginEntity: LoginEntity): Single<BaseResponse<String>>
+    fun login(@Body loginEntity: LoginEntity): Single<BaseResponse<Token>>
 
     @PUT("user/update")
     fun updateUser(@Body userEditEntity: UserEditEntity): Single<BaseResponse<Any>>
