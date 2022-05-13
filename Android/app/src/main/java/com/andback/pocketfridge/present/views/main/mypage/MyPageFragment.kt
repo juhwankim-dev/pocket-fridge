@@ -34,5 +34,8 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         binding.llMyPageFAlarmSetting.setOnClickListener {
             findNavController().navigate(R.id.action_myPageFragment_to_notiSettingFragment)
         }
+        binding.llMyPageFFridgeManagement.setOnClickListener {
+            findNavController().navigate(R.id.action_myPageFragment_to_fridgeManageFragment)
+        }
     }
 }
