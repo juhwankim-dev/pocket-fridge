@@ -184,13 +184,17 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = false) // save 없이 자동으로 업데이트
     public String updateUser(User user, UpdateUserRequestDto updateUserRequestDto) {
         // 닉네임 중복검사
-        if (checkUserNickname(updateUserRequestDto.getUserNickname()).equals("fail"))
+        if (userRepository.existsByUserNickname(updateUserRequestDto.getUserNickname()))
             return "fail";
-        if (!updateUserRequestDto.getUserNickname().equals(user.getUserNickname()))
+        // 공백이면 원래 데이터 그대로, 변경되었으면 변경
+        if (!updateUserRequestDto.getUserNickname().equals("") &&
+                !updateUserRequestDto.getUserNickname().equals(user.getUserNickname()))
             user.setUserNickname(updateUserRequestDto.getUserNickname());
-        if (!passwordEncoder.matches(updateUserRequestDto.getUserPassword(), user.getUserPassword()))
+        if (!updateUserRequestDto.getUserPassword().equals("") &&
+                !passwordEncoder.matches(updateUserRequestDto.getUserPassword(), user.getUserPassword()))
             user.setUserPassword(passwordEncode(updateUserRequestDto.getUserPassword()));
-        if (!updateUserRequestDto.getUserPicture().equals(user.getUserPicture()))
+        if (!updateUserRequestDto.getUserPicture().equals("") &&
+                !updateUserRequestDto.getUserPicture().equals(user.getUserPicture()))
             user.setUserPicture(updateUserRequestDto.getUserPicture());
         userRepository.save(user);
         return "success";
