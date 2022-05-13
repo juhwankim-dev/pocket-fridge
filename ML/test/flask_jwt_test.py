@@ -31,7 +31,7 @@ np = api.namespace('jwt', description='jwt 테스트')
 class TokenGet(Resource):
     @np.doc(responses={200: 'jwt 토큰 확인 완료'})
     @np.doc(responses={404: 'jwt 토큰 확인 실패'})
-    def post(self):
+    def get(self):
         header = request.headers.get('Authorization')  # Authorization 헤더로 담음
         if header is None:
             return {'message': 'Please Login'}, 404
