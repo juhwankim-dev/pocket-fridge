@@ -279,7 +279,7 @@ class IngreUploadViewModel @Inject constructor(
                     .subscribe(
                         {
                             it.data?.let { list ->
-                                _fridges.value = list
+                                _fridges.value = list.filter { fridge -> fridge.isOwner }
                             }
                             setDefaultData()
                             _isLoading.value = false

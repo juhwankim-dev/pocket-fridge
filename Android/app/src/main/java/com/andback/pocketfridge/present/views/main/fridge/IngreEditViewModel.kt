@@ -328,7 +328,7 @@ class IngreEditViewModel @Inject constructor(
                     .subscribe(
                         {
                             it.data?.let { list ->
-                                _fridges.value = list
+                                _fridges.value = list.filter { fridge -> fridge.isOwner }
                                 _isInitDone.value = _isInitDone.value?.plus(1)
                             }
                             _isLoading.value = false
