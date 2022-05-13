@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -76,6 +77,48 @@ public class RefrigeratorController {
         if (response.equals("fail")) {
             return ResponseEntity.status(401).body(BaseResponseDto.of(401, "실패"));
         }
+
+        return ResponseEntity.ok(BaseResponseDto.of(200, "success"));
+    }
+
+    @ApiOperation(value = "냉장고 이름 변경", notes = "냉장고 이름을 변경한다")
+    @PutMapping("/{refrigeratorId}/{refrigeratorName}")
+    public ResponseEntity<BaseResponseDto>
+    updateRefrigerator(@ApiIgnore Authentication authentication, @PathVariable Long refrigeratorId, @PathVariable String refrigeratorName)
+            throws CustomException {
+
+        if (authentication == null) {
+            throw new CustomException(ErrorCode.NOT_AUTH_TOKEN);
+        }
+
+        User user = (User) authentication.getPrincipal();
+
+        if (user == null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
+
+        refrigeratorService.updateRefrigerator(user, refrigeratorId, refrigeratorName);
+
+        return ResponseEntity.ok(BaseResponseDto.of(200, "success"));
+    }
+
+    @ApiOperation(value = "냉장고 삭제", notes = "냉장고를 삭제한다")
+    @DeleteMapping("/{refrigeratorId}")
+    public ResponseEntity<BaseResponseDto>
+    deleteRefrigerator(@ApiIgnore Authentication authentication, @PathVariable Long refrigeratorId) throws CustomException {
+        if (authentication == null) {
+            throw new CustomException(ErrorCode.NOT_AUTH_TOKEN);
+        }
+
+        User user = (User) authentication.getPrincipal();
+
+        if (user == null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
+
+
+        refrigeratorService.deleteRefrigerator(user, refrigeratorId);
+
 
         return ResponseEntity.ok(BaseResponseDto.of(200, "success"));
     }
