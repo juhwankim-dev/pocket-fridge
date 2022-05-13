@@ -1,6 +1,5 @@
 package com.andback.pocketfridge.present.views.main.fridge
 
-import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -47,14 +46,21 @@ class FridgeViewModel @Inject constructor(
     }
 
     fun getFridges() {
+
+        val no = if (_selectedFridge.value != null) _selectedFridge.value!!.id else -1
+
         getFridgesUseCase()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
+                    // emptyList 처리는 보장 못함
                     it.data?.let { list ->
                         _fridges.value = list
-                        setFridgeForChangingIngreList(list[0].id)
+                        if (no >= 0)
+                            setFridgeForChangingIngreList(no)
+                        else
+                            setFridgeForChangingIngreList(list[0].id)
                     }
                 },
                 {
