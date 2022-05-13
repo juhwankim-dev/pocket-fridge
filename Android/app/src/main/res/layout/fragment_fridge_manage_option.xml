@@ -14,6 +14,7 @@
         android:orientation="vertical">
 
         <ImageButton
+            android:id="@+id/ib_fridge_manage_optionF_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
@@ -22,6 +23,7 @@
             android:src="@drawable/ic_close" />
 
         <LinearLayout
+            android:id="@+id/ll_fridge_manage_optionF_show_member"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -42,6 +44,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_fridge_manage_optionF_edit_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -62,6 +65,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_fridge_manage_optionF_delete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/activity_margin_wide"
