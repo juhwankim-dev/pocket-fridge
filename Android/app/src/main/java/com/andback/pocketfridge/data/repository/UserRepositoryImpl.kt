@@ -2,6 +2,7 @@ package com.andback.pocketfridge.data.repository
 
 import com.andback.pocketfridge.data.model.*
 import com.andback.pocketfridge.data.repository.user.UserRemoteDataSource
+import com.andback.pocketfridge.domain.model.Token
 import com.andback.pocketfridge.domain.repository.UserRepository
 import io.reactivex.Single
 import javax.inject.Inject
@@ -34,11 +35,11 @@ class UserRepositoryImpl @Inject constructor(
         return userRemoteDataSource.findPW(userForFind)
     }
 
-    override fun login(loginEntity: LoginEntity): Single<BaseResponse<String>> {
+    override fun login(loginEntity: LoginEntity): Single<BaseResponse<Token>> {
         return userRemoteDataSource.login(loginEntity)
     }
 
-    override fun socialLogin(socialType: String, code: String): Single<BaseResponse<String>> {
+    override fun socialLogin(socialType: String, code: String): Single<BaseResponse<Token>> {
         return userRemoteDataSource.socialLogin(socialType, code)
     }
 

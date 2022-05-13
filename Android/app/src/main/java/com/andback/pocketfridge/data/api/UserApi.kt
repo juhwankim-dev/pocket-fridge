@@ -1,6 +1,7 @@
 package com.andback.pocketfridge.data.api
 
 import com.andback.pocketfridge.data.model.*
+import com.andback.pocketfridge.domain.model.Token
 import io.reactivex.Single
 import org.jetbrains.annotations.NotNull
 import retrofit2.http.*
@@ -25,13 +26,13 @@ interface UserApi {
     fun findPW(@Body userForFind: UserForFindEntity): Single<BaseResponse<Any>>
 
     @POST("user/login")
-    fun login(@Body loginEntity: LoginEntity): Single<BaseResponse<String>>
+    fun login(@Body loginEntity: LoginEntity): Single<BaseResponse<Token>>
 
     @GET("auth/{socialLoginType}/callback")
     fun socialLogin(
         @Path("socialLoginType") @NotNull socialType: String,
         @Query("code") @NotNull code: String
-    ): Single<BaseResponse<String>>
+    ): Single<BaseResponse<Token>>
 
     @POST("user/token")
     fun updateFcmToken(@Body tokenEntity: FcmTokenEntity): Single<BaseResponse<Any>>
