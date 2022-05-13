@@ -102,4 +102,24 @@ public class RefrigeratorServiceImpl implements RefrigeratorService {
         return "success";
     }
 
+    @Override
+    @Transactional(readOnly = false)
+    public String updateRefrigerator(User user, Long refrigeratorId, String refrigeratorName) {
+
+        Refrigerator refrigerator = refrigeratorRepository.findByRefrigeratorId(refrigeratorId);
+
+        if (refrigerator == null) {
+            throw new CustomException(ErrorCode.REFRIGERATOR_NOT_FOUND);
+        }
+
+        Optional<UserRefrigerator> result = userRefrigeratorRepository.findAllByRefrigeratorAndUserAndRefrigeratorOwner(refrigerator, user, true);
+        result.orElseThrow(
+                () -> new CustomException(ErrorCode.INVALID_USER)
+        );
+
+        result.get().getRefrigerator().updateName(refrigeratorName);
+
+        return "success";
+    }
+
 }
