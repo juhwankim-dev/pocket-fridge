@@ -161,15 +161,15 @@ class IngreEditFragment: BaseFragment<FragmentIngreEditBinding>(R.layout.fragmen
     }
 
     private fun setDropDownAdapter(list: List<FridgeEntity>) {
-        val stringList = list.map { it.refrigeratorName }
-        val adapter = ArrayAdapter(requireContext(), R.layout.item_fridge_list, stringList)
+        val stringList = list.map { it.name }
+        val adapter = ArrayAdapter(requireContext(), R.layout.item_dropdown_list, stringList)
         (binding.tvIngreEditFSelectFridge as? AutoCompleteTextView)?.let { tv ->
             tv.setText(stringList[0])
             tv.setAdapter(adapter)
             // 아이템 클릭 시 mainCategory 업데이트
             tv.setOnItemClickListener { _, _, i, l ->
                 Log.d(TAG, "setDropdownAdapter: $i, $l")
-                val fridge = list.find { it.refrigeratorName == stringList[i] }
+                val fridge = list.find { it.name == stringList[i] }
                 fridge?.let { viewModel.setFridge(it) }
             }
         }

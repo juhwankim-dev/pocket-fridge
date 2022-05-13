@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.core.content.ContextCompat
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
 import com.andback.pocketfridge.R
@@ -17,7 +16,6 @@ import com.andback.pocketfridge.present.config.BaseFragment
 import com.andback.pocketfridge.present.utils.DateConverter
 import com.andback.pocketfridge.present.utils.Storage
 import com.andback.pocketfridge.present.views.main.DatePickerFragment
-import com.andback.pocketfridge.present.views.main.fridge.IngreEditFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -151,15 +149,15 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
     }
 
     private fun setDropDownAdapter(list: List<FridgeEntity>) {
-        val stringList = list.map { it.refrigeratorName }
-        val adapter = ArrayAdapter(requireContext(), R.layout.item_fridge_list, stringList)
+        val stringList = list.map { it.name }
+        val adapter = ArrayAdapter(requireContext(), R.layout.item_dropdown_list, stringList)
         (binding.tvIngreUploadFSelectFridge as? AutoCompleteTextView)?.let { tv ->
             tv.setText(stringList[0])
             tv.setAdapter(adapter)
             // 아이템 클릭 시 냉장고 업데이트
             tv.setOnItemClickListener { _, _, i, l ->
                 Log.d(TAG, "setDropdownAdapter: $i, $l")
-                val fridge = list.find { it.refrigeratorName == stringList[i] }
+                val fridge = list.find { it.name == stringList[i] }
                 fridge?.let { viewModel.setFridge(it) }
             }
         }

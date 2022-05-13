@@ -41,6 +41,6 @@ class SelectRegiIngreBottomSheet : BottomSheetDialogFragment() {
     }
 
     companion object {
-        const val TAG = "ModalBottomSheet"
+        const val TAG = "SelectRegiIngreBottomSheet"
     }
 }

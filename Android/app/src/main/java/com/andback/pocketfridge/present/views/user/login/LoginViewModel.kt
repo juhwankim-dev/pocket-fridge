@@ -11,6 +11,7 @@ import com.andback.pocketfridge.domain.usecase.datastore.WriteDataStoreUseCase
 import com.andback.pocketfridge.domain.usecase.user.SocialLoginUseCase
 import com.andback.pocketfridge.present.config.SingleLiveEvent
 import com.andback.pocketfridge.present.utils.PageSet
+import com.andback.pocketfridge.present.workmanager.DailyNotiWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -40,6 +41,9 @@ class LoginViewModel @Inject constructor(
     private val _toastMsg = SingleLiveEvent<String>()
     val toastMsg: LiveData<String> get() = _toastMsg
 
+    private val _isLogin = SingleLiveEvent<Boolean>()
+    val isLogin: LiveData<Boolean> = _isLogin
+
     private fun login(loginEntity: LoginEntity) {
         _isLoading.value = true
 
@@ -50,8 +54,9 @@ class LoginViewModel @Inject constructor(
                 .subscribe(
                     {
                         if(it.data != null) {
-                            saveJWT(it.data)
+                            saveJWT(it.data.token, it.data.loginType)
                         }
+                        _isLogin.value = true
                         _toastMsg.value = it.message
                         _isLoading.value = false
                         pageNumber.value = PageSet.MAIN
@@ -74,8 +79,9 @@ class LoginViewModel @Inject constructor(
                 .subscribe(
                     {
                         if (it.data != null) {
-                            saveJWT(it.data)
+                            saveJWT(it.data.token, socialType.uppercase())
                         }
+                        _isLogin.value = true
                         _toastMsg.value = it.message
                         _isLoading.value = false
                         pageNumber.value = PageSet.MAIN
@@ -88,9 +94,10 @@ class LoginViewModel @Inject constructor(
         )
     }
 
-    fun saveJWT(jwt: String) {
+    fun saveJWT(jwt: String, loginType: String) {
         viewModelScope.launch {
             writeDataStoreUseCase.execute("JWT", jwt)
+            writeDataStoreUseCase.execute("LOGIN_TYPE", loginType)
         }
     }
 

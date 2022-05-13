@@ -3,6 +3,7 @@
 
     <string name="cancel">취소</string>
     <string name="accept">확인</string>
+    <string name="save">저장</string>
 
     <string name="permission_error">권한 처리 중 문제가 발생하였습니다</string>
     <string name="network_error">네트워크 상태를 확인해 주세요.</string>
@@ -86,6 +87,25 @@
     <string name="self_input_title">바코드번호 입력</string>
 
     <string name="barcode_scan_fail">바코드로 정보를 가져올 수 없습니다</string>
+    
+
+    <string name="user_info">회원정보</string>
+    <string name="fridge_manage">냉장고관리</string>
+    <string name="setting_alarm">알람설정</string>
+    <string name="logout">로그아웃</string>
+    <string name="withdrawal">회원탈퇴</string>
+    
+    <string name="empty_fridge">냉장고가 존재하지 않습니다.</string>
+    <string name="add_fridge">냉장고 만들기</string>
+    <string name="share_fridge">냉장고 공유</string>
+    <string name="delete_fridge">냉장고 삭제</string>
+    <string name="edit_fridge_name">냉장고 이름 변경</string>
+    <string name="show_fridge_member">냉장고 공유원들 보기</string>
+    
+    
+    <string name="noti_setting_offset">일 전</string>
+    <string name="noti_setting_offset_label">유통기한 임박 알림 일</string>
+    <string name="noti_setting_activation_label">유통기한 임박 알림 받기</string>
 
 
     <string name="ipa_ready">네 말씀해주세요</string>
@@ -96,10 +116,4 @@
         <item>여훈아</item>
         <item>영후나</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="save">저장</string>
-    <string name="noti_setting_offset">일 전</string>
-    <string name="noti_setting_offset_label">유통기한 임박 알림 일</string>
-    <string name="noti_setting_activation_label">유통기한 임박 알림 받기</string>
 </resources>

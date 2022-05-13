@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
@@ -18,6 +19,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.databinding.FragmentBarcodeScanBinding
+import com.andback.pocketfridge.databinding.FragmentDialogInputBinding
 import com.andback.pocketfridge.present.config.BaseFragment
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
@@ -79,28 +81,7 @@ class BarcodeScanFragment : BaseFragment<FragmentBarcodeScanBinding>(R.layout.fr
             findNavController().popBackStack()
         }
         binding.tvBarcodeScanFSelfInput.setOnClickListener {
-            AlertDialog.Builder(requireContext())
-                .setView(R.layout.fragment_barcode_self_input)
-                .show()
-                .also { alertDialog ->
-                    if (alertDialog == null) {
-                        return@also
-                    }
-
-                    val etInput = alertDialog.findViewById<EditText>(R.id.et_barcode_inputF)
-                    val tvCancel = alertDialog.findViewById<TextView>(R.id.tv_barcode_inputF_cancel)
-                    val tvAccept = alertDialog.findViewById<TextView>(R.id.tv_barcode_inputF_accept)
-
-                    tvCancel.setOnClickListener {
-                        alertDialog.dismiss()
-                    }
-                    tvAccept.setOnClickListener {
-                        if (etInput.text.isNotBlank()) {
-                            loadIngresFromBarcodes(etInput.text.toString())
-                            alertDialog.dismiss()
-                        }
-                    }
-                }
+            showSelfInputDialog()
         }
     }
 
@@ -198,6 +179,31 @@ class BarcodeScanFragment : BaseFragment<FragmentBarcodeScanBinding>(R.layout.fr
         if (barcodes.isNotEmpty()) {
             loadIngresFromBarcodes(barcodes[0].rawValue.toString())
         }
+    }
+
+    private fun showSelfInputDialog() {
+        val dialogBinding = FragmentDialogInputBinding.inflate(LayoutInflater.from(requireContext()))
+
+        AlertDialog.Builder(requireContext())
+            .setView(dialogBinding.root)
+            .show()
+            .also { alertDialog ->
+                if (alertDialog == null) {
+                    return@also
+                }
+
+                dialogBinding.tvDialogTitle.text = resources.getString(R.string.self_input_title)
+
+                dialogBinding.tvDialogInputFCancel.setOnClickListener {
+                    alertDialog.dismiss()
+                }
+                dialogBinding.tvDialogInputFAccept.setOnClickListener {
+                    if (dialogBinding.etDialogInputF.text.isNotBlank()) {
+                        loadIngresFromBarcodes(dialogBinding.etDialogInputF.text.toString())
+                        alertDialog.dismiss()
+                    }
+                }
+            }
     }
 
     private fun loadIngresFromBarcodes(barcode: String) {

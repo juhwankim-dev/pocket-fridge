@@ -10,9 +10,11 @@ import com.andback.pocketfridge.domain.usecase.notification.SendIngreExpiryNotiU
 import com.andback.pocketfridge.present.config.EXPIRY_DATE_NOTIFIED
 import com.andback.pocketfridge.present.config.EXPIRY_NOTI_HOUR
 import com.andback.pocketfridge.present.config.EXPIRY_NOTI_MINUTE
+import com.andback.pocketfridge.present.utils.DateConverter
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.*
+import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -44,28 +46,28 @@ class DailyNotiWorker @AssistedInject constructor(
             if(triggerHour == -1 || triggerMinute == -1) return
 
             val now = Calendar.getInstance()
-            Log.d(TAG, "run: now = $now")
 
             // 오늘 날짜를 기반으로 세팅된 시간 값
-            val notiTime = GregorianCalendar.getInstance().apply {
-                set(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH), triggerHour, triggerMinute)
+            val notiTime = Calendar.getInstance().apply {
+                clear()
+                set(Calendar.YEAR, now.get(Calendar.YEAR))
+                set(Calendar.MONTH, now.get(Calendar.MONTH))
+                set(Calendar.DAY_OF_MONTH, now.get(Calendar.DAY_OF_MONTH))
+                set(Calendar.HOUR_OF_DAY, triggerHour)
+                set(Calendar.MINUTE, triggerMinute)
             }
 
             // 현재 시간이 예약된 시간과 같거나 지난 뒤
             // noti가 보여졌으면 다음 날로 미룸
-            val plusDay = if (now == notiTime
-                || now.after(notiTime)
+            val plusDay = if (now.time.time >= notiTime.timeInMillis
                 || isNotified(now, readDataStoreUseCase)
             ) 1 else 0
 
-            now.add(Calendar.DAY_OF_MONTH, plusDay)
-            Log.d(TAG, "run: added now = $now")
-
-            val duration = now.get(Calendar.SECOND) - Calendar.getInstance().get(Calendar.SECOND)
-            Log.d(TAG, "run: duration = $duration")
+            notiTime.add(Calendar.DAY_OF_MONTH, plusDay)
+            val duration = notiTime.timeInMillis - Calendar.getInstance().time.time
 
             val workRequest = OneTimeWorkRequestBuilder<DailyNotiWorker>()
-                .setInitialDelay(duration.toLong(), TimeUnit.SECONDS)
+                .setInitialDelay(duration, TimeUnit.MILLISECONDS)
                 .build()
 
             WorkManager.getInstance(context)
@@ -74,6 +76,7 @@ class DailyNotiWorker @AssistedInject constructor(
                     ExistingWorkPolicy.REPLACE,
                     workRequest
                 )
+            Log.d(TAG, "runAt: invoked")
         }
 
         private suspend fun isNotified(now: Calendar, readDataStoreUseCase: ReadDataStoreUseCase): Boolean {
