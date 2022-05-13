@@ -13,6 +13,6 @@ interface UserRepository {
     fun checkNickname(nickname: String): Single<BaseResponse<Any>>
     fun findPW(userForFind: UserForFindEntity): Single<BaseResponse<Any>>
     fun login(loginEntity: LoginEntity): Single<BaseResponse<Token>>
-    fun socialLogin(socialType: String, code: String): Single<BaseResponse<String>>
+    fun socialLogin(socialType: String, code: String): Single<BaseResponse<Token>>
     fun updateFcmToken(tokenEntity: FcmTokenEntity): Single<BaseResponse<Any>>
 }

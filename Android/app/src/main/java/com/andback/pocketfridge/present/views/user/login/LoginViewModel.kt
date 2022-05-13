@@ -75,7 +75,7 @@ class LoginViewModel @Inject constructor(
                     {
                         if (it.data != null) {
                             // TODO: 나중에 구글 or 카카오에 따라 다르게 넣어줘 
-                            saveJWT(it.data, "GOOGLE")
+                            saveJWT(it.data.token, "GOOGLE")
                         }
                         _toastMsg.value = it.message
                         _isLoading.value = false

@@ -19,6 +19,6 @@ interface UserRemoteDataSource {
     fun socialLogin(
         @NotNull socialType: String,
         @NotNull code: String
-    ): Single<BaseResponse<String>>
+    ): Single<BaseResponse<Token>>
     fun updateFcmToken(tokenEntity: FcmTokenEntity): Single<BaseResponse<Any>>
 }

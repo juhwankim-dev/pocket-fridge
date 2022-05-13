@@ -32,7 +32,7 @@ interface UserApi {
     fun socialLogin(
         @Path("socialLoginType") @NotNull socialType: String,
         @Query("code") @NotNull code: String
-    ): Single<BaseResponse<String>>
+    ): Single<BaseResponse<Token>>
 
     @POST("user/token")
     fun updateFcmToken(@Body tokenEntity: FcmTokenEntity): Single<BaseResponse<Any>>
