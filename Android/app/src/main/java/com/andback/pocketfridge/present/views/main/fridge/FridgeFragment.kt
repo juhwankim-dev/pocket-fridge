@@ -60,11 +60,11 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
         binding.tvFridgeFName.setOnClickListener {
             FridgeListBottomSheet(
                 viewModel.fridges.value!!,
-                viewModel.selectedFridge.value!!.refrigeratorId
+                viewModel.selectedFridge.value!!.id
             ).apply {
                 fridgeAdapter.itemClickListener = object : FridgeListAdapter.ItemClickListener {
                     override fun onClick(data: FridgeEntity) {
-                        viewModel.updateSelectedFridgeThenGetIngreList(data.refrigeratorId)
+                        viewModel.updateSelectedFridgeThenGetIngreList(data.id)
                         dismiss()
                     }
                 }
@@ -108,7 +108,7 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
                     }
                 }
                 selectedFridge.observe(owner) {
-                    binding.tvFridgeFName.setText(it.refrigeratorName)
+                    binding.tvFridgeFName.setText(it.name)
                 }
             }
         }

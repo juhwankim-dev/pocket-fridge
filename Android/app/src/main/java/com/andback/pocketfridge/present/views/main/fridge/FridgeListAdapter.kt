@@ -23,8 +23,8 @@ class FridgeListAdapter : RecyclerView.Adapter<FridgeListAdapter.FridgeViewHolde
         fun bind(data: FridgeEntity) {
             // TODO : 공유인지 아닌지 확인 후 공유 표시 -> 디테일 페이지에서 자기소유 아니면 수정 삭제 표시 X
             binding.ivFridgeListINotOwner.visibility = View.INVISIBLE
-            binding.tvFridgeListIName.text = data.refrigeratorName
-            when(data.refrigeratorId) {
+            binding.tvFridgeListIName.text = data.name
+            when(data.id) {
                 id   -> binding.ivFridgeListICurrent.visibility = View.VISIBLE
                 else -> binding.ivFridgeListICurrent.visibility = View.INVISIBLE
             }

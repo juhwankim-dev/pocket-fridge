@@ -54,7 +54,7 @@ class FridgeViewModel @Inject constructor(
                 {
                     it.data?.let { list ->
                         _fridges.value = list
-                        setFridgeForChangingIngreList(list[0].refrigeratorId)
+                        setFridgeForChangingIngreList(list[0].id)
                     }
                 },
                 {
@@ -98,7 +98,7 @@ class FridgeViewModel @Inject constructor(
 
     fun updateSelectedFridgeThenGetIngreList(fridgeId: Int) {
         if(_fridges.value != null) {
-            _selectedFridge.value = _fridges.value!!.find { it.refrigeratorId == fridgeId }
+            _selectedFridge.value = _fridges.value!!.find { it.id == fridgeId }
             getIngreList(fridgeId)
         }
     }
@@ -107,7 +107,7 @@ class FridgeViewModel @Inject constructor(
      * 냉장고를 선택하면 그에 맞는 재료 리스트까지 업데이트
      */
     private fun setFridgeForChangingIngreList(id: Int) {
-        val selectedFridge = fridges.value?.find { it.refrigeratorId == id }?: return
+        val selectedFridge = fridges.value?.find { it.id == id }?: return
         _selectedFridge.value = selectedFridge
         getIngreList(id)
     }
