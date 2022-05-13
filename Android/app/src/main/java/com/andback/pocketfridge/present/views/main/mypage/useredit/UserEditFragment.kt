@@ -48,6 +48,7 @@ class UserEditFragment : BaseFragment<FragmentUserEditBinding>(R.layout.fragment
 
         binding.vm = viewModel
         viewModel.getUser()
+        viewModel.readLoginType()
         checkPermission()
         initEvent()
         initViewModel()
@@ -58,6 +59,12 @@ class UserEditFragment : BaseFragment<FragmentUserEditBinding>(R.layout.fragment
             personalInfo.observe(viewLifecycleOwner) {
                 binding.etUserEditFNickname.setText(it.nickname)
                 email = it.email
+            }
+
+            loginType.observe(viewLifecycleOwner) {
+                if(it != "COMMON") {
+                    binding.tilUserEditFPw.visibility = View.GONE
+                }
             }
         }
     }

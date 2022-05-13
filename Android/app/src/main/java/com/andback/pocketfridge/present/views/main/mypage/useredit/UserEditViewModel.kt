@@ -4,9 +4,9 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.navigation.fragment.findNavController
 import com.andback.pocketfridge.data.model.UserEditEntity
 import com.andback.pocketfridge.data.model.UserEntity
+import com.andback.pocketfridge.domain.usecase.datastore.ReadDataStoreUseCase
 import com.andback.pocketfridge.domain.usecase.user.GetUserUseCase
 import com.andback.pocketfridge.domain.usecase.user.UpdateUserUseCase
 import com.andback.pocketfridge.present.config.SingleLiveEvent
@@ -14,6 +14,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.runBlocking
 import org.json.JSONObject
 import retrofit2.HttpException
 import javax.inject.Inject
@@ -21,7 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class UserEditViewModel @Inject constructor(
     private val getUserUseCase: GetUserUseCase,
-    private val updateUserUseCase: UpdateUserUseCase
+    private val updateUserUseCase: UpdateUserUseCase,
+    private val readDataStoreUseCase: ReadDataStoreUseCase
 ) : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
 
@@ -32,6 +34,9 @@ class UserEditViewModel @Inject constructor(
 
     private val _toastMsg = SingleLiveEvent<String>()
     val toastMsg: LiveData<String> get() = _toastMsg
+
+    private val _loginType = SingleLiveEvent<String>()
+    val loginType: LiveData<String> get() = _loginType
 
     val isLoading = MutableLiveData<Boolean>()
 
@@ -66,6 +71,12 @@ class UserEditViewModel @Inject constructor(
                     },
                 )
         )
+    }
+
+    fun readLoginType() {
+        _loginType.value = runBlocking {
+            readDataStoreUseCase.execute("LOGIN_TYPE") ?: ""
+        }
     }
 
     private fun showError(t : Throwable) {
