@@ -126,8 +126,11 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
                 dismiss()
             }
             dialogBinding.llFridgeManageOptionFDelete.setOnClickListener {
+                val title = if (fridge.isOwner) getString(R.string.delete_fridge_dialog_title_owner, fridge.name)
+                            else getString(R.string.delete_fridge_dialog_title, fridge.name)
+
                 AlertDialog.Builder(requireContext())
-                    .setTitle(getString(R.string.delete_fridge_dialog_title, fridge.name))
+                    .setTitle(title)
                     .setMessage("")
                     .setNegativeButton(R.string.cancel, null)
                     .setPositiveButton(R.string.accept) { dialog, which ->
