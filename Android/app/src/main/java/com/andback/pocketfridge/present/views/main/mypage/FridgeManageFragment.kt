@@ -95,6 +95,7 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
                 dialogBinding.tvDialogInputFAccept.setOnClickListener {
                     if (dialogBinding.etDialogInputF.text.isNotBlank()) {
                         // TODO : 냉장고 추가
+                        // TODO: 냉장고 다이얼로그 input type 변경 
                         alertDialog.dismiss()
                     }
                 }
