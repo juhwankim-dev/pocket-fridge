@@ -113,7 +113,7 @@ class IngreEditViewModel @Inject constructor(
         dateExpiry.value = ingredient.expiryDate
         ingreId = ingredient.id
         subCategories.value?.let {
-            val result = it.find { element -> ingredient.category == element.subCategoryId }
+            val result = it.find { element -> ingredient.subCategory == element.subCategoryId }
             _selectedSubCategory.value = result!!
         }
         fridges.value?.let { list ->
@@ -188,7 +188,7 @@ class IngreEditViewModel @Inject constructor(
     private fun getIngredientFromInput(): Ingredient {
         val name = name.value?:""
         val quantity = 1
-        val category = selectedSubCategory.value?.subCategoryId?: -1
+        val subCategory = selectedSubCategory.value?.subCategoryId?: -1
         val purchasedDate = datePurchased.value.toString()
         val expiryDate = dateExpiry.value.toString()
         val fridgeId = selectedFridge.value?.id?: -1
@@ -196,7 +196,8 @@ class IngreEditViewModel @Inject constructor(
         val id = ingreId
         return Ingredient(
             id = id,
-            category = category,
+            subCategory = subCategory,
+            mainCategory = -1,
             quantity = quantity,
             purchasedDate = purchasedDate,
             expiryDate = expiryDate,

@@ -30,7 +30,7 @@ object IngreChecker {
     }
 
     fun checkCategory(ingredient: Ingredient): Boolean {
-        return ingredient.category != -1
+        return ingredient.subCategory != -1
     }
 
     // String을 Date로 바꾸는 과정에서 에러 캐치

@@ -1,10 +1,8 @@
 package com.andback.pocketfridge.data.model
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.andback.pocketfridge.present.config.INGRE_TABLE
-import com.google.gson.annotations.SerializedName
 
 data class IngreEntityForUpload(
     val subCategoryId: Int,
@@ -23,6 +21,7 @@ data class IngreEntity(
     val foodIngredientWay: String,
     val refrigeratorId: Int,
     val subCategoryId: Int,
+    val mainCategoryId: Int = -1,
     @PrimaryKey
     val foodIngredientId: Int = -1,
 )
