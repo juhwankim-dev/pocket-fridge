@@ -4,9 +4,9 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.andback.pocketfridge.data.model.CookingIngreEntity
 import com.andback.pocketfridge.data.model.RecipeEntity
 import com.andback.pocketfridge.data.model.RecipeStepEntity
+import com.andback.pocketfridge.domain.model.CookingIngre
 import com.andback.pocketfridge.domain.usecase.like.DeleteLikeUseCase
 import com.andback.pocketfridge.domain.usecase.like.UploadLikeUseCase
 import com.andback.pocketfridge.domain.usecase.recipe.GetCookingIngresUseCase
@@ -30,8 +30,8 @@ class CookSharedViewModel @Inject constructor(
     private val compositeDisposable = CompositeDisposable()
 
     lateinit var selectedRecipe: RecipeEntity
-    private val _cookingIngres = MutableLiveData<List<CookingIngreEntity>>()
-    val cookingIngres: LiveData<List<CookingIngreEntity>> get() = _cookingIngres
+    private val _cookingIngres = MutableLiveData<List<CookingIngre>>()
+    val cookingIngres: LiveData<List<CookingIngre>> get() = _cookingIngres
 
     private val _recipeSteps = MutableLiveData<List<RecipeStepEntity>>()
     val recipeSteps: LiveData<List<RecipeStepEntity>> get() = _recipeSteps
