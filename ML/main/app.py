@@ -229,7 +229,7 @@ def recommend(user_id):
         recipes = dic_list
         print(f'<현재 유저 {user_id} 에게 추천하는 레시피>', recipes)
 
-        return recipes
+    return recipes
 
 
 if __name__ == '__main__':
