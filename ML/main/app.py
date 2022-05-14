@@ -63,6 +63,7 @@ def recommend(user_id):
 
     sql_recipe = "SELECT * from recipe;"  # 레시피 sql 쿼리문
     sql_like = "SELECT * from recipe_like"  # 레시피 좋아요 sql 쿼리문
+    sql_user_like = "SELECT * from recipe_like where user_id=%s"
 
     # 커서로 sql 쿼리문 출력 (with를 사용하기 때문에 conn.commit()과 conn.close() 불필요)
     with conn:
@@ -75,6 +76,10 @@ def recommend(user_id):
             cur.execute(sql_like)  # 좋아요 레시피 가져오기
             likes = cur.fetchall()  # 모든 레시피 좋아요 레코드 가져오기
 
+            # 현재 유저의 레시피 좋아요 목록
+            cur.execute(sql_user_like, user_id)
+            here_user_likes = cur.fetchall()
+
     # 레시피 DataFrame
     df_recipes = pd.DataFrame(recipes)
 
@@ -82,12 +87,13 @@ def recommend(user_id):
     df_likes = pd.DataFrame(likes)
 
     # 좋아요가 비어있으면, 랜덤 추천
-    if df_likes.empty:
+    if df_likes.empty or len(here_user_likes) == 0:
         df_dict = df_recipes.to_dict()  # DataFrame을 Dictionary로 변환
         dic_val = df_dict['recipe_id'].values()  # value 값만 리스트로 저장 후 API 응답
         dic_list = list(dic_val)
         random.shuffle(dic_list)  # 랜덤으로 섞기
         recipes = dic_list[:5]
+        return recipes
     else:
         # 레시피와 좋아요 데이터 결합
         recipes_likes_merge = pd.merge(df_recipes, df_likes, on="recipe_id")
@@ -229,7 +235,7 @@ def recommend(user_id):
         recipes = dic_list
         print(f'<현재 유저 {user_id} 에게 추천하는 레시피>', recipes)
 
-    return recipes
+        return recipes
 
 
 if __name__ == '__main__':
