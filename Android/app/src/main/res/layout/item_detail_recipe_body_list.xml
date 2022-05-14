@@ -19,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/activity_margin_default"
+            android:gravity="center"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
@@ -31,6 +32,21 @@
                 android:layout_marginStart="@dimen/activity_margin_default"
                 android:text="@{serving}"
                 tools:text="3~4인분" />
+
+            <TextView
+                style="@style/explain_text"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="@dimen/activity_margin_narrow"
+                android:paddingTop="6dp"
+                android:gravity="end"
+                android:text="*"
+                android:textColor="@color/main_color" />
+
+            <TextView
+                style="@style/explain_text"
+                android:text="부족한 재료"
+                android:textColor="@color/main_color" />
         </LinearLayout>
 
         <View

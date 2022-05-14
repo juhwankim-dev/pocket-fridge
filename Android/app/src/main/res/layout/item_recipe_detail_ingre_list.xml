@@ -3,25 +3,37 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="cookingIngre"
-            type="com.andback.pocketfridge.data.model.CookingIngreEntity" />
+            type="com.andback.pocketfridge.domain.model.CookingIngre" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:padding="@dimen/activity_margin_default">
 
         <TextView
             style="@style/body_text"
+            android:layout_width="wrap_content"
+            android:text="*"
+            android:visibility="@{cookingIngre.isLack ? View.VISIBLE : View.INVISIBLE}"
+            android:textColor="@color/main_color"
+            android:layout_marginEnd="@dimen/activity_margin_narrow"
+            android:paddingTop="6dp" />
+
+        <TextView
+            style="@style/body_text"
+            android:layout_width="0dp"
             android:layout_weight="1"
             android:text="@{cookingIngre.name}"
             tools:text="생삽겹살"/>
 
         <TextView
             style="@style/body_text"
-            android:paddingStart="@dimen/activity_margin_default"
+            android:layout_width="0dp"
             android:layout_weight="1"
             android:text="@{cookingIngre.count}"
             tools:text="3줄(350g)"/>

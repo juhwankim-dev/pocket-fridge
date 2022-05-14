@@ -171,8 +171,6 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
 
                     }
                 }
-
-                showToastMessage("$position")
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
