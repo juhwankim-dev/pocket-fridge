@@ -3,6 +3,8 @@ package com.andback.pocketfridge.present.views.main.fridge
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.core.widget.addTextChangedListener
 import android.widget.ImageView
 import androidx.fragment.app.activityViewModels
@@ -14,6 +16,8 @@ import com.andback.pocketfridge.databinding.FragmentFridgeBinding
 import com.andback.pocketfridge.domain.model.Ingredient
 import com.andback.pocketfridge.present.config.BaseFragment
 import com.andback.pocketfridge.present.views.main.FridgeListAdapter
+import com.andback.pocketfridge.present.utils.Storage
+import com.google.android.material.chip.Chip
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -30,10 +34,13 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
 
     private fun init() {
         viewModel.getFridges()
+        viewModel.getMainCategory()
         setToolbar()
         setRecyclerView()
         setObservers()
         setSearchBar()
+        setChipGroup()
+        setSpinner()
     }
 
     private fun setToolbar() {
@@ -118,12 +125,59 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
                     binding.tvFridgeFName.setText(it.name)
                 }
             }
+            mainCategoryList.observe(viewLifecycleOwner) {
+                it.forEach { category ->
+                    val chip = layoutInflater.inflate(R.layout.custom_chip_view, binding.cgFridgeFFilter, false) as Chip
+                    chip.id = View.generateViewId()
+                    chip.text = category.mainCategoryName
+                    binding.cgFridgeFFilter.addView(chip)
+                }
+            }
         }
     }
 
     private fun setSearchBar() {
         binding.tilFridgeF.editText?.addTextChangedListener {
             rvAdapter.filter.filter(it.toString())
+        }
+    }
+
+    private fun setChipGroup() {
+        binding.cgFridgeFFilter.setOnCheckedChangeListener { group, checkedId ->
+            rvAdapter.filter?.filter("$checkedId")
+        }
+    }
+
+    private fun setSpinner() {
+        val myAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, resources.getStringArray(R.array.spinner_list))
+        binding.spinnerFridgeF.adapter = myAdapter
+        binding.spinnerFridgeF.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                //아이템이 클릭 되면 맨 위부터 position 0번부터 순서대로 동작하게 됩니다.
+                when (position) {
+                    0 -> {
+
+                    }
+                    1 -> {
+
+                    }
+                    //...
+                    else -> {
+
+                    }
+                }
+
+                showToastMessage("$position")
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+
+            }
         }
     }
 

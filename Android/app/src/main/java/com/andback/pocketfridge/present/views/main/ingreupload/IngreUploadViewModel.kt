@@ -190,7 +190,7 @@ class IngreUploadViewModel @Inject constructor(
     private fun getIngredientFromInput(): Ingredient {
         // TODO: 수량 data가 필요해지면 추가
         // TODO: mapper 필요
-        return Ingredient(quantity = 1, category = selectedSubCategory.value?.subCategoryId?: -1, name = name.value?: "", purchasedDate = datePurchased.value.toString(), expiryDate = dateExpiry.value.toString(), fridgeId = selectedFridge.value?.id?: -1, storage = selectedStorage.value?:Storage.Fridge)
+        return Ingredient(quantity = 1, subCategory = selectedSubCategory.value?.subCategoryId?: -1, mainCategory = -1, name = name.value?: "", purchasedDate = datePurchased.value.toString(), expiryDate = dateExpiry.value.toString(), fridgeId = selectedFridge.value?.id?: -1, storage = selectedStorage.value?:Storage.Fridge)
     }
 
     fun setFridge() {

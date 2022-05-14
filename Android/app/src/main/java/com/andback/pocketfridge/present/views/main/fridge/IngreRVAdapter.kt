@@ -76,19 +76,17 @@ class IngreRVAdapter: RecyclerView.Adapter<IngreRVAdapter.ViewHolder>(), Filtera
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(p0: CharSequence?): FilterResults {
-                val strKey = p0.toString()
+                val category = p0.toString().toInt()
 
-                if (strKey.isBlank()) {
-                    filteredList = list
-                } else {
-                    val newFilteredList = arrayListOf<Ingredient>()
-
-                    for (item in list) {
-                        if (item.name.contains(strKey)) {
-                            newFilteredList.add(item)
-                        }
+                filteredList = when(category) {
+                    in 1..100 -> {
+                        val newFilteredList = arrayListOf<Ingredient>()
+                        list.filter { it.mainCategory == category }.forEach { newFilteredList.add(it) }
+                        newFilteredList
                     }
-                    filteredList = newFilteredList
+                    else -> {
+                        list
+                    }
                 }
                 return FilterResults().apply { values = filteredList }
             }

@@ -88,7 +88,7 @@ class IngreDetailViewModel @Inject constructor(
 
     private fun setSubCategory(ingre: Ingredient): SubCategoryEntity? {
         return if(this::subCategories.isInitialized) {
-            subCategories.find { it.subCategoryId == ingre.category }
+            subCategories.find { it.subCategoryId == ingre.subCategory }
         } else null
     }
     

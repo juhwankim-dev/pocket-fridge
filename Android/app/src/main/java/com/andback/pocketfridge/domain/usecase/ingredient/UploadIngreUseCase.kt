@@ -20,7 +20,7 @@ class UploadIngreUseCase @Inject constructor(
     private fun checkValidationThenUpload(ingredient: Ingredient): Single<BaseResponse<Any>> {
         return try {
             IngreChecker.check(ingredient)
-            val ingredientEntity = IngreEntityForUpload(foodIngredientName = ingredient.name, foodIngredientExp = ingredient.expiryDate, foodIngredientDate = ingredient.purchasedDate, refrigeratorId = ingredient.fridgeId, subCategoryId = ingredient.category, foodIngredientWay = ingredient.storage.value)
+            val ingredientEntity = IngreEntityForUpload(foodIngredientName = ingredient.name, foodIngredientExp = ingredient.expiryDate, foodIngredientDate = ingredient.purchasedDate, refrigeratorId = ingredient.fridgeId, subCategoryId = ingredient.subCategory, foodIngredientWay = ingredient.storage.value)
             ingreRepository.uploadIngre(ingreEntityForUpload = ingredientEntity)
         } catch (e: Throwable) {
             makeValidationErrorObservable(e)
