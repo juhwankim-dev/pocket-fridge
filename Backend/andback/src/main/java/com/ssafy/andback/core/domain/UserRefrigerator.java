@@ -24,7 +24,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @ToString
-public class UserRefrigerator {
+public class UserRefrigerator extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

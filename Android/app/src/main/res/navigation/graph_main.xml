@@ -37,7 +37,7 @@
             android:name="productName"
             app:argType="string"
             app:nullable="true"
-            android:defaultValue=""/>
+            android:defaultValue="" />
     </fragment>
     <fragment
         android:id="@+id/recipeFragment"
@@ -52,6 +52,9 @@
         <action
             android:id="@+id/action_ingreDetailFragment_to_ingreEditFragment"
             app:destination="@id/ingreEditFragment" />
+        <argument
+            android:name="isOwner"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/ingreEditFragment"
@@ -65,9 +68,17 @@
         android:label="MyPageFragment"
         tools:layout="@layout/fragment_my_page">
         <action
+            android:id="@+id/action_myPageFragment_to_fridgeManageFragment"
+            app:destination="@id/fridgeManageFragment" />
+        <action
             android:id="@+id/action_myPageFragment_to_notiSettingFragment"
             app:destination="@id/notiSettingFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/fridgeManageFragment"
+        android:name="com.andback.pocketfridge.present.views.main.mypage.FridgeManageFragment"
+        android:label="FridgeManageFragment"
+        tools:layout="@layout/fragment_fridge_manage"/>
     <fragment
         android:id="@+id/notiSettingFragment"
         android:name="com.andback.pocketfridge.present.views.main.mypage.NotiSettingFragment"

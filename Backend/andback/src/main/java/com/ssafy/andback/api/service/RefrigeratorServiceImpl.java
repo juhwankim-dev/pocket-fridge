@@ -5,10 +5,12 @@ import com.ssafy.andback.api.dto.request.InsertRefrigeratorRequestDto;
 import com.ssafy.andback.api.dto.request.InsertShareMemberRequestDto;
 import com.ssafy.andback.api.dto.response.RefrigeratorResponseDto;
 import com.ssafy.andback.api.exception.CustomException;
+import com.ssafy.andback.core.domain.FoodIngredient;
 import com.ssafy.andback.core.domain.Refrigerator;
 import com.ssafy.andback.core.domain.User;
 import com.ssafy.andback.core.domain.UserRefrigerator;
 import com.ssafy.andback.core.queryrepository.RefrigeratorQueryRepository;
+import com.ssafy.andback.core.repository.FoodIngredientRepository;
 import com.ssafy.andback.core.repository.RefrigeratorRepository;
 import com.ssafy.andback.core.repository.UserRefrigeratorRepository;
 import com.ssafy.andback.core.repository.UserRepository;
@@ -37,23 +39,20 @@ import java.util.Optional;
 public class RefrigeratorServiceImpl implements RefrigeratorService {
 
     private final RefrigeratorRepository refrigeratorRepository;
-    private final RefrigeratorQueryRepository refrigeratorQueryRepository;
-    private final UserRepository userRepository;
     private final UserRefrigeratorRepository userRefrigeratorRepository;
+    private final FoodIngredientRepository foodIngredientRepository;
 
-    public String insertRefrigerator(InsertRefrigeratorRequestDto reqDto) {
+    public String insertRefrigerator(User user, String refrigeratorName) {
 
-        Optional<User> user = userRepository.findByUserEmail(reqDto.getUserEmail());
-        //에러코드 추가
-        user.orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         Refrigerator refrigerator = refrigeratorRepository.save(Refrigerator.builder()
-                .refrigeratorName(reqDto.getRefrigeratorName())
+                .refrigeratorName(refrigeratorName)
                 .build());
 
         UserRefrigerator save = userRefrigeratorRepository.save(UserRefrigerator.builder()
                 .refrigerator(refrigerator)
-                .user(user.get())
+                .refrigeratorOwner(true)
+                .user(user)
                 .build());
 
         return "success";
@@ -62,14 +61,16 @@ public class RefrigeratorServiceImpl implements RefrigeratorService {
     @Override
     public List<RefrigeratorResponseDto> findAllRefrigeratorByUser(User user) {
 
-        List<Refrigerator> refrigeratorByUser = refrigeratorQueryRepository.findAllRefrigeratorByUser(user);
+        List<UserRefrigerator> userRefrigeratorByUser = userRefrigeratorRepository.findUserRefrigeratorByUser(user);
         List<RefrigeratorResponseDto> response = new ArrayList<>();
 
-        for (Refrigerator temp : refrigeratorByUser) {
-            response.add(RefrigeratorResponseDto.builder()
-                    .refrigeratorId(temp.getRefrigeratorId())
-                    .refrigeratorName(temp.getRefrigeratorName())
-                    .build());
+        for (UserRefrigerator temp : userRefrigeratorByUser) {
+            response.add(
+                    RefrigeratorResponseDto.builder()
+                            .refrigeratorId(temp.getUserRefrigeratorId())
+                            .refrigeratorName(temp.getRefrigerator().getRefrigeratorName())
+                            .refrigeratorOwner(temp.isRefrigeratorOwner()) // 주인 여부 추가 2022-05-13
+                            .build());
         }
 
         return response;
@@ -78,11 +79,15 @@ public class RefrigeratorServiceImpl implements RefrigeratorService {
     @Override
     public String createShareGroup(User user, Long refrigeratorId) {
 
-        Refrigerator refrigerator = refrigeratorRepository.findByRefrigeratorId(refrigeratorId);
+        Optional<Refrigerator> refrigerator = refrigeratorRepository.findByRefrigeratorId(refrigeratorId);
+
+        refrigerator.orElseThrow(
+                () -> new CustomException(ErrorCode.REFRIGERATOR_NOT_FOUND)
+        );
 
         UserRefrigerator shareRefrigerator = new UserRefrigerator();
 
-        shareRefrigerator.setRefrigerator(refrigerator);
+        shareRefrigerator.setRefrigerator(refrigerator.get());
         shareRefrigerator.setUser(user);
         shareRefrigerator.setRefrigeratorOwner(true);
 
@@ -92,13 +97,73 @@ public class RefrigeratorServiceImpl implements RefrigeratorService {
     @Override
     public String createShareGroup(User user, InsertShareMemberRequestDto insertShareMemberRequestDto) {
 
-        Refrigerator refrigerator = refrigeratorRepository.findByRefrigeratorId(insertShareMemberRequestDto.getRefrigeratorId());
+        Optional<Refrigerator> refrigerator = refrigeratorRepository.findByRefrigeratorId(insertShareMemberRequestDto.getRefrigeratorId());
+
+        refrigerator.orElseThrow(
+                () -> new CustomException(ErrorCode.REFRIGERATOR_NOT_FOUND)
+        );
 
         UserRefrigerator shareRefrigerator = new UserRefrigerator();
 
-        shareRefrigerator.setRefrigerator(refrigerator);
+        shareRefrigerator.setRefrigerator(refrigerator.get());
         shareRefrigerator.setUser(user);
         shareRefrigerator.setRefrigeratorOwner(false);
+
+        return "success";
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public String updateRefrigerator(User user, Long refrigeratorId, String refrigeratorName) throws CustomException {
+
+        Optional<Refrigerator> refrigerator = refrigeratorRepository.findByRefrigeratorId(refrigeratorId);
+
+        refrigerator.orElseThrow(
+                () -> new CustomException(ErrorCode.REFRIGERATOR_NOT_FOUND)
+        );
+
+        Optional<UserRefrigerator> result = userRefrigeratorRepository.findByRefrigeratorAndUserAndRefrigeratorOwner(refrigerator.get(), user, true);
+        result.orElseThrow(
+                () -> new CustomException(ErrorCode.INVALID_USER)
+        );
+
+        result.get().getRefrigerator().updateName(refrigeratorName);
+
+        return "success";
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public String deleteRefrigerator(User user, Long refrigeratorId) {
+
+
+        Optional<Refrigerator> refrigerator = refrigeratorRepository.findByRefrigeratorId(refrigeratorId);
+
+        refrigerator.orElseThrow(
+                () -> new CustomException(ErrorCode.REFRIGERATOR_NOT_FOUND)
+        );
+
+        Optional<UserRefrigerator> userRefrigerator = userRefrigeratorRepository.findByRefrigeratorAndUser(refrigerator.get(), user);
+
+        userRefrigerator.orElseThrow(
+                () -> new CustomException(ErrorCode.INVALID_USER)
+        );
+
+        if (userRefrigerator.get().isRefrigeratorOwner()) { // 주인일때
+            //1. 냉장고 재료 모두 삭제
+            foodIngredientRepository.deleteAll(userRefrigerator.get().getRefrigerator().getFoodIngredientList());
+
+            //2. userRefrigerator 삭제
+            userRefrigeratorRepository.deleteAll(userRefrigeratorRepository.findAllByRefrigerator(refrigerator.get()));
+
+            //3. 냉장고 삭제
+            refrigeratorRepository.delete(refrigerator.get());
+
+        } else { // 주인이 아닐때
+            //1. userRefrigerator삭제
+            userRefrigeratorRepository.delete(userRefrigerator.get());
+        }
+
 
         return "success";
     }

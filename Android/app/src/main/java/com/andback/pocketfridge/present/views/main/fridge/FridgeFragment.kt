@@ -11,9 +11,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.andback.pocketfridge.R
+import com.andback.pocketfridge.data.model.FridgeEntity
 import com.andback.pocketfridge.databinding.FragmentFridgeBinding
 import com.andback.pocketfridge.domain.model.Ingredient
 import com.andback.pocketfridge.present.config.BaseFragment
+import com.andback.pocketfridge.present.views.main.FridgeListAdapter
 import com.andback.pocketfridge.present.utils.Storage
 import com.google.android.material.chip.Chip
 import com.bumptech.glide.Glide
@@ -63,6 +65,19 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
             }
         }
 
+        binding.tvFridgeFName.setOnClickListener {
+            FridgeListBottomSheet(
+                viewModel.fridges.value!!,
+                viewModel.selectedFridge.value!!.id
+            ).apply {
+                fridgeAdapter.itemClickListener = object : FridgeListAdapter.ItemClickListener {
+                    override fun onClick(data: FridgeEntity) {
+                        viewModel.updateSelectedFridgeThenGetIngreList(data.id)
+                        dismiss()
+                    }
+                }
+            }.show(requireActivity().supportFragmentManager, FridgeListBottomSheet.TAG)
+        }
     }
 
     private fun setRecyclerView() {
@@ -71,13 +86,19 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
                 override fun onClick(data: Ingredient) {
                     Log.d(TAG, "onClick: ${data}")
                     detailViewModel.selectIngre(data)
-                    findNavController().navigate(R.id.action_fridgeFragment_to_ingreDetailFragment)
+                    findNavController().navigate(
+                        FridgeFragmentDirections.actionFridgeFragmentToIngreDetailFragment(
+                            viewModel.selectedFridge.value!!.isOwner
+                        )
+                    )
                 }
             }
             itemLongClickListener = object : IngreRVAdapter.ItemLongClickListener {
                 override fun onLongClick(data: Ingredient) {
                     Log.d(TAG, "onLongClick: ${data}")
-                    showDeleteDialog(data)
+                    if (viewModel.selectedFridge.value!!.isOwner) {
+                        showDeleteDialog(data)
+                    }
                 }
             }
         }
@@ -99,6 +120,9 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
                     if(::profileImageView.isInitialized) {
                         Glide.with(profileImageView).load(it.picture).circleCrop().into(profileImageView)
                     }
+                }
+                selectedFridge.observe(owner) {
+                    binding.tvFridgeFName.setText(it.name)
                 }
             }
             mainCategoryList.observe(viewLifecycleOwner) {

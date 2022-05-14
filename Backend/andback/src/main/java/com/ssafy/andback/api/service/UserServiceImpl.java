@@ -42,16 +42,11 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RefrigeratorRepository refrigeratorRepository;
     private final UserRefrigeratorRepository userRefrigeratorRepository;
-
-    @Autowired
-    private FoodIngredientRepository foodIngredientRepository;
-
-    @Autowired
-    private RecipeLikeRepository recipeLikeRepository;
-
+    private final FoodIngredientRepository foodIngredientRepository;
+    private final RecipeLikeRepository recipeLikeRepository;
     private final PasswordEncoder passwordEncoder; // WebSecurityConfig.java 에서 Bean 설정
+    private final MailService mailService;
 
-    private final JavaMailSender javaMailSender;
 
     // JWT 토큰 발급받는 객체
     private final JwtAuthenticationProvider jwtAuthenticationProvider;
@@ -88,10 +83,7 @@ public class UserServiceImpl implements UserService {
                 .build();
 
         User saveUser = userRepository.save(user);
-        Refrigerator refrigerator = Refrigerator.builder().refrigeratorName("냉장고").build();
-        Refrigerator saveRefrigerator = refrigeratorRepository.save(refrigerator);
-        UserRefrigerator userRefrigerator = UserRefrigerator.builder().user(saveUser).refrigerator(saveRefrigerator).build();
-        userRefrigeratorRepository.save(userRefrigerator);
+        // 기본 냉장고 생성 부분 삭제
 
         return "success";
     }
@@ -112,84 +104,6 @@ public class UserServiceImpl implements UserService {
         return "success";
     }
 
-    // 이메일 인증번호 전송
-    @Override
-    public String sendUserEmailNumber(String userEmail) {
-        // 이메일 인증번호 생성
-        String tempEmailNumber = getRamdomNumber(10);
-
-        // 수신 대상을 담을 ArrayList 생성
-        ArrayList<String> toUserList = new ArrayList<>();
-
-        // 수신 대상 추가
-        toUserList.add(userEmail);
-
-        // 수신 대상 개수
-        int toUserSize = toUserList.size();
-
-        // SimpleMailMessage (단순 텍스트 구성 메일 메시지 생성할 때 이용)
-        SimpleMailMessage simpleMessage = new SimpleMailMessage();
-
-        // 수신자 설정
-        simpleMessage.setTo((String[]) toUserList.toArray(new String[toUserSize]));
-
-        // 메일 제목
-        simpleMessage.setSubject("[이메일 인증번호 안내] 포켓프리지 입니다.");
-
-        // 메일 내용
-        simpleMessage.setText("이메일 인증번호는\n\n" + tempEmailNumber + "\n\n입니다.");
-
-        // 메일 발송
-        javaMailSender.send(simpleMessage);
-
-        return tempEmailNumber;
-    }
-
-    // 비밀번호 찾기에서 새 비밀번호 전송
-    @Override
-    public String sendNewUserPassword(String userEmail) {
-        // 이메일 인증번호 생성
-        String tempEmailNumber = getRamdomNumber(10);
-
-        // 수신 대상을 담을 ArrayList 생성
-        ArrayList<String> toUserList = new ArrayList<>();
-
-        // 수신 대상 추가
-        toUserList.add(userEmail);
-
-        // 수신 대상 개수
-        int toUserSize = toUserList.size();
-
-        // SimpleMailMessage (단순 텍스트 구성 메일 메시지 생성할 때 이용)
-        SimpleMailMessage simpleMessage = new SimpleMailMessage();
-
-        // 수신자 설정
-        simpleMessage.setTo((String[]) toUserList.toArray(new String[toUserSize]));
-
-        // 메일 제목
-        simpleMessage.setSubject("[임시 비밀번호 변경 안내] 포켓프리지 입니다.");
-
-        // 메일 내용
-        simpleMessage.setText("임시 비밀번호는\n\n" + tempEmailNumber + "\n\n입니다.");
-
-        // 메일 발송
-        javaMailSender.send(simpleMessage);
-
-        return tempEmailNumber;
-    }
-
-    // 인증번호 생성
-    public static String getRamdomNumber(int len) {
-        char[] charSet = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
-                'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
-        int idx = 0;
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < len; i++) {
-            idx = (int) (charSet.length * Math.random()); // 36 * 생성된 난수를 Int로 추출 (소숫점제거)
-            sb.append(charSet[idx]);
-        }
-        return sb.toString();
-    }
 
     // 로그인
     @Override
@@ -217,14 +131,16 @@ public class UserServiceImpl implements UserService {
         String userEmail = findUserPasswordRequestDto.getUserEmail();
         Optional<User> user = userRepository.findByUserEmail(userEmail);
 
-        if(!user.isPresent())   // 이메일에 해당하는 유저가 없으면 fail
+        if (!user.isPresent())   // 이메일에 해당하는 유저가 없으면 fail
             return "fail";
 
         // 다른 이름이 들어왔다면 fail
-        if(!user.get().getUserName().equals(findUserPasswordRequestDto.getUserName()))
+        if (!user.get().getUserName().equals(findUserPasswordRequestDto.getUserName()))
             return "fail";
 
-        String userPassword = sendNewUserPassword(userEmail);
+
+        String userPassword = MailService.getRamdomNumber(10);
+        mailService.sendNewUserPassword(userEmail, userPassword);
         user.get().setUserPassword(passwordEncoder.encode(userPassword));
 
         return "success";
@@ -267,14 +183,20 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = false) // save 없이 자동으로 업데이트
     public String updateUser(User user, UpdateUserRequestDto updateUserRequestDto) {
+
         // 닉네임 중복검사
-        if(checkUserNickname(updateUserRequestDto.getUserNickname()).equals("fail"))
+        if (!user.getUserNickname().equals(updateUserRequestDto.getUserNickname()) &&
+                userRepository.existsByUserNickname(updateUserRequestDto.getUserNickname()))
             return "fail";
-        if(!updateUserRequestDto.getUserNickname().equals(user.getUserNickname()))
+        // 공백이면 원래 데이터 그대로, 변경되었으면 변경
+        if (!updateUserRequestDto.getUserNickname().equals("") &&
+                !updateUserRequestDto.getUserNickname().equals(user.getUserNickname()))
             user.setUserNickname(updateUserRequestDto.getUserNickname());
-        if(!passwordEncoder.matches(updateUserRequestDto.getUserPassword(), user.getUserPassword()))
+        if (!updateUserRequestDto.getUserPassword().equals("") &&
+                !passwordEncoder.matches(updateUserRequestDto.getUserPassword(), user.getUserPassword()))
             user.setUserPassword(passwordEncode(updateUserRequestDto.getUserPassword()));
-        if(!updateUserRequestDto.getUserPicture().equals(user.getUserPicture()))
+        if (!updateUserRequestDto.getUserPicture().equals("") &&
+                !updateUserRequestDto.getUserPicture().equals(user.getUserPicture()))
             user.setUserPicture(updateUserRequestDto.getUserPicture());
         userRepository.save(user);
         return "success";

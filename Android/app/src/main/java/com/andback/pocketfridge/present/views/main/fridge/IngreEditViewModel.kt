@@ -117,7 +117,7 @@ class IngreEditViewModel @Inject constructor(
             _selectedSubCategory.value = result!!
         }
         fridges.value?.let { list ->
-            val fridge = list.find { ingredient.fridgeId == it.refrigeratorId }
+            val fridge = list.find { ingredient.fridgeId == it.id }
             fridge?.let { _selectedFridge.value = it }
         }
     }
@@ -191,7 +191,7 @@ class IngreEditViewModel @Inject constructor(
         val category = selectedSubCategory.value?.subCategoryId?: -1
         val purchasedDate = datePurchased.value.toString()
         val expiryDate = dateExpiry.value.toString()
-        val fridgeId = selectedFridge.value?.refrigeratorId?: -1
+        val fridgeId = selectedFridge.value?.id?: -1
         val storage = selectedStorage.value?:Storage.Fridge
         val id = ingreId
         return Ingredient(
@@ -328,7 +328,7 @@ class IngreEditViewModel @Inject constructor(
                     .subscribe(
                         {
                             it.data?.let { list ->
-                                _fridges.value = list
+                                _fridges.value = list.filter { fridge -> fridge.isOwner }
                                 _isInitDone.value = _isInitDone.value?.plus(1)
                             }
                             _isLoading.value = false

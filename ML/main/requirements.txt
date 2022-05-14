@@ -1,7 +1,8 @@
-pymysql
 flask
 flask-restx
+pymysql
 numpy
 pandas
-matplotlib
-seaborn
+sklearn
+random
+pyjwt

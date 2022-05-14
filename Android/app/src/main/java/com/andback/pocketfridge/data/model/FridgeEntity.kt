@@ -1,6 +1,9 @@
 package com.andback.pocketfridge.data.model
 
+import com.google.gson.annotations.SerializedName
+
 data class FridgeEntity(
-    val refrigeratorId: Int,
-    val refrigeratorName: String
+    @SerializedName("refrigeratorId") val id: Int,
+    @SerializedName("refrigeratorName") val name: String,
+    @SerializedName("refrigeratorOwner") val isOwner: Boolean
 )

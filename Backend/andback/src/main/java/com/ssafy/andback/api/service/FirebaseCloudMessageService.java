@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import okhttp3.*;
 import org.apache.http.HttpHeaders;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,7 @@ public class FirebaseCloudMessageService {
     private final String API_URL = "https://fcm.googleapis.com/v1/projects/andbackproject/messages:send";
     private final ObjectMapper objectMapper;
 
+    @Async
     public void sendMessageTo(String targetToken, String title, String body) throws IOException {
         String message = makeMessage(targetToken, title, body);
 

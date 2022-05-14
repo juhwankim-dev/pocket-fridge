@@ -9,11 +9,15 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "recipe_like")
-@NoArgsConstructor @AllArgsConstructor
-@Getter @Setter
-public class RecipeLike {
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+public class RecipeLike extends BaseEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long recipeLikeId;
 
     // 레시피 아이디 (레시피 1 : 좋아요 N)

@@ -26,7 +26,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Refrigerator {
+public class Refrigerator extends BaseEntity {
 
     @Id
     @Column(name = "refrigereator_id")

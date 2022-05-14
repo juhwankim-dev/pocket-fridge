@@ -1,6 +1,5 @@
 package com.andback.pocketfridge.present.views.main.fridge
 
-import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -57,9 +56,13 @@ class FridgeViewModel @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
+                    // emptyList 처리는 보장 못함
                     it.data?.let { list ->
                         _fridges.value = list
-                        setFridgeForChangingIngreList(list[0].refrigeratorId)
+                        if (_selectedFridge.value != null && list.contains(_selectedFridge.value))
+                            setFridgeForChangingIngreList(_selectedFridge.value!!.id)
+                        else
+                            setFridgeForChangingIngreList(list[0].id)
                     }
                 },
                 {
@@ -103,7 +106,7 @@ class FridgeViewModel @Inject constructor(
 
     fun updateSelectedFridgeThenGetIngreList(fridgeId: Int) {
         if(_fridges.value != null) {
-            _selectedFridge.value = _fridges.value!!.find { it.refrigeratorId == fridgeId }
+            _selectedFridge.value = _fridges.value!!.find { it.id == fridgeId }
             getIngreList(fridgeId)
         }
     }
@@ -112,7 +115,7 @@ class FridgeViewModel @Inject constructor(
      * 냉장고를 선택하면 그에 맞는 재료 리스트까지 업데이트
      */
     private fun setFridgeForChangingIngreList(id: Int) {
-        val selectedFridge = fridges.value?.find { it.refrigeratorId == id }?: return
+        val selectedFridge = fridges.value?.find { it.id == id }?: return
         _selectedFridge.value = selectedFridge
         getIngreList(id)
     }

@@ -54,7 +54,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/refrigerator/**").permitAll()
                 .antMatchers("/user/**").permitAll()   // "USER" 권한을 가진 유저만 접근 가능
                 .antMatchers("/like/**").permitAll()
-                .antMatchers("/auth/**").permitAll();
+                .antMatchers("/auth/**").permitAll()
+                .antMatchers("/notification/**").permitAll();
         http
                 .csrf().disable() // csrf 보안 토큰 disable 처리
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 토큰 기반 인증이므로 세션 사용 안함

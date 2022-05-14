@@ -24,7 +24,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-public class FoodIngredient {
+public class FoodIngredient extends BaseEntity{
 
     // 식재료 아이디
     @Id

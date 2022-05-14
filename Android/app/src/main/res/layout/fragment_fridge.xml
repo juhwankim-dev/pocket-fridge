@@ -19,7 +19,12 @@
                 android:id="@+id/tb_fridgeF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:menu="@menu/menu_toolbar_fridge"/>
+                app:menu="@menu/menu_toolbar_fridge">
+                <TextView
+                    android:id="@+id/tv_fridgeF_name"
+                    style="@style/page_title_text"
+                    tools:text="냉장고 이름" />
+            </com.google.android.material.appbar.MaterialToolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
 
