@@ -122,9 +122,4 @@
         <item>가나다순</item>
         <item>가나다역순</item>
     </string-array>
-
-    <string name="save">저장</string>
-    <string name="noti_setting_offset">일 전</string>
-    <string name="noti_setting_offset_label">유통기한 임박 알림 일</string>
-    <string name="noti_setting_activation_label">유통기한 임박 알림 받기</string>
 </resources>
