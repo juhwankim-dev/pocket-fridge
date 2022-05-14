@@ -1,6 +1,8 @@
 package com.ssafy.andback.api.controller;
 
+import com.ssafy.andback.api.constant.ErrorCode;
 import com.ssafy.andback.api.dto.response.*;
+import com.ssafy.andback.api.exception.CustomException;
 import com.ssafy.andback.api.service.RecipeIngredientService;
 import com.ssafy.andback.api.service.RecipeService;
 import com.ssafy.andback.api.service.UserRefrigeratorService;
@@ -10,10 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
@@ -41,7 +40,7 @@ public class RecipeController {
     //모든 레시피 출력
     @ApiOperation(value = "모든 레시피 조회", notes = "모든 레시피 리스트를 보여준다")
     @GetMapping
-    ResponseEntity<ListResponseDto<RecipeResponseDto>> findAllRecipe(@ApiIgnore Authentication authentication){
+    ResponseEntity<ListResponseDto<RecipeResponseDto>> findAllRecipe(@ApiIgnore Authentication authentication) {
 
         User user = (User) authentication.getPrincipal();
 
@@ -53,7 +52,7 @@ public class RecipeController {
 
     @ApiOperation(value = "레시피 과정 정보 조회", notes = "레시피 Id로 레시피 과정을 조회한다")
     @GetMapping("/{recipeId}")
-    ResponseEntity<ListResponseDto<RecipeProcessResponseDto>> findAllRecipeProcessByRecipeId(@PathVariable(value = "recipeId", required = true) Long recipeId){
+    ResponseEntity<ListResponseDto<RecipeProcessResponseDto>> findAllRecipeProcessByRecipeId(@PathVariable(value = "recipeId", required = true) Long recipeId) {
 
         List<RecipeProcessResponseDto> response = recipeService.findRecipeProcessByRecipeId(recipeId);
 
@@ -87,5 +86,24 @@ public class RecipeController {
         List<LackRecipeIngredientResponseDto> response = recipeService.findLackRecipeIngredient(recipeIngredientList, foodIngredientList);
 
         return ResponseEntity.ok(new ListResponseDto<LackRecipeIngredientResponseDto>(200, "success", response));
+    }
+
+
+    @ApiOperation(value = "추천 레시피 목록", notes = "추천 레시피를 보여 준다.")
+    @GetMapping("/recommend")
+    ResponseEntity<String> recommendRecipeList(@ApiIgnore Authentication authentication) throws CustomException {
+        if (authentication == null) {
+            throw new CustomException(ErrorCode.NOT_AUTH_TOKEN); // token 이 없습니다
+        }
+
+        User user = (User) authentication.getPrincipal();
+
+        if (user == null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND); // user 가 없습니다
+        }
+
+        ResponseEntity<String> entity = recipeService.recommendRecipeList(user.getUserId());
+
+        return entity;
     }
 }

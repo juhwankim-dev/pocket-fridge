@@ -12,9 +12,12 @@ import com.ssafy.andback.core.repository.RecipeLikeRepository;
 import com.ssafy.andback.core.repository.RecipeProcessRepository;
 import com.ssafy.andback.core.repository.RecipeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
 import java.util.*;
 
 /**
@@ -37,9 +40,13 @@ public class RecipeServiceImpl implements RecipeService {
     private final RecipeProcessRepository recipeProcessRepository;
     private final RecipeIngredientRepository recipeIngredientRepository;
     private final RecipeLikeRepository recipeLikeRepository;
+    private final RestTemplate restTemplate;
+
+    private static final String base_url = "http://k6d206.p.ssafy.io:5000/recommend/";
+
 
     @Override
-    public List<RecipeResponseDto> findAllRecipe(User user) {
+    public List<RecipeResponseDto> findAllRecipe(User user) throws CustomException {
 
         List<Recipe> recipeList = recipeRepository.findAll();
         List<RecipeLike> recipeLikeList = recipeLikeRepository.findAllByUser(user);
@@ -50,10 +57,10 @@ public class RecipeServiceImpl implements RecipeService {
             set.add(recipeLike.getRecipe().getRecipeId());
         }
 
-        for(int i=0; i<recipeList.size(); i++) {
+        for (int i = 0; i < recipeList.size(); i++) {
             Recipe temp = recipeList.get(i);
 
-            if(set.contains(temp.getRecipeId())) {
+            if (set.contains(temp.getRecipeId())) {
                 result.add(RecipeResponseDto.builder()
                         .recipeId(temp.getRecipeId())
                         .recipeAllIngredient(temp.getRecipeAllIngredient())
@@ -84,7 +91,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public List<RecipeProcessResponseDto> findRecipeProcessByRecipeId(Long recipeId) {
+    public List<RecipeProcessResponseDto> findRecipeProcessByRecipeId(Long recipeId) throws CustomException {
 
         Optional<Recipe> recipe = recipeRepository.findById(recipeId);
         recipe.orElseThrow(() -> new CustomException(ErrorCode.RECIPE_NOT_FOUND));
@@ -111,7 +118,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     @Transactional
-    public List<LackRecipeIngredientResponseDto> findLackRecipeIngredient(List<RecipeIngredient> recipeIngredientList, List<FoodIngredient> foodIngredientList) {
+    public List<LackRecipeIngredientResponseDto> findLackRecipeIngredient(List<RecipeIngredient> recipeIngredientList, List<FoodIngredient> foodIngredientList) throws CustomException {
 
         List<LackRecipeIngredientResponseDto> result = new ArrayList<>();
         HashSet<String> recipeIngredientSubCategoryNames = new HashSet<>();
@@ -121,7 +128,7 @@ public class RecipeServiceImpl implements RecipeService {
             recipeIngredientSubCategoryNames.add(recipeIngredientList.get(i).getSubCategory().getSubCategoryName());
         }
 
-        for(int i=0; i < foodIngredientList.size(); i++) {
+        for (int i = 0; i < foodIngredientList.size(); i++) {
             foodIngredientSubCategoryNames.add(foodIngredientList.get(i).getSubCategory().getSubCategoryName());
         }
 
@@ -137,7 +144,24 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public List<RecipeIngredientResponseDto> findRecipeIngredientByRecipeId(Long recipeId) {
+    public ResponseEntity<String> recommendRecipeList(Long userId) throws CustomException {
+
+
+        String url = base_url + userId;
+
+        // GET 방식으로 요청한다
+        ResponseEntity<String> entity = restTemplate.getForEntity(url, String.class);
+
+
+        if (entity.getStatusCode() == HttpStatus.OK) {
+            return entity;
+        } else {
+            throw new CustomException(ErrorCode.RECOMMEND_REFRIGERATOR_NOT_FOUND);
+        }
+    }
+
+    @Override
+    public List<RecipeIngredientResponseDto> findRecipeIngredientByRecipeId(Long recipeId) throws CustomException {
 
         Optional<Recipe> recipe = recipeRepository.findById(recipeId);
         recipe.orElseThrow(() -> new CustomException(ErrorCode.RECIPE_NOT_FOUND));
