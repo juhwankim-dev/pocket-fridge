@@ -3,6 +3,7 @@ package com.andback.pocketfridge.present.views.main.mypage
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -33,7 +34,6 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
     private fun setObserve() {
         with(viewModel) {
             binding.lifecycleOwner?.let { owner ->
-                // TODO: 냉장고 목록 가져오기
                 fridges.observe(owner) {
                     if (it.isEmpty()) {
                         binding.rvFridgeManageF.visibility = View.GONE
@@ -43,6 +43,9 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
                         binding.llFridgeManageFEmpty.visibility = View.GONE
                         fmAdapter.setList(it, -1)
                     }
+                }
+                tstMsg.observe(owner) {
+                    showToastMessage(it)
                 }
 
                 // TODO: 냉장고 이름 수정 적용
@@ -88,14 +91,14 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
                 }
 
                 dialogBinding.tvDialogTitle.text = resources.getString(R.string.add_fridge)
+                dialogBinding.etDialogInputF.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
 
                 dialogBinding.tvDialogInputFCancel.setOnClickListener {
                     alertDialog.dismiss()
                 }
                 dialogBinding.tvDialogInputFAccept.setOnClickListener {
                     if (dialogBinding.etDialogInputF.text.isNotBlank()) {
-                        // TODO : 냉장고 추가
-                        // TODO: 냉장고 다이얼로그 input type 변경 
+                        viewModel.createFridge(dialogBinding.etDialogInputF.text.toString())
                         alertDialog.dismiss()
                     }
                 }

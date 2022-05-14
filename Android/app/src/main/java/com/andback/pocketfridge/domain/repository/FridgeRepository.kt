@@ -6,4 +6,6 @@ import io.reactivex.Single
 
 interface FridgeRepository {
     fun getFridges(): Single<BaseResponse<List<FridgeEntity>>>
+
+    fun createFridge(name: String): Single<BaseResponse<Unit>>
 }

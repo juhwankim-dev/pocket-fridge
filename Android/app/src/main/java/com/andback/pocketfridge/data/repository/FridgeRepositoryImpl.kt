@@ -13,4 +13,8 @@ class FridgeRepositoryImpl @Inject constructor(
     override fun getFridges(): Single<BaseResponse<List<FridgeEntity>>> {
         return dataSource.getFridges()
     }
+
+    override fun createFridge(name: String): Single<BaseResponse<Unit>> {
+        return dataSource.createFridge(name)
+    }
 }
