@@ -15,7 +15,6 @@ import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.metrics import mean_squared_error
 import random
-import jwt
 
 # Flask 연동
 app = Flask(__name__)  # 앱 초기화
@@ -29,24 +28,18 @@ api = Api(
 # flask_restx의 api.namespace로 api 생성
 recommend_np = api.namespace('recommend', description='레시피 추천 API')
 
-# jwt secret key 설정 (Spring jwt와 같은 secret key)
-JWT_SECRET_KEY = 'SSAFYPocketFridge'
-algorithm = 'HS256'
 
-
-@recommend_np.route('')
+@recommend_np.route('/<int:userid>')
 class TokenGet(Resource):
     @recommend_np.doc(responses={200: '레시피 추천 완료'})
     @recommend_np.doc(responses={404: '레시피 추천 실패'})
-    def get(self):
-        # 1. JWT 토큰 인증
-        header = request.headers.get('JWT')  # JWT 헤더로 담음
-        if header is None:
-            return {'message': 'Please Login'}, 404
-        data = jwt.decode(header, JWT_SECRET_KEY, algorithms=algorithm)
-        user_id = data.get('user_id')
+    def get(self, userid):
+        if userid is None:
+            return {'message': '유효하지 않은 id 입니다.'}, 404
+        print('userid =', userid)
+        user_id = userid
 
-        # 2. 추천 알고리즘
+        # 추천 알고리즘
         recipes = recommend(user_id)
 
         return {
@@ -122,7 +115,6 @@ def recommend(user_id):
 
         # 데이터 프레임 형태로 저장
         item_sim_df = pd.DataFrame(item_sim, index=likes_matrix_T.index, columns=likes_matrix_T.index)
-
 
         # 사용자별 예측 함수
         # 인수로 사용자-아이템 행렬(NaN은 0으로 대체), 아이템 유사도 행렬 사용
