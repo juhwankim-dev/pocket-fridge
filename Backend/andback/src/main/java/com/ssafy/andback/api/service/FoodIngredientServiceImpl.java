@@ -46,7 +46,6 @@ public class FoodIngredientServiceImpl implements FoodIngredientService {
 
         // 식재료 등록
         FoodIngredient foodIngredient = new FoodIngredient();
-        Refrigerator refrigerator;
 
         foodIngredient.setFoodIngredientName(insertFoodIngredientReqDto.getFoodIngredientName());
         foodIngredient.setFoodIngredientExp(insertFoodIngredientReqDto.getFoodIngredientExp());
@@ -61,9 +60,14 @@ public class FoodIngredientServiceImpl implements FoodIngredientService {
             return "fail";
         }
 
-        refrigerator = refrigeratorRepository.findByRefrigeratorId(insertFoodIngredientReqDto.getRefrigeratorId());
+        Optional<Refrigerator> refrigerator = refrigeratorRepository.findByRefrigeratorId(insertFoodIngredientReqDto.getRefrigeratorId());
+
+        refrigerator.orElseThrow(
+                () -> new CustomException(ErrorCode.REFRIGERATOR_NOT_FOUND)
+        );
+
         Optional<SubCategory> subCategory = subCategoryRepository.findById(insertFoodIngredientReqDto.getSubCategoryId());
-        foodIngredient.setRefrigerator(refrigerator);
+        foodIngredient.setRefrigerator(refrigerator.get());
         foodIngredient.setSubCategory(subCategory.get());
         foodIngredientRepository.save(foodIngredient);
         return "success";
@@ -73,7 +77,6 @@ public class FoodIngredientServiceImpl implements FoodIngredientService {
     public String updateFoodIngredient(UpdateFoodIngredientRequestDto updateFoodIngredientReqDto) {
 
         FoodIngredient foodIngredient = foodIngredientRepository.findByFoodIngredientId(updateFoodIngredientReqDto.getFoodIngredientId());
-        Refrigerator refrigerator;
 
         // 식재료 수정
         foodIngredient.setFoodIngredientName(updateFoodIngredientReqDto.getFoodIngredientName());
@@ -89,8 +92,11 @@ public class FoodIngredientServiceImpl implements FoodIngredientService {
             throw new CustomException(ErrorCode.FAIL_CHANGE_INGREDIENT);
         }
 
-        refrigerator = refrigeratorRepository.findByRefrigeratorId(updateFoodIngredientReqDto.getRefrigeratorId());
-        foodIngredient.setRefrigerator(refrigerator);
+        Optional<Refrigerator> refrigerator = refrigeratorRepository.findByRefrigeratorId(updateFoodIngredientReqDto.getRefrigeratorId());
+
+
+
+        foodIngredient.setRefrigerator(refrigerator.get());
         foodIngredientRepository.save(foodIngredient);
         return "success";
     }
@@ -110,9 +116,13 @@ public class FoodIngredientServiceImpl implements FoodIngredientService {
     @Override
     public List<FoodIngredientResponseDto> findAllByRefrigeratorId(Long refrigeratorId) {
 
-        Refrigerator refrigerator = refrigeratorRepository.findByRefrigeratorId(refrigeratorId);
+        Optional<Refrigerator> refrigerator = refrigeratorRepository.findByRefrigeratorId(refrigeratorId);
 
-        List<FoodIngredient> allByRefrigerator = foodIngredientRepository.findAllByRefrigerator(refrigerator);
+        refrigerator.orElseThrow(
+                () -> new CustomException(ErrorCode.REFRIGERATOR_NOT_FOUND)
+        );
+
+        List<FoodIngredient> allByRefrigerator = foodIngredientRepository.findAllByRefrigerator(refrigerator.get());
 
         List<FoodIngredientResponseDto> res = new ArrayList<>();
 

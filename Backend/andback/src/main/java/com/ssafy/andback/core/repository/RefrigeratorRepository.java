@@ -12,9 +12,11 @@ package com.ssafy.andback.core.repository;
 import com.ssafy.andback.core.domain.Refrigerator;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 public interface RefrigeratorRepository extends JpaRepository<Refrigerator, Long> {
 
-    Refrigerator findByRefrigeratorId(Long refrigeratorId);
+    Optional<Refrigerator> findByRefrigeratorId(Long refrigeratorId);
 
     void deleteRefrigeratorByRefrigeratorId(Long refrigeratorId);
 }

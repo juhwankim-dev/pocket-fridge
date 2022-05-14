@@ -9,10 +9,11 @@ import javax.persistence.*;
 @Table(name = "recipe_process")
 @NoArgsConstructor
 @Getter
-public class RecipeProcess {
+public class RecipeProcess extends BaseEntity {
 
     // 레시피 과정정보 아이디
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "recipe_process_id", nullable = false)
     private Long recipeProcessId;
 

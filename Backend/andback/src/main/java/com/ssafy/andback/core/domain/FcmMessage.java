@@ -18,7 +18,7 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 @Getter
-public class FcmMessage {
+public class FcmMessage extends BaseEntity {
     private boolean validateOnly;
     private Message message;
 

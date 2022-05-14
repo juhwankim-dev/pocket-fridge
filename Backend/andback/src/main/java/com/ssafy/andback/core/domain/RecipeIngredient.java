@@ -19,7 +19,8 @@ import javax.persistence.*;
 @Table(name = "recipe_ingredient")
 @NoArgsConstructor
 @Getter
-public class RecipeIngredient {
+public class RecipeIngredient extends BaseEntity {
+
 
     // 레시피 재료 아이디
     @Id
