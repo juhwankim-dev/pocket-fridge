@@ -13,7 +13,10 @@ class IngreRVAdapter: RecyclerView.Adapter<IngreRVAdapter.ViewHolder>(), Filtera
     lateinit var itemClickListener: ItemClickListener
     lateinit var itemLongClickListener: ItemLongClickListener
     private var filteredList = arrayListOf<Ingredient>()
-
+    private val SORT_BY_EXP = 0
+    private val REVERSER_SORT_BY_EXP = 1
+    private val SORT_BY_KOR = 2
+    private val REVERSER_SORT_BY_KOR = 3
 
     inner class ViewHolder(val binding: ItemIngreListBinding): RecyclerView.ViewHolder(binding.root) {
         init {
@@ -96,5 +99,16 @@ class IngreRVAdapter: RecyclerView.Adapter<IngreRVAdapter.ViewHolder>(), Filtera
                 notifyDataSetChanged()
             }
         }
+    }
+
+    fun sortList(sortType: Int) {
+        when(sortType) {
+            SORT_BY_EXP -> filteredList.sortByDescending { it.leftDay }
+            REVERSER_SORT_BY_EXP -> filteredList.sortBy { it.leftDay }
+            SORT_BY_KOR -> filteredList.sortBy { it.name }
+            REVERSER_SORT_BY_KOR -> filteredList.sortByDescending { it.name }
+        }
+
+        notifyDataSetChanged()
     }
 }

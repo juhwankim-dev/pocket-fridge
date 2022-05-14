@@ -32,6 +32,11 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
         init()
     }
 
+    override fun onStart() {
+        super.onStart()
+        binding.spinnerFridgeF.setSelection(0)
+    }
+
     private fun init() {
         viewModel.getFridges()
         viewModel.getMainCategory()
@@ -149,8 +154,8 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
     }
 
     private fun setSpinner() {
-        val myAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, resources.getStringArray(R.array.spinner_list))
-        binding.spinnerFridgeF.adapter = myAdapter
+        val sortAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, resources.getStringArray(R.array.spinner_list))
+        binding.spinnerFridgeF.adapter = sortAdapter
         binding.spinnerFridgeF.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
@@ -158,23 +163,11 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
                 position: Int,
                 id: Long
             ) {
-                //아이템이 클릭 되면 맨 위부터 position 0번부터 순서대로 동작하게 됩니다.
-                when (position) {
-                    0 -> {
-
-                    }
-                    1 -> {
-
-                    }
-                    //...
-                    else -> {
-
-                    }
-                }
+                rvAdapter.sortList(position)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
-
+                rvAdapter.sortList(0)
             }
         }
     }
