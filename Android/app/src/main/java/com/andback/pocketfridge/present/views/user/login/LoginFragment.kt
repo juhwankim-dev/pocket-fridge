@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,9 +15,13 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import com.andback.pocketfridge.BuildConfig
 import com.andback.pocketfridge.R
+import com.andback.pocketfridge.data.model.BaseResponse
+import com.andback.pocketfridge.data.model.FcmTokenEntity
 import com.andback.pocketfridge.databinding.FragmentLoginBinding
 import com.andback.pocketfridge.databinding.FragmentSnsLoginBinding
 import com.andback.pocketfridge.domain.usecase.datastore.ReadDataStoreUseCase
+import com.andback.pocketfridge.domain.usecase.user.GetFcmTokenUseCase
+import com.andback.pocketfridge.domain.usecase.user.SendFcmTokenUseCase
 import com.andback.pocketfridge.present.config.BaseFragment
 import com.andback.pocketfridge.present.utils.PageSet
 import com.andback.pocketfridge.present.utils.SignUpChecker
@@ -28,6 +33,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -40,6 +48,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 
     @Inject
     lateinit var readDataStoreUseCase: ReadDataStoreUseCase
+    @Inject
+    lateinit var getFcmTokenUseCase: GetFcmTokenUseCase
+    @Inject
+    lateinit var sendFcmTokenUseCase: SendFcmTokenUseCase
 
     var isValidName = false
     var isValidPw = false
@@ -64,6 +76,17 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             }
 
             isLogin.observe(viewLifecycleOwner) {
+                sendFcmToken().subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
+                            // TODO: fcm 업뎃 성공 -> Main으로 이동
+                        },
+                        {
+                            // TODO: 업뎃 실패
+                            Log.d(TAG, "initViewModel: ${it.javaClass.canonicalName}")
+                        }
+                    )
                 registerNotiWorker()
             }
         }
@@ -144,6 +167,13 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
     private fun registerNotiWorker() {
         runBlocking {
             DailyNotiWorker.runAt(requireContext(), readDataStoreUseCase)
+        }
+    }
+
+    private fun sendFcmToken(): Single<BaseResponse<Any>> {
+        return getFcmTokenUseCase().flatMap { token ->
+            val androidId = Settings.Secure.getString(requireActivity().contentResolver, Settings.Secure.ANDROID_ID)
+            sendFcmTokenUseCase(FcmTokenEntity(androidId, token)).subscribeOn(Schedulers.io())
         }
     }
 
