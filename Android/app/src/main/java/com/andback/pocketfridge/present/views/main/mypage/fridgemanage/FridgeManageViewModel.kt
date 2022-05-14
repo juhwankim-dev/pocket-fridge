@@ -10,6 +10,7 @@ import com.andback.pocketfridge.data.model.UserEntity
 import com.andback.pocketfridge.domain.usecase.fridge.CreateFridgeUseCase
 import com.andback.pocketfridge.domain.usecase.fridge.DeleteFridgeUseCase
 import com.andback.pocketfridge.domain.usecase.fridge.GetFridgesUseCase
+import com.andback.pocketfridge.domain.usecase.fridge.UpdateFridgeNameUseCase
 import com.andback.pocketfridge.domain.usecase.user.GetUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -22,6 +23,7 @@ class FridgeManageViewModel @Inject constructor(
     private val getFridgesUseCase: GetFridgesUseCase,
     private val getUserUseCase: GetUserUseCase,
     private val createFridgeUseCase: CreateFridgeUseCase,
+    private val updateFridgeNameUseCase: UpdateFridgeNameUseCase,
     private val deleteFridgeUseCase: DeleteFridgeUseCase
 ) : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
@@ -71,7 +73,7 @@ class FridgeManageViewModel @Inject constructor(
                     },
                     {
                         _tstErrorMsg.value = R.string.common_error.toString()
-                        Log.e(TAG, "deleteFridge: ${it.message}")
+                        Log.e(TAG, "getFridges: ${it.message}")
                     }
                 )
         )
@@ -89,7 +91,25 @@ class FridgeManageViewModel @Inject constructor(
                     },
                     {
                         _tstErrorMsg.value = R.string.common_error.toString()
-                        Log.e(TAG, "deleteFridge: ${it.message}")
+                        Log.e(TAG, "createFridge: ${it.message}")
+                    }
+                )
+        )
+    }
+
+    fun updateFridgeName(id: Int, name: String) {
+        compositeDisposable.add(
+            updateFridgeNameUseCase(id, name)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        _tstMsg.value = it.message
+                        getFridges()
+                    },
+                    {
+                        _tstErrorMsg.value = R.string.common_error.toString()
+                        Log.e(TAG, "updateFridgeName: ${it.message}")
                     }
                 )
         )

@@ -2,11 +2,11 @@ package com.andback.pocketfridge.present.views.main.mypage.fridgemanage
 
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andback.pocketfridge.R
@@ -51,8 +51,6 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
                 tstErrorMsg.observe(owner) {
                     showToastMessage(it)
                 }
-
-                // TODO: 냉장고 이름 수정 적용
             }
         }
     }
@@ -69,7 +67,7 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
             showShareFridgeDialog()
         }
         binding.llFridgeManageFAddFridge.setOnClickListener {
-            showAddFridgeDialog()
+            showFridgeNameDialog()
         }
         fmAdapter.itemClickListener = object : FridgeListAdapter.ItemClickListener {
             override fun onClick(data: FridgeEntity) {
@@ -82,8 +80,13 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
         // TODO: 공유 xml 만들고 dialog 띄우기
     }
 
-    private fun showAddFridgeDialog() {
+    private fun showFridgeNameDialog(data: FridgeEntity? = null) {
         val dialogBinding = FragmentDialogInputBinding.inflate(LayoutInflater.from(requireContext()))
+        val title = if (data != null) {
+            resources.getString(R.string.edit_fridge_name)
+        } else {
+            resources.getString(R.string.add_fridge)
+        }
 
         AlertDialog.Builder(requireContext())
             .setView(dialogBinding.root)
@@ -93,16 +96,30 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
                     return@also
                 }
 
-                dialogBinding.tvDialogTitle.text = resources.getString(R.string.add_fridge)
-                dialogBinding.etDialogInputF.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
+                dialogBinding.tvDialogTitle.text = title
+                dialogBinding.etDialogInputF.apply {
+                    inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
+                    data?.let { setText(data.name) }
+                }
 
                 dialogBinding.tvDialogInputFCancel.setOnClickListener {
                     alertDialog.dismiss()
                 }
                 dialogBinding.tvDialogInputFAccept.setOnClickListener {
-                    if (dialogBinding.etDialogInputF.text.isNotBlank()) {
-                        viewModel.createFridge(dialogBinding.etDialogInputF.text.toString())
-                        alertDialog.dismiss()
+                    val name = dialogBinding.etDialogInputF.text.toString()
+
+                    if (name.isNotBlank()) {
+                        if (data != null) {
+                            if (name == data.name) {
+                                showToastMessage(resources.getString(R.string.not_change))
+                            } else {
+                                viewModel.updateFridgeName(data.id, dialogBinding.etDialogInputF.text.toString())
+                                alertDialog.dismiss()
+                            }
+                        } else {
+                            viewModel.createFridge(dialogBinding.etDialogInputF.text.toString())
+                            alertDialog.dismiss()
+                        }
                     }
                 }
             }
@@ -114,6 +131,10 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
         BottomSheetDialog(requireContext()).apply {
             setContentView(dialogBinding.root)
 
+            if (fridge.isOwner == false) {
+                dialogBinding.llFridgeManageOptionFEditName.visibility = View.GONE
+            }
+
             dialogBinding.ibFridgeManageOptionFCancel.setOnClickListener {
                 dismiss()
             }
@@ -122,7 +143,7 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
                 dismiss()
             }
             dialogBinding.llFridgeManageOptionFEditName.setOnClickListener {
-                // TODO : 이름 수정 다이알로그 띄우기
+                showFridgeNameDialog(fridge)
                 dismiss()
             }
             dialogBinding.llFridgeManageOptionFDelete.setOnClickListener {
