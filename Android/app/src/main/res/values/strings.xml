@@ -5,8 +5,9 @@
     <string name="accept">확인</string>
     <string name="save">저장</string>
 
-    <string name="permission_error">권한 처리 중 문제가 발생하였습니다</string>
+    <string name="permission_error">권한 처리 중 문제가 발생하였습니다.</string>
     <string name="network_error">네트워크 상태를 확인해 주세요.</string>
+    <string name="common_error">처리 중 문제가 발생하였습니다.</string>
 
 
     <string name="fridge">냉장고</string>
@@ -103,6 +104,8 @@
     <string name="delete_fridge">냉장고 삭제</string>
     <string name="edit_fridge_name">냉장고 이름 변경</string>
     <string name="show_fridge_member">냉장고 공유원들 보기</string>
+
+    <string name="delete_fridge_dialog_title">냉장고: [%1$s]를 삭제하시겠습니까?</string>
 
 
     <string name="noti_setting_offset">일 전</string>
