@@ -9,4 +9,6 @@ interface FridgeRemoteDataSource {
     fun getFridges(): Single<BaseResponse<List<FridgeEntity>>>
 
     fun createFridge(@NotNull name: String): Single<BaseResponse<Unit>>
+
+    fun deleteFridge(@NotNull id: Int): Single<BaseResponse<Unit>>
 }
