@@ -9,6 +9,8 @@
     <string name="network_error">네트워크 상태를 확인해 주세요.</string>
     <string name="common_error">처리 중 문제가 발생하였습니다.</string>
 
+    <string name="not_change">변경사항이 없습니다.</string>
+
 
     <string name="fridge">냉장고</string>
     <string name="add">추가</string>

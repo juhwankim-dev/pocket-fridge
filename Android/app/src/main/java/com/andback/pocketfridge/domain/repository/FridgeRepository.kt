@@ -9,5 +9,7 @@ interface FridgeRepository {
 
     fun createFridge(name: String): Single<BaseResponse<Unit>>
 
+    fun updateFridgeName(id: Int, name: String): Single<BaseResponse<Unit>>
+
     fun deleteFridge(id: Int): Single<BaseResponse<Unit>>
 }
