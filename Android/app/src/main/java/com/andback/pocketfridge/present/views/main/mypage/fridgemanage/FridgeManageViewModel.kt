@@ -1,4 +1,4 @@
-package com.andback.pocketfridge.present.views.main.mypage
+package com.andback.pocketfridge.present.views.main.mypage.fridgemanage
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
