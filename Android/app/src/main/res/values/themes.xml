@@ -90,6 +90,15 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
+    <style name="explain_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/explain_text_size</item>
+        <item name="android:textColor">@color/black_low_emphasis</item>
+        <item name="android:fontFamily">@font/noto_sans_regular</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
     <style name="Colors_Widget.MaterialComponents.Chip.Choice" parent="Widget.MaterialComponents.Chip.Choice">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
