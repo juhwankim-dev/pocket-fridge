@@ -24,8 +24,6 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
         private const val TAG = "IngreUploadFragment_debuk"
     }
     private val viewModel: IngreUploadViewModel by activityViewModels()
-    // TODO: upload
-    // TODO: 입력값 에러처리
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
