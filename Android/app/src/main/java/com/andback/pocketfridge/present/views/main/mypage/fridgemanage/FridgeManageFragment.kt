@@ -1,7 +1,8 @@
-package com.andback.pocketfridge.present.views.main.mypage
+package com.andback.pocketfridge.present.views.main.mypage.fridgemanage
 
 
 import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.text.InputType
 import android.view.LayoutInflater
@@ -47,9 +48,11 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
                 tstMsg.observe(owner) {
                     showToastMessage(it)
                 }
+                tstErrorMsg.observe(owner) {
+                    showToastMessage(it)
+                }
 
                 // TODO: 냉장고 이름 수정 적용
-                // TODO: 냉장고 삭제 적용
             }
         }
     }
@@ -70,7 +73,7 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
         }
         fmAdapter.itemClickListener = object : FridgeListAdapter.ItemClickListener {
             override fun onClick(data: FridgeEntity) {
-                showOptionDialog()
+                showOptionDialog(data)
             }
         }
     }
@@ -105,7 +108,7 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
             }
     }
 
-    private fun showOptionDialog() {
+    private fun showOptionDialog(fridge: FridgeEntity) {
         val dialogBinding = FragmentFridgeManageOptionBinding.inflate(LayoutInflater.from(requireActivity()))
 
         BottomSheetDialog(requireContext()).apply {
@@ -123,7 +126,14 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
                 dismiss()
             }
             dialogBinding.llFridgeManageOptionFDelete.setOnClickListener {
-                // TODO : 삭제 다이알로그 띄우기
+                AlertDialog.Builder(requireContext())
+                    .setTitle(getString(R.string.delete_fridge_dialog_title, fridge.name))
+                    .setMessage("")
+                    .setNegativeButton(R.string.cancel, null)
+                    .setPositiveButton(R.string.accept) { dialog, which ->
+                        viewModel.deleteFridge(fridge.id)
+                    }
+                    .show()
                 dismiss()
             }
 

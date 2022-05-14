@@ -82,7 +82,7 @@
     </fragment>
     <fragment
         android:id="@+id/fridgeManageFragment"
-        android:name="com.andback.pocketfridge.present.views.main.mypage.FridgeManageFragment"
+        android:name="com.andback.pocketfridge.present.views.main.mypage.fridgemanage.FridgeManageFragment"
         android:label="FridgeManageFragment"
         tools:layout="@layout/fragment_fridge_manage"/>
     <fragment
