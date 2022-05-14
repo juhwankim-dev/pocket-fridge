@@ -4,9 +4,11 @@ import com.ssafy.andback.api.dto.response.LackRecipeIngredientResponseDto;
 import com.ssafy.andback.api.dto.response.RecipeIngredientResponseDto;
 import com.ssafy.andback.api.dto.response.RecipeProcessResponseDto;
 import com.ssafy.andback.api.dto.response.RecipeResponseDto;
+import com.ssafy.andback.api.exception.CustomException;
 import com.ssafy.andback.core.domain.FoodIngredient;
 import com.ssafy.andback.core.domain.RecipeIngredient;
 import com.ssafy.andback.core.domain.User;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -22,9 +24,13 @@ import java.util.List;
 
 public interface RecipeService {
 
-    List<RecipeResponseDto> findAllRecipe(User user);
-    List<RecipeProcessResponseDto> findRecipeProcessByRecipeId(Long recipeId);
-    List<RecipeIngredientResponseDto> findRecipeIngredientByRecipeId(Long recipeId);
-    List<LackRecipeIngredientResponseDto> findLackRecipeIngredient(List<RecipeIngredient> recipeIngredientList, List<FoodIngredient> foodIngredientList);
+    List<RecipeResponseDto> findAllRecipe(User user) throws CustomException;
 
+    List<RecipeProcessResponseDto> findRecipeProcessByRecipeId(Long recipeId) throws CustomException;
+
+    List<RecipeIngredientResponseDto> findRecipeIngredientByRecipeId(Long recipeId) throws CustomException;
+
+    List<LackRecipeIngredientResponseDto> findLackRecipeIngredient(List<RecipeIngredient> recipeIngredientList, List<FoodIngredient> foodIngredientList) throws CustomException;
+
+    ResponseEntity<String> recommendRecipeList(Long userId) throws CustomException;
 }
