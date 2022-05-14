@@ -81,7 +81,7 @@ class IngreRVAdapter: RecyclerView.Adapter<IngreRVAdapter.ViewHolder>(), Filtera
                 filteredList = when(category) {
                     in 1..100 -> {
                         val newFilteredList = arrayListOf<Ingredient>()
-                        list.filter { it.category == category }.forEach { filteredList.add(it) }
+                        list.filter { it.mainCategory == category }.forEach { newFilteredList.add(it) }
                         newFilteredList
                     }
                     else -> {
