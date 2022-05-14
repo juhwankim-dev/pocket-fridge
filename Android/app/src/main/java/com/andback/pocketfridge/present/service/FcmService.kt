@@ -10,9 +10,9 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class FcmService @Inject constructor(
-    private val sendFcmTokenUseCase: SendFcmTokenUseCase
-): FirebaseMessagingService() {
+class FcmService: FirebaseMessagingService() {
+    @Inject
+    lateinit var sendFcmTokenUseCase: SendFcmTokenUseCase
 
     @SuppressLint("HardwareIds")
     override fun onNewToken(token:String) {
@@ -25,7 +25,10 @@ class FcmService @Inject constructor(
 
         // 서버에 업데이트
         sendFcmTokenUseCase(FcmTokenEntity(androidId, token)).subscribeOn(Schedulers.io())
-            .subscribe()
+            .subscribe(
+                {},
+                {}
+            )
     }
 
 

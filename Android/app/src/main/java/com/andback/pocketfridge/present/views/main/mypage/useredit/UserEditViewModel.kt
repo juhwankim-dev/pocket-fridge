@@ -1,12 +1,14 @@
-package com.andback.pocketfridge.present.views.main.mypage
+package com.andback.pocketfridge.present.views.main.mypage.useredit
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.andback.pocketfridge.data.model.UserEditEntity
 import com.andback.pocketfridge.data.model.UserEntity
 import com.andback.pocketfridge.domain.usecase.datastore.ReadDataStoreUseCase
 import com.andback.pocketfridge.domain.usecase.user.GetUserUseCase
+import com.andback.pocketfridge.domain.usecase.user.UpdateUserUseCase
 import com.andback.pocketfridge.present.config.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -18,19 +20,25 @@ import retrofit2.HttpException
 import javax.inject.Inject
 
 @HiltViewModel
-class MyPageViewModel @Inject constructor(
+class UserEditViewModel @Inject constructor(
     private val getUserUseCase: GetUserUseCase,
+    private val updateUserUseCase: UpdateUserUseCase,
     private val readDataStoreUseCase: ReadDataStoreUseCase
 ) : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
 
     val personalInfo = MutableLiveData<UserEntity>()
 
+    val nickname = MutableLiveData<String>()
+    val pw = MutableLiveData<String>()
+
     private val _toastMsg = SingleLiveEvent<String>()
     val toastMsg: LiveData<String> get() = _toastMsg
 
     private val _loginType = SingleLiveEvent<String>()
     val loginType: LiveData<String> get() = _loginType
+
+    val isLoading = MutableLiveData<Boolean>()
 
     fun getUser() {
         compositeDisposable.add(
@@ -48,6 +56,23 @@ class MyPageViewModel @Inject constructor(
         )
     }
 
+    fun updateUser(userEditEntity: UserEditEntity) {
+        compositeDisposable.add(
+            updateUserUseCase(userEditEntity)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        isLoading.value = false
+                    },
+                    {
+                        showError(it)
+                        isLoading.value = false
+                    },
+                )
+        )
+    }
+
     fun readLoginType() {
         _loginType.value = runBlocking {
             readDataStoreUseCase.execute("LOGIN_TYPE") ?: ""
@@ -60,7 +85,7 @@ class MyPageViewModel @Inject constructor(
             val jsonObject = JSONObject(responseBody!!.trim())
             var message = jsonObject.getString("message")
             _toastMsg.value = message
-            Log.d("LoginViewModel", "${t.code()}")
+            Log.d("UserEditViewModel", "${t.code()}")
         } else {
             _toastMsg.value = t.message
         }

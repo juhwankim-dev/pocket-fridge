@@ -27,6 +27,23 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
             toastMsg.observe(viewLifecycleOwner) {
                 showToastMessage(it)
             }
+
+            loginType.observe(viewLifecycleOwner) {
+                when(it) {
+                    "COMMON" -> {
+                        findNavController().navigate(R.id.action_myPageFragment_to_confirmPWFragment)
+                    }
+                    "GOOGLE" -> {
+                        findNavController().navigate(R.id.action_myPageFragment_to_userEditFragment)
+                    }
+                    "KAKAO" -> {
+                        findNavController().navigate(R.id.action_myPageFragment_to_userEditFragment)
+                    }
+                    else -> {
+                        showToastMessage(resources.getString(R.string.network_error))
+                    }
+                }
+            }
         }
     }
 
@@ -36,6 +53,10 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         }
         binding.llMyPageFFridgeManagement.setOnClickListener {
             findNavController().navigate(R.id.action_myPageFragment_to_fridgeManageFragment)
+        }
+
+        binding.llMyPageFUserEdit.setOnClickListener {
+            viewModel.readLoginType()
         }
     }
 }

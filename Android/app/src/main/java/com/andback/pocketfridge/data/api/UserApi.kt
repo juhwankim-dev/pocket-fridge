@@ -27,7 +27,7 @@ interface UserApi {
     fun findPW(@Body userForFind: UserForFindEntity): Single<BaseResponse<Any>>
 
     @POST("user/login")
-    fun login(@Body loginEntity: LoginEntity): Single<BaseResponse<String>>
+    fun login(@Body loginEntity: LoginEntity): Single<BaseResponse<Token>>
 
     @PUT("user/update")
     fun updateUser(@Body userEditEntity: UserEditEntity): Single<BaseResponse<Any>>
@@ -41,6 +41,6 @@ interface UserApi {
         @Query("code") @NotNull code: String
     ): Single<BaseResponse<Token>>
 
-    @POST("user/token")
+    @POST("token")
     fun updateFcmToken(@Body tokenEntity: FcmTokenEntity): Single<BaseResponse<Any>>
 }
