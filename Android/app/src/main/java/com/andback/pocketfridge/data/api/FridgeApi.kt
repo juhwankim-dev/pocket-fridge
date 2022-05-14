@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface FridgeApi {
@@ -15,6 +16,12 @@ interface FridgeApi {
 
     @POST("refrigerator/{refrigeratorName}")
     fun createFridge(@Path("refrigeratorName") @NotNull name: String): Single<BaseResponse<Unit>>
+
+    @PUT("refrigerator/{refrigeratorId}/{refrigeratorName}")
+    fun updateFridgeName(
+        @Path("refrigeratorId") @NotNull id: Int,
+        @Path("refrigeratorName") @NotNull name: String
+    ): Single<BaseResponse<Unit>>
 
     @DELETE("refrigerator/{refrigeratorId}")
     fun deleteFridge(@Path("refrigeratorId") @NotNull id: Int): Single<BaseResponse<Unit>>

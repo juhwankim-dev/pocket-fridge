@@ -3,7 +3,6 @@ package com.andback.pocketfridge.data.repository.fridge
 import com.andback.pocketfridge.data.api.FridgeApi
 import com.andback.pocketfridge.data.model.BaseResponse
 import com.andback.pocketfridge.data.model.FridgeEntity
-import io.reactivex.Observable
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -16,6 +15,10 @@ class FridgeRemoteDataSourceImpl @Inject constructor(
 
     override fun createFridge(name: String): Single<BaseResponse<Unit>> {
         return fridgeApi.createFridge(name)
+    }
+
+    override fun updateFridgeName(id: Int, name: String): Single<BaseResponse<Unit>> {
+        return fridgeApi.updateFridgeName(id, name)
     }
 
     override fun deleteFridge(id: Int): Single<BaseResponse<Unit>> {
