@@ -5,11 +5,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.databinding.FragmentEmailAuthBinding
 import com.andback.pocketfridge.present.config.BaseFragment
 import com.andback.pocketfridge.present.utils.SignUpChecker
-import com.andback.pocketfridge.present.views.user.UserActivity
 
 class EmailAuthFragment : BaseFragment<FragmentEmailAuthBinding>(R.layout.fragment_email_auth) {
     private val viewModel: SignUpViewModel by activityViewModels()
@@ -25,10 +25,6 @@ class EmailAuthFragment : BaseFragment<FragmentEmailAuthBinding>(R.layout.fragme
         binding.vm = viewModel
 
         with(viewModel) {
-            pageNumber.observe(viewLifecycleOwner) {
-                (context as UserActivity).onChangeFragement(it)
-            }
-
             toastMsg.observe(viewLifecycleOwner) {
                 showToastMessage(it)
             }
@@ -43,6 +39,10 @@ class EmailAuthFragment : BaseFragment<FragmentEmailAuthBinding>(R.layout.fragme
 
             emailAuthNumberErrorMsg.observe(viewLifecycleOwner) {
                 binding.tilEmailAuthFAuthNumber.error = resources.getString(it)
+            }
+
+            isSuccessCheckEmail.observe(viewLifecycleOwner) {
+                findNavController().navigate(R.id.action_emailAuthFragment_to_signUpFragment)
             }
         }
     }
@@ -63,6 +63,10 @@ class EmailAuthFragment : BaseFragment<FragmentEmailAuthBinding>(R.layout.fragme
                 binding.tilEmailAuthFAuthNumber.error = resources.getString(R.string.no_error)
                 activateButton()
             }
+        }
+
+        binding.tbEmailAuthF.setNavigationOnClickListener {
+            findNavController().popBackStack()
         }
     }
 
