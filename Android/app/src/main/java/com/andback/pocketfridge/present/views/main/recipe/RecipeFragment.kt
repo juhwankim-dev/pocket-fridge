@@ -11,6 +11,7 @@ import com.andback.pocketfridge.databinding.FragmentRecipeBinding
 import com.andback.pocketfridge.domain.model.Recipe
 import com.andback.pocketfridge.present.config.BaseFragment
 import com.andback.pocketfridge.present.views.main.recipe.detail.DetailRecipeActivity
+import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -51,6 +52,14 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding>(R.layout.fragment_rec
             layoutManager = LinearLayoutManager(context)
             adapter = recipeAdapter
             addItemDecoration(RecipeItemDecoration(20F, ContextCompat.getColor(context, R.color.gray_divider)))
+        }
+
+        val filterList = resources.getStringArray(R.array.recipe_filter_list)
+        filterList.forEachIndexed { i, s ->
+            val chip = layoutInflater.inflate(R.layout.custom_chip_view, binding.cgRecipeF, false) as Chip
+            chip.text = s
+            chip.id = i
+            binding.cgRecipeF.addView(chip)
         }
     }
     

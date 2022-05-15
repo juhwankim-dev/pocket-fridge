@@ -13,8 +13,16 @@ import com.andback.pocketfridge.domain.model.Recipe
 
 class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>(), Filterable {
     private lateinit var itemClickListener: ItemClickListener
-    private var recipeList: ArrayList<RecipeEntity> = ArrayList()
-    private var recipeListFiltered: ArrayList<RecipeEntity> = ArrayList()
+    private var recipeList: ArrayList<Recipe> = ArrayList()
+    private var recipeListFiltered: ArrayList<Recipe> = ArrayList()
+    private val chipIndex = mapOf (
+        "전체보기" to -1,
+        "즐겨찾기" to 0,
+        "추천메뉴" to 1,
+        "한식" to 2,
+        "양식" to 3,
+        "일식" to 4,
+    )
 
     inner class RecipeViewHolder(private val binding: ItemRecipeListBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bindInfo(recipe: Recipe) {
@@ -68,7 +76,7 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>(), Fi
 
             //클릭연결
             itemView.setOnClickListener{
-                itemClickListener.onClick(recipeList[position])
+                itemClickListener.onClick(recipeListFiltered[position])
             }
         }
     }
@@ -82,23 +90,23 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>(), Fi
                 val filteredList = ArrayList<Recipe>()
 
                 recipeListFiltered = when(category) {
-                    1 -> {
+                    chipIndex["즐겨찾기"] -> {
                         recipeList.filter{ it.like }.forEach{ filteredList.add(it) }
                         filteredList
                     }
-                    2 -> {
-                        // TODO: 나중에 API 완성되면 추가
-                        recipeList
+                    chipIndex["추천메뉴"] -> {
+                        recipeList.filter{ it.isRecommendation }.forEach { filteredList.add(it) }
+                        filteredList
                     }
-                    3 -> {
+                    chipIndex["한식"] -> {
                         recipeList.filter{ it.type == "한식" }.forEach{ filteredList.add(it) }
                         filteredList
                     }
-                    4 -> {
+                    chipIndex["양식"] -> {
                         recipeList.filter{ it.type == "양식" }.forEach{ filteredList.add(it) }
                         filteredList
                     }
-                    5 -> {
+                    chipIndex["일식"] -> {
                         recipeList.filter{ it.type == "일식" }.forEach{ filteredList.add(it) }
                         filteredList
                     }
