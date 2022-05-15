@@ -22,7 +22,6 @@ class EmailAuthFragment : BaseFragment<FragmentEmailAuthBinding>(R.layout.fragme
     }
 
     private fun initViewModel() {
-        viewModel.init()
         binding.vm = viewModel
 
         with(viewModel) {

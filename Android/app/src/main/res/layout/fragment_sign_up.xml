@@ -154,7 +154,6 @@
             android:textColor="@color/white"
             android:onClick="@{()->vm.onSignUpClick()}"
             android:enabled="false"
-            android:visibility="@{vm.isSentEmail() ? View.VISIBLE : View.GONE}"
             app:backgroundTint="@color/gray_non_clickable_button"
             app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
