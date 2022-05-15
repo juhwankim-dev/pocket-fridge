@@ -52,6 +52,11 @@ class ApiModule {
     @Singleton
     fun provideLikeApiInterface(): LikeApi {
         return RetrofitUtil.likeService
+    }
 
+    @Provides
+    @Singleton
+    fun provideNotificationApiInterface(): NotificationApi {
+        return RetrofitUtil.notificationService
     }
 }
