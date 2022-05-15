@@ -130,4 +130,11 @@
         <item>가나다순</item>
         <item>가나다역순</item>
     </string-array>
+    <string-array name="recipe_filter_list">
+        <item>즐겨찾기</item>
+        <item>추천메뉴</item>
+        <item>한식</item>
+        <item>양식</item>
+        <item>일식</item>
+    </string-array>
 </resources>
