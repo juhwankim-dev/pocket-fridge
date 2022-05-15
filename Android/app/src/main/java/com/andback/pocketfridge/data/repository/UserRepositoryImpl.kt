@@ -20,6 +20,10 @@ class UserRepositoryImpl @Inject constructor(
         return userRemoteDataSource.signUp(signUpEntity)
     }
 
+    override fun deleteUser(): Single<BaseResponse<Any>> {
+        return userRemoteDataSource.deleteUser()
+    }
+
     override fun sendEmail(email: String): Single<BaseResponse<String>> {
         return userRemoteDataSource.sendEmail(email)
     }

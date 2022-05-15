@@ -4,11 +4,11 @@ import com.andback.pocketfridge.data.model.*
 import com.andback.pocketfridge.domain.model.Password
 import com.andback.pocketfridge.domain.model.Token
 import io.reactivex.Single
-import retrofit2.http.Body
 
 interface UserRepository {
     fun getUser(): Single<BaseResponse<UserEntity>>
     fun signUp(signUpEntity: SignUpEntity): Single<BaseResponse<Any>>
+    fun deleteUser(): Single<BaseResponse<Any>>
     fun sendEmail(email: String): Single<BaseResponse<String>>
     fun checkEmail(email: String): Single<BaseResponse<Any>>
     fun checkNickname(nickname: String): Single<BaseResponse<Any>>
