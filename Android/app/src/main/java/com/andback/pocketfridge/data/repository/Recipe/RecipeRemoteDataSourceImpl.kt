@@ -25,4 +25,8 @@ class RecipeRemoteDataSourceImpl @Inject constructor(private val recipeApi: Reci
     override fun getLackIngres(recipeId: Int): Single<BaseResponse<List<LackIngreEntity>>> {
         return recipeApi.getLackIngres(recipeId)
     }
+
+    override fun getRecommendList(): Single<BaseResponse<List<Int>>> {
+        return recipeApi.getRecommendList()
+    }
 }
