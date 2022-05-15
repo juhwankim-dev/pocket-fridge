@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.data.model.RecipeEntity
 import com.andback.pocketfridge.databinding.ActivityDetailRecipeBinding
+import com.andback.pocketfridge.domain.model.Recipe
 import com.andback.pocketfridge.present.config.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,7 +20,7 @@ class DetailRecipeActivity : BaseActivity<ActivityDetailRecipeBinding>(R.layout.
         initViewModel()
 
         if(intent.hasExtra("recipe")) {
-            intent.getParcelableExtra<RecipeEntity>("recipe")!!.let {
+            intent.getParcelableExtra<Recipe>("recipe")!!.let {
                 viewModel.selectedRecipe = it
                 viewModel.getCookingIngres(it.id)
                 viewModel.getRecipeSteps(it.id)

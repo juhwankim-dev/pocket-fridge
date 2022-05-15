@@ -8,8 +8,8 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.andback.pocketfridge.R
-import com.andback.pocketfridge.data.model.RecipeEntity
 import com.andback.pocketfridge.databinding.ItemRecipeListBinding
+import com.andback.pocketfridge.domain.model.Recipe
 
 class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>(), Filterable {
     private lateinit var itemClickListener: ItemClickListener
@@ -17,7 +17,7 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>(), Fi
     private var recipeListFiltered: ArrayList<RecipeEntity> = ArrayList()
 
     inner class RecipeViewHolder(private val binding: ItemRecipeListBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bindInfo(recipe: RecipeEntity) {
+        fun bindInfo(recipe: Recipe) {
             binding.recipe = recipe
 
             binding.ivRecipeIHeart.setOnClickListener {
@@ -79,7 +79,7 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>(), Fi
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val category = constraint?.toString()?.toInt()
-                val filteredList = ArrayList<RecipeEntity>()
+                val filteredList = ArrayList<Recipe>()
 
                 recipeListFiltered = when(category) {
                     1 -> {
@@ -114,13 +114,13 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>(), Fi
                 recipeListFiltered = if (results?.values == null)
                     ArrayList()
                 else
-                    results.values as ArrayList<RecipeEntity>
+                    results.values as ArrayList<Recipe>
                 notifyDataSetChanged()
             }
         }
     }
 
-    fun setList(list: List<RecipeEntity>) {
+    fun setList(list: List<Recipe>) {
         recipeList.clear()
         recipeList.addAll(list)
         recipeListFiltered.clear()
@@ -129,7 +129,7 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>(), Fi
     }
 
     interface ItemClickListener {
-        fun onClick(recipe: RecipeEntity)
+        fun onClick(recipe: Recipe)
         fun onAddLikeClick(recipeId: Int)
         fun onDeleteLikeClick(recipeId: Int)
     }

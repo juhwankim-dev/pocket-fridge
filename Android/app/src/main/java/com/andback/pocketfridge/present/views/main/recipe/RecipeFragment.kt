@@ -7,8 +7,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andback.pocketfridge.R
-import com.andback.pocketfridge.data.model.RecipeEntity
 import com.andback.pocketfridge.databinding.FragmentRecipeBinding
+import com.andback.pocketfridge.domain.model.Recipe
 import com.andback.pocketfridge.present.config.BaseFragment
 import com.andback.pocketfridge.present.views.main.recipe.detail.DetailRecipeActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -56,7 +56,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding>(R.layout.fragment_rec
     
     private fun initEvent() {
         recipeAdapter.setItemClickListener(object : RecipeAdapter.ItemClickListener{
-            override fun onClick(recipe: RecipeEntity) {
+            override fun onClick(recipe: Recipe) {
                 Intent(requireContext(), DetailRecipeActivity::class.java).let {
                     it.putExtra("recipe", recipe)
                     startActivity(it)
