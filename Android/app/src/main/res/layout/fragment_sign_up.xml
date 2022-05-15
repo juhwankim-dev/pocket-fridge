@@ -26,7 +26,6 @@
                 android:id="@+id/tb_step_oneF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:navigationOnClickListener="@{()->vm.onCloseClick()}"
                 app:title="@string/sign_up"
                 app:navigationIcon="@drawable/ic_close"/>
 
