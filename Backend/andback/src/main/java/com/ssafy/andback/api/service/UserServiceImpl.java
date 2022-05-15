@@ -44,6 +44,8 @@ public class UserServiceImpl implements UserService {
     private final UserRefrigeratorRepository userRefrigeratorRepository;
     private final FoodIngredientRepository foodIngredientRepository;
     private final RecipeLikeRepository recipeLikeRepository;
+    private final TokenRepository tokenRepository;
+    private final NotificationRepository notificationRepository;
     private final PasswordEncoder passwordEncoder; // WebSecurityConfig.java 에서 Bean 설정
     private final MailService mailService;
 
@@ -164,6 +166,12 @@ public class UserServiceImpl implements UserService {
 
         // 현재 유저의 레시피 좋아요 삭제
         recipeLikeRepository.deleteRecipeLikeByUser(user);
+
+        // 토큰 삭제
+        tokenRepository.deleteAllByUser(user);
+
+        // 알림 삭제
+        notificationRepository.deleteAllByUser(user);
 
         // 현재 유저 삭제
         userRepository.deleteUserByUserId(user.getUserId());
