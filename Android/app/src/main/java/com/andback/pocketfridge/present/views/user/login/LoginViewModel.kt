@@ -10,8 +10,6 @@ import com.andback.pocketfridge.domain.usecase.user.GetLoginUseCase
 import com.andback.pocketfridge.domain.usecase.datastore.WriteDataStoreUseCase
 import com.andback.pocketfridge.domain.usecase.user.SocialLoginUseCase
 import com.andback.pocketfridge.present.config.SingleLiveEvent
-import com.andback.pocketfridge.present.utils.PageSet
-import com.andback.pocketfridge.present.workmanager.DailyNotiWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -28,21 +26,16 @@ class LoginViewModel @Inject constructor(
     private val writeDataStoreUseCase: WriteDataStoreUseCase
 ) : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
-    val email = MutableLiveData<String>()
-    val pw = MutableLiveData<String>()
 
-    // view가 다음으로 넘어갈 페이지를 observe 하기 위함
-    val pageNumber = SingleLiveEvent<PageSet>()
-
-    // 로딩을 보여줄지 결정하기 위함
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
-
     private val _toastMsg = SingleLiveEvent<String>()
     val toastMsg: LiveData<String> get() = _toastMsg
-
     private val _isLogin = SingleLiveEvent<Boolean>()
     val isLogin: LiveData<Boolean> = _isLogin
+
+    val email = MutableLiveData<String>()
+    val pw = MutableLiveData<String>()
 
     private fun login(loginEntity: LoginEntity) {
         _isLoading.value = true
@@ -59,7 +52,6 @@ class LoginViewModel @Inject constructor(
                         _isLogin.value = true
                         _toastMsg.value = it.message
                         _isLoading.value = false
-                        pageNumber.value = PageSet.MAIN
                     },
                     {
                         _isLoading.value = false
@@ -84,7 +76,6 @@ class LoginViewModel @Inject constructor(
                         _isLogin.value = true
                         _toastMsg.value = it.message
                         _isLoading.value = false
-                        pageNumber.value = PageSet.MAIN
                     },
                     {
                         _isLoading.value = false
@@ -103,14 +94,6 @@ class LoginViewModel @Inject constructor(
 
     fun onLoginClick() {
         login(LoginEntity(email.value.toString(), pw.value.toString()))
-    }
-
-    fun onSignUpClick() {
-        pageNumber.value = PageSet.EMAIL_AUTH
-    }
-
-    fun onFindPwClick() {
-        pageNumber.value = PageSet.FIND_PW
     }
 
     private fun showError(t : Throwable) {
