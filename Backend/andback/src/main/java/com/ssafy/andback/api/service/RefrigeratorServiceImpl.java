@@ -67,7 +67,7 @@ public class RefrigeratorServiceImpl implements RefrigeratorService {
         for (UserRefrigerator temp : userRefrigeratorByUser) {
             response.add(
                     RefrigeratorResponseDto.builder()
-                            .refrigeratorId(temp.getUserRefrigeratorId())
+                            .refrigeratorId(temp.getRefrigerator().getRefrigeratorId())
                             .refrigeratorName(temp.getRefrigerator().getRefrigeratorName())
                             .refrigeratorOwner(temp.isRefrigeratorOwner()) // 주인 여부 추가 2022-05-13
                             .build());
