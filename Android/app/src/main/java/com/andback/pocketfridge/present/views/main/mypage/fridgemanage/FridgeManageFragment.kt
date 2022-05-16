@@ -14,6 +14,7 @@ import com.andback.pocketfridge.data.model.FridgeEntity
 import com.andback.pocketfridge.databinding.FragmentDialogInputBinding
 import com.andback.pocketfridge.databinding.FragmentFridgeManageBinding
 import com.andback.pocketfridge.databinding.FragmentFridgeManageOptionBinding
+import com.andback.pocketfridge.databinding.FragmentShareFridgeBinding
 import com.andback.pocketfridge.present.config.BaseFragment
 import com.andback.pocketfridge.present.views.main.FridgeListAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -159,6 +160,19 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
     }
 
     private fun showShareFridgeDialog() {
-        // TODO: 공유 xml 만들고 dialog 띄우기
+        val dialogBinding = FragmentShareFridgeBinding.inflate(LayoutInflater.from(requireActivity()))
+
+        AlertDialog.Builder(requireContext())
+            .setView(dialogBinding.root)
+            .show()
+            .also { alertDialog ->
+                if (alertDialog == null) {
+                    return@also
+                }
+
+                dialogBinding.ibShareFridgeFClose.setOnClickListener {
+                    alertDialog.dismiss()
+                }
+            }
     }
 }
