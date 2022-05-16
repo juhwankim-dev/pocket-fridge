@@ -9,6 +9,7 @@ import com.andback.pocketfridge.data.repository.fridge.FridgeRemoteDataSource
 import com.andback.pocketfridge.data.repository.ingredient.IngreLocalDataSource
 import com.andback.pocketfridge.data.repository.ingredient.IngreRemoteDataSource
 import com.andback.pocketfridge.data.repository.like.LikeRemoteDataSource
+import com.andback.pocketfridge.data.repository.notification.NotificationRemoteDataSource
 import com.andback.pocketfridge.data.repository.user.UserRemoteDataSource
 import com.andback.pocketfridge.domain.repository.*
 import dagger.Module
@@ -67,5 +68,11 @@ class RepositoryModule {
     @Singleton
     fun provideDataStore(@ApplicationContext context: Context): DataStoreRepository {
         return DataStoreRepositoryImpl(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNotificationRepository(notificationRemoteDataSource: NotificationRemoteDataSource): NotificationRepository {
+        return NotificationRepositoryImpl(notificationRemoteDataSource)
     }
 }

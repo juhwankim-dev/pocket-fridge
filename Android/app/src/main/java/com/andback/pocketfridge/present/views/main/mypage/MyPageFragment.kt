@@ -54,9 +54,13 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         binding.llMyPageFFridgeManagement.setOnClickListener {
             findNavController().navigate(R.id.action_myPageFragment_to_fridgeManageFragment)
         }
-
         binding.llMyPageFUserEdit.setOnClickListener {
             viewModel.readLoginType()
+        }
+        binding.tvMyPageFUserDelete.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString("name", viewModel.personalInfo.value?.name ?: "")
+            findNavController().navigate(R.id.action_myPageFragment_to_userDeleteFragment, bundle)
         }
     }
 }

@@ -2,6 +2,7 @@ package com.andback.pocketfridge.data.repository.fridge
 
 import com.andback.pocketfridge.data.model.BaseResponse
 import com.andback.pocketfridge.data.model.FridgeEntity
+import com.andback.pocketfridge.data.model.ShareUserEntity
 import io.reactivex.Single
 import org.jetbrains.annotations.NotNull
 
@@ -13,4 +14,6 @@ interface FridgeRemoteDataSource {
     fun updateFridgeName(@NotNull id: Int, @NotNull name: String): Single<BaseResponse<Unit>>
 
     fun deleteFridge(@NotNull id: Int): Single<BaseResponse<Unit>>
+
+    fun getFridgeMembers(@NotNull id: Int): Single<BaseResponse<List<ShareUserEntity>>>
 }

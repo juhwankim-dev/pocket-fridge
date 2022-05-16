@@ -25,8 +25,15 @@ class DataStoreRepositoryImpl @Inject constructor(
 
     override suspend fun writeDataStore(key: String, value: String) {
         val dataStoreKey = stringPreferencesKey(key)
+
         context.dataStore.edit {
             it[dataStoreKey] = value
+        }
+    }
+
+    override suspend fun resetDataStore() {
+        context.dataStore.edit {
+            it.clear()
         }
     }
 }

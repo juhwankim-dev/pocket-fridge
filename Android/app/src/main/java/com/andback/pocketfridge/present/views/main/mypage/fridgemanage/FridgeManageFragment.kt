@@ -11,9 +11,11 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.data.model.FridgeEntity
+import com.andback.pocketfridge.data.model.ShareUserEntity
 import com.andback.pocketfridge.databinding.FragmentDialogInputBinding
 import com.andback.pocketfridge.databinding.FragmentFridgeManageBinding
 import com.andback.pocketfridge.databinding.FragmentFridgeManageOptionBinding
+import com.andback.pocketfridge.databinding.FragmentShareFridgeBinding
 import com.andback.pocketfridge.present.config.BaseFragment
 import com.andback.pocketfridge.present.views.main.FridgeListAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -23,6 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.fragment_fridge_manage) {
     private val fmAdapter = FridgeListAdapter()
     private val viewModel: FridgeManageViewModel by viewModels()
+    private lateinit var memberAdapter: ShareMemberAdapter
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,11 +48,14 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
                         fmAdapter.setList(it, -1)
                     }
                 }
+                members.observe(owner) {
+                    memberAdapter.setList(it)
+                }
                 tstMsg.observe(owner) {
                     showToastMessage(it)
                 }
                 tstErrorMsg.observe(owner) {
-                    showToastMessage(it)
+                    showToastMessage(resources.getString(it))
                 }
             }
         }
@@ -63,9 +69,6 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
     }
 
     private fun setEvent() {
-        binding.llFridgeManageFShareFridge.setOnClickListener {
-            showShareFridgeDialog()
-        }
         binding.llFridgeManageFAddFridge.setOnClickListener {
             showFridgeNameDialog()
         }
@@ -74,10 +77,6 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
                 showOptionDialog(data)
             }
         }
-    }
-
-    private fun showShareFridgeDialog() {
-        // TODO: 공유 xml 만들고 dialog 띄우기
     }
 
     private fun showFridgeNameDialog(data: FridgeEntity? = null) {
@@ -139,7 +138,8 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
                 dismiss()
             }
             dialogBinding.llFridgeManageOptionFShowMember.setOnClickListener {
-                // TODO : 공유원들 보여주는 창 띄우기
+                viewModel.getFridgeMembers(fridge.id)
+                showShareFridgeDialog(fridge)
                 dismiss()
             }
             dialogBinding.llFridgeManageOptionFEditName.setOnClickListener {
@@ -163,5 +163,45 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
 
             show()
         }
+    }
+
+    private fun showShareFridgeDialog(fridge: FridgeEntity) {
+        val dialogBinding = FragmentShareFridgeBinding.inflate(LayoutInflater.from(requireActivity()))
+        memberAdapter = ShareMemberAdapter(fridge.isOwner)
+
+        AlertDialog.Builder(requireContext())
+            .setView(dialogBinding.root)
+            .show()
+            .also { alertDialog ->
+                if (alertDialog == null) {
+                    return@also
+                }
+
+                dialogBinding.ibShareFridgeFClose.setOnClickListener {
+                    alertDialog.dismiss()
+                }
+                when (fridge.isOwner) {
+                    true -> {
+                        dialogBinding.etShareFridgeFEmail.visibility = View.VISIBLE
+                        dialogBinding.ibShareFridgeFSend.visibility = View.VISIBLE
+                    }
+                     false -> {
+                         dialogBinding.etShareFridgeFEmail.visibility = View.GONE
+                         dialogBinding.ibShareFridgeFSend.visibility = View.GONE
+                     }
+                }
+
+                dialogBinding.rvShareFridgeF.apply {
+                    layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                    adapter = memberAdapter
+                }
+                memberAdapter.apply {
+                    itemClickListener = object : ShareMemberAdapter.ItemClickListener {
+                        override fun onClick(data: ShareUserEntity) {
+                            // TODO : 회원 강퇴
+                        }
+                    }
+                }
+            }
     }
 }

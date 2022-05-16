@@ -14,6 +14,9 @@ interface UserApi {
     @POST("user")
     fun signUp(@Body signUpEntity: SignUpEntity): Single<BaseResponse<Any>>
 
+    @DELETE("user")
+    fun deleteUser(): Single<BaseResponse<Any>>
+
     @GET("user/{userEmail}")
     fun sendEmail(@Path("userEmail") @NotNull email: String): Single<BaseResponse<String>>
 
