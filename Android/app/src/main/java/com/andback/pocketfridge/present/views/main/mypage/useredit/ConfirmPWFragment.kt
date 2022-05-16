@@ -20,6 +20,13 @@ class ConfirmPWFragment : BaseFragment<FragmentConfirmPWBinding>(R.layout.fragme
 
         initViewModel()
         initEvent()
+        setToolbar()
+    }
+
+    private fun setToolbar() {
+        binding.tbConfirmPwF.setNavigationOnClickListener {
+            requireActivity().onBackPressed()
+        }
     }
 
     private fun initViewModel() {

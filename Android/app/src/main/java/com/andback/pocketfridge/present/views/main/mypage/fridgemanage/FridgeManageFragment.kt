@@ -77,6 +77,9 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
                 showOptionDialog(data)
             }
         }
+        binding.tbFridgeManageF.setNavigationOnClickListener {
+            requireActivity().onBackPressed()
+        }
     }
 
     private fun showFridgeNameDialog(data: FridgeEntity? = null) {

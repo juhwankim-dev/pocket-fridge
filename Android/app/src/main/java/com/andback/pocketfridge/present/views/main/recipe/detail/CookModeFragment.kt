@@ -2,6 +2,7 @@ package com.andback.pocketfridge.present.views.main.recipe.detail
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -76,6 +77,9 @@ class CookModeFragment : BaseFragment<FragmentCookModeBinding>(R.layout.fragment
                 binding.title = "${viewModel.selectedRecipe.foodName} (${position + 1}/${viewModel.recipeSteps.value!!.size})"
             }
         })
+        binding.ivCookModeFBack.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
     }
 
     private fun initSTT() {

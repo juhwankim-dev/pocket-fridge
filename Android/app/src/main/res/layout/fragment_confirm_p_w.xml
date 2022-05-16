@@ -20,10 +20,11 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/tb_confirm_pwF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:title="@string/edit_user"
-                app:navigationIcon="@drawable/ic_back"/>
+                app:navigationIcon="@drawable/ic_back"
+                app:title="@string/edit_user" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <TextView
