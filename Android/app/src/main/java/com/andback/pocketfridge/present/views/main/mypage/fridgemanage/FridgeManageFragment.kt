@@ -24,6 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.fragment_fridge_manage) {
     private val fmAdapter = FridgeListAdapter()
     private val viewModel: FridgeManageViewModel by viewModels()
+    lateinit var shareDialog: AlertDialog
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,6 +52,15 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
                 }
                 tstErrorMsg.observe(owner) {
                     showToastMessage(it)
+                }
+                isShared.observe(owner) {
+                    if(it == true) {
+                        if(this@FridgeManageFragment::shareDialog.isInitialized) {
+                            shareDialog.dismiss()
+                        }
+                        showToastMessage(resources.getString(R.string.fridge_share_success))
+                        viewModel.resetIsShared()
+                    }
                 }
             }
         }
@@ -163,7 +173,7 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
     private fun showShareFridgeDialog(fridge: FridgeEntity) {
         val dialogBinding = FragmentShareFridgeBinding.inflate(LayoutInflater.from(requireActivity()))
 
-        AlertDialog.Builder(requireContext())
+        shareDialog = AlertDialog.Builder(requireContext())
             .setView(dialogBinding.root)
             .show()
             .also { alertDialog ->
@@ -176,8 +186,10 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
                     dialogBinding.llShareFridgeFEmail.visibility = View.GONE
                 } else {
                     dialogBinding.ibShareFridgeFClose.setOnClickListener {
-                        viewModel.addMember(fridge.id, dialogBinding.etShareFridgeFEmail.text.toString().trim())
                         alertDialog.dismiss()
+                    }
+                    dialogBinding.ibShareFridgeFSend.setOnClickListener {
+                        viewModel.addMember(fridge.id, dialogBinding.etShareFridgeFEmail.text.toString().trim())
                     }
                 }
             }
