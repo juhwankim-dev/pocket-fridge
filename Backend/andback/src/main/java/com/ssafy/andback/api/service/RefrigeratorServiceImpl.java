@@ -78,24 +78,6 @@ public class RefrigeratorServiceImpl implements RefrigeratorService {
     }
 
     @Override
-    public String createShareGroup(User user, Long refrigeratorId) {
-
-        Optional<Refrigerator> refrigerator = refrigeratorRepository.findByRefrigeratorId(refrigeratorId);
-
-        refrigerator.orElseThrow(
-                () -> new CustomException(ErrorCode.REFRIGERATOR_NOT_FOUND)
-        );
-
-        UserRefrigerator shareRefrigerator = new UserRefrigerator();
-
-        shareRefrigerator.setRefrigerator(refrigerator.get());
-        shareRefrigerator.setUser(user);
-        shareRefrigerator.setRefrigeratorOwner(true);
-
-        return "success";
-    }
-
-    @Override
     public String createShareGroup(User user, InsertShareMemberRequestDto insertShareMemberRequestDto) {
 
         Optional<Refrigerator> refrigerator = refrigeratorRepository.findByRefrigeratorId(insertShareMemberRequestDto.getRefrigeratorId());
