@@ -2,6 +2,7 @@ package com.andback.pocketfridge.domain.repository
 
 import com.andback.pocketfridge.data.model.BaseResponse
 import com.andback.pocketfridge.data.model.FridgeEntity
+import com.andback.pocketfridge.data.model.ShareUserEntity
 import io.reactivex.Single
 
 interface FridgeRepository {
@@ -12,4 +13,6 @@ interface FridgeRepository {
     fun updateFridgeName(id: Int, name: String): Single<BaseResponse<Unit>>
 
     fun deleteFridge(id: Int): Single<BaseResponse<Unit>>
+
+    fun getFridgeMembers(id: Int): Single<BaseResponse<List<ShareUserEntity>>>
 }

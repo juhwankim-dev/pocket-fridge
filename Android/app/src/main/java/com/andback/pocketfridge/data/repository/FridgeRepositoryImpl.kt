@@ -2,6 +2,7 @@ package com.andback.pocketfridge.data.repository
 
 import com.andback.pocketfridge.data.model.BaseResponse
 import com.andback.pocketfridge.data.model.FridgeEntity
+import com.andback.pocketfridge.data.model.ShareUserEntity
 import com.andback.pocketfridge.data.repository.fridge.FridgeRemoteDataSource
 import com.andback.pocketfridge.domain.repository.FridgeRepository
 import io.reactivex.Single
@@ -24,5 +25,9 @@ class FridgeRepositoryImpl @Inject constructor(
 
     override fun deleteFridge(id: Int): Single<BaseResponse<Unit>> {
         return dataSource.deleteFridge(id)
+    }
+
+    override fun getFridgeMembers(id: Int): Single<BaseResponse<List<ShareUserEntity>>> {
+        return dataSource.getFridgeMembers(id)
     }
 }
