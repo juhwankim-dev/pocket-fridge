@@ -30,4 +30,8 @@ class FridgeRepositoryImpl @Inject constructor(
     override fun getFridgeMembers(id: Int): Single<BaseResponse<List<ShareUserEntity>>> {
         return dataSource.getFridgeMembers(id)
     }
+
+    override fun deleteFridgeMember(id: Int, email: String): Single<BaseResponse<String>> {
+        return dataSource.deleteFridgeMember(id, email)
+    }
 }
