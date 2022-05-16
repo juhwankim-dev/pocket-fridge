@@ -17,6 +17,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         super.onViewCreated(view, savedInstanceState)
         initView()
         initViewModel()
+        setToolbar()
     }
 
     private fun initViewModel() {
@@ -61,6 +62,12 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
             val bundle = Bundle()
             bundle.putString("name", viewModel.personalInfo.value?.name ?: "")
             findNavController().navigate(R.id.action_myPageFragment_to_userDeleteFragment, bundle)
+        }
+    }
+
+    private fun setToolbar() {
+        binding.tbMyPageF.setNavigationOnClickListener {
+            requireActivity().onBackPressed()
         }
     }
 }

@@ -33,13 +33,13 @@
                     android:scaleType="centerCrop" />
 
                 <com.google.android.material.appbar.MaterialToolbar
-                    android:layout_height="?attr/actionBarSize"
+                    android:id="@+id/tb_detail_recipeF"
                     android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
                     android:background="@android:color/transparent"
                     android:elevation="0dp"
-                    app:navigationIcon="@drawable/ic_back"
-                    app:layout_collapseMode="pin">
-                </com.google.android.material.appbar.MaterialToolbar>
+                    app:layout_collapseMode="pin"
+                    app:navigationIcon="@drawable/ic_back" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 

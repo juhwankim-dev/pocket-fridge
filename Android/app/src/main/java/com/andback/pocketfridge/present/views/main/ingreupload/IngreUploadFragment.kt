@@ -163,7 +163,7 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
 
     private fun setToolbarButton() {
         binding.tbIngreUploadF.setNavigationOnClickListener {
-            // TODO: 바코드 찍는 화면으로 돌아가기
+            requireActivity().onBackPressed()
         }
 
         binding.tbIngreUploadF.setOnMenuItemClickListener {

@@ -20,6 +20,13 @@ class DetailRecipeFragment : BaseFragment<FragmentDetailRecipeBinding>(R.layout.
         initView()
         initViewModel()
         initEvent()
+        setToolbar()
+    }
+
+    private fun setToolbar() {
+        binding.tbDetailRecipeF.setNavigationOnClickListener {
+            requireActivity().onBackPressed()
+        }
     }
 
     private fun initView() {
