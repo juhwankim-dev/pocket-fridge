@@ -6,19 +6,14 @@ import com.ssafy.andback.api.dto.request.InsertShareMemberRequestDto;
 import com.ssafy.andback.api.dto.response.RefrigeratorResponseDto;
 import com.ssafy.andback.api.dto.response.RefrigeratorShareUserResponseDto;
 import com.ssafy.andback.api.exception.CustomException;
-import com.ssafy.andback.core.domain.FoodIngredient;
-import com.ssafy.andback.core.domain.Refrigerator;
-import com.ssafy.andback.core.domain.User;
-import com.ssafy.andback.core.domain.UserRefrigerator;
+import com.ssafy.andback.core.domain.*;
 import com.ssafy.andback.core.queryrepository.RefrigeratorQueryRepository;
-import com.ssafy.andback.core.repository.FoodIngredientRepository;
-import com.ssafy.andback.core.repository.RefrigeratorRepository;
-import com.ssafy.andback.core.repository.UserRefrigeratorRepository;
-import com.ssafy.andback.core.repository.UserRepository;
+import com.ssafy.andback.core.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -42,6 +37,10 @@ public class RefrigeratorServiceImpl implements RefrigeratorService {
     private final RefrigeratorRepository refrigeratorRepository;
     private final UserRefrigeratorRepository userRefrigeratorRepository;
     private final FoodIngredientRepository foodIngredientRepository;
+    private final UserRepository userRepository;
+    private final TokenRepository tokenRepository;
+    private final FirebaseCloudMessageService firebaseCloudMessageService;
+    private final NotificationRepository notificationRepository;
 
     public String insertRefrigerator(User user, String refrigeratorName) {
 
@@ -167,5 +166,54 @@ public class RefrigeratorServiceImpl implements RefrigeratorService {
 
 
         return userRefrigeratorRepository.shareUserList(refrigeratorId);
+    }
+
+    @Override
+    public boolean deleteUser(User user, Long refrigeratorId, String userEmail) throws IOException {
+
+        Optional<Refrigerator> refrigerator = refrigeratorRepository.findByRefrigeratorId(refrigeratorId);
+
+        refrigerator.orElseThrow(
+                () -> new CustomException(ErrorCode.REFRIGERATOR_NOT_FOUND)
+        );
+
+        Optional<User> targetUser = userRepository.findByUserEmail(userEmail);
+
+        targetUser.orElseThrow(
+                () -> new CustomException(ErrorCode.USER_NOT_FOUND)
+        );
+
+        // 소유자인지 확인
+        if (!userRefrigeratorRepository.existsByRefrigeratorAndUserAndRefrigeratorOwner(refrigerator.get(), user, true)) {
+            //소유자가 아니면 처리하는 부분
+            throw new CustomException(ErrorCode.INVALID_USER); // 권한 없는 유저입니다
+        }
+
+
+        Optional<UserRefrigerator> result = userRefrigeratorRepository.findByRefrigeratorAndUser(refrigerator.get(), targetUser.get());
+
+        if (result.isEmpty()) {
+            return false;
+        }
+
+        userRefrigeratorRepository.delete(result.get());
+
+        Optional<List<Token>> tokenList = tokenRepository.findAllByUser(targetUser.get());
+
+        String body = user.getUserNickname() + "님의 " + refrigerator.get().getRefrigeratorName() + "에서 추방당하셨습니다";
+
+        Notification notification = Notification.builder().notificationMessage(body)
+                .user(targetUser.get())
+                .notificationRead(false)
+                .refrigeratorId(refrigeratorId)
+                .build();
+
+        notificationRepository.save(notification);
+
+        for (Token token : tokenList.get()) {
+            firebaseCloudMessageService.sendMessageTo(token.getTokenNum(), "추방 알림", body);
+        }
+
+        return true;
     }
 }

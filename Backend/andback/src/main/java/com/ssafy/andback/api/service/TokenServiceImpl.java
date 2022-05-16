@@ -38,7 +38,6 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     @Transactional(readOnly = false)
-
     public String insertToken(User user, TokenRequestDto tokenDto) {
 
         Optional<List<Token>> tokenList = tokenRepository.findAllByUser(user);

@@ -179,4 +179,24 @@ public class RefrigeratorController {
         return ResponseEntity.ok().body(new ListResponseDto<RefrigeratorShareUserResponseDto>(200, "success", response));
     }
 
+    @ApiOperation(value = "공유 대상 추방", notes = "대상을 공유 냉장고 목록에서 추방한다")
+    @DeleteMapping("/{refrigeratorId}/{userEmail}")
+    public ResponseEntity<SingleResponseDto<String>> deleteUser(@ApiIgnore Authentication authentication, @PathVariable Long refrigeratorId, @PathVariable String userEmail) throws IOException {
+        if (authentication == null) {
+            throw new CustomException(ErrorCode.NOT_AUTH_TOKEN);
+        }
+
+        User user = (User) authentication.getPrincipal();
+
+        if (user == null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
+
+        if (refrigeratorService.deleteUser(user, refrigeratorId, userEmail)) {
+            return ResponseEntity.ok().body(new SingleResponseDto<String>(200, "success", "추방에 성공했습니다"));
+        }
+        return ResponseEntity.ok().body(new SingleResponseDto<String>(401, "success", "추방에 실패했습니다"));
+
+    }
+
 }
