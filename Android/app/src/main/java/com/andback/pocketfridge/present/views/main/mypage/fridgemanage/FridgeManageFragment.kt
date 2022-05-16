@@ -198,10 +198,22 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
                 memberAdapter.apply {
                     itemClickListener = object : ShareMemberAdapter.ItemClickListener {
                         override fun onClick(data: ShareUserEntity) {
-                            // TODO : 회원 강퇴
+                            alertDialog.dismiss()
+                            showDeleteMemberDialog(fridge.id, data)
                         }
                     }
                 }
             }
+    }
+
+    private fun showDeleteMemberDialog(id: Int, data: ShareUserEntity) {
+        AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.delete_fridge_member_title, data.nickname))
+            .setMessage("")
+            .setNegativeButton(R.string.cancel, null)
+            .setPositiveButton(R.string.accept) { dialog, which ->
+                viewModel.deleteFridgeMember(id, data.email)
+            }
+            .show()
     }
 }
