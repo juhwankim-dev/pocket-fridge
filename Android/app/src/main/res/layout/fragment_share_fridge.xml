@@ -33,6 +33,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_share_fridgeF_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_margin_default"
