@@ -166,7 +166,7 @@ public class RefrigeratorController {
         throw new CustomException(ErrorCode.FAIL_SHARE_GROUP);
     }
 
-    @ApiOperation(value = "냉장고 공유 유저 목록", notes = "냉장고의 공유 그룹원을 모두 보여준다")
+    @ApiOperation(value = "공유 냉장고 유저 목록", notes = "공유 냉장고의 그룹원을 모두 보여준다")
     @GetMapping("/share/{refrigeratorId}")
     public ResponseEntity<ListResponseDto<RefrigeratorShareUserResponseDto>> shareUserList(@ApiIgnore Authentication authentication, @PathVariable Long refrigeratorId) {
 
