@@ -63,9 +63,6 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
     }
 
     private fun setEvent() {
-        binding.llFridgeManageFShareFridge.setOnClickListener {
-            showShareFridgeDialog()
-        }
         binding.llFridgeManageFAddFridge.setOnClickListener {
             showFridgeNameDialog()
         }
@@ -74,10 +71,6 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
                 showOptionDialog(data)
             }
         }
-    }
-
-    private fun showShareFridgeDialog() {
-        // TODO: 공유 xml 만들고 dialog 띄우기
     }
 
     private fun showFridgeNameDialog(data: FridgeEntity? = null) {
@@ -139,7 +132,7 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
                 dismiss()
             }
             dialogBinding.llFridgeManageOptionFShowMember.setOnClickListener {
-                // TODO : 공유원들 보여주는 창 띄우기
+                showShareFridgeDialog()
                 dismiss()
             }
             dialogBinding.llFridgeManageOptionFEditName.setOnClickListener {
@@ -163,5 +156,9 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
 
             show()
         }
+    }
+
+    private fun showShareFridgeDialog() {
+        // TODO: 공유 xml 만들고 dialog 띄우기
     }
 }
