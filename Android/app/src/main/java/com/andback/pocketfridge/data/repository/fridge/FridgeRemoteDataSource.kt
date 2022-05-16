@@ -13,4 +13,6 @@ interface FridgeRemoteDataSource {
     fun updateFridgeName(@NotNull id: Int, @NotNull name: String): Single<BaseResponse<Unit>>
 
     fun deleteFridge(@NotNull id: Int): Single<BaseResponse<Unit>>
+
+    fun shareFridge(email: String, fridgeId: Int): Single<BaseResponse<String>>
 }

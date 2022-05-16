@@ -24,4 +24,8 @@ class FridgeRemoteDataSourceImpl @Inject constructor(
     override fun deleteFridge(id: Int): Single<BaseResponse<Unit>> {
         return fridgeApi.deleteFridge(id)
     }
+
+    override fun shareFridge(email: String, fridgeId: Int): Single<BaseResponse<String>> {
+        return fridgeApi.shareFridge(email, fridgeId)
+    }
 }

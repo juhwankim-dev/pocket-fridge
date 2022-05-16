@@ -25,4 +25,10 @@ interface FridgeApi {
 
     @DELETE("refrigerator/{refrigeratorId}")
     fun deleteFridge(@Path("refrigeratorId") @NotNull id: Int): Single<BaseResponse<Unit>>
+
+    @GET("refrigerator/share/{userEmail}/{refrigeratorId}")
+    fun shareFridge(
+        @Path("userEmail") email: String,
+        @Path("refrigeratorId") fridgeId: Int
+    ): Single<BaseResponse<String>>
 }
