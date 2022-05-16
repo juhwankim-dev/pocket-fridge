@@ -1,10 +1,7 @@
 package com.ssafy.andback.api.service;
 
 import com.ssafy.andback.api.constant.ErrorCode;
-import com.ssafy.andback.api.dto.response.LackRecipeIngredientResponseDto;
-import com.ssafy.andback.api.dto.response.RecipeIngredientResponseDto;
-import com.ssafy.andback.api.dto.response.RecipeProcessResponseDto;
-import com.ssafy.andback.api.dto.response.RecipeResponseDto;
+import com.ssafy.andback.api.dto.response.*;
 import com.ssafy.andback.api.exception.CustomException;
 import com.ssafy.andback.core.domain.*;
 import com.ssafy.andback.core.repository.RecipeIngredientRepository;
@@ -159,6 +156,7 @@ public class RecipeServiceImpl implements RecipeService {
             throw new CustomException(ErrorCode.RECOMMEND_REFRIGERATOR_NOT_FOUND);
         }
     }
+
 
     @Override
     public List<RecipeIngredientResponseDto> findRecipeIngredientByRecipeId(Long recipeId) throws CustomException {

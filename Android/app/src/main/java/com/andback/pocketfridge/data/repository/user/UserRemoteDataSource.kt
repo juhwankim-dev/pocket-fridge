@@ -11,6 +11,7 @@ import retrofit2.http.Path
 interface UserRemoteDataSource {
     fun getUser(): Single<BaseResponse<UserEntity>>
     fun signUp(@Body signUpEntity: SignUpEntity): Single<BaseResponse<Any>>
+    fun deleteUser(): Single<BaseResponse<Any>>
     fun sendEmail(@Path("userEmail") @NotNull email: String): Single<BaseResponse<String>>
     fun checkEmail(@Path("userEmail") @NotNull email: String): Single<BaseResponse<Any>>
     fun checkNickname(@Path("userNickname") @NotNull nickname: String): Single<BaseResponse<Any>>

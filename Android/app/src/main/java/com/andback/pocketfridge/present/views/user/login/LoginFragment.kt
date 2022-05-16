@@ -13,6 +13,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.andback.pocketfridge.BuildConfig
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.data.model.BaseResponse
@@ -23,9 +24,8 @@ import com.andback.pocketfridge.domain.usecase.datastore.ReadDataStoreUseCase
 import com.andback.pocketfridge.domain.usecase.user.GetFcmTokenUseCase
 import com.andback.pocketfridge.domain.usecase.user.SendFcmTokenUseCase
 import com.andback.pocketfridge.present.config.BaseFragment
-import com.andback.pocketfridge.present.utils.PageSet
 import com.andback.pocketfridge.present.utils.SignUpChecker
-import com.andback.pocketfridge.present.views.user.UserActivity
+import com.andback.pocketfridge.present.views.main.MainActivity
 import com.andback.pocketfridge.present.workmanager.DailyNotiWorker
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -36,8 +36,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
@@ -67,10 +65,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         binding.vm = viewModel
 
         with(viewModel) {
-            pageNumber.observe(viewLifecycleOwner) {
-                (requireActivity() as UserActivity).onChangeFragement(it)
-            }
-
             toastMsg.observe(viewLifecycleOwner) {
                 showToastMessage(it)
             }
@@ -81,6 +75,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
                     .subscribe(
                         {
                             // TODO: fcm 업뎃 성공 -> Main으로 이동
+                            startActivity(Intent(activity, MainActivity::class.java))
                         },
                         {
                             // TODO: 업뎃 실패
@@ -109,6 +104,14 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 
         binding.btnLoginFSocialLogin.setOnClickListener {
             showSNSLoginDialog()
+        }
+
+        binding.tvLoginFSignUp.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_emailAuthFragment)
+        }
+
+        binding.tvLoginFFindPw.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_findPWFragment)
         }
     }
 

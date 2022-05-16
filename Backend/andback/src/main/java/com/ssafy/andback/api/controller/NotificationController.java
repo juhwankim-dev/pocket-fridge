@@ -4,9 +4,11 @@ import com.ssafy.andback.api.constant.ErrorCode;
 import com.ssafy.andback.api.dto.response.BaseResponseDto;
 import com.ssafy.andback.api.dto.response.ListResponseDto;
 import com.ssafy.andback.api.dto.response.NotificationResponseDto;
+import com.ssafy.andback.api.dto.response.SingleResponseDto;
 import com.ssafy.andback.api.exception.CustomException;
 import com.ssafy.andback.api.service.NotificationService;
 import com.ssafy.andback.core.domain.BaseEntity;
+import com.ssafy.andback.core.domain.Notification;
 import com.ssafy.andback.core.domain.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -79,5 +81,24 @@ public class NotificationController {
         }
 
         return ResponseEntity.ok(BaseResponseDto.of(200, "success"));
+    }
+
+    @GetMapping("/read")
+    @ApiOperation(value = "안 읽은 알림 조회", notes = "안 읽은 알림이 있는지 없는지 여부를 반환한다")
+    ResponseEntity<SingleResponseDto<Boolean>> noReadNotification(@ApiIgnore Authentication authentication) {
+        if (authentication == null) {
+            throw new CustomException(ErrorCode.NOT_AUTH_TOKEN);
+        }
+
+        User user = (User) authentication.getPrincipal();
+
+        if (user == null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
+
+        Boolean response = notificationService.noReadNotification(user);
+
+        return ResponseEntity.ok(new SingleResponseDto<Boolean>(200, "success", response));
+
     }
 }

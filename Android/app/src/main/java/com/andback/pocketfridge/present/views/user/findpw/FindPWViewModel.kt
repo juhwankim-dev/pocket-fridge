@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import com.andback.pocketfridge.data.model.UserForFindEntity
 import com.andback.pocketfridge.domain.usecase.user.GetFindPWUseCase
 import com.andback.pocketfridge.present.config.SingleLiveEvent
-import com.andback.pocketfridge.present.utils.PageSet
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -22,15 +21,15 @@ class FindPWViewModel @Inject constructor(
 ) : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
 
-    val name = MutableLiveData<String>()
-    val email = MutableLiveData<String>()
-    val pageNumber = SingleLiveEvent<PageSet>()
-
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
-
     private val _toastMsg = SingleLiveEvent<String>()
     val toastMsg: LiveData<String> get() = _toastMsg
+    private val _isSuccessSendEmail = SingleLiveEvent<Boolean>()
+    val isSuccessSendEmail: LiveData<Boolean> get() = _isSuccessSendEmail
+
+    val name = MutableLiveData<String>()
+    val email = MutableLiveData<String>()
 
     private fun findPW(userForFind: UserForFindEntity) {
         _isLoading.value = true
@@ -45,7 +44,7 @@ class FindPWViewModel @Inject constructor(
                             200 -> {
                                 _isLoading.value = false
                                 _toastMsg.value = "이메일을 전송하였습니다."
-                                pageNumber.value = PageSet.LOGIN
+                                _isSuccessSendEmail.value = true
                             }
                         }
                     },
@@ -59,10 +58,6 @@ class FindPWViewModel @Inject constructor(
 
     fun onSendEmailClick() {
         findPW(UserForFindEntity(email.value!!, name.value!!))
-    }
-
-    fun onCloseClick() {
-        pageNumber.value = PageSet.LOGIN
     }
 
     private fun showError(t : Throwable) {

@@ -1,17 +1,16 @@
 package com.andback.pocketfridge.present.views.user.findpw
 
-import android.content.ContextWrapper
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.databinding.FragmentFindPWBinding
 import com.andback.pocketfridge.present.config.BaseFragment
 import com.andback.pocketfridge.present.utils.SignUpChecker
-import com.andback.pocketfridge.present.views.user.UserActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,8 +30,8 @@ class FindPWFragment : BaseFragment<FragmentFindPWBinding>(R.layout.fragment_fin
         binding.vm = viewModel
 
         with(viewModel) {
-            pageNumber.observe(viewLifecycleOwner) {
-                ((context as ContextWrapper).baseContext as UserActivity).onChangeFragement(it)
+            isSuccessSendEmail.observe(viewLifecycleOwner) {
+                findNavController().popBackStack()
             }
 
             toastMsg.observe(viewLifecycleOwner) {
@@ -56,6 +55,10 @@ class FindPWFragment : BaseFragment<FragmentFindPWBinding>(R.layout.fragment_fin
                 isValidEmail = isValid
                 checkValidate()
             }
+        }
+
+        binding.tbFindPwF.setNavigationOnClickListener {
+            findNavController().popBackStack()
         }
     }
 
