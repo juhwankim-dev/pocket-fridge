@@ -4,6 +4,7 @@ import com.ssafy.andback.api.constant.ErrorCode;
 import com.ssafy.andback.api.dto.request.InsertRefrigeratorRequestDto;
 import com.ssafy.andback.api.dto.request.InsertShareMemberRequestDto;
 import com.ssafy.andback.api.dto.response.RefrigeratorResponseDto;
+import com.ssafy.andback.api.dto.response.RefrigeratorShareUserResponseDto;
 import com.ssafy.andback.api.exception.CustomException;
 import com.ssafy.andback.core.domain.FoodIngredient;
 import com.ssafy.andback.core.domain.Refrigerator;
@@ -168,4 +169,21 @@ public class RefrigeratorServiceImpl implements RefrigeratorService {
         return "success";
     }
 
+    @Override
+    public List<RefrigeratorShareUserResponseDto> shareUserList(User user, Long refrigeratorId) {
+
+        //예외처리 현재 유저가 가지고 있지 않는 냉장고이면 보여주지 않는다
+        Optional<Refrigerator> refrigerator = refrigeratorRepository.findByRefrigeratorId(refrigeratorId);
+        refrigerator.orElseThrow(
+                () -> new CustomException(ErrorCode.REFRIGERATOR_NOT_FOUND) // 냉장고가 없을 시 예외처리
+        );
+
+        // 없으면 권한이 없는 사용자 입니다
+        if (!userRefrigeratorRepository.existsByRefrigeratorAndUser(refrigerator.get(), user)) {
+            throw new CustomException(ErrorCode.INVALID_USER);
+        }
+
+
+        return userRefrigeratorRepository.shareUserList(refrigeratorId);
+    }
 }

@@ -166,4 +166,24 @@ public class RefrigeratorController {
         throw new CustomException(ErrorCode.FAIL_SHARE_GROUP);
     }
 
+    @ApiOperation(value = "공유 냉장고 유저 목록", notes = "공유 냉장고의 그룹원을 모두 보여준다")
+    @GetMapping("/share/{refrigeratorId}")
+    public ResponseEntity<ListResponseDto<RefrigeratorShareUserResponseDto>> shareUserList(@ApiIgnore Authentication authentication, @PathVariable Long refrigeratorId) {
+
+        if (authentication == null) {
+            throw new CustomException(ErrorCode.NOT_AUTH_TOKEN);
+        }
+
+        User user = (User) authentication.getPrincipal();
+
+        if (user == null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
+
+
+        List<RefrigeratorShareUserResponseDto> response = refrigeratorService.shareUserList(user, refrigeratorId);
+
+        return ResponseEntity.ok().body(new ListResponseDto<RefrigeratorShareUserResponseDto>(200, "success", response));
+    }
+
 }
