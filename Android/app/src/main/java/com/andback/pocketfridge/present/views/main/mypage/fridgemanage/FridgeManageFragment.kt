@@ -181,13 +181,14 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
                     return@also
                 }
 
+                dialogBinding.ibShareFridgeFClose.setOnClickListener {
+                    alertDialog.dismiss()
+                }
+
                 // 내가 냉장고 주인이 아닐 경우 초대 불가
                 if(fridge.isOwner == false) {
                     dialogBinding.llShareFridgeFEmail.visibility = View.GONE
                 } else {
-                    dialogBinding.ibShareFridgeFClose.setOnClickListener {
-                        alertDialog.dismiss()
-                    }
                     dialogBinding.ibShareFridgeFSend.setOnClickListener {
                         viewModel.addMember(fridge.id, dialogBinding.etShareFridgeFEmail.text.toString().trim())
                     }
