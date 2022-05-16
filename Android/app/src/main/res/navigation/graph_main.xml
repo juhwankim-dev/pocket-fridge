@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_fridgeFragment_to_myPageFragment"
             app:destination="@id/myPageFragment" />
+        <action
+            android:id="@+id/action_fridgeFragment_to_notificationFragment"
+            app:destination="@id/notificationFragment" />
     </fragment>
     <fragment
         android:id="@+id/barcodeScanFragment"
@@ -106,4 +109,9 @@
             app:destination="@id/userEditFragment"
             app:popUpTo="@id/myPageFragment"/>
     </fragment>
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.andback.pocketfridge.present.views.main.notification.NotificationFragment"
+        android:label="NotificationFragment"
+        tools:layout="@layout/fragment_notification"/>
 </navigation>
