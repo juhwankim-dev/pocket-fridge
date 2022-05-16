@@ -12,4 +12,5 @@ interface RecipeRemoteDataSource {
     fun getRecipeSteps(recipeId: Int): Single<BaseResponse<List<RecipeStepEntity>>>
     fun getCookingIngres(recipeId: Int): Single<BaseResponse<List<CookingIngreEntity>>>
     fun getLackIngres(recipeId: Int): Single<BaseResponse<List<LackIngreEntity>>>
+    fun getRecommendList(): Single<BaseResponse<List<Int>>>
 }

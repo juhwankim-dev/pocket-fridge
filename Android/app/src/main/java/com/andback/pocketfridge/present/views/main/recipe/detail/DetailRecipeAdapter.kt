@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andback.pocketfridge.R
-import com.andback.pocketfridge.data.model.RecipeEntity
 import com.andback.pocketfridge.databinding.ItemDetailRecipeBodyListBinding
 import com.andback.pocketfridge.databinding.ItemDetailRecipeHeaderListBinding
 import com.andback.pocketfridge.domain.model.CookingIngre
+import com.andback.pocketfridge.domain.model.Recipe
 
 class DetailRecipeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var itemClickListener: ItemClickListener
@@ -22,7 +22,7 @@ class DetailRecipeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         "BODY" to 1
     )
 
-    lateinit var recipe: RecipeEntity
+    lateinit var recipe: Recipe
     private val cookingIngreList = arrayListOf<CookingIngre>()
 
     inner class HeadViewHolder(private val binding: ItemDetailRecipeHeaderListBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -110,7 +110,7 @@ class DetailRecipeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount(): Int = viewHolderType.size
 
-    fun setHeaderContent(recipe: RecipeEntity) {
+    fun setHeaderContent(recipe: Recipe) {
         this.recipe = recipe
         notifyDataSetChanged()
     }

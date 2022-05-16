@@ -22,4 +22,7 @@ interface RecipeApi {
 
     @GET("recipe/lack/{recipeId}")
     fun getLackIngres(@Path("recipeId") @NotNull recipeId: Int): Single<BaseResponse<List<LackIngreEntity>>>
+
+    @GET("recipe/recommend")
+    fun getRecommendList(): Single<BaseResponse<List<Int>>>
 }

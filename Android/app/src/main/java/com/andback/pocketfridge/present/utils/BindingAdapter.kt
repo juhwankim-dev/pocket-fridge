@@ -30,4 +30,12 @@ object BindingAdapter {
             view.setBackgroundResource(R.drawable.ic_profile_default)
         }
     }
+
+    @JvmStatic
+    @BindingAdapter("bindImageUrl")
+    fun bindImageUrl(view: ImageView, src: String){
+        Glide.with(view.context)
+            .load(src)
+            .into(view)
+    }
 }

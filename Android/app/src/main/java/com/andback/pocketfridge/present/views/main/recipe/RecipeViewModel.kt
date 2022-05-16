@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.andback.pocketfridge.data.model.RecipeEntity
+import com.andback.pocketfridge.domain.model.Recipe
 import com.andback.pocketfridge.domain.usecase.like.DeleteLikeUseCase
 import com.andback.pocketfridge.domain.usecase.like.UploadLikeUseCase
 import com.andback.pocketfridge.domain.usecase.recipe.GetRecipesUseCase
@@ -31,8 +31,8 @@ class RecipeViewModel @Inject constructor(
     private val _toastMsg = SingleLiveEvent<String>()
     val toastMsg: LiveData<String> get() = _toastMsg
 
-    private val _recipes = MutableLiveData<List<RecipeEntity>>()
-    val recipes: LiveData<List<RecipeEntity>> get() = _recipes
+    private val _recipes = MutableLiveData<List<Recipe>>()
+    val recipes: LiveData<List<Recipe>> get() = _recipes
 
     fun getRecipes() {
         _isLoading.value = true

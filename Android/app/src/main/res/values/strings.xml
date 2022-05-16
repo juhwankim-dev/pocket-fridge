@@ -53,7 +53,6 @@
     <string name="profile">프로필</string>
     <string name="mypage">마이페이지</string>
     <string name="edit_user">정보 수정</string>
-    <string name="delete_user">회원탈퇴</string>
 
     <string name="google_login">Google 계정으로 로그인</string>
     <string name="login_fail">로그인에 실패했습니다.</string>
@@ -65,11 +64,6 @@
     <string name="email_auth_guide">입력하신 이메일 주소로 인증번호가 발송되었습니다.\n인증번호를 확인해 주세요.</string>
     <string name="find_pw_guide">회원가입 시 등록한 이메일을 입력해주세요.\n입력하신 이메일로 임시 비밀번호를 발급해드립니다.</string>
     <string name="confirm_pw_guide">개인 정보를 안전하게 보호하기 위해\n비밀번호를 다시 한 번 입력해 주세요.</string>
-    <string name="delete_user_guide1">님\n정말 탈퇴하시겠어요?</string>
-    <string name="delete_user_guide2">지금 탈퇴하시면 냉장고를 공유 받으신 분이 냉장고를 더 이상 이용하실 수 없게 돼요!</string>
-    <string name="delete_user_guide3">지금 탈퇴하시면 등록하신 냉장고와 식재료 정보도 함께 사라져요. 추후에 동일 계정으로 재가입하셔도 냉장고와 식재료 내역은 복구되지 않아요!</string>
-    <string name="delete_user_guide4">회원 탈퇴 유의사항을 확인하였으며 동의합니다.</string>
-    <string name="delete_user_guide5">회원 탈퇴가 정상적으로 신청되었습니다.\n포켓프리지를 이용해주셔서 감사합니다.</string>
 
     <!-- Error Messages -->
     <string name="name_empty_error">"이름은 필수 입력 값입니다."</string>
@@ -111,6 +105,7 @@
     <string name="share_fridge">냉장고 공유</string>
     <string name="delete_fridge">냉장고 삭제</string>
     <string name="edit_fridge_name">냉장고 이름 변경</string>
+    <string name="show_fridge_member">냉장고 공유원들 보기</string>
 
     <string name="delete_fridge_dialog_title_owner">냉장고: [%1$s]를 삭제하시겠습니까?</string>
     <string name="delete_fridge_dialog_title">냉장고: [%1$s] 공유 받기를 중지하시겠습니까?</string>
@@ -135,6 +130,11 @@
         <item>가나다순</item>
         <item>가나다역순</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="recipe_filter_list">
+        <item>즐겨찾기</item>
+        <item>추천메뉴</item>
+        <item>한식</item>
+        <item>양식</item>
+        <item>일식</item>
+    </string-array>
 </resources>
