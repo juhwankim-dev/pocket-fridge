@@ -13,6 +13,8 @@ import com.andback.pocketfridge.data.repository.ingredient.IngreRemoteDataSource
 import com.andback.pocketfridge.data.repository.ingredient.IngreRemoteDataSourceImpl
 import com.andback.pocketfridge.data.repository.like.LikeRemoteDataSource
 import com.andback.pocketfridge.data.repository.like.LikeRemoteDataSourceImpl
+import com.andback.pocketfridge.data.repository.notification.NotificationRemoteDataSource
+import com.andback.pocketfridge.data.repository.notification.NotificationRemoteDataSourceImpl
 import com.andback.pocketfridge.data.repository.user.UserRemoteDataSource
 import com.andback.pocketfridge.data.repository.user.UserRemoteDataSourceImpl
 import dagger.Module
@@ -64,5 +66,11 @@ class RemoteDataModule {
     @Singleton
     fun provideLikeRemoteDataSource(likeApi: LikeApi): LikeRemoteDataSource {
         return LikeRemoteDataSourceImpl(likeApi)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNotificationDataSource(notificationApi: NotificationApi): NotificationRemoteDataSource {
+        return NotificationRemoteDataSourceImpl(notificationApi)
     }
 }

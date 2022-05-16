@@ -120,38 +120,31 @@ public class RefrigeratorController {
             throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
 
-
         refrigeratorService.deleteRefrigerator(user, refrigeratorId);
-
 
         return ResponseEntity.ok(BaseResponseDto.of(200, "success"));
     }
 
-    @ApiOperation(value = "공유 냉장고 생성", notes = "공유 냉장고를 생성한다.")
-    @PostMapping("/share/{refrigeratorId}")
-    public ResponseEntity<BaseResponseDto> createShareGroup(@ApiIgnore Authentication authentication, @PathVariable Long refrigeratorId) {
+    @ApiOperation(value = "냉장고 공유", notes = "공유할 대상에게 냉장고를 공유하고 메세지를 보내준다")
+    @GetMapping("/share/{userEmail}/{refrigeratorId}")
+    public ResponseEntity<SingleResponseDto<String>> inviteShareMember(@ApiIgnore Authentication authentication, @PathVariable String userEmail, @PathVariable Long refrigeratorId) throws CustomException, IOException {
+
+        if (authentication == null) {
+            throw new CustomException(ErrorCode.NOT_AUTH_TOKEN);
+        }
 
         User user = (User) authentication.getPrincipal();
 
-        String result = refrigeratorService.createShareGroup(user, refrigeratorId);
-
-        if (result.equals("success")) {
-            return ResponseEntity.ok().body(BaseResponseDto.of(200, "냉장고 공유 그룹 생성 성공"));
+        if (user == null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
         }
 
-        throw new CustomException(ErrorCode.FAIL_SHARE_GROUP);
-    }
-
-    @ApiOperation(value = "공유 냉장고 그릅원 초대를 위한 냉장고 아이디 전달", notes = "공유 냉장고 그룹원 초대를 위해 해당 냉장고 아이디를 넘겨준다.")
-    @GetMapping("/share/{userEmail}/{refrigeratorId}")
-    public ResponseEntity<SingleResponseDto<String>> inviteShareMember(@PathVariable String userEmail, @PathVariable Long refrigeratorId) throws CustomException, IOException {
-
-        tokenService.sendMessage(userEmail, refrigeratorId);
+        tokenService.sendMessage(user, userEmail, refrigeratorId);
 
         return ResponseEntity.ok(new SingleResponseDto<String>(200, "success", "메세지 전달 완료"));
     }
 
-    @ApiOperation(value = "공유 그룹원 초대 수락", notes = "공유 그릅원을 추가한다.")
+    @ApiOperation(value = "공유 그룹원 초대 수락", notes = "공유 그룹원을 추가한다.")
     @PostMapping("/share/insertmember")
     public ResponseEntity<BaseResponseDto> insertShareMember(@ApiIgnore Authentication authentication, @RequestBody InsertShareMemberRequestDto insertShareMemberRequestDto) {
 
@@ -184,6 +177,26 @@ public class RefrigeratorController {
         List<RefrigeratorShareUserResponseDto> response = refrigeratorService.shareUserList(user, refrigeratorId);
 
         return ResponseEntity.ok().body(new ListResponseDto<RefrigeratorShareUserResponseDto>(200, "success", response));
+    }
+
+    @ApiOperation(value = "공유 대상 추방", notes = "대상을 공유 냉장고 목록에서 추방한다")
+    @DeleteMapping("/{refrigeratorId}/{userEmail}")
+    public ResponseEntity<SingleResponseDto<String>> deleteUser(@ApiIgnore Authentication authentication, @PathVariable Long refrigeratorId, @PathVariable String userEmail) throws IOException {
+        if (authentication == null) {
+            throw new CustomException(ErrorCode.NOT_AUTH_TOKEN);
+        }
+
+        User user = (User) authentication.getPrincipal();
+
+        if (user == null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
+
+        if (refrigeratorService.deleteUser(user, refrigeratorId, userEmail)) {
+            return ResponseEntity.ok().body(new SingleResponseDto<String>(200, "success", "추방에 성공했습니다"));
+        }
+        return ResponseEntity.ok().body(new SingleResponseDto<String>(401, "success", "추방에 실패했습니다"));
+
     }
 
 }

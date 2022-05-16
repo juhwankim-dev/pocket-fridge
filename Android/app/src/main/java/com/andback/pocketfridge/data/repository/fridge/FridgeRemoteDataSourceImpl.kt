@@ -3,6 +3,7 @@ package com.andback.pocketfridge.data.repository.fridge
 import com.andback.pocketfridge.data.api.FridgeApi
 import com.andback.pocketfridge.data.model.BaseResponse
 import com.andback.pocketfridge.data.model.FridgeEntity
+import com.andback.pocketfridge.data.model.ShareUserEntity
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -27,5 +28,9 @@ class FridgeRemoteDataSourceImpl @Inject constructor(
 
     override fun shareFridge(email: String, fridgeId: Int): Single<BaseResponse<String>> {
         return fridgeApi.shareFridge(email, fridgeId)
+    }
+
+    override fun getFridgeMembers(id: Int): Single<BaseResponse<List<ShareUserEntity>>> {
+        return fridgeApi.getFridgeMembers(id)
     }
 }

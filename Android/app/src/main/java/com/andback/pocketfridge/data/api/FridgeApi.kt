@@ -2,6 +2,7 @@ package com.andback.pocketfridge.data.api
 
 import com.andback.pocketfridge.data.model.BaseResponse
 import com.andback.pocketfridge.data.model.FridgeEntity
+import com.andback.pocketfridge.data.model.ShareUserEntity
 import io.reactivex.Single
 import org.jetbrains.annotations.NotNull
 import retrofit2.http.DELETE
@@ -31,4 +32,7 @@ interface FridgeApi {
         @Path("userEmail") email: String,
         @Path("refrigeratorId") fridgeId: Int
     ): Single<BaseResponse<String>>
+
+    @GET("refrigerator/share/{refrigeratorId}")
+    fun getFridgeMembers(@Path ("refrigeratorId") @NotNull id: Int): Single<BaseResponse<List<ShareUserEntity>>>
 }

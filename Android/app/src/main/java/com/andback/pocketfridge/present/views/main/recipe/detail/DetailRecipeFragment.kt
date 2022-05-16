@@ -34,6 +34,7 @@ class DetailRecipeFragment : BaseFragment<FragmentDetailRecipeBinding>(R.layout.
     }
 
     private fun initViewModel() {
+        binding.selectedRecipe = viewModel.selectedRecipe
         with(viewModel) {
             toastMsg.observe(viewLifecycleOwner) {
                 showToastMessage(it)

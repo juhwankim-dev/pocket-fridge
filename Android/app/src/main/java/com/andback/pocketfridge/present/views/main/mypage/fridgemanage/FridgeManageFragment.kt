@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.data.model.FridgeEntity
+import com.andback.pocketfridge.data.model.ShareUserEntity
 import com.andback.pocketfridge.databinding.FragmentDialogInputBinding
 import com.andback.pocketfridge.databinding.FragmentFridgeManageBinding
 import com.andback.pocketfridge.databinding.FragmentFridgeManageOptionBinding
@@ -25,7 +26,7 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
     private val fmAdapter = FridgeListAdapter()
     private val viewModel: FridgeManageViewModel by viewModels()
     lateinit var shareDialog: AlertDialog
-
+    private lateinit var memberAdapter: ShareMemberAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -47,11 +48,14 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
                         fmAdapter.setList(it, -1)
                     }
                 }
+                members.observe(owner) {
+                    memberAdapter.setList(it)
+                }
                 tstMsg.observe(owner) {
                     showToastMessage(it)
                 }
                 tstErrorMsg.observe(owner) {
-                    showToastMessage(it)
+                    showToastMessage(resources.getString(it))
                 }
                 isShared.observe(owner) {
                     if(it == true) {
@@ -143,6 +147,7 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
                 dismiss()
             }
             dialogBinding.llFridgeManageOptionFShowMember.setOnClickListener {
+                viewModel.getFridgeMembers(fridge.id)
                 showShareFridgeDialog(fridge)
                 dismiss()
             }
@@ -169,9 +174,10 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
         }
     }
 
-
     private fun showShareFridgeDialog(fridge: FridgeEntity) {
-        val dialogBinding = FragmentShareFridgeBinding.inflate(LayoutInflater.from(requireActivity()))
+        val dialogBinding =
+            FragmentShareFridgeBinding.inflate(LayoutInflater.from(requireActivity()))
+        memberAdapter = ShareMemberAdapter(fridge.isOwner)
 
         shareDialog = AlertDialog.Builder(requireContext())
             .setView(dialogBinding.root)
@@ -186,11 +192,32 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
                 }
 
                 // 내가 냉장고 주인이 아닐 경우 초대 불가
-                if(fridge.isOwner == false) {
+                if (fridge.isOwner == false) {
                     dialogBinding.llShareFridgeFEmail.visibility = View.GONE
                 } else {
                     dialogBinding.ibShareFridgeFSend.setOnClickListener {
-                        viewModel.addMember(fridge.id, dialogBinding.etShareFridgeFEmail.text.toString().trim())
+                        viewModel.addMember(
+                            fridge.id,
+                            dialogBinding.etShareFridgeFEmail.text.toString().trim()
+                        )
+
+                        dialogBinding.rvShareFridgeF.apply {
+                            layoutManager = LinearLayoutManager(
+                                requireContext(),
+                                LinearLayoutManager.VERTICAL,
+                                false
+                            )
+                            adapter = memberAdapter
+                        }
+
+                        memberAdapter.apply {
+                            itemClickListener = object : ShareMemberAdapter.ItemClickListener {
+                                override fun onClick(data: ShareUserEntity) {
+                                    // TODO : 회원 강퇴
+                                }
+                            }
+                        }
+
                     }
                 }
             }

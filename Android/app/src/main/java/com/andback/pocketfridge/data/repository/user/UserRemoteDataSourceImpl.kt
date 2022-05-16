@@ -16,6 +16,10 @@ class UserRemoteDataSourceImpl @Inject constructor(private val userApi: UserApi)
         return userApi.signUp(signUpEntity)
     }
 
+    override fun deleteUser(): Single<BaseResponse<Any>> {
+        return userApi.deleteUser()
+    }
+
     override fun sendEmail(email: String): Single<BaseResponse<String>> {
         return userApi.sendEmail(email)
     }

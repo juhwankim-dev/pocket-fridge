@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_fridgeFragment_to_myPageFragment"
             app:destination="@id/myPageFragment" />
+        <action
+            android:id="@+id/action_fridgeFragment_to_notificationFragment"
+            app:destination="@id/notificationFragment" />
     </fragment>
     <fragment
         android:id="@+id/barcodeScanFragment"
@@ -79,12 +82,19 @@
         <action
             android:id="@+id/action_myPageFragment_to_confirmPWFragment"
             app:destination="@id/confirmPWFragment" />
+        <action
+            android:id="@+id/action_myPageFragment_to_userDeleteFragment"
+            app:destination="@id/userDeleteFragment" />
     </fragment>
     <fragment
         android:id="@+id/fridgeManageFragment"
         android:name="com.andback.pocketfridge.present.views.main.mypage.fridgemanage.FridgeManageFragment"
         android:label="FridgeManageFragment"
-        tools:layout="@layout/fragment_fridge_manage"/>
+        tools:layout="@layout/fragment_fridge_manage">
+        <action
+            android:id="@+id/action_fridgeManageFragment_to_userDeleteFragment"
+            app:destination="@id/userDeleteFragment" />
+    </fragment>
     <fragment
         android:id="@+id/notiSettingFragment"
         android:name="com.andback.pocketfridge.present.views.main.mypage.NotiSettingFragment"
@@ -106,4 +116,14 @@
             app:destination="@id/userEditFragment"
             app:popUpTo="@id/myPageFragment"/>
     </fragment>
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.andback.pocketfridge.present.views.main.notification.NotificationFragment"
+        android:label="NotificationFragment"
+        tools:layout="@layout/fragment_notification"/>
+    <fragment
+        android:id="@+id/userDeleteFragment"
+        android:name="com.andback.pocketfridge.present.views.main.mypage.userdelete.UserDeleteFragment"
+        android:label="UserDeleteFragment"
+        tools:layout="@layout/fragment_user_delete"/>
 </navigation>

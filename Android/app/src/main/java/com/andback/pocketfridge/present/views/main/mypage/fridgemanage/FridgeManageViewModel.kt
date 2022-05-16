@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.data.model.FridgeEntity
+import com.andback.pocketfridge.data.model.ShareUserEntity
 import com.andback.pocketfridge.data.model.UserEntity
 import com.andback.pocketfridge.domain.usecase.fridge.*
 import com.andback.pocketfridge.domain.usecase.user.GetUserUseCase
@@ -22,7 +23,8 @@ class FridgeManageViewModel @Inject constructor(
     private val createFridgeUseCase: CreateFridgeUseCase,
     private val updateFridgeNameUseCase: UpdateFridgeNameUseCase,
     private val deleteFridgeUseCase: DeleteFridgeUseCase,
-    private val shareFridgeUseCase: ShareFridgeUseCase
+    private val shareFridgeUseCase: ShareFridgeUseCase,
+    private val getFridgeMembersUseCase: GetFridgeMembersUseCase
 ) : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
 
@@ -30,12 +32,14 @@ class FridgeManageViewModel @Inject constructor(
     val user: LiveData<UserEntity> get() = _user
     private val _fridges = MutableLiveData<List<FridgeEntity>>()
     val fridges: LiveData<List<FridgeEntity>> get() = _fridges
+    private val _members = MutableLiveData<List<ShareUserEntity>>()
+    val members: LiveData<List<ShareUserEntity>> get() = _members
     private val _tstMsg = MutableLiveData<String>()
     val tstMsg: LiveData<String> get() = _tstMsg
-    private val _tstErrorMsg = MutableLiveData<String>()
-    val tstErrorMsg: LiveData<String> get() = _tstErrorMsg
     private val _isShared = MutableLiveData<Boolean>()
     val isShared: LiveData<Boolean> get() = _isShared
+    private val _tstErrorMsg = MutableLiveData<Int>()
+    val tstErrorMsg: LiveData<Int> get() = _tstErrorMsg
 
     init {
         getUser()
@@ -71,7 +75,7 @@ class FridgeManageViewModel @Inject constructor(
                         }
                     },
                     {
-                        _tstErrorMsg.value = R.string.common_error.toString()
+                        _tstErrorMsg.value = R.string.common_error
                         Log.e(TAG, "getFridges: ${it.message}")
                     }
                 )
@@ -89,7 +93,7 @@ class FridgeManageViewModel @Inject constructor(
                         getFridges()
                     },
                     {
-                        _tstErrorMsg.value = R.string.common_error.toString()
+                        _tstErrorMsg.value = R.string.common_error
                         Log.e(TAG, "createFridge: ${it.message}")
                     }
                 )
@@ -107,7 +111,7 @@ class FridgeManageViewModel @Inject constructor(
                         getFridges()
                     },
                     {
-                        _tstErrorMsg.value = R.string.common_error.toString()
+                        _tstErrorMsg.value = R.string.common_error
                         Log.e(TAG, "updateFridgeName: ${it.message}")
                     }
                 )
@@ -125,7 +129,7 @@ class FridgeManageViewModel @Inject constructor(
                         getFridges()
                     },
                     {
-                        _tstErrorMsg.value = R.string.common_error.toString()
+                        _tstErrorMsg.value = R.string.common_error
                         Log.e(TAG, "deleteFridge: ${it.message}")
                     }
                 )
@@ -150,6 +154,26 @@ class FridgeManageViewModel @Inject constructor(
 
     fun resetIsShared() {
         _isShared.value = false
+    }
+
+    fun getFridgeMembers(id: Int) {
+        compositeDisposable.add(
+            getFridgeMembersUseCase(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        it.data?.let { list ->
+                            _members.value = list.sortedByDescending { item -> item.isOwner }
+                        }
+                    },
+                    {
+                        _tstErrorMsg.value = R.string.common_error
+                        _members.value = emptyList()
+                        Log.e(TAG, "getFridgeMembers: ${it.message}")
+                    }
+                )
+        )
     }
 
     override fun onCleared() {

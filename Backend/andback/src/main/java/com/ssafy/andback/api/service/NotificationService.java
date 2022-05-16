@@ -10,4 +10,6 @@ public interface NotificationService {
     List<NotificationResponseDto> findAllByUser(User user);
 
     String readNotificationByUser(User user);
+
+    Boolean noReadNotification(User user);
 }
