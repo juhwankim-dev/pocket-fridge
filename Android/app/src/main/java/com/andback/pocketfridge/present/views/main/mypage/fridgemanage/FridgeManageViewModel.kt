@@ -7,10 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.data.model.FridgeEntity
 import com.andback.pocketfridge.data.model.UserEntity
-import com.andback.pocketfridge.domain.usecase.fridge.CreateFridgeUseCase
-import com.andback.pocketfridge.domain.usecase.fridge.DeleteFridgeUseCase
-import com.andback.pocketfridge.domain.usecase.fridge.GetFridgesUseCase
-import com.andback.pocketfridge.domain.usecase.fridge.UpdateFridgeNameUseCase
+import com.andback.pocketfridge.domain.usecase.fridge.*
 import com.andback.pocketfridge.domain.usecase.user.GetUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -24,7 +21,8 @@ class FridgeManageViewModel @Inject constructor(
     private val getUserUseCase: GetUserUseCase,
     private val createFridgeUseCase: CreateFridgeUseCase,
     private val updateFridgeNameUseCase: UpdateFridgeNameUseCase,
-    private val deleteFridgeUseCase: DeleteFridgeUseCase
+    private val deleteFridgeUseCase: DeleteFridgeUseCase,
+    private val shareFridgeUseCase: ShareFridgeUseCase
 ) : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
 
@@ -36,7 +34,8 @@ class FridgeManageViewModel @Inject constructor(
     val tstMsg: LiveData<String> get() = _tstMsg
     private val _tstErrorMsg = MutableLiveData<String>()
     val tstErrorMsg: LiveData<String> get() = _tstErrorMsg
-
+    private val _isShared = MutableLiveData<Boolean>()
+    val isShared: LiveData<Boolean> get() = _isShared
 
     init {
         getUser()
@@ -131,6 +130,26 @@ class FridgeManageViewModel @Inject constructor(
                     }
                 )
         )
+    }
+
+    fun addMember(fridgeId: Int, email: String) {
+        val disposable = shareFridgeUseCase(email, fridgeId).subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    _isShared.value = true
+//                    _isShared.value = false
+                },
+                {
+                    // TODO: R.string.share_error
+                }
+            )
+
+        compositeDisposable.add(disposable)
+    }
+
+    fun resetIsShared() {
+        _isShared.value = false
     }
 
     override fun onCleared() {
