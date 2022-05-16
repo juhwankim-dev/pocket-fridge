@@ -32,4 +32,6 @@ public interface UserRefrigeratorRepository extends JpaRepository<UserRefrigerat
     List<UserRefrigerator> findAllByRefrigerator(Refrigerator refrigerator);
 
     Boolean existsByRefrigeratorAndUser(Refrigerator refrigerator, User user);
+
+    Boolean existsByRefrigeratorAndUserAndRefrigeratorOwner(Refrigerator refrigerator, User user, Boolean owner);
 }

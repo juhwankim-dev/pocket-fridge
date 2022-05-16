@@ -3,14 +3,8 @@ package com.ssafy.andback.api.service;
 import com.ssafy.andback.api.constant.ErrorCode;
 import com.ssafy.andback.api.dto.request.TokenRequestDto;
 import com.ssafy.andback.api.exception.CustomException;
-import com.ssafy.andback.core.domain.Notification;
-import com.ssafy.andback.core.domain.Refrigerator;
-import com.ssafy.andback.core.domain.Token;
-import com.ssafy.andback.core.domain.User;
-import com.ssafy.andback.core.repository.NotificationRepository;
-import com.ssafy.andback.core.repository.RefrigeratorRepository;
-import com.ssafy.andback.core.repository.TokenRepository;
-import com.ssafy.andback.core.repository.UserRepository;
+import com.ssafy.andback.core.domain.*;
+import com.ssafy.andback.core.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.BiFunction;
 
 /**
  * TokenServiceImpl
@@ -38,6 +33,7 @@ public class TokenServiceImpl implements TokenService {
     private final FirebaseCloudMessageService firebaseCloudMessageService;
     private final RefrigeratorRepository refrigeratorRepository;
     private final NotificationRepository notificationRepository;
+    private final UserRefrigeratorRepository userRefrigeratorRepository;
 
 
     @Override
@@ -67,14 +63,7 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     @Transactional(readOnly = false)
-    public String sendMessage(String userEmail, Long refrigeratorId) throws IOException, CustomException {
-
-        Optional<User> user = userRepository.findByUserEmail(userEmail);
-
-        // 유저 검사
-        user.orElseThrow(
-                () -> new CustomException(ErrorCode.USER_NOT_FOUND)
-        );
+    public void sendMessage(User user, String userEmail, Long refrigeratorId) throws IOException, CustomException {
 
         Optional<Refrigerator> refrigerator = refrigeratorRepository.findByRefrigeratorId(refrigeratorId);
 
@@ -83,25 +72,49 @@ public class TokenServiceImpl implements TokenService {
                 () -> new CustomException(ErrorCode.REFRIGERATOR_NOT_FOUND)
         );
 
-        //알람에 넣어주기
+        // 유저가 냉장고 소유자인지 검사
+        if (!userRefrigeratorRepository.existsByRefrigeratorAndUserAndRefrigeratorOwner(refrigerator.get(), user, true)) {
+            // 소유자가 아니면 공유할 수 없음
+            // 냉장고가 없어도 공유할 수 없음
+            throw new CustomException(ErrorCode.INVALID_USER);
+        }
 
-        String message = refrigerator.get().getRefrigeratorName() + "을 공유 받으시겠습니까?";
+
+        Optional<User> targetUser = userRepository.findByUserEmail(userEmail);
+
+        // 유저 검사
+        targetUser.orElseThrow(
+                () -> new CustomException(ErrorCode.USER_NOT_FOUND)
+        );
+
+        // target 에게 냉장고가 있을 때
+        // 이미 공유된 냉장고 입니다.
+        if (userRefrigeratorRepository.existsByRefrigeratorAndUser(refrigerator.get(), targetUser.get())) {
+            throw new CustomException(ErrorCode.DUPLICATE_RESOURCE); // 데이터가 이미 존재합니다
+        }
+
+
+
+        //알람에 넣어주기
+        String message = user.getUserNickname() + "님이 " + refrigerator.get().getRefrigeratorName() + " 공유했습니다";
 
         Notification notification = Notification.builder()
                 .notificationMessage(message)
                 .notificationRead(false)
                 .refrigeratorId(refrigeratorId)
-                .user(user.get())
+                .user(targetUser.get())
                 .build();
 
         notificationRepository.save(notification);
 
-        Optional<List<Token>> TokenList = tokenRepository.findAllByUser(user.get());
+        Optional<List<Token>> TokenList = tokenRepository.findAllByUser(targetUser.get());
         for (Token temp : TokenList.get()) {
-            firebaseCloudMessageService.sendMessageTo(temp.getTokenNum(), "냉장고 공유 수락 요청", message);
+            firebaseCloudMessageService.sendMessageTo(temp.getTokenNum(), "냉장고 공유", message);
         }
 
-        return null;
+        //냉장고 공유 세이브
+        UserRefrigerator save = new UserRefrigerator(refrigerator.get(), targetUser.get(), false);
+        userRefrigeratorRepository.save(save);
     }
 
 

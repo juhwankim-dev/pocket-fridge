@@ -24,8 +24,6 @@ public interface RefrigeratorService {
 
     public List<RefrigeratorResponseDto> findAllRefrigeratorByUser(User user);
 
-    public String createShareGroup(User user, Long refrigeratorId);
-
     public String createShareGroup(User user, InsertShareMemberRequestDto insertShareMemberRequestDto);
 
     public String updateRefrigerator(User user, Long refrigeratorId, String refrigeratorName);
