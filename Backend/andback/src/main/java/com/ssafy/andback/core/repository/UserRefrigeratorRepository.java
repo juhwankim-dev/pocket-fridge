@@ -3,6 +3,8 @@ package com.ssafy.andback.core.repository;
 import com.ssafy.andback.core.domain.Refrigerator;
 import com.ssafy.andback.core.domain.User;
 import com.ssafy.andback.core.domain.UserRefrigerator;
+import com.ssafy.andback.core.queryrepository.UserRefrigeratorQueryRepository;
+import com.ssafy.andback.core.queryrepository.UserRefrigeratorQueryRepositoryImpl;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -17,7 +19,7 @@ import java.util.Optional;
  * 생성일 2022-05-03
  * 마지막 수정일 2022-05-03
  **/
-public interface UserRefrigeratorRepository extends JpaRepository<UserRefrigerator, Long> {
+public interface UserRefrigeratorRepository extends JpaRepository<UserRefrigerator, Long>, UserRefrigeratorQueryRepository {
 
     List<UserRefrigerator> findUserRefrigeratorByUser(User user);
 
@@ -28,4 +30,6 @@ public interface UserRefrigeratorRepository extends JpaRepository<UserRefrigerat
     Optional<UserRefrigerator> findByRefrigeratorAndUser(Refrigerator refrigerator, User user);
 
     List<UserRefrigerator> findAllByRefrigerator(Refrigerator refrigerator);
+
+    Boolean existsByRefrigeratorAndUser(Refrigerator refrigerator, User user);
 }
