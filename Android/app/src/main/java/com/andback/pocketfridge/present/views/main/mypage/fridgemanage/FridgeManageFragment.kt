@@ -133,7 +133,7 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
                 dismiss()
             }
             dialogBinding.llFridgeManageOptionFShowMember.setOnClickListener {
-                showShareFridgeDialog()
+                showShareFridgeDialog(fridge)
                 dismiss()
             }
             dialogBinding.llFridgeManageOptionFEditName.setOnClickListener {
@@ -159,7 +159,8 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
         }
     }
 
-    private fun showShareFridgeDialog() {
+
+    private fun showShareFridgeDialog(fridge: FridgeEntity) {
         val dialogBinding = FragmentShareFridgeBinding.inflate(LayoutInflater.from(requireActivity()))
 
         AlertDialog.Builder(requireContext())
@@ -170,8 +171,14 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
                     return@also
                 }
 
-                dialogBinding.ibShareFridgeFClose.setOnClickListener {
-                    alertDialog.dismiss()
+                // 내가 냉장고 주인이 아닐 경우 초대 불가
+                if(fridge.isOwner == false) {
+                    dialogBinding.llShareFridgeFEmail.visibility = View.GONE
+                } else {
+                    dialogBinding.ibShareFridgeFClose.setOnClickListener {
+                        viewModel.addMember(fridge.id, dialogBinding.etShareFridgeFEmail.text.toString().trim())
+                        alertDialog.dismiss()
+                    }
                 }
             }
     }
