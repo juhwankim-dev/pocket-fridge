@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="selectedRecipe"
+            type="com.andback.pocketfridge.domain.model.Recipe" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -29,8 +31,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fitsSystemWindows="true"
-                    android:src="@drawable/bg_food_sample"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"
+                    bindImageUrl="@{selectedRecipe.url}"
+                    tools:src="@drawable/bg_food_sample" />
 
                 <com.google.android.material.appbar.MaterialToolbar
                     android:layout_height="?attr/actionBarSize"
