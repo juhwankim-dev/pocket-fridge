@@ -48,4 +48,11 @@ public class NotificationServiceImpl implements NotificationService {
 
         return "success";
     }
+
+    @Override
+    public Boolean noReadNotification(User user) {
+        // 읽지 않는 notification 이 존재하면 true;
+        // 없으면 false;
+        return notificationRepository.existsByUserAndNotificationRead(user, false);
+    }
 }

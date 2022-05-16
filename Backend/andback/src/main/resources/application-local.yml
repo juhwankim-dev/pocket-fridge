@@ -21,10 +21,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-      properties:
-        hibernate:
-          format_sql: true #To beautify or pretty print the SQL
-          show_sql: true #show sql
+    properties:
+      hibernate:
+        show_sql: true #debug로 볼 수 있으니깐 주석 처리
+        format_sql: true
+        use_sql_comments: true
     # JPA 실행 후 data.sql 진행
     defer-datasource-initialization: true
   freemarker:
