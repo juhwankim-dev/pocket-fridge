@@ -21,6 +21,6 @@ public interface TokenService {
 
     String insertToken(User user, TokenRequestDto tokenDto);
 
-    String sendMessage(String userEmail, Long refrigeratorId) throws IOException;
+    void sendMessage(User user,String userEmail, Long refrigeratorId) throws IOException;
 
 }

@@ -24,4 +24,6 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     List<Notification> findAllByUserAndNotificationRead(User user, boolean read);
 
     void deleteAllByUser(User user);
+
+    Boolean existsByUserAndNotificationRead(User user, boolean notificationRead);
 }
