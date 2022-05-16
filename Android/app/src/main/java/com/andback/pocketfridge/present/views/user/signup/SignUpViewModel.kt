@@ -12,7 +12,6 @@ import com.andback.pocketfridge.domain.usecase.user.GetCheckNicknameUseCase
 import com.andback.pocketfridge.domain.usecase.user.GetSignUpUseCase
 import com.andback.pocketfridge.domain.usecase.user.GetSendEmailUseCase
 import com.andback.pocketfridge.present.config.SingleLiveEvent
-import com.andback.pocketfridge.present.utils.PageSet
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -31,50 +30,32 @@ class SignUpViewModel @Inject constructor (
 ) : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
 
-    // viewmodel이 editText에 입력된 값을 observe 하기 위함
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
+    private val _toastMsg = SingleLiveEvent<String>()
+    val toastMsg: LiveData<String> get() = _toastMsg
+    private val _toastMsgIntType = SingleLiveEvent<Int>()
+    val toastMsgIntType: LiveData<Int> get() = _toastMsgIntType
+    private val _emailErrorMsg = MutableLiveData<CheckResult>()
+    val emailErrorMsg: LiveData<CheckResult> get() = _emailErrorMsg
+    private val _emailAuthNumberErrorMsg = MutableLiveData<Int>()
+    val emailAuthNumberErrorMsg: LiveData<Int> get() = _emailAuthNumberErrorMsg
+    private val _isSuccessCheckEmail = MutableLiveData<Boolean>()
+    val isSuccessCheckEmail: LiveData<Boolean> get() = _isSuccessCheckEmail
+    private val _isSuccessSignUp = MutableLiveData<Boolean>()
+    val isSuccessSignUp: LiveData<Boolean> get() = _isSuccessSignUp
+    private val _nicknameErrorMsg = MutableLiveData<Int>()
+    val nicknameErrorMsg: LiveData<Int> get() = _nicknameErrorMsg
+
     val email = MutableLiveData<String>()
+    val isSentEmail = SingleLiveEvent<Boolean>()
+    val typedAuthNumber = MutableLiveData<String>()
+    var sentEmailAuthNumber = "THISISPRIVATEKEY"
+
     val name = MutableLiveData<String>()
     val nickname = MutableLiveData<String>()
     val pw = MutableLiveData<String>()
     val pwConfirm = MutableLiveData<String>()
-
-    // view가 다음으로 넘어갈 페이지를 observe 하기 위함
-    val pageNumber = SingleLiveEvent<PageSet>()
-
-    // 로딩을 보여줄지 결정하기 위함
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> get() = _isLoading
-
-    // 이메일을 성공적으로 보냈는지 xml에서 확인하기 위함
-    val isSentEmail = SingleLiveEvent<Boolean>()
-
-    // 토스트 메시지 & 에러 메시지
-    private val _toastMsg = SingleLiveEvent<String>()
-    private val _toastMsgIntType = SingleLiveEvent<Int>()
-    private val _emailErrorMsg = MutableLiveData<CheckResult>()
-    private val _emailAuthNumberErrorMsg = MutableLiveData<Int>()
-    private val _nicknameErrorMsg = MutableLiveData<Int>()
-
-    val toastMsg: LiveData<String> get() = _toastMsg
-    val toastMsgIntType: LiveData<Int> get() = _toastMsgIntType
-    val emailErrorMsg: LiveData<CheckResult> get() = _emailErrorMsg
-    val emailAuthNumberErrorMsg: LiveData<Int> get() = _emailAuthNumberErrorMsg
-    val nicknameErrorMsg: LiveData<Int> get() = _nicknameErrorMsg
-
-    // 이메일 인증번호
-    val EmailAuthNumber = MutableLiveData<String>()
-    var sentEmailAuthNumber = "THISISPRIVATEKEY"
-
-    fun init() {
-        email.value = ""
-        name.value = ""
-        nickname.value = ""
-        pw.value = ""
-        pwConfirm.value = ""
-        isSentEmail.value = false
-        EmailAuthNumber.value = ""
-        sentEmailAuthNumber = "THISISPRIVATEKEY"
-    }
 
     private fun checkEmail(email: String) {
         compositeDisposable.add(
@@ -144,7 +125,7 @@ class SignUpViewModel @Inject constructor (
                     {
                         _toastMsg.value = it.message
                         _isLoading.value = false
-                        pageNumber.value = PageSet.LOGIN
+                        _isSuccessSignUp.value = true
                     },
                     {
                         _isLoading.value = false
@@ -159,20 +140,15 @@ class SignUpViewModel @Inject constructor (
     }
 
     fun onNextClick() {
-        if(sentEmailAuthNumber == EmailAuthNumber.value) {
-            _toastMsgIntType.value = R.string.email_auth_success
-            pageNumber.value = PageSet.SIGN_UP
+        if(sentEmailAuthNumber == typedAuthNumber.value) {
+            _isSuccessCheckEmail.value = true
         } else {
-            _emailAuthNumberErrorMsg.value = R.string.email_auth_match_error
+            _toastMsgIntType.value = R.string.email_auth_match_error
         }
     }
 
     fun onSignUpClick() {
         checkNickname(nickname.value!!)
-    }
-
-    fun onCloseClick() {
-        pageNumber.value = PageSet.LOGIN
     }
 
     private fun showError(t : Throwable) {

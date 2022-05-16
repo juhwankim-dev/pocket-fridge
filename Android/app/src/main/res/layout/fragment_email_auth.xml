@@ -26,7 +26,6 @@
                 android:id="@+id/tb_email_authF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:navigationOnClickListener="@{()->vm.onCloseClick()}"
                 app:title="@string/sign_up"
                 app:navigationIcon="@drawable/ic_close"/>
 
@@ -108,7 +107,7 @@
                         android:maxLength="10"
                         android:inputType="text"
                         android:visibility="@{vm.isSentEmail() ? View.VISIBLE : View.GONE}"
-                        android:text="@={vm.EmailAuthNumber}"
+                        android:text="@={vm.typedAuthNumber}"
                         tools:visibility="gone"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
@@ -148,8 +147,8 @@
             android:background="@drawable/bg_ellipse_filled_main_color_32"
             android:text="다음"
             android:textColor="@color/white"
-            android:onClick="@{()->vm.onNextClick()}"
             android:enabled="false"
+            android:onClick="@{()->vm.onNextClick()}"
             app:backgroundTint="@color/gray_non_clickable_button"
             app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

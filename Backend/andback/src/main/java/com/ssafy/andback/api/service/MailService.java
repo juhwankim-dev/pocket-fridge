@@ -16,9 +16,8 @@ public class MailService {
 
     // 이메일 인증번호 전송
     @Async
-    public String sendUserEmailNumber(String userEmail) {
+    public String sendUserEmailNumber(String userEmail,String tempEmailNumber) {
         // 이메일 인증번호 생성
-        String tempEmailNumber = getRamdomNumber(10);
 
         // 수신 대상을 담을 ArrayList 생성
         ArrayList<String> toUserList = new ArrayList<>();

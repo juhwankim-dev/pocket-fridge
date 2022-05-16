@@ -5,11 +5,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.databinding.FragmentSignUpBinding
 import com.andback.pocketfridge.present.config.BaseFragment
 import com.andback.pocketfridge.present.utils.SignUpChecker
-import com.andback.pocketfridge.present.views.user.UserActivity
 
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sign_up) {
     private val viewModel: SignUpViewModel by activityViewModels()
@@ -28,12 +28,11 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
     }
 
     private fun initViewModel() {
-        viewModel.init()
         binding.vm = viewModel
 
         with(viewModel) {
-            pageNumber.observe(viewLifecycleOwner) {
-                (context as UserActivity).onChangeFragement(it)
+            isSuccessSignUp.observe(viewLifecycleOwner) {
+                findNavController().popBackStack()
             }
 
             toastMsg.observe(viewLifecycleOwner) {
@@ -78,6 +77,10 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
                     isValidPwConfirm = isValid
                     checkValidate()
                 }
+        }
+
+        binding.tbStepOneF.setNavigationOnClickListener {
+            findNavController().popBackStack()
         }
     }
 

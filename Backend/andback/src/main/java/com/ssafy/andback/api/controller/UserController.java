@@ -79,9 +79,12 @@ public class UserController {
     @ApiOperation(value = "이메일 인증번호 전송", notes = "회원가입 시 이메일 인증번호 전송")
     @GetMapping(value = "/{userEmail}")
     public ResponseEntity<SingleResponseDto<String>> sendUserEmailNumber(@PathVariable String userEmail) {
-        String userEmailNumber = mailService.sendUserEmailNumber(userEmail);
 
-        return ResponseEntity.ok(new SingleResponseDto<>(200, "이메일 인증번호 전송 완료", userEmailNumber));
+        String tempEmailNumber = mailService.getRamdomNumber(10);
+
+        String userEmailNumber = mailService.sendUserEmailNumber(userEmail, tempEmailNumber);
+
+        return ResponseEntity.ok(new SingleResponseDto<>(200, "이메일 인증번호 전송 완료", tempEmailNumber));
     }
 
     @ApiOperation(value = "로그인", notes = "이메일, 비밀번호로 로그인")

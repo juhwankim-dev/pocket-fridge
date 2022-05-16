@@ -22,4 +22,6 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     List<Notification> findAllByUserOrderByCreatedDateDesc(User user);
 
     List<Notification> findAllByUserAndNotificationRead(User user, boolean read);
+
+    void deleteAllByUser(User user);
 }
