@@ -63,7 +63,7 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
         binding.tbFridgeF.setOnMenuItemClickListener { menuItem ->
             when(menuItem.itemId) {
                 R.id.notification_menu_fridge -> {
-                    // TODO: 알림 fragment로 이동
+                    findNavController().navigate(R.id.action_fridgeFragment_to_notificationFragment)
                     true
                 }
                 else -> false
