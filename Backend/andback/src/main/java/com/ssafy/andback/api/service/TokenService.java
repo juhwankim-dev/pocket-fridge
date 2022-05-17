@@ -1,6 +1,7 @@
 package com.ssafy.andback.api.service;
 
 
+import com.google.firebase.messaging.FirebaseMessagingException;
 import com.ssafy.andback.api.dto.request.TokenRequestDto;
 import com.ssafy.andback.core.domain.User;
 
@@ -21,6 +22,6 @@ public interface TokenService {
 
     String insertToken(User user, TokenRequestDto tokenDto);
 
-    void sendMessage(User user,String userEmail, Long refrigeratorId) throws IOException;
+    void sendMessage(User user,String userEmail, Long refrigeratorId);
 
 }

@@ -104,7 +104,7 @@ aes256:
 
 # 푸쉬 알림 전송 시 필요한 firebase json 파일의 위치
 app:
-  firebase-config: ssafy-e6f74-firebase-adminsdk-2911y-cfd0f23f96.json
+  firebase-config: firebase/firebase_service_key.json
 
 # swagger에서 테스트 할 때의 host
 swagger:

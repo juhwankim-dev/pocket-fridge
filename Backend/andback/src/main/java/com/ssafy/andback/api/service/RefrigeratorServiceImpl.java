@@ -1,5 +1,6 @@
 package com.ssafy.andback.api.service;
 
+import com.google.firebase.messaging.FirebaseMessagingException;
 import com.ssafy.andback.api.constant.ErrorCode;
 import com.ssafy.andback.api.dto.request.InsertRefrigeratorRequestDto;
 import com.ssafy.andback.api.dto.request.InsertShareMemberRequestDto;
@@ -169,7 +170,7 @@ public class RefrigeratorServiceImpl implements RefrigeratorService {
     }
 
     @Override
-    public boolean deleteUser(User user, Long refrigeratorId, String userEmail) throws IOException {
+    public boolean deleteUser(User user, Long refrigeratorId, String userEmail) {
 
         Optional<Refrigerator> refrigerator = refrigeratorRepository.findByRefrigeratorId(refrigeratorId);
 

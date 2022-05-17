@@ -1,5 +1,6 @@
 package com.ssafy.andback.api.controller;
 
+import com.google.firebase.messaging.FirebaseMessagingException;
 import com.ssafy.andback.api.dto.request.FcmMessageRequestDto;
 import com.ssafy.andback.api.dto.response.BaseResponseDto;
 import com.ssafy.andback.api.service.FirebaseCloudMessageService;
@@ -14,15 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 
 /**
-*
-* FcmMessageController
-* fcm 메세지 전송 컨트롤러
-*
-* @author hoony
-* @version 1.0.0
-* 생성일 2022-05-03
-* 마지막 수정일 2022-05-03
-**/
+ * FcmMessageController
+ * fcm 메세지 전송 컨트롤러
+ *
+ * @author hoony
+ * @version 1.0.0
+ * 생성일 2022-05-03
+ * 마지막 수정일 2022-05-03
+ **/
 
 @RestController
 @RequestMapping("/fcm")
@@ -33,7 +33,7 @@ public class FcmMessageController {
     private final FirebaseCloudMessageService firebaseCloudMessageService;
 
     @PostMapping
-    public ResponseEntity<BaseResponseDto> pushMessage(@RequestBody FcmMessageRequestDto requestDto) throws IOException {
+    public ResponseEntity<BaseResponseDto> pushMessage(@RequestBody FcmMessageRequestDto requestDto) {
 
         firebaseCloudMessageService.sendMessageTo(
                 requestDto.getTargetToken(),

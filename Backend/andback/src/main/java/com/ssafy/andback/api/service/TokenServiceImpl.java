@@ -1,5 +1,6 @@
 package com.ssafy.andback.api.service;
 
+import com.google.firebase.messaging.FirebaseMessagingException;
 import com.ssafy.andback.api.constant.ErrorCode;
 import com.ssafy.andback.api.dto.request.TokenRequestDto;
 import com.ssafy.andback.api.exception.CustomException;
@@ -62,7 +63,7 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     @Transactional(readOnly = false)
-    public void sendMessage(User user, String userEmail, Long refrigeratorId) throws IOException, CustomException {
+    public void sendMessage(User user, String userEmail, Long refrigeratorId) throws CustomException {
 
         Optional<Refrigerator> refrigerator = refrigeratorRepository.findByRefrigeratorId(refrigeratorId);
 
@@ -91,7 +92,6 @@ public class TokenServiceImpl implements TokenService {
         if (userRefrigeratorRepository.existsByRefrigeratorAndUser(refrigerator.get(), targetUser.get())) {
             throw new CustomException(ErrorCode.DUPLICATE_RESOURCE); // 데이터가 이미 존재합니다
         }
-
 
 
         //알람에 넣어주기

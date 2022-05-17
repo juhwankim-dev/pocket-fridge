@@ -1,5 +1,6 @@
 package com.ssafy.andback.api.controller;
 
+import com.google.firebase.messaging.FirebaseMessagingException;
 import com.ssafy.andback.api.constant.ErrorCode;
 import com.ssafy.andback.api.dto.request.InsertRefrigeratorRequestDto;
 import com.ssafy.andback.api.dto.request.InsertShareMemberRequestDto;
@@ -127,7 +128,7 @@ public class RefrigeratorController {
 
     @ApiOperation(value = "냉장고 공유", notes = "공유할 대상에게 냉장고를 공유하고 메세지를 보내준다")
     @GetMapping("/share/{userEmail}/{refrigeratorId}")
-    public ResponseEntity<SingleResponseDto<String>> inviteShareMember(@ApiIgnore Authentication authentication, @PathVariable String userEmail, @PathVariable Long refrigeratorId) throws CustomException, IOException {
+    public ResponseEntity<SingleResponseDto<String>> inviteShareMember(@ApiIgnore Authentication authentication, @PathVariable String userEmail, @PathVariable Long refrigeratorId) throws CustomException, IOException, FirebaseMessagingException {
 
         if (authentication == null) {
             throw new CustomException(ErrorCode.NOT_AUTH_TOKEN);
