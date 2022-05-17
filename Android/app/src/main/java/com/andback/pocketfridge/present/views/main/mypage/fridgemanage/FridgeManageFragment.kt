@@ -25,8 +25,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.fragment_fridge_manage) {
     private val fmAdapter = FridgeListAdapter()
     private val viewModel: FridgeManageViewModel by viewModels()
+    lateinit var shareDialog: AlertDialog
     private lateinit var memberAdapter: ShareMemberAdapter
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,6 +56,15 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
                 }
                 tstErrorMsg.observe(owner) {
                     showToastMessage(resources.getString(it))
+                }
+                isShared.observe(owner) {
+                    if(it == true) {
+                        if(this@FridgeManageFragment::shareDialog.isInitialized) {
+                            shareDialog.dismiss()
+                        }
+                        showToastMessage(resources.getString(R.string.fridge_share_success))
+                        viewModel.resetIsShared()
+                    }
                 }
             }
         }
@@ -169,10 +178,11 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
     }
 
     private fun showShareFridgeDialog(fridge: FridgeEntity) {
-        val dialogBinding = FragmentShareFridgeBinding.inflate(LayoutInflater.from(requireActivity()))
+        val dialogBinding =
+            FragmentShareFridgeBinding.inflate(LayoutInflater.from(requireActivity()))
         memberAdapter = ShareMemberAdapter(fridge.isOwner)
 
-        AlertDialog.Builder(requireContext())
+        shareDialog = AlertDialog.Builder(requireContext())
             .setView(dialogBinding.root)
             .show()
             .also { alertDialog ->
@@ -183,26 +193,44 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
                 dialogBinding.ibShareFridgeFClose.setOnClickListener {
                     alertDialog.dismiss()
                 }
-                when (fridge.isOwner) {
-                    true -> {
-                        dialogBinding.etShareFridgeFEmail.visibility = View.VISIBLE
-                        dialogBinding.ibShareFridgeFSend.visibility = View.VISIBLE
-                    }
-                     false -> {
-                         dialogBinding.etShareFridgeFEmail.visibility = View.GONE
-                         dialogBinding.ibShareFridgeFSend.visibility = View.GONE
-                     }
-                }
 
-                dialogBinding.rvShareFridgeF.apply {
-                    layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                    adapter = memberAdapter
-                }
-                memberAdapter.apply {
-                    itemClickListener = object : ShareMemberAdapter.ItemClickListener {
-                        override fun onClick(data: ShareUserEntity) {
-                            alertDialog.dismiss()
-                            showDeleteMemberDialog(fridge.id, data)
+                // 내가 냉장고 주인이 아닐 경우 초대 불가
+                if (fridge.isOwner == false) {
+                    dialogBinding.llShareFridgeFEmail.visibility = View.GONE
+                } else {
+                    dialogBinding.ibShareFridgeFSend.setOnClickListener {
+                        viewModel.addMember(
+                            fridge.id,
+                            dialogBinding.etShareFridgeFEmail.text.toString().trim()
+                        )
+                    }
+
+                    dialogBinding.rvShareFridgeF.apply {
+                        layoutManager = LinearLayoutManager(
+                            requireContext(),
+                            LinearLayoutManager.VERTICAL,
+                            false
+                        )
+                        adapter = memberAdapter
+                    }
+
+
+                    dialogBinding.rvShareFridgeF.apply {
+                        layoutManager = LinearLayoutManager(
+                            requireContext(),
+                            LinearLayoutManager.VERTICAL,
+                            false
+                        )
+                        adapter = memberAdapter
+                    }
+
+                    memberAdapter.apply {
+                        itemClickListener = object : ShareMemberAdapter.ItemClickListener {
+                            override fun onClick(data: ShareUserEntity) {
+                                alertDialog.dismiss()
+                                showDeleteMemberDialog(fridge.id, data)
+                            }
+
                         }
                     }
                 }

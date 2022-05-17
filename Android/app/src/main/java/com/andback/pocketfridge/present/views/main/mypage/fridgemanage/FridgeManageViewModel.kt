@@ -23,6 +23,7 @@ class FridgeManageViewModel @Inject constructor(
     private val createFridgeUseCase: CreateFridgeUseCase,
     private val updateFridgeNameUseCase: UpdateFridgeNameUseCase,
     private val deleteFridgeUseCase: DeleteFridgeUseCase,
+    private val shareFridgeUseCase: ShareFridgeUseCase,
     private val getFridgeMembersUseCase: GetFridgeMembersUseCase,
     private val deleteFridgeMemberUseCase: DeleteFridgeMemberUseCase
 ) : ViewModel() {
@@ -36,9 +37,10 @@ class FridgeManageViewModel @Inject constructor(
     val members: LiveData<List<ShareUserEntity>> get() = _members
     private val _tstMsg = MutableLiveData<String>()
     val tstMsg: LiveData<String> get() = _tstMsg
+    private val _isShared = MutableLiveData<Boolean>()
+    val isShared: LiveData<Boolean> get() = _isShared
     private val _tstErrorMsg = MutableLiveData<Int>()
     val tstErrorMsg: LiveData<Int> get() = _tstErrorMsg
-
 
     init {
         getUser()
@@ -133,6 +135,26 @@ class FridgeManageViewModel @Inject constructor(
                     }
                 )
         )
+    }
+
+    fun addMember(fridgeId: Int, email: String) {
+        val disposable = shareFridgeUseCase(email, fridgeId).subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    _isShared.value = true
+//                    _isShared.value = false
+                },
+                {
+                    // TODO: R.string.share_error
+                }
+            )
+
+        compositeDisposable.add(disposable)
+    }
+
+    fun resetIsShared() {
+        _isShared.value = false
     }
 
     fun getFridgeMembers(id: Int) {
