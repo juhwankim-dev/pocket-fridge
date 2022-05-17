@@ -21,6 +21,11 @@
             app:destination="@id/notificationFragment" />
     </fragment>
     <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.andback.pocketfridge.present.views.main.search.SearchFragment"
+        android:label="SearchFragment"
+        tools:layout="@layout/fragment_search"/>
+    <fragment
         android:id="@+id/barcodeScanFragment"
         android:name="com.andback.pocketfridge.present.views.main.barcode.BarcodeScanFragment"
         android:label="BarcodeScanFragment"
@@ -90,11 +95,7 @@
         android:id="@+id/fridgeManageFragment"
         android:name="com.andback.pocketfridge.present.views.main.mypage.fridgemanage.FridgeManageFragment"
         android:label="FridgeManageFragment"
-        tools:layout="@layout/fragment_fridge_manage">
-        <action
-            android:id="@+id/action_fridgeManageFragment_to_userDeleteFragment"
-            app:destination="@id/userDeleteFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_fridge_manage"/>
     <fragment
         android:id="@+id/notiSettingFragment"
         android:name="com.andback.pocketfridge.present.views.main.mypage.NotiSettingFragment"

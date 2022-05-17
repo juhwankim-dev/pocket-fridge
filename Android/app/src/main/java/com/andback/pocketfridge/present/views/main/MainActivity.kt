@@ -39,6 +39,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when(destination.id) {
                 R.id.fridgeFragment,
+                R.id.searchFragment,
+                R.id.myPageFragment,
                 R.id.recipeFragment -> {
                     binding.bnvMain.visibility = View.VISIBLE
                 }
