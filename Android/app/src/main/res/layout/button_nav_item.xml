@@ -9,5 +9,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitCenter"
-        android:src="@drawable/ic_add_circle_outline" />
+        android:src="@drawable/ic_plus" />
 </FrameLayout>
