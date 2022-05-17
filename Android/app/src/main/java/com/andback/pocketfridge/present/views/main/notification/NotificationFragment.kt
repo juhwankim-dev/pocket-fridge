@@ -26,6 +26,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>(R.layout.
     }
     
     private fun init() {
+        viewModel.readNotification()
         setRecyclerView()
         setObserver()
         setToolbar()
