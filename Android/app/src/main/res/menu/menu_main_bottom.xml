@@ -3,12 +3,20 @@
     <item
         android:id="@+id/fridgeFragment"
         android:title="@string/fridge"
-        android:icon="@drawable/selector_fridge_bottom_nav"/>
+        android:icon="@drawable/ic_fridge"/>
+    <item
+        android:id="@+id/searchFragment"
+        android:title="@string/search"
+        android:icon="@drawable/ic_search"/>
     <item
         android:id="@+id/selectRegiIngre"
         android:title=""/>
     <item
         android:id="@+id/recipeFragment"
         android:title="@string/recipe"
-        android:icon="@drawable/selector_recipe_bottom_nav"/>
+        android:icon="@drawable/ic_recipe"/>
+    <item
+        android:id="@+id/myPageFragment"
+        android:title="@string/mypage"
+        android:icon="@drawable/ic_mypage"/>
 </menu>

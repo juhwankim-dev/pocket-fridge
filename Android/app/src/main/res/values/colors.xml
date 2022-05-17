@@ -12,7 +12,7 @@
     <color name="black_high_emphasis">#D9000000</color>
     <color name="black_medium_emphasis">#99000000</color>
     <color name="black_low_emphasis">#66000000</color>
-    <color name="main_color">#FF5C00</color>
+    <color name="main_color">#ff7b30</color>
     <color name="red_error_message">#b00020</color>
     <color name="gray_non_clickable_button">#cfcfd9</color>
     <color name="gray">#C4C4C4</color>
