@@ -75,7 +75,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     private fun registerReceiver() {
         val br = BRReceiver()
-        LocalBroadcastManager.getInstance(this).registerReceiver(br, IntentFilter())
+        LocalBroadcastManager.getInstance(this).registerReceiver(br, IntentFilter().apply {
+            addAction(INTENT_ACTION)
+        })
     }
 
     private fun moveToLogin() {
@@ -139,6 +141,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     inner class BRReceiver: BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
+            Log.d(TAG, "onReceive: ${intent?.action}")
             if(intent?.action == INTENT_ACTION) {
                 fridgeViewModel.newNotificationArrival()
                 Log.d(TAG, "onReceive: br recieved")
