@@ -19,7 +19,7 @@ public class FirebaseConfig {
     @Value("${app.firebase-config}")
     private String googleApplicationCredentials;
 
-    @PostConstruct
+    @PostConstruct()
     public void initialize() throws IOException {
         ClassPathResource resource = new ClassPathResource(googleApplicationCredentials);
 
