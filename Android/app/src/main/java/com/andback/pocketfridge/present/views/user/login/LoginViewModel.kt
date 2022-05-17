@@ -15,6 +15,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.json.JSONObject
 import retrofit2.HttpException
 import javax.inject.Inject
@@ -85,12 +86,11 @@ class LoginViewModel @Inject constructor(
         )
     }
 
-    fun saveJWT(jwt: String, loginType: String) {
-        viewModelScope.launch {
-            writeDataStoreUseCase.execute("JWT", jwt)
-            writeDataStoreUseCase.execute("LOGIN_TYPE", loginType)
-        }
-    }
+    fun saveJWT(jwt: String, loginType: String) =
+            runBlocking {
+                writeDataStoreUseCase.execute("JWT", jwt)
+                writeDataStoreUseCase.execute("LOGIN_TYPE", loginType)
+            }
 
     fun onLoginClick() {
         login(LoginEntity(email.value.toString(), pw.value.toString()))
