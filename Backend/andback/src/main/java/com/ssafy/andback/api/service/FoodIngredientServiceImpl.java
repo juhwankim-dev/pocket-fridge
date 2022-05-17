@@ -16,10 +16,7 @@ import com.ssafy.andback.api.dto.response.FoodIngredientResponseDto;
 import com.ssafy.andback.api.dto.response.MainCategoryResponseDto;
 import com.ssafy.andback.api.dto.response.SubCategoryResponseDto;
 import com.ssafy.andback.api.exception.CustomException;
-import com.ssafy.andback.core.domain.FoodIngredient;
-import com.ssafy.andback.core.domain.MainCategory;
-import com.ssafy.andback.core.domain.Refrigerator;
-import com.ssafy.andback.core.domain.SubCategory;
+import com.ssafy.andback.core.domain.*;
 import com.ssafy.andback.core.repository.FoodIngredientRepository;
 import com.ssafy.andback.core.repository.MainCategoryRepository;
 import com.ssafy.andback.core.repository.RefrigeratorRepository;
@@ -93,7 +90,6 @@ public class FoodIngredientServiceImpl implements FoodIngredientService {
         }
 
         Optional<Refrigerator> refrigerator = refrigeratorRepository.findByRefrigeratorId(updateFoodIngredientReqDto.getRefrigeratorId());
-
 
 
         foodIngredient.setRefrigerator(refrigerator.get());
@@ -171,6 +167,29 @@ public class FoodIngredientServiceImpl implements FoodIngredientService {
                     .mainCategoryId(temp.getMainCategory().getMainCategory())
                     .subCategoryId(temp.getSubCategory())
                     .subCategoryName(temp.getSubCategoryName())
+                    .build());
+        }
+
+        return res;
+    }
+
+    @Override
+    public List<FoodIngredientResponseDto> findAllIngredientList(User user) {
+
+        List<FoodIngredient> foodIngredientList = foodIngredientRepository.findAllIngredientList(user);
+
+        List<FoodIngredientResponseDto> res = new ArrayList<>();
+
+        for (FoodIngredient temp : foodIngredientList) {
+            res.add(FoodIngredientResponseDto.builder()
+                    .foodIngredientId(temp.getFoodIngredientId())
+                    .foodIngredientDate(temp.getFoodIngredientDate())
+                    .foodIngredientExp(temp.getFoodIngredientExp())
+                    .foodIngredientName(temp.getFoodIngredientName())
+                    .foodIngredientWay(temp.getFoodIngredientWay())
+                    .refrigeratorId(temp.getRefrigerator().getRefrigeratorId())
+                    .subCategoryId(temp.getSubCategory().getSubCategory())
+                    .mainCategoryId(temp.getSubCategory().getMainCategory().getMainCategory())
                     .build());
         }
 
