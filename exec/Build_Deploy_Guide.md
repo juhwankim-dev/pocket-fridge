@@ -1,4 +1,22 @@
-# 빌드 & 배포 가이드
+# Pocket Fridge - 포팅 매뉴얼
+
+
+
+## 목차
+
+[1. EC2에 MariaDB 설치](#ec2에-mariadb-설치)
+
+[2. EC2에 Docker 설치](#ec2에-docker-설치)
+
+[3. Docker에 Jenkins 설치](#docker에-jenkins-설치)
+
+[4. Jenkins 프로젝트 설정](#jenkins-프로젝트-설정)
+
+[5. 빌드 시 사용되는 환경 변수](#빌드-시-사용되는-환경-변수)
+
+[6. 사용하는 외부 서비스 정보](#사용하는-외부-서비스-정보)
+
+[7. 데이터베이스](#데이터베이스)
 
 
 
@@ -420,3 +438,70 @@ docker exec jenkins-andback cat /var/jenkins_home/secrets/initialAdminPassword
        nohup python3 /home/ubuntu/deploy/ML/main/app.py >> /home/ubuntu/deploy/logs/flasklogs.log 2>&1 &
        ```
 
+
+
+## 빌드 시 사용되는 환경 변수
+
+**Spring 빌드**
+
+```bash
+// Spring 빌드
+./gradlew clean build
+
+// 빌드 완료된 jar 파일을 백그라운드로 실행
+nohup java -jar /home/ubuntu/deploy/Backend/andback/build/libs/andback-0.0.1-SNAPSHOT.jar &
+```
+
+**Flask 빌드**
+
+```bash
+// Flask 빌드 & 백그라운드로 실행
+nohup python3 app.py &
+```
+
+
+
+**배포 시 특이사항**
+
+- Spring은 8080번 포트 사용
+- Flask는 5000번 포트 사용
+
+
+
+**데이터베이스 접속 정보**
+
+[File Path]
+
+- S06P31D206 -> Backend -> andback -> main -> resources -> application-local.yml
+
+![image_52](./images/image_52.png)
+
+
+
+## 사용하는 외부 서비스 정보
+
+- Amazon EC2
+
+  [SSH로 서버 접속]
+
+  ```bash
+  ssh -i K6D206T.pem ubuntu@k6d206.p.ssafy.io
+  ```
+
+  
+
+## 데이터베이스
+
+- 덤프 파일
+
+  [File Path]
+
+  S06P31D206 -> Backend -> andback -> main -> resources -> dump.sql
+
+
+
+- ERD 다이어그램
+
+  ![image_53](./images/image_53.png)
+
+  
