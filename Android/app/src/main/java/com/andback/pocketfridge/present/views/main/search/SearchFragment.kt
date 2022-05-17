@@ -44,13 +44,14 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
 
     private fun setView() {
         binding.etSearchF.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search_24, 0, 0, 0)
-        binding.tvIngreSearchFCount.text = resources.getString(R.string.search_count, 1)
+        viewModel.getFridges()
     }
 
     private fun setRecyclerView() {
         binding.rvSearchF.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter = rvAdapter
+            itemAnimator = null
         }
         rvAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onChanged() {
@@ -74,6 +75,20 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
                 ingreList.observe(owner) {
                     rvAdapter.setList(fridges.value!!, it)
                     binding.tvIngreSearchFCount.text = resources.getString(R.string.search_count, rvAdapter.itemCount)
+                }
+                isLoading.observe(owner) {
+                    when(it) {
+                        true -> {
+                            binding.sflSearchF.startShimmer()
+                            binding.sflSearchF.visibility = View.VISIBLE
+                            binding.rvSearchF.visibility = View.GONE
+                        }
+                        false -> {
+                            binding.sflSearchF.stopShimmer()
+                            binding.sflSearchF.visibility = View.GONE
+                            binding.rvSearchF.visibility = View.VISIBLE
+                        }
+                    }
                 }
             }
         }

@@ -29,15 +29,16 @@ class SearchViewModel @Inject constructor(
     val fridges: LiveData<List<FridgeEntity>> get() = _fridges
     private val _ingreList = MutableLiveData<List<Ingredient>>()
     val ingreList: LiveData<List<Ingredient>> get() = _ingreList
+
     private val _toastMsg = MutableLiveData<String>()
     val toastMsg: LiveData<String> get() = _toastMsg
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
 
-
-    init {
-        getFridges()
-    }
 
     fun getFridges() {
+        _isLoading.value = true
+
         compositeDisposable.add(
             getFridgesUseCase()
                 .subscribeOn(Schedulers.io())
@@ -50,6 +51,7 @@ class SearchViewModel @Inject constructor(
                         getAllIngreList()
                     },
                     {
+                        _isLoading.value = false
                         showError(it)
                     }
                 )
@@ -66,8 +68,10 @@ class SearchViewModel @Inject constructor(
                         it.data?.let { list ->
                             _ingreList.value = list
                         }
+                        _isLoading.value = false
                     },
                     {
+                        _isLoading.value = false
                         showError(it)
                     }
                 )
