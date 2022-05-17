@@ -123,6 +123,8 @@
     <string name="noti_setting_offset_label">유통기한 임박 알림 일</string>
     <string name="noti_setting_activation_label">유통기한 임박 알림 받기</string>
 
+    <string name="search_count">%1$d개의 검색결과</string>
+
 
     <string name="ipa_ready">네 말씀해주세요</string>
     <string name="ipa_next">다음 페이지로 이동합니다</string>

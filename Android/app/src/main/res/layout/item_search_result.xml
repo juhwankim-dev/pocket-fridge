@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="ingredient"
+            type="com.andback.pocketfridge.domain.model.Ingredient" />
+        <variable
+            name="leftday"
+            type="String" />
+        <variable
+            name="fridge"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_margin_default">
+
+        <ImageView
+            android:id="@+id/iv_search_resultF_bg"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/activity_margin_default"
+            android:src="@drawable/bg_circle_gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/tv_search_resultI_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_search_resultI_category"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="@dimen/activity_margin_narrow"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_search_resultF_bg"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="@+id/iv_search_resultF_bg"
+            app:layout_constraintStart_toStartOf="@+id/iv_search_resultF_bg"
+            app:layout_constraintTop_toTopOf="@+id/iv_search_resultF_bg"
+            app:srcCompat="@android:drawable/ic_menu_report_image" />
+
+        <TextView
+            style="@style/button_text"
+            android:layout_height="0dp"
+            android:layout_marginStart="-8dp"
+            android:layout_marginTop="-8dp"
+            android:background="@drawable/bg_ellipse_filled_4"
+            android:backgroundTint="@{(0 > ingredient.leftDay)? @color/main_color : @color/gray}"
+            android:paddingHorizontal="@dimen/activity_margin_narrow"
+            android:paddingVertical="4dp"
+            android:text="@{leftday}"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="@+id/iv_search_resultF_bg"
+            app:layout_constraintTop_toTopOf="@+id/iv_search_resultF_bg"
+            tools:text="D-3" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/search_resultI_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".3"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_search_resultI_name"
+            style="@style/body_text"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:text="@{ingredient.name}"
+            tools:text="제품명"
+            app:layout_constraintBottom_toTopOf="@+id/tv_search_resultI_fridge"
+            app:layout_constraintStart_toStartOf="@+id/search_resultI_guideline"
+            app:layout_constraintTop_toTopOf="@+id/iv_search_resultF_bg"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/tv_search_resultI_fridge"
+            style="@style/body_text"
+            android:textColor="@android:color/darker_gray"
+            tools:text="냉장고"
+            android:text="@{fridge}"
+            android:layout_marginTop="@dimen/activity_margin_narrow"
+            app:layout_constraintBottom_toTopOf="@+id/tv_search_resultI_expiry"
+            app:layout_constraintStart_toStartOf="@+id/tv_search_resultI_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_search_resultI_name" />
+
+        <TextView
+            android:id="@+id/tv_search_resultI_expiry"
+            style="@style/body_text"
+            android:textColor="@android:color/darker_gray"
+            tools:text="2022.05.17"
+            android:text="@{ingredient.expiryDate}"
+            android:layout_marginTop="@dimen/activity_margin_narrow"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_search_resultF_bg"
+            app:layout_constraintStart_toStartOf="@+id/tv_search_resultI_fridge"
+            app:layout_constraintTop_toBottomOf="@+id/tv_search_resultI_fridge" />
+
+        <TextView
+            android:id="@+id/tv_search_resultI_storage"
+            style="@style/body_text"
+            android:textColor="@android:color/darker_gray"
+            tools:text="냉동"
+            android:text="@{ingredient.storage.value}"
+            android:layout_marginStart="@dimen/activity_margin_narrow"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_search_resultI_fridge"
+            app:layout_constraintStart_toEndOf="@+id/tv_search_resultI_fridge"
+            app:layout_constraintTop_toTopOf="@+id/tv_search_resultI_fridge" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
