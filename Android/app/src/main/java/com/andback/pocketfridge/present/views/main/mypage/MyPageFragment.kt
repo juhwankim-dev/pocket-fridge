@@ -1,5 +1,6 @@
 package com.andback.pocketfridge.present.views.main.mypage
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -7,6 +8,8 @@ import androidx.navigation.fragment.findNavController
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.databinding.FragmentMyPageBinding
 import com.andback.pocketfridge.present.config.BaseFragment
+import com.andback.pocketfridge.present.views.user.UserActivity
+import com.andback.pocketfridge.present.workmanager.DailyNotiWorker
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,6 +30,13 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         with(viewModel) {
             toastMsg.observe(viewLifecycleOwner) {
                 showToastMessage(it)
+            }
+
+            isLogout.observe(viewLifecycleOwner) {
+                if(it == true) {
+                    DailyNotiWorker.cancel(requireActivity())
+                    moveToLogin()
+                }
             }
 
             loginType.observe(viewLifecycleOwner) {
@@ -69,5 +79,10 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         binding.tbMyPageF.setNavigationOnClickListener {
             requireActivity().onBackPressed()
         }
+    }
+
+    private fun moveToLogin() {
+        requireActivity().startActivity(Intent(requireActivity(), UserActivity::class.java))
+        requireActivity().finish()
     }
 }
