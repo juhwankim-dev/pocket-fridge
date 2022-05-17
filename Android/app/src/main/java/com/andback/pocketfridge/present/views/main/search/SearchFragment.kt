@@ -55,41 +55,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
     }
 
     private fun setObserve() {
-        val ingres = mutableListOf<Ingredient>()
-
-        for (i in 1..10) {
-            ingres.add(Ingredient(0,
-                1,
-                1,
-                2,
-                "2022.05.12",
-                "2022.6.14",
-                "빵",
-                4,
-                Storage.Fridge,
-                10))
-            ingres.add(Ingredient(0,
-                2,
-                1,
-                4,
-                "2022.05.12",
-                "2022.6.14",
-                "떡",
-                5,
-                Storage.Fridge,
-                2))
-            ingres.add(Ingredient(0,
-                1,
-                1,
-                2,
-                "2022.05.12",
-                "2022.6.14",
-                "사과",
-                10,
-                Storage.Fridge,
-                -3))
-        }
-
         with(viewModel) {
             binding.lifecycleOwner?.let { owner ->
                 ingreList.observe(owner) {
@@ -97,12 +62,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
                     binding.tvIngreSearchFCount.text = resources.getString(R.string.search_count, rvAdapter.itemCount)
                     rvAdapter.sortList(SearchAdapter.SORT_BY_EXP)
                 }
-//                fridges.observe(owner) {
-//                    Log.d(TAG, "setObserve: ")
-//                    rvAdapter.setList(it, ingres)
-//                    binding.tvIngreSearchFCount.text = resources.getString(R.string.search_count, rvAdapter.itemCount)
-//                    rvAdapter.sortList(SearchAdapter.SORT_BY_EXP)
-//                }
             }
         }
     }
