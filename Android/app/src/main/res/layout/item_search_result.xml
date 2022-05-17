@@ -36,25 +36,26 @@
             android:id="@+id/iv_search_resultI_category"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:padding="@dimen/activity_margin_narrow"
+            android:padding="@dimen/activity_margin_default"
             app:layout_constraintBottom_toBottomOf="@+id/iv_search_resultF_bg"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="@+id/iv_search_resultF_bg"
             app:layout_constraintStart_toStartOf="@+id/iv_search_resultF_bg"
             app:layout_constraintTop_toTopOf="@+id/iv_search_resultF_bg"
-            app:srcCompat="@android:drawable/ic_menu_report_image" />
+            app:srcCompat="@drawable/ic_error_category" />
 
         <TextView
             style="@style/button_text"
             android:layout_height="0dp"
             android:layout_marginStart="-8dp"
-            android:layout_marginTop="-8dp"
+            android:layout_marginTop="-4dp"
             android:background="@drawable/bg_ellipse_filled_4"
             android:backgroundTint="@{(0 > ingredient.leftDay)? @color/main_color : @color/gray}"
             android:paddingHorizontal="@dimen/activity_margin_narrow"
             android:paddingVertical="4dp"
             android:text="@{leftday}"
             android:textColor="@color/white"
+            android:textSize="10sp"
             app:layout_constraintStart_toStartOf="@+id/iv_search_resultF_bg"
             app:layout_constraintTop_toTopOf="@+id/iv_search_resultF_bg"
             tools:text="D-3" />
@@ -70,14 +71,16 @@
         <TextView
             android:id="@+id/tv_search_resultI_name"
             style="@style/body_text"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{ingredient.name}"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:text="@{ingredient.name}"
-            tools:text="제품명"
             app:layout_constraintBottom_toTopOf="@+id/tv_search_resultI_fridge"
             app:layout_constraintStart_toStartOf="@+id/search_resultI_guideline"
             app:layout_constraintTop_toTopOf="@+id/iv_search_resultF_bg"
-            app:layout_constraintVertical_chainStyle="packed" />
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="제품명" />
 
         <TextView
             android:id="@+id/tv_search_resultI_fridge"
