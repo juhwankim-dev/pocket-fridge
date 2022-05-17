@@ -1,7 +1,9 @@
 package com.andback.pocketfridge.present.views.main
 
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.viewModels
@@ -15,6 +17,7 @@ import com.andback.pocketfridge.R
 import com.andback.pocketfridge.databinding.ActivityMainBinding
 import com.andback.pocketfridge.present.config.BaseActivity
 import com.andback.pocketfridge.present.views.main.fridge.FridgeViewModel
+import com.andback.pocketfridge.present.views.user.UserActivity
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,10 +26,37 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private val TAG = "MainActivity_debuk"
     private val fridgeViewModel: FridgeViewModel by viewModels()
+    private val mainViewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setObserver()
+
+        Log.d(TAG, "onCreate: ${intent.extras?.get("data")}")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mainViewModel.checkLogin()
+    }
+
+    private fun setObserver() {
+        mainViewModel.isLogin.observe(this) {
+            if(it == true) showUi()
+            else moveToLogin()
+        }
+    }
+
+    private fun showUi() {
+        binding.flMain.visibility = View.GONE
         setBottomNav()
+    }
+
+    private fun moveToLogin() {
+        startActivity(Intent(this, UserActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+        })
+        finish()
     }
 
     private fun setBottomNav() {
