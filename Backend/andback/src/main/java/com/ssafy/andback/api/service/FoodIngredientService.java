@@ -5,6 +5,7 @@ import com.ssafy.andback.api.dto.request.UpdateFoodIngredientRequestDto;
 import com.ssafy.andback.api.dto.response.FoodIngredientResponseDto;
 import com.ssafy.andback.api.dto.response.MainCategoryResponseDto;
 import com.ssafy.andback.api.dto.response.SubCategoryResponseDto;
+import com.ssafy.andback.core.domain.User;
 
 import java.util.List;
 
@@ -20,4 +21,6 @@ public interface FoodIngredientService {
     List<MainCategoryResponseDto> findAllMainCategory();
 
     List<SubCategoryResponseDto> findAllSubCategory();
+
+    List<FoodIngredientResponseDto> findAllIngredientList(User user);
 }

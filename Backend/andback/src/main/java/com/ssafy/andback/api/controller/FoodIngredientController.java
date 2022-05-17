@@ -9,16 +9,21 @@
  **/
 package com.ssafy.andback.api.controller;
 
+import com.ssafy.andback.api.constant.ErrorCode;
 import com.ssafy.andback.api.dto.request.UpdateFoodIngredientRequestDto;
 import com.ssafy.andback.api.dto.response.*;
 import com.ssafy.andback.api.dto.request.InsertFoodIngredientRequestDto;
+import com.ssafy.andback.api.exception.CustomException;
 import com.ssafy.andback.api.service.FoodIngredientService;
+import com.ssafy.andback.core.domain.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 
@@ -76,7 +81,7 @@ public class FoodIngredientController {
 
     @ApiOperation(value = "메인 카테고리 목록", notes = "메인 카테고리 목록을 보여준다")
     @GetMapping("/maincategory")
-    public ResponseEntity<ListResponseDto<MainCategoryResponseDto>> findAllMainCategory(){
+    public ResponseEntity<ListResponseDto<MainCategoryResponseDto>> findAllMainCategory() {
 
         List<MainCategoryResponseDto> response = foodIngredientService.findAllMainCategory();
 
@@ -90,5 +95,23 @@ public class FoodIngredientController {
         List<SubCategoryResponseDto> response = foodIngredientService.findAllSubCategory();
 
         return ResponseEntity.ok(new ListResponseDto<SubCategoryResponseDto>(200, "success", response));
+    }
+
+    @ApiOperation(value = "모든 식재료 목록", notes = "가지고 있는 모든 식재료를 반환한다")
+    @GetMapping
+    public ResponseEntity<ListResponseDto<FoodIngredientResponseDto>> findAllIngredientList(@ApiIgnore Authentication authentication) {
+        if (authentication == null) {
+            throw new CustomException(ErrorCode.NOT_AUTH_TOKEN);
+        }
+
+        User user = (User) authentication.getPrincipal();
+
+        if (user == null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
+
+        List<FoodIngredientResponseDto> response = foodIngredientService.findAllIngredientList(user);
+
+        return ResponseEntity.ok(new ListResponseDto<FoodIngredientResponseDto>(200, "success", response));
     }
 }
