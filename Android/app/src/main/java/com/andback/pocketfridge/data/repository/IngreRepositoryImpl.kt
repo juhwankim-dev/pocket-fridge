@@ -65,6 +65,23 @@ class IngreRepositoryImpl @Inject constructor(
         return result
     }
 
+    override fun getAllIngreList(): Single<BaseResponse<List<Ingredient>>> {
+        var dtoList: List<Ingredient> = emptyList()
+
+        val result = ingreRemoteDataSource.getAllIngreList()
+            .doOnSuccess { response ->
+                if(response.data != null) {
+                    dtoList = response.data.map { entity -> IngreMapper(entity) }
+                } else {
+                    throw Exception("get null from server")
+                }
+            }.map {
+                BaseResponse(data = dtoList)
+            }
+
+        return result
+    }
+
     override fun deleteIngreById(ingreId: Int): Single<BaseResponse<Any>> {
         return ingreRemoteDataSource.deleteIngreById(ingreId)
     }
