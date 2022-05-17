@@ -2,9 +2,11 @@ package com.andback.pocketfridge.present.service
 
 import android.annotation.SuppressLint
 import android.provider.Settings
+import android.util.Log
 import com.andback.pocketfridge.data.model.FcmTokenEntity
 import com.andback.pocketfridge.domain.usecase.user.SendFcmTokenUseCase
 import com.google.firebase.messaging.FirebaseMessagingService
+import com.google.firebase.messaging.RemoteMessage
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -14,22 +16,14 @@ class FcmService: FirebaseMessagingService() {
     @Inject
     lateinit var sendFcmTokenUseCase: SendFcmTokenUseCase
 
-    @SuppressLint("HardwareIds")
-    override fun onNewToken(token:String) {
-        super.onNewToken(token)
-
-        val androidId: String = Settings.Secure.getString(
-            applicationContext.contentResolver,
-            Settings.Secure.ANDROID_ID
-        )
-
-        // 서버에 업데이트
-        sendFcmTokenUseCase(FcmTokenEntity(androidId, token)).subscribeOn(Schedulers.io())
-            .subscribe(
-                {},
-                {}
-            )
+    override fun onMessageReceived(message: RemoteMessage) {
+        super.onMessageReceived(message)
+        Log.d(TAG, "onMessageReceived: ${message.data}")
+        Log.d(TAG, "onMessageReceived: ${message.notification?.title}")
+        Log.d(TAG, "onMessageReceived: ${message.notification?.body}")
     }
 
-
+    companion object {
+        private const val TAG = "FcmService_debuk"
+    }
 }
