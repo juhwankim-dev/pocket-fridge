@@ -109,6 +109,7 @@
 
     <string name="delete_fridge_dialog_title_owner">냉장고: [%1$s]를 삭제하시겠습니까?</string>
     <string name="delete_fridge_dialog_title">냉장고: [%1$s] 공유 받기를 중지하시겠습니까?</string>
+    <string name="delete_fridge_member_title">%1$s 님을 내보내시겠습니까?</string>
 
 
     <string name="noti_setting_offset">일 전</string>
