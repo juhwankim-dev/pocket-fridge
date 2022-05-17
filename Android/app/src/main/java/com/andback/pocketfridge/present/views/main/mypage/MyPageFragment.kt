@@ -73,6 +73,9 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
             bundle.putString("name", viewModel.personalInfo.value?.name ?: "")
             findNavController().navigate(R.id.action_myPageFragment_to_userDeleteFragment, bundle)
         }
+        binding.tvMyPageFLogout.setOnClickListener {
+            viewModel.logout()
+        }
     }
 
     private fun setToolbar() {
