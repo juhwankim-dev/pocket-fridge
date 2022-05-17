@@ -42,7 +42,15 @@ public class RecipeController {
     @GetMapping
     ResponseEntity<ListResponseDto<RecipeResponseDto>> findAllRecipe(@ApiIgnore Authentication authentication) {
 
+        if (authentication == null) {
+            throw new CustomException(ErrorCode.NOT_AUTH_TOKEN);
+        }
+
         User user = (User) authentication.getPrincipal();
+
+        if (user == null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND); // user 가 없습니다
+        }
 
         List<RecipeResponseDto> response = recipeService.findAllRecipe(user);
 
@@ -70,6 +78,10 @@ public class RecipeController {
     @ApiOperation(value = "부족한 레시피 재료 조회", notes = "레시피 재료 중 부족한 재료를 보여준다.")
     @GetMapping("/lack/{recipeId}")
     ResponseEntity<ListResponseDto<LackRecipeIngredientResponseDto>> findLackRecipeIngredients(@ApiIgnore Authentication authentication, @PathVariable(value = "recipeId", required = true) Long recipeId) {
+
+        if (authentication == null) {
+            throw new CustomException(ErrorCode.NOT_AUTH_TOKEN);
+        }
 
         User user = (User) authentication.getPrincipal();
 

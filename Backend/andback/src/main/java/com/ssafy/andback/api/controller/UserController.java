@@ -1,5 +1,6 @@
 package com.ssafy.andback.api.controller;
 
+import com.ssafy.andback.api.constant.ErrorCode;
 import com.ssafy.andback.api.constant.LoginType;
 import com.ssafy.andback.api.dto.request.CheckUserPasswordRequestDto;
 import com.ssafy.andback.api.dto.request.FindUserPasswordRequestDto;
@@ -8,6 +9,7 @@ import com.ssafy.andback.api.dto.request.UpdateUserRequestDto;
 import com.ssafy.andback.api.dto.response.CheckUserResponseDto;
 import com.ssafy.andback.api.dto.response.SingleResponseDto;
 import com.ssafy.andback.api.dto.response.TokenResponseDto;
+import com.ssafy.andback.api.exception.CustomException;
 import com.ssafy.andback.api.service.MailService;
 import com.ssafy.andback.core.domain.User;
 import io.swagger.annotations.*;
@@ -129,7 +131,17 @@ public class UserController {
     @ApiOperation(value = "회원정보 조회", notes = "유저의 정보를 조회한다.")
     @GetMapping
     public ResponseEntity<SingleResponseDto<CheckUserResponseDto>> checkUser(@ApiIgnore Authentication authentication) {
+
+        // 토큰 없을 때 에러
+        if (authentication == null) {
+            throw new CustomException(ErrorCode.NOT_AUTH_TOKEN);
+        }
+
         User user = (User) authentication.getPrincipal();
+
+        if (user == null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
 
         CheckUserResponseDto checkUserResponseDto = CheckUserResponseDto.builder()
                 .userId(user.getUserId())
