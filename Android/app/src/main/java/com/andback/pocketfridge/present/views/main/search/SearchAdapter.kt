@@ -1,5 +1,6 @@
 package com.andback.pocketfridge.present.views.main.search
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
@@ -13,6 +14,11 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(), Filterab
     private val fridges = ArrayList<FridgeEntity>()
     private val list = ArrayList<Ingredient>()
     private val filteredList = arrayListOf<Ingredient>()
+
+    interface ItemClickListener {
+        fun onClick(data: Ingredient, isOwner: Boolean)
+    }
+    lateinit var itemClickListener: ItemClickListener
 
 
     inner class ViewHolder(val binding: ItemSearchResultBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -43,7 +49,9 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(), Filterab
         holder.apply {
             val fridge = fridges.find { it.id == filteredList[position].fridgeId }!!
             bind(filteredList[position], fridge.name)
-            // TODO : 냉장고 상세보기(주인인지 아닌지 체크)
+            binding.root.setOnClickListener {
+                itemClickListener.onClick(filteredList[position], fridge.isOwner)
+            }
         }
     }
 
@@ -56,7 +64,8 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(), Filterab
         this.fridges.addAll(fridges)
         list.addAll(ingredients)
         filteredList.addAll(ingredients)
-        notifyDataSetChanged()
+        Log.d("TEST", "setList: $filteredList")
+        sortList(SORT_BY_EXP)
     }
 
     override fun getFilter(): Filter {
@@ -88,6 +97,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(), Filterab
             SORT_BY_KOR -> filteredList.sortBy { it.name }
             REVERSER_SORT_BY_KOR -> filteredList.sortByDescending { it.name }
         }
+        Log.d("TEST", "sortList: $sortType $filteredList")
         notifyDataSetChanged()
     }
 
