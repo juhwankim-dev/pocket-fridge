@@ -1,12 +1,16 @@
 package com.andback.pocketfridge.present.views.main
 
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.viewModels
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -22,6 +26,16 @@ import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * onStart
+ *  로그인 확인 -> isLogin 변경
+ *
+ *  viewModel.isLogin? showUi() : moveToLogin()
+ *
+ *  showUi() -> intent의 extras 있으면 알림 센터로 이동.
+ *
+ *      안 읽은 알림이 있는지 확인
+ */
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private val TAG = "MainActivity_debuk"
@@ -31,8 +45,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setObserver()
-
-        Log.d(TAG, "onCreate: ${intent.extras?.get("data")}")
     }
 
     override fun onStart() {
@@ -41,15 +53,31 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     }
 
     private fun setObserver() {
-        mainViewModel.isLogin.observe(this) {
-            if(it == true) showUi()
-            else moveToLogin()
+        with(mainViewModel) {
+            isLogin.observe(this@MainActivity) {
+                if(it == true) showUi()
+                else moveToLogin()
+            }
         }
     }
 
     private fun showUi() {
         binding.flMain.visibility = View.GONE
         setBottomNav()
+        registerReceiver()
+        if (intent.extras != null) {
+            val navHostFragment = supportFragmentManager.findFragmentById(R.id.fcv_main) as NavHostFragment
+            val navController = navHostFragment.findNavController()
+            navController.navigate(R.id.action_fridgeFragment_to_notificationFragment)
+            intent.replaceExtras(null)
+        }
+    }
+
+    private fun registerReceiver() {
+        val br = BRReceiver()
+        LocalBroadcastManager.getInstance(this).registerReceiver(br, IntentFilter().apply {
+            addAction(INTENT_ACTION)
+        })
     }
 
     private fun moveToLogin() {
@@ -109,5 +137,19 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     private fun moveToFridgeManageFragment(navController: NavController) {
         navController.navigate(R.id.fridgeManageFragment)
+    }
+
+    inner class BRReceiver: BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            Log.d(TAG, "onReceive: ${intent?.action}")
+            if(intent?.action == INTENT_ACTION) {
+                fridgeViewModel.newNotificationArrival()
+                Log.d(TAG, "onReceive: br recieved")
+            }
+        }
+    }
+
+    companion object {
+        const val INTENT_ACTION = "new notification"
     }
 }

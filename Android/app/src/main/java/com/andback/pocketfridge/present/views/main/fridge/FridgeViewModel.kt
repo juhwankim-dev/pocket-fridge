@@ -11,6 +11,7 @@ import com.andback.pocketfridge.domain.usecase.category.GetCategoryUseCase
 import com.andback.pocketfridge.domain.usecase.fridge.GetFridgesUseCase
 import com.andback.pocketfridge.domain.usecase.ingredient.DeleteIngreUseCase
 import com.andback.pocketfridge.domain.usecase.ingredient.GetIngreListUseCase
+import com.andback.pocketfridge.domain.usecase.notification.CheckNewNotiUseCase
 import com.andback.pocketfridge.domain.usecase.user.GetUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -23,7 +24,8 @@ class FridgeViewModel @Inject constructor(
     private val getIngreListUseCase: GetIngreListUseCase,
     private val deleteIngreUseCase: DeleteIngreUseCase,
     private val getUserUseCase: GetUserUseCase,
-    private val getCategoryUseCase: GetCategoryUseCase
+    private val getCategoryUseCase: GetCategoryUseCase,
+    private val checkNewNotiUseCase: CheckNewNotiUseCase
 ): ViewModel() {
     // data
     private val _fridges = MutableLiveData<List<FridgeEntity>>()
@@ -40,6 +42,7 @@ class FridgeViewModel @Inject constructor(
     // view state
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> get() = _isLoading
+    val hasNewNotification = MutableLiveData(false)
 
     /**
      * 뷰모델이 처음 생성될 때, 냉장고 리스트 요청
@@ -167,5 +170,18 @@ class FridgeViewModel @Inject constructor(
             }
             _ingreList.value = refreshedList
         }
+    }
+
+    fun newNotificationArrival() {
+        checkNewNotiUseCase().subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    hasNewNotification.value = it.data
+                },
+                {
+                    hasNewNotification.value = false
+                }
+            )
     }
 }

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.andback.pocketfridge.data.model.NotificationEntity
 import com.andback.pocketfridge.domain.repository.NotificationRepository
 import com.andback.pocketfridge.domain.usecase.notification.GetNotificationListUseCase
+import com.andback.pocketfridge.domain.usecase.notification.ReadNotificationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -13,7 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NotificationViewModel @Inject constructor(
-    private val getNotificationListUseCase: GetNotificationListUseCase
+    private val getNotificationListUseCase: GetNotificationListUseCase,
+    private val readNotificationUseCase: ReadNotificationUseCase
 ): ViewModel() {
     private val compositeDisposable = CompositeDisposable()
     private val _notificationList = MutableLiveData<List<NotificationEntity>>()
@@ -36,6 +38,15 @@ class NotificationViewModel @Inject constructor(
                 }
             )
         compositeDisposable.add(single)
+    }
+
+    fun readNotification() {
+        val single1 = readNotificationUseCase().subscribeOn(Schedulers.io())
+            .subscribe(
+                {},
+                {}
+            )
+        compositeDisposable.add(single1)
     }
 
     override fun onCleared() {

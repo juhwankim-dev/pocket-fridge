@@ -13,4 +13,12 @@ class NotificationRepositoryImpl @Inject constructor(
     override fun getNotifications(): Single<BaseResponse<List<NotificationEntity>>> {
         return remoteDataSource.getNotifications()
     }
+
+    override fun readNotifications(): Single<BaseResponse<Unit>> {
+        return remoteDataSource.readNotifications()
+    }
+
+    override fun checkNewNotification(): Single<BaseResponse<Boolean>> {
+        return remoteDataSource.checkNewNotification()
+    }
 }

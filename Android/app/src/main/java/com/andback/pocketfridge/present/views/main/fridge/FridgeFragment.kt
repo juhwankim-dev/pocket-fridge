@@ -138,6 +138,13 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
                     binding.cgFridgeFFilter.addView(chip)
                 }
             }
+            hasNewNotification.observe(viewLifecycleOwner) {
+                if(it == true) {
+                    // TODO: 알림 아이콘 빨간점 보이기
+                } else {
+                    // TODO: 알림 아이콘 빨간점 삭제
+                }
+            }
         }
     }
 

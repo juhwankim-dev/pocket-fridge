@@ -6,4 +6,8 @@ import io.reactivex.Single
 
 interface NotificationRemoteDataSource {
     fun getNotifications(): Single<BaseResponse<List<NotificationEntity>>>
+
+    fun readNotifications(): Single<BaseResponse<Unit>>
+
+    fun checkNewNotification(): Single<BaseResponse<Boolean>>
 }
