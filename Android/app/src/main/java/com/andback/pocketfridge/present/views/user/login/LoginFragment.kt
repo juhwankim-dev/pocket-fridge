@@ -70,21 +70,26 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             }
 
             isLogin.observe(viewLifecycleOwner) {
+                registerNotiWorker()
+
                 sendFcmToken().subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                         {
-                            // TODO: fcm 업뎃 성공 -> Main으로 이동
-                            startActivity(Intent(activity, MainActivity::class.java))
+                            moveToMain()
                         },
                         {
                             // TODO: 업뎃 실패
                             Log.d(TAG, "initViewModel: ${it.javaClass.canonicalName}")
                         }
                     )
-                registerNotiWorker()
             }
         }
+    }
+
+    private fun moveToMain() {
+        startActivity(Intent(activity, MainActivity::class.java))
+        requireActivity().finish()
     }
 
     private fun initEvent() {
