@@ -1,0 +1,177 @@
+package com.andback.pocketfridge.present.views.main.search
+
+
+import android.annotation.SuppressLint
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.widget.ArrayAdapter
+import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.andback.pocketfridge.R
+import com.andback.pocketfridge.databinding.FragmentSearchBinding
+import com.andback.pocketfridge.databinding.FragmentSortListBinding
+import com.andback.pocketfridge.domain.model.Ingredient
+import com.andback.pocketfridge.present.config.BaseFragment
+import com.andback.pocketfridge.present.utils.Storage
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import dagger.hilt.android.AndroidEntryPoint
+
+
+@AndroidEntryPoint
+class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_search) {
+    private val rvAdapter = SearchAdapter()
+    private val viewModel: SearchViewModel by viewModels()
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setView()
+        setObserve()
+        setRecyclerView()
+        setSort()
+        setSearchBar()
+    }
+
+    private fun setView() {
+        binding.etSearchF.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search_24, 0, 0, 0)
+        binding.tvIngreSearchFCount.text = resources.getString(R.string.search_count, 1)
+    }
+
+    private fun setRecyclerView() {
+        binding.rvSearchF.apply {
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            adapter = rvAdapter
+        }
+        rvAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onChanged() {
+                super.onChanged()
+                binding.tvIngreSearchFCount.text = resources.getString(R.string.search_count, rvAdapter.itemCount)
+            }
+        })
+    }
+
+    private fun setObserve() {
+        val ingres = mutableListOf<Ingredient>()
+
+        for (i in 1..10) {
+            ingres.add(Ingredient(0,
+                1,
+                1,
+                2,
+                "2022.05.12",
+                "2022.6.14",
+                "빵",
+                4,
+                Storage.Fridge,
+                10))
+            ingres.add(Ingredient(0,
+                2,
+                1,
+                4,
+                "2022.05.12",
+                "2022.6.14",
+                "떡",
+                5,
+                Storage.Fridge,
+                2))
+            ingres.add(Ingredient(0,
+                1,
+                1,
+                2,
+                "2022.05.12",
+                "2022.6.14",
+                "사과",
+                10,
+                Storage.Fridge,
+                -3))
+        }
+
+        with(viewModel) {
+            binding.lifecycleOwner?.let { owner ->
+                ingreList.observe(owner) {
+                    rvAdapter.setList(fridges.value!!, it)
+                    binding.tvIngreSearchFCount.text = resources.getString(R.string.search_count, rvAdapter.itemCount)
+                    rvAdapter.sortList(SearchAdapter.SORT_BY_EXP)
+                }
+//                fridges.observe(owner) {
+//                    Log.d(TAG, "setObserve: ")
+//                    rvAdapter.setList(it, ingres)
+//                    binding.tvIngreSearchFCount.text = resources.getString(R.string.search_count, rvAdapter.itemCount)
+//                    rvAdapter.sortList(SearchAdapter.SORT_BY_EXP)
+//                }
+            }
+        }
+    }
+
+    private fun setSort() {
+        val list = resources.getStringArray(R.array.spinner_list)
+        val sortAdapter = ArrayAdapter(requireContext(), R.layout.item_dropdown_list, list)
+
+        binding.tvSearchFSort.text = list[SearchAdapter.SORT_BY_EXP]
+
+        binding.tvSearchFSort.setOnClickListener {
+            val dialogBinding = FragmentSortListBinding.inflate(LayoutInflater.from(requireContext()))
+
+            BottomSheetDialog(requireContext()).apply {
+                setContentView(dialogBinding.root)
+
+                dialogBinding.ibSortListFClose.setOnClickListener {
+                    dismiss()
+                }
+                dialogBinding.lvSsortListF.apply {
+                    adapter = sortAdapter
+                    setOnItemClickListener { adapterView, view, position, id ->
+                        rvAdapter.sortList(position)
+                        binding.tvSearchFSort.text = list[position]
+                        dismiss()
+                    }
+                }
+            }.show()
+        }
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setSearchBar() {
+        binding.etSearchF.addTextChangedListener {
+            if (it != null && it.isNotEmpty()) {
+                binding.etSearchF.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search_24,
+                    0,
+                    R.drawable.ic_baseline_cancel_24,
+                    0)
+            } else {
+                binding.etSearchF.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search_24,
+                    0,
+                    0,
+                    0)
+            }
+
+            rvAdapter.filter.filter(it)
+
+        }
+        binding.etSearchF.setOnTouchListener { view, motionEvent ->
+            if (motionEvent.action == MotionEvent.ACTION_DOWN) {
+                if(binding.etSearchF.compoundDrawables[2] != null) {
+                    if(motionEvent.x >=
+                        (binding.etSearchF.right
+                                - binding.etSearchF.left
+                                - binding.etSearchF.compoundDrawables[2].bounds.width()
+                        )
+                    ) {
+                        if (binding.etSearchF.text.toString().isNotBlank()) {
+                            binding.etSearchF.setText("")
+                        }
+                    }
+                }
+            }
+            false
+        }
+    }
+
+    companion object {
+        const val TAG = "SearchFragment"
+    }
+}
