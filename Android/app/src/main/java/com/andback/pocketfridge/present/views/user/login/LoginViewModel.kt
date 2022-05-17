@@ -9,6 +9,8 @@ import com.andback.pocketfridge.data.model.LoginEntity
 import com.andback.pocketfridge.domain.usecase.user.GetLoginUseCase
 import com.andback.pocketfridge.domain.usecase.datastore.WriteDataStoreUseCase
 import com.andback.pocketfridge.domain.usecase.user.SocialLoginUseCase
+import com.andback.pocketfridge.present.config.JWT
+import com.andback.pocketfridge.present.config.LOGIN_TYPE
 import com.andback.pocketfridge.present.config.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -88,8 +90,8 @@ class LoginViewModel @Inject constructor(
 
     fun saveJWT(jwt: String, loginType: String) =
             runBlocking {
-                writeDataStoreUseCase.execute("JWT", jwt)
-                writeDataStoreUseCase.execute("LOGIN_TYPE", loginType)
+                writeDataStoreUseCase.execute(JWT, jwt)
+                writeDataStoreUseCase.execute(LOGIN_TYPE, loginType)
             }
 
     fun onLoginClick() {

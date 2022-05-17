@@ -1,6 +1,7 @@
 package com.andback.pocketfridge.present.utils
 
 import com.andback.pocketfridge.domain.usecase.datastore.ReadDataStoreUseCase
+import com.andback.pocketfridge.present.config.JWT
 import kotlinx.coroutines.*
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -12,11 +13,11 @@ class XAccessTokenInterceptor @Inject constructor(
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         var token = runBlocking {
-            readDataStoreUseCase.execute("JWT") ?: ""
+            readDataStoreUseCase.execute(JWT) ?: ""
         }
 
         val request = chain.request().newBuilder()
-            .addHeader("JWT", token)
+            .addHeader(JWT, token)
             .build()
 
         return chain.proceed(request)

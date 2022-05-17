@@ -4,15 +4,21 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.andback.pocketfridge.data.model.UserEntity
 import com.andback.pocketfridge.domain.usecase.datastore.ReadDataStoreUseCase
+import com.andback.pocketfridge.domain.usecase.datastore.ResetDataStoreUseCase
+import com.andback.pocketfridge.domain.usecase.datastore.WriteDataStoreUseCase
 import com.andback.pocketfridge.domain.usecase.user.GetUserUseCase
 import com.andback.pocketfridge.present.config.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import retrofit2.HttpException
 import javax.inject.Inject
@@ -20,7 +26,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
     private val getUserUseCase: GetUserUseCase,
-    private val readDataStoreUseCase: ReadDataStoreUseCase
+    private val readDataStoreUseCase: ReadDataStoreUseCase,
+    private val resetDataStoreUseCase: ResetDataStoreUseCase
 ) : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
 
@@ -31,6 +38,9 @@ class MyPageViewModel @Inject constructor(
 
     private val _loginType = SingleLiveEvent<String>()
     val loginType: LiveData<String> get() = _loginType
+
+    private val _isLogout = MutableLiveData<Boolean>()
+    val isLogout: LiveData<Boolean> get() = _isLogout
 
     fun getUser() {
         compositeDisposable.add(
@@ -69,5 +79,14 @@ class MyPageViewModel @Inject constructor(
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.dispose()
+    }
+
+    fun logout() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                resetDataStoreUseCase.execute()
+            }
+            _isLogout.value = true
+        }
     }
 }
