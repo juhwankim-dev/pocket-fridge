@@ -15,3 +15,7 @@ const val EXPIRY_DATE_NOTIFIED = "isNotified"
 const val EXPIRY_NOTI_HOUR = "hour"
 const val EXPIRY_NOTI_MINUTE = "minute"
 const val EXPIRY_NOTI_ACCEPTED = "ingre_noti_accepted"
+
+// login data store key
+const val JWT = "JWT"
+const val LOGIN_TYPE = "LOGIN_TYPE"
