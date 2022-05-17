@@ -22,6 +22,7 @@ class UserDeleteFragment : BaseFragment<FragmentUserDeleteBinding>(R.layout.frag
         binding.name = arguments?.getString("name")
         initViewModel()
         initEvent()
+        setToolbar()
     }
 
     private fun initViewModel() {
@@ -63,6 +64,12 @@ class UserDeleteFragment : BaseFragment<FragmentUserDeleteBinding>(R.layout.frag
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(this)
+        }
+    }
+
+    private fun setToolbar() {
+        binding.tbMyPageF.setNavigationOnClickListener {
+            requireActivity().onBackPressed()
         }
     }
 }

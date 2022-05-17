@@ -14,9 +14,9 @@ interface FridgeRepository {
 
     fun deleteFridge(id: Int): Single<BaseResponse<Unit>>
 
-<<<<<<< HEAD
     fun shareFridge(email: String, fridgeId: Int): Single<BaseResponse<String>>
-=======
+
     fun getFridgeMembers(id: Int): Single<BaseResponse<List<ShareUserEntity>>>
->>>>>>> develop
+
+    fun deleteFridgeMember(id: Int, email: String): Single<BaseResponse<String>>
 }

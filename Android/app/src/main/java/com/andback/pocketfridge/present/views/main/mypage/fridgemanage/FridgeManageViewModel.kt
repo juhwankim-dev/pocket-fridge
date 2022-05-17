@@ -24,7 +24,8 @@ class FridgeManageViewModel @Inject constructor(
     private val updateFridgeNameUseCase: UpdateFridgeNameUseCase,
     private val deleteFridgeUseCase: DeleteFridgeUseCase,
     private val shareFridgeUseCase: ShareFridgeUseCase,
-    private val getFridgeMembersUseCase: GetFridgeMembersUseCase
+    private val getFridgeMembersUseCase: GetFridgeMembersUseCase,
+    private val deleteFridgeMemberUseCase: DeleteFridgeMemberUseCase
 ) : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
 
@@ -171,6 +172,25 @@ class FridgeManageViewModel @Inject constructor(
                         _tstErrorMsg.value = R.string.common_error
                         _members.value = emptyList()
                         Log.e(TAG, "getFridgeMembers: ${it.message}")
+                    }
+                )
+        )
+    }
+
+    fun deleteFridgeMember(id: Int, email: String) {
+        compositeDisposable.add(
+            deleteFridgeMemberUseCase(id, email)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        it.data?.let { data ->
+                            _tstMsg.value = data
+                        }
+                    },
+                    {
+                        _tstErrorMsg.value = R.string.common_error
+                        Log.e(TAG, "deleteFridgeMember: ${it.message}")
                     }
                 )
         )

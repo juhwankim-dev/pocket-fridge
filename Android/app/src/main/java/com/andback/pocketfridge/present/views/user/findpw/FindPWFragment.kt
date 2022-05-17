@@ -24,6 +24,7 @@ class FindPWFragment : BaseFragment<FragmentFindPWBinding>(R.layout.fragment_fin
 
         initViewModel()
         initEvent()
+        setToolbar()
     }
 
     private fun initViewModel() {
@@ -73,6 +74,12 @@ class FindPWFragment : BaseFragment<FragmentFindPWBinding>(R.layout.fragment_fin
                 backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.gray_non_clickable_button))
                 isEnabled = false
             }
+        }
+    }
+
+    private fun setToolbar() {
+        binding.tbFindPwF.setNavigationOnClickListener {
+            requireActivity().onBackPressed()
         }
     }
 }

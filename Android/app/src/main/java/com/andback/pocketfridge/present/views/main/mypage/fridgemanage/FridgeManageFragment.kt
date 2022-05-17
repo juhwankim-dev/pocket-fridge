@@ -86,6 +86,9 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
                 showOptionDialog(data)
             }
         }
+        binding.tbFridgeManageF.setNavigationOnClickListener {
+            requireActivity().onBackPressed()
+        }
     }
 
     private fun showFridgeNameDialog(data: FridgeEntity? = null) {
@@ -200,26 +203,48 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
                             fridge.id,
                             dialogBinding.etShareFridgeFEmail.text.toString().trim()
                         )
+                    }
 
-                        dialogBinding.rvShareFridgeF.apply {
-                            layoutManager = LinearLayoutManager(
-                                requireContext(),
-                                LinearLayoutManager.VERTICAL,
-                                false
-                            )
-                            adapter = memberAdapter
-                        }
+                    dialogBinding.rvShareFridgeF.apply {
+                        layoutManager = LinearLayoutManager(
+                            requireContext(),
+                            LinearLayoutManager.VERTICAL,
+                            false
+                        )
+                        adapter = memberAdapter
+                    }
 
-                        memberAdapter.apply {
-                            itemClickListener = object : ShareMemberAdapter.ItemClickListener {
-                                override fun onClick(data: ShareUserEntity) {
-                                    // TODO : 회원 강퇴
-                                }
+
+                    dialogBinding.rvShareFridgeF.apply {
+                        layoutManager = LinearLayoutManager(
+                            requireContext(),
+                            LinearLayoutManager.VERTICAL,
+                            false
+                        )
+                        adapter = memberAdapter
+                    }
+
+                    memberAdapter.apply {
+                        itemClickListener = object : ShareMemberAdapter.ItemClickListener {
+                            override fun onClick(data: ShareUserEntity) {
+                                alertDialog.dismiss()
+                                showDeleteMemberDialog(fridge.id, data)
                             }
-                        }
 
+                        }
                     }
                 }
             }
+    }
+
+    private fun showDeleteMemberDialog(id: Int, data: ShareUserEntity) {
+        AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.delete_fridge_member_title, data.nickname))
+            .setMessage("")
+            .setNegativeButton(R.string.cancel, null)
+            .setPositiveButton(R.string.accept) { dialog, which ->
+                viewModel.deleteFridgeMember(id, data.email)
+            }
+            .show()
     }
 }
