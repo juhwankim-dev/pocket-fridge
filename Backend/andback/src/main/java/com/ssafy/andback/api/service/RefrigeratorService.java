@@ -1,5 +1,6 @@
 package com.ssafy.andback.api.service;
 
+import com.google.firebase.messaging.FirebaseMessagingException;
 import com.ssafy.andback.api.dto.request.InsertRefrigeratorRequestDto;
 import com.ssafy.andback.api.dto.request.InsertShareMemberRequestDto;
 import com.ssafy.andback.api.dto.response.RefrigeratorResponseDto;
