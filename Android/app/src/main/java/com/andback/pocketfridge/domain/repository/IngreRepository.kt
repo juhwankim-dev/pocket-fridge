@@ -9,6 +9,7 @@ import io.reactivex.Single
 interface IngreRepository {
     fun uploadIngre(ingreEntityForUpload: IngreEntityForUpload): Single<BaseResponse<Any>>
     fun getIngreListByFridgeId(fridgeId: Int): Single<BaseResponse<List<Ingredient>>>
+    fun getAllIngreList(): Single<BaseResponse<List<Ingredient>>>
     fun deleteIngreById(ingreId: Int): Single<BaseResponse<Any>>
     fun updateIngre(ingredient: Ingredient): Single<BaseResponse<Any>>
     fun getIngreListByDateBetween(from: String, to: String): Single<List<Ingredient>>

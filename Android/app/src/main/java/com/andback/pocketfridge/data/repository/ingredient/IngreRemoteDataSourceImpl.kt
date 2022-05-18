@@ -18,6 +18,10 @@ class IngreRemoteDataSourceImpl @Inject constructor(
         return ingreApi.getIngreListByFridgeId(fridgeId)
     }
 
+    override fun getAllIngreList(): Single<BaseResponse<List<IngreEntity>>> {
+        return ingreApi.getAllIngreList()
+    }
+
     override fun deleteIngreById(ingreId: Int): Single<BaseResponse<Any>> {
         return ingreApi.deleteIngreById(ingreId)
     }
