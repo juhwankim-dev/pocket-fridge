@@ -130,6 +130,7 @@
     <string name="ipa_next">다음 페이지로 이동합니다</string>
     <string name="share_error">냉장고 공유에 문제가 생겼습니다.</string>
     <string name="fridge_share_success">냉장고 공유에 성공했습니다.</string>
+    <string name="ingre_info">식재료 정보</string>
     <string-array name="ipa_name_list">
         <item>영훈아</item>
         <item>영운아</item>
