@@ -17,6 +17,7 @@ import com.andback.pocketfridge.present.config.BaseFragment
 
 class IngreDetailFragment : BaseFragment<FragmentIngreDetailBinding>(R.layout.fragment_ingre_detail) {
     private val viewModel: IngreDetailViewModel by activityViewModels()
+    private val args: IngreDetailFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -25,7 +26,6 @@ class IngreDetailFragment : BaseFragment<FragmentIngreDetailBinding>(R.layout.fr
 
     private fun init() {
         initViewModel()
-        initView()
         setObserver()
         setToolbar()
     }
@@ -45,7 +45,7 @@ class IngreDetailFragment : BaseFragment<FragmentIngreDetailBinding>(R.layout.fr
                     setView(it)
                 }
                 subCategory.observe(owner) {
-                    binding.tvIngreDetailFCategory.text = it.subCategoryName
+                    // TODO: 식재료의 서브 카테고리에 따라 이미지 변경
                 }
                 isDeleteSuccess.observe(owner) {
                     if(it == true) {
@@ -62,15 +62,6 @@ class IngreDetailFragment : BaseFragment<FragmentIngreDetailBinding>(R.layout.fr
             }
         }
     }
-    
-    private fun initView() {
-        binding.btnIngreDetailFDelete.setOnClickListener { 
-            viewModel.deleteIngre()
-        }
-        binding.btnIngreDetailFEdit.setOnClickListener {
-            findNavController().navigate(R.id.action_ingreDetailFragment_to_ingreEditFragment, bundleOf("data" to viewModel.selectedIngre.value))
-        }
-    }
 
     private fun setView(ingredient: Ingredient) {
         binding.ingredient = ingredient
@@ -85,23 +76,37 @@ class IngreDetailFragment : BaseFragment<FragmentIngreDetailBinding>(R.layout.fr
                 "D+${ingredient.leftDay}"
             }
         }
-
-        val args: IngreDetailFragmentArgs by navArgs()
-        when(args.isOwner) {
-            true -> {
-                binding.btnIngreDetailFDelete.visibility = View.VISIBLE
-                binding.btnIngreDetailFEdit.visibility = View.VISIBLE
-            }
-            else -> {
-                binding.btnIngreDetailFDelete.visibility = View.GONE
-                binding.btnIngreDetailFEdit.visibility = View.GONE
-            }
-        }
     }
 
     private fun setToolbar() {
         binding.tbIngreDetailF.setNavigationOnClickListener {
             requireActivity().onBackPressed()
+        }
+        // 툴바 메뉴 클릭 리스너
+        binding.tbIngreDetailF.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.delete_menu_fridge -> {
+                    if(args.isOwner) {
+                        viewModel.deleteIngre()
+                        true
+                    } else {
+                        showToastMessage("삭제 권한이 없습니다.")
+                        false
+                    }
+                }
+                R.id.edit_menu_fridge -> {
+                    if(args.isOwner) {
+                        findNavController().navigate(R.id.action_ingreDetailFragment_to_ingreEditFragment, bundleOf("data" to viewModel.selectedIngre.value))
+                        true
+                    } else {
+                        showToastMessage("수정 권한이 없습니다.")
+                        false
+                    }
+                }
+                else -> {
+                    false
+                }
+            }
         }
     }
     

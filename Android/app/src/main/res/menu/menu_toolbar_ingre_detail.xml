@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- todo 아이콘 체크 -->
+    <item
+        android:id="@+id/delete_menu_fridge"
+        android:title="@string/delete_button"
+        android:icon="@drawable/ic_delete_outline_24"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/edit_menu_fridge"
+        android:title="@string/edit_button"
+        android:icon="@drawable/ic_baseline_edit_24"
+        app:showAsAction="ifRoom"/>
+
+</menu>
