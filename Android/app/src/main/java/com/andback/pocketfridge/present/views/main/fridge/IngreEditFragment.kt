@@ -10,10 +10,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.andback.pocketfridge.R
+import com.andback.pocketfridge.data.model.FridgeEntity
 import com.andback.pocketfridge.databinding.FragmentIngreEditBinding
 import com.andback.pocketfridge.present.config.BaseFragment
 import com.andback.pocketfridge.present.utils.DateConverter
 import com.andback.pocketfridge.present.views.main.DatePickerFragment
+import com.andback.pocketfridge.present.views.main.FridgeListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,11 +32,39 @@ class IngreEditFragment: BaseFragment<FragmentIngreEditBinding>(R.layout.fragmen
         binding.vm = viewModel
         initViewModel()
         setObserver()
-        setExpiryDateIcon()
-        setPurchasedDateIcon()
         setToolbar()
-        setCalendarIconClickListener()
+        initView()
     }
+
+    private fun initView() {
+        setCalendarIconClickListener()
+        setFridgeClickListener()
+    }
+
+    private fun setFridgeClickListener() {
+        binding.tvIngreEditFFridgeName.setOnClickListener {
+            showFridgeDialog()
+        }
+        binding.ivIngreEditFFridge.setOnClickListener {
+            showFridgeDialog()
+        }
+    }
+
+    private fun showFridgeDialog() {
+        FridgeListBottomSheet(
+            viewModel.fridges.value!!,
+            viewModel.selectedFridge.value!!.id
+        ).apply {
+            fridgeAdapter.itemClickListener = object : FridgeListAdapter.ItemClickListener {
+                override fun onClick(data: FridgeEntity) {
+                    viewModel.setFridge(data)
+                    dismiss()
+                }
+            }
+        }.show(requireActivity().supportFragmentManager, FridgeListBottomSheet.TAG)
+    }
+
+
 
     private fun setCalendarIconClickListener() {
         binding.tilIngreEditFPurchasedDate.setEndIconOnClickListener {
@@ -105,26 +135,6 @@ class IngreEditFragment: BaseFragment<FragmentIngreEditBinding>(R.layout.fragmen
                 fridges.observe(owner) {
 //                    setDropDownAdapter(it)
                 }
-            }
-        }
-    }
-
-    private fun setExpiryDateIcon() {
-        binding.tilIngreEditFExpiryDate.setStartIconOnClickListener {
-            showDatePickerWith { _, year, month, day ->
-                val result = DateConverter.toStringDate(year, month, day)
-                viewModel.dateExpiry.value = result
-                Log.d(TAG, "setExpiryDateIcon: $result")
-            }
-        }
-    }
-
-    private fun setPurchasedDateIcon() {
-        binding.tilIngreEditFPurchasedDate.setStartIconOnClickListener {
-            showDatePickerWith { _, year, month, day ->
-                val result = DateConverter.toStringDate(year, month, day)
-                viewModel.datePurchased.value = result
-                Log.d(TAG, "setPurchasedDateIcon: $result")
             }
         }
     }
