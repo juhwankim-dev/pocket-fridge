@@ -48,7 +48,7 @@ class IngreEditFragment: BaseFragment<FragmentIngreEditBinding>(R.layout.fragmen
 
                 // 에러 관련 live data
                 isNameError.observe(owner) {
-                    binding.tilIngreEditFName.error = if(it) getString(R.string.error_msg_ingre_name) else null
+                    binding.tilIngreEditFIngreName.error = if(it) getString(R.string.error_msg_ingre_name) else null
                 }
 
                 isDateExpiryError.observe(owner) {
@@ -80,17 +80,17 @@ class IngreEditFragment: BaseFragment<FragmentIngreEditBinding>(R.layout.fragmen
                     }
                 }
 
-                // 식재료 정보관련 live data
-                selectedStorage.observe(owner) {
-                    clearStorageTextView()
-                    setBrandColorOnText(it)
-                }
+//                // 식재료 정보관련 live data
+//                selectedStorage.observe(owner) {
+////                    clearStorageTextView()
+////                    setBrandColorOnText(it)
+//                }
 
-                selectedSubCategory.observe(owner) {
-                    it?.let {
-                        binding.tvIngreEditFCategory.text = it.subCategoryName
-                    }
-                }
+//                selectedSubCategory.observe(owner) {
+//                    it?.let {
+//                        binding.tvIngreEditFCategory.text = it.subCategoryName
+//                    }
+//                }
 
                 selectedMainCategory.observe(owner) {
                     it?.let {
@@ -100,7 +100,7 @@ class IngreEditFragment: BaseFragment<FragmentIngreEditBinding>(R.layout.fragmen
 
                 // 냉장고 리스트 세팅
                 fridges.observe(owner) {
-                    setDropDownAdapter(it)
+//                    setDropDownAdapter(it)
                 }
 
                 isInitDone.observe(owner) {
@@ -111,22 +111,6 @@ class IngreEditFragment: BaseFragment<FragmentIngreEditBinding>(R.layout.fragmen
                     }
                 }
             }
-        }
-    }
-
-    private fun clearStorageTextView() {
-        val color = ContextCompat.getColor(requireContext(), R.color.gray)
-        binding.tvIngreEditFStorageFridge.setTextColor(color)
-        binding.tvIngreEditFStorageFreeze.setTextColor(color)
-        binding.tvIngreEditFStorageRoom.setTextColor(color)
-    }
-
-    private fun setBrandColorOnText(storage: Storage) {
-        val color = ContextCompat.getColor(requireContext(), R.color.main_color)
-        when(storage) {
-            Storage.Fridge -> binding.tvIngreEditFStorageFridge.setTextColor(color)
-            Storage.Freeze -> binding.tvIngreEditFStorageFreeze.setTextColor(color)
-            Storage.Room -> binding.tvIngreEditFStorageRoom.setTextColor(color)
         }
     }
 
@@ -160,25 +144,25 @@ class IngreEditFragment: BaseFragment<FragmentIngreEditBinding>(R.layout.fragmen
         categorySelectFragment.show(childFragmentManager, "categoryPicker")
     }
 
-    private fun setDropDownAdapter(list: List<FridgeEntity>) {
-        val stringList = list.map { it.name }
-        val adapter = ArrayAdapter(requireContext(), R.layout.item_dropdown_list, stringList)
-        (binding.tvIngreEditFSelectFridge as? AutoCompleteTextView)?.let { tv ->
-            tv.setText(stringList[0])
-            tv.setAdapter(adapter)
-            // 아이템 클릭 시 mainCategory 업데이트
-            tv.setOnItemClickListener { _, _, i, l ->
-                Log.d(TAG, "setDropdownAdapter: $i, $l")
-                val fridge = list.find { it.name == stringList[i] }
-                fridge?.let { viewModel.setFridge(it) }
-            }
-        }
-    }
+//    private fun setDropDownAdapter(list: List<FridgeEntity>) {
+//        val stringList = list.map { it.name }
+//        val adapter = ArrayAdapter(requireContext(), R.layout.item_dropdown_list, stringList)
+//        (binding.tvIngreEditFSelectFridge as? AutoCompleteTextView)?.let { tv ->
+//            tv.setText(stringList[0])
+//            tv.setAdapter(adapter)
+//            // 아이템 클릭 시 mainCategory 업데이트
+//            tv.setOnItemClickListener { _, _, i, l ->
+//                Log.d(TAG, "setDropdownAdapter: $i, $l")
+//                val fridge = list.find { it.name == stringList[i] }
+//                fridge?.let { viewModel.setFridge(it) }
+//            }
+//        }
+//    }
 
     private fun setCategoryClickListener() {
-        binding.tvIngreEditFCategory.setOnClickListener {
-            showCategoryPicker()
-        }
+//        binding.tvIngreEditFCategory.setOnClickListener {
+//            showCategoryPicker()
+//        }
         binding.ivIngreEditF.setOnClickListener {
             showCategoryPicker()
         }
