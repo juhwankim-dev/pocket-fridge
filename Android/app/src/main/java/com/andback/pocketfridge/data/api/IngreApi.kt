@@ -13,6 +13,9 @@ interface IngreApi {
     @GET("foodingredient/{refrigeratorId}")
     fun getIngreListByFridgeId(@Path("refrigeratorId") fridgeId: Int): Single<BaseResponse<List<IngreEntity>>>
 
+    @GET("/foodingredient")
+    fun getAllIngreList(): Single<BaseResponse<List<IngreEntity>>>
+
     @DELETE("foodingredient/{ingreId}")
     fun deleteIngreById(@Path("ingreId") ingreId: Int): Single<BaseResponse<Any>>
 

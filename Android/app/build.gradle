@@ -146,4 +146,7 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:30.0.0')
     implementation "com.google.firebase:firebase-messaging-ktx:$fcm"
     implementation "com.google.firebase:firebase-storage-ktx:$firebase_storage_version"
+
+    // shimmer
+    implementation "com.facebook.shimmer:shimmer:$shimmer_version"
 }

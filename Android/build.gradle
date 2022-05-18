@@ -23,6 +23,7 @@ buildscript {
         google_service="4.3.10"
         fcm="23.0.4"
         firebase_storage_version="20.0.0"
+        shimmer_version="0.5.0"
     }
     dependencies {
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"

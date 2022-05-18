@@ -10,6 +10,7 @@ import retrofit2.http.Path
 interface IngreRemoteDataSource {
     fun uploadIngre(ingreEntityForUpload: IngreEntityForUpload): Single<BaseResponse<Any>>
     fun getIngreListByFridgeId(fridgeId: Int): Single<BaseResponse<List<IngreEntity>>>
+    fun getAllIngreList(): Single<BaseResponse<List<IngreEntity>>>
     fun deleteIngreById(ingreId: Int): Single<BaseResponse<Any>>
     fun updateIngre(ingre: IngreEntity): Single<BaseResponse<Any>>
 }
