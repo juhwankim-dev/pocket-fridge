@@ -10,6 +10,7 @@
     <string name="common_error">처리 중 문제가 발생하였습니다.</string>
 
     <string name="not_change">변경사항이 없습니다.</string>
+    <string name="go_make_fridge">냉장고 만들러 가기</string>
 
 
     <string name="fridge">냉장고</string>
