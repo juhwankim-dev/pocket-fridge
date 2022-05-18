@@ -33,4 +33,7 @@ public class SubCategory extends BaseEntity {
     @JoinColumn(name = "main_category_id")
     private MainCategory mainCategory;
 
+    @Column(name = "sub_category_url")
+    private String subCategoryUrl;
+
 }

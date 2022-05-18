@@ -13,11 +13,14 @@ public class SubCategoryResponseDto {
 
     private Long mainCategoryId;
 
+    private String subCategoryUrl;
+
 
     @Builder
-    public SubCategoryResponseDto(Long subCategoryId, String subCategoryName, Long mainCategoryId) {
+    public SubCategoryResponseDto(Long subCategoryId, String subCategoryName, Long mainCategoryId, String subCategoryUrl) {
         this.subCategoryId = subCategoryId;
         this.subCategoryName = subCategoryName;
         this.mainCategoryId = mainCategoryId;
+        this.subCategoryUrl = subCategoryUrl;
     }
 }

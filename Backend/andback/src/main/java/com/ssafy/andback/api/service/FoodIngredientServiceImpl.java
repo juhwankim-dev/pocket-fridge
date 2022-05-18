@@ -167,6 +167,7 @@ public class FoodIngredientServiceImpl implements FoodIngredientService {
                     .mainCategoryId(temp.getMainCategory().getMainCategory())
                     .subCategoryId(temp.getSubCategory())
                     .subCategoryName(temp.getSubCategoryName())
+                    .subCategoryUrl(temp.getSubCategoryUrl())
                     .build());
         }
 
