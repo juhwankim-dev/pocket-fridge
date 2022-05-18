@@ -1,9 +1,7 @@
 package com.andback.pocketfridge.present.views.main.fridge
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.core.view.isNotEmpty
 import androidx.core.view.size
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -22,7 +20,6 @@ import com.google.android.material.tabs.TabLayout
 class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fridge) {
     private lateinit var rvAdapter: IngreRVAdapter
     private val viewModel: FridgeViewModel by activityViewModels()
-    private val detailViewModel: IngreDetailViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -80,18 +77,16 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
         rvAdapter = IngreRVAdapter().apply {
             itemClickListener = object : IngreRVAdapter.ItemClickListener {
                 override fun onClick(data: Ingredient) {
-                    Log.d(TAG, "onClick: ${data}")
-                    detailViewModel.selectIngre(data)
                     findNavController().navigate(
                         FridgeFragmentDirections.actionFridgeFragmentToIngreDetailFragment(
-                            viewModel.selectedFridge.value!!.isOwner
+                            viewModel.selectedFridge.value!!.isOwner,
+                            data
                         )
                     )
                 }
             }
             itemLongClickListener = object : IngreRVAdapter.ItemLongClickListener {
                 override fun onLongClick(data: Ingredient) {
-                    Log.d(TAG, "onLongClick: ${data}")
                     if (viewModel.selectedFridge.value!!.isOwner) {
                         showDeleteDialog(data)
                     }

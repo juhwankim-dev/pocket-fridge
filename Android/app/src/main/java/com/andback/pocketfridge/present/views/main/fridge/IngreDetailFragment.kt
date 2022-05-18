@@ -1,11 +1,7 @@
 package com.andback.pocketfridge.present.views.main.fridge
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -64,6 +60,19 @@ class IngreDetailFragment : BaseFragment<FragmentIngreDetailBinding>(R.layout.fr
     }
     
     private fun initView() {
+        val args: IngreDetailFragmentArgs by navArgs()
+        when(args.isOwner) {
+            true -> {
+                binding.btnIngreDetailFDelete.visibility = View.VISIBLE
+                binding.btnIngreDetailFEdit.visibility = View.VISIBLE
+            }
+            else -> {
+                binding.btnIngreDetailFDelete.visibility = View.GONE
+                binding.btnIngreDetailFEdit.visibility = View.GONE
+            }
+        }
+        viewModel.selectIngre(args.ingredient)
+
         binding.btnIngreDetailFDelete.setOnClickListener { 
             viewModel.deleteIngre()
         }
@@ -83,18 +92,6 @@ class IngreDetailFragment : BaseFragment<FragmentIngreDetailBinding>(R.layout.fr
             }
             else -> {
                 "D+${ingredient.leftDay}"
-            }
-        }
-
-        val args: IngreDetailFragmentArgs by navArgs()
-        when(args.isOwner) {
-            true -> {
-                binding.btnIngreDetailFDelete.visibility = View.VISIBLE
-                binding.btnIngreDetailFEdit.visibility = View.VISIBLE
-            }
-            else -> {
-                binding.btnIngreDetailFDelete.visibility = View.GONE
-                binding.btnIngreDetailFEdit.visibility = View.GONE
             }
         }
     }
