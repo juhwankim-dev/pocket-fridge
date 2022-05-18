@@ -11,6 +11,9 @@
         <variable
             name="leftDay"
             type="String" />
+        <variable
+            name="fridge"
+            type="com.andback.pocketfridge.data.model.FridgeEntity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -54,7 +57,8 @@
             app:layout_constraintTop_toTopOf="@id/iv_ingre_detailF"
             android:layout_marginBottom="@dimen/activity_margin_narrow"
             app:layout_constraintVertical_chainStyle="packed"
-            tools:text="공유 냉장고" />
+            tools:text="공유 냉장고"
+            android:text="@{fridge.name}"/>
 
         <LinearLayout
             android:id="@+id/ll_ingre_detailF_storage"
