@@ -3,11 +3,15 @@ package com.andback.pocketfridge.present.views.main.fridge
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.data.model.FridgeEntity
 import com.andback.pocketfridge.databinding.FragmentIngreEditBinding
@@ -16,10 +20,24 @@ import com.andback.pocketfridge.present.config.BaseFragment
 import com.andback.pocketfridge.present.utils.DateConverter
 import com.andback.pocketfridge.present.utils.Storage
 import com.andback.pocketfridge.present.views.main.DatePickerFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class IngreEditFragment: BaseFragment<FragmentIngreEditBinding>(R.layout.fragment_ingre_edit) {
-    private val viewModel: IngreEditViewModel by activityViewModels()
+    private val viewModel: IngreEditViewModel by viewModels()
     private val detailViewModel: IngreDetailViewModel by activityViewModels()
+    private val args: IngreEditFragmentArgs by navArgs()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val superCall = super.onCreateView(inflater, container, savedInstanceState)
+        binding.vm = viewModel
+        initViewModel()
+        return superCall
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -27,8 +45,6 @@ class IngreEditFragment: BaseFragment<FragmentIngreEditBinding>(R.layout.fragmen
     }
 
     private fun init() {
-        binding.vm = viewModel
-        initViewModel()
         setObserver()
         setExpiryDateIcon()
         setPurchasedDateIcon()
@@ -37,9 +53,7 @@ class IngreEditFragment: BaseFragment<FragmentIngreEditBinding>(R.layout.fragmen
     }
 
     private fun initViewModel() {
-        arguments?.let {
-            viewModel.init(it["data"] as Ingredient)
-        }?: goBack()
+        viewModel.init(args.ingredient)
     }
 
     private fun setObserver() {
@@ -103,13 +117,11 @@ class IngreEditFragment: BaseFragment<FragmentIngreEditBinding>(R.layout.fragmen
 //                    setDropDownAdapter(it)
                 }
 
-                isInitDone.observe(owner) {
-                    if(it == 2) {
-                        arguments?.let { bundle ->
-                            viewModel.init(bundle["data"] as Ingredient)
-                        }
-                    }
-                }
+//                isInitDone.observe(owner) {
+//                    if(it == 2) {
+//                        viewModel.init(args.ingredient)
+//                    }
+//                }
             }
         }
     }
