@@ -5,6 +5,7 @@
 
     <data>
         <import type="com.andback.pocketfridge.present.utils.Storage"/>
+        <import type="android.text.InputType" />
 
         <variable
             name="vm"
@@ -155,13 +156,14 @@
             android:id="@+id/til_ingre_editF_purchased_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/TextInputLayout.Outlined.Custom"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/til_ingre_editF_ingre_name"
             android:layout_marginHorizontal="@dimen/activity_margin_default"
             app:endIconDrawable="@drawable/ic_calendar_month_24"
             app:endIconMode="custom"
-            app:placeholderText="@string/purchased_date"
+            app:placeholderText="yyyy-mm-dd"
+            android:hint="@string/purchased_date"
             app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -169,7 +171,8 @@
                 style="@style/body_text.bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"
+                android:inputType="@{InputType.TYPE_NULL}"
+                android:text="@={vm.datePurchased}"
                 tools:text="2020.01.01"/>
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -179,13 +182,14 @@
             android:id="@+id/til_ingre_editF_expiry_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/TextInputLayout.Outlined.Custom"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/til_ingre_editF_purchased_date"
             android:layout_marginHorizontal="@dimen/activity_margin_default"
             app:endIconDrawable="@drawable/ic_calendar_month_24"
             app:endIconMode="custom"
-            app:placeholderText="@string/expiry_date"
+            app:placeholderText="yyyy-mm-dd"
+            android:hint="@string/expiry_date"
             app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -193,7 +197,8 @@
                 style="@style/body_text.bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
+                android:inputType="@{InputType.TYPE_NULL}"
+                android:text="@={vm.dateExpiry}"
                 tools:text="2020.01.01"/>
 
         </com.google.android.material.textfield.TextInputLayout>
