@@ -29,6 +29,8 @@ class IngreEditViewModel @Inject constructor(
 ): ViewModel() {
     private val compositeDisposable = CompositeDisposable()
 
+    private lateinit var targetIngredient: Ingredient
+
     private val _isInitDone = MutableLiveData(0)
     val isInitDone: LiveData<Int> = _isInitDone
 
@@ -106,19 +108,40 @@ class IngreEditViewModel @Inject constructor(
         getFridges()
     }
 
-    fun init(ingredient: Ingredient) {
+    // args로 전달 받은 ingredient 정보 세팅
+    private fun setIngredient(ingredient: Ingredient) {
+        targetIngredient = ingredient
         name.value = ingredient.name
         _selectedStorage.value = ingredient.storage
         datePurchased.value = ingredient.purchasedDate
         dateExpiry.value = ingredient.expiryDate
         ingreId = ingredient.id
-        subCategories.value?.let {
-            val result = it.find { element -> ingredient.subCategory == element.subCategoryId }
-            _selectedSubCategory.value = result!!
+    }
+
+    /**
+     * 총 3번 호출되는 함수
+     * args를 전달 받을 때,
+     * 서브 카테고리 가져왔을 때,
+     * 냉장고 목록 가져왔을 때
+    */
+
+    fun init(ingredient: Ingredient) {
+        if(::targetIngredient.isInitialized == false) {
+            setIngredient(ingredient)
         }
-        fridges.value?.let { list ->
-            val fridge = list.find { ingredient.fridgeId == it.id }
-            fridge?.let { _selectedFridge.value = it }
+
+        if(selectedSubCategory.value == null) {
+            subCategories.value?.let {
+                val result = it.find { element -> ingredient.subCategory == element.subCategoryId }
+                _selectedSubCategory.value = result!!
+            }
+        }
+
+        if(selectedFridge.value == null) {
+            fridges.value?.let { list ->
+                val fridge = list.find { ingredient.fridgeId == it.id }
+                fridge?.let { _selectedFridge.value = it }
+            }
         }
     }
 
@@ -294,11 +317,12 @@ class IngreEditViewModel @Inject constructor(
                             when {
                                 it.data[0] is MainCategoryEntity -> {
                                     _mainCategories.value = it.data as List<MainCategoryEntity>
-                                    setDefaultData()
                                 }
                                 it.data[0] is SubCategoryEntity -> {
                                     _subCategories.value = it.data as List<SubCategoryEntity>
-                                    setDefaultData()
+                                    if(this@IngreEditViewModel::targetIngredient.isInitialized == true) {
+                                        init(targetIngredient)
+                                    }
                                 }
                                 else -> {
                                     // TODO: error 처리
@@ -331,6 +355,9 @@ class IngreEditViewModel @Inject constructor(
                             it.data?.let { list ->
                                 _fridges.value = list.filter { fridge -> fridge.isOwner }
                                 _isInitDone.value = _isInitDone.value?.plus(1)
+                                if(this@IngreEditViewModel::targetIngredient.isInitialized == true) {
+                                    init(targetIngredient)
+                                }
                             }
                             _isLoading.value = false
                         },

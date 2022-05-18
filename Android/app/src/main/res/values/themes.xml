@@ -154,6 +154,11 @@
         <item name="chipStartPadding">12dp</item>
     </style>
 
+    <style name="TextInputLayout.Outlined.Custom" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@drawable/selector_box_stroke_color</item>
+        <item name="boxStrokeWidth">2dp</item>
+    </style>
+
     <!-- toolbar style -->
     <style name="ThemeOverlay.App.Toolbar" parent="">
         <item name="colorPrimary">@color/white</item>

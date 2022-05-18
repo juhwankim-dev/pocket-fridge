@@ -4,22 +4,24 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import androidx.core.content.ContextCompat
+import android.widget.DatePicker
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.data.model.FridgeEntity
 import com.andback.pocketfridge.databinding.FragmentIngreEditBinding
-import com.andback.pocketfridge.domain.model.Ingredient
 import com.andback.pocketfridge.present.config.BaseFragment
 import com.andback.pocketfridge.present.utils.DateConverter
-import com.andback.pocketfridge.present.utils.Storage
 import com.andback.pocketfridge.present.views.main.DatePickerFragment
+import com.andback.pocketfridge.present.views.main.FridgeListAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class IngreEditFragment: BaseFragment<FragmentIngreEditBinding>(R.layout.fragment_ingre_edit) {
-    private val viewModel: IngreEditViewModel by activityViewModels()
-    private val detailViewModel: IngreDetailViewModel by activityViewModels()
+    private val viewModel: IngreEditViewModel by viewModels()
+    private val args: IngreEditFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,16 +32,58 @@ class IngreEditFragment: BaseFragment<FragmentIngreEditBinding>(R.layout.fragmen
         binding.vm = viewModel
         initViewModel()
         setObserver()
-        setExpiryDateIcon()
-        setPurchasedDateIcon()
-        setToolbarButton()
-        setCategoryClickListener()
+        setToolbar()
+        initView()
+    }
+
+    private fun initView() {
+        setCalendarIconClickListener()
+        setFridgeClickListener()
+    }
+
+    private fun setFridgeClickListener() {
+        binding.tvIngreEditFFridgeName.setOnClickListener {
+            showFridgeDialog()
+        }
+        binding.ivIngreEditFFridge.setOnClickListener {
+            showFridgeDialog()
+        }
+    }
+
+    private fun showFridgeDialog() {
+        FridgeListBottomSheet(
+            viewModel.fridges.value!!,
+            viewModel.selectedFridge.value!!.id
+        ).apply {
+            fridgeAdapter.itemClickListener = object : FridgeListAdapter.ItemClickListener {
+                override fun onClick(data: FridgeEntity) {
+                    viewModel.setFridge(data)
+                    dismiss()
+                }
+            }
+        }.show(requireActivity().supportFragmentManager, FridgeListBottomSheet.TAG)
+    }
+
+
+
+    private fun setCalendarIconClickListener() {
+        binding.tilIngreEditFPurchasedDate.setEndIconOnClickListener {
+            showDatePickerWith { _, year, month, day ->
+                val result = DateConverter.toStringDate(year, month, day)
+                viewModel.datePurchased.value = result
+            }
+        }
+
+        binding.tilIngreEditFExpiryDate.setEndIconOnClickListener {
+            showDatePickerWith { _, year, month, day ->
+                val result = DateConverter.toStringDate(year, month, day)
+                viewModel.dateExpiry.value = result
+            }
+        }
     }
 
     private fun initViewModel() {
-        arguments?.let {
-            viewModel.init(it["data"] as Ingredient)
-        }?: goBack()
+        viewModel.init(args.ingredient)
     }
 
     private fun setObserver() {
@@ -48,7 +92,7 @@ class IngreEditFragment: BaseFragment<FragmentIngreEditBinding>(R.layout.fragmen
 
                 // 에러 관련 live data
                 isNameError.observe(owner) {
-                    binding.tilIngreEditFName.error = if(it) getString(R.string.error_msg_ingre_name) else null
+                    binding.tilIngreEditFIngreName.error = if(it) getString(R.string.error_msg_ingre_name) else null
                 }
 
                 isDateExpiryError.observe(owner) {
@@ -74,78 +118,23 @@ class IngreEditFragment: BaseFragment<FragmentIngreEditBinding>(R.layout.fragmen
                 isUpdateSuccess.observe(owner) {
                     if(it == true) {
                         viewModel.updatedIngredient?.let { ingre ->
-                            detailViewModel.selectIngre(ingre)
+                            findNavController().navigate(IngreEditFragmentDirections.actionIngreEditFragmentToIngreDetailFragment(
+                                true, ingre
+                            ))
                         }
-                        goBack()
                     }
-                }
-
-                // 식재료 정보관련 live data
-                selectedStorage.observe(owner) {
-                    clearStorageTextView()
-                    setBrandColorOnText(it)
                 }
 
                 selectedSubCategory.observe(owner) {
                     it?.let {
-                        binding.tvIngreEditFCategory.text = it.subCategoryName
-                    }
-                }
-
-                selectedMainCategory.observe(owner) {
-                    it?.let {
-                        // TODO: 이미지 반영
+                        // TODO: 카테고리 이미지 변경
                     }
                 }
 
                 // 냉장고 리스트 세팅
                 fridges.observe(owner) {
-                    setDropDownAdapter(it)
+//                    setDropDownAdapter(it)
                 }
-
-                isInitDone.observe(owner) {
-                    if(it == 2) {
-                        arguments?.let { bundle ->
-                            viewModel.init(bundle["data"] as Ingredient)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private fun clearStorageTextView() {
-        val color = ContextCompat.getColor(requireContext(), R.color.gray)
-        binding.tvIngreEditFStorageFridge.setTextColor(color)
-        binding.tvIngreEditFStorageFreeze.setTextColor(color)
-        binding.tvIngreEditFStorageRoom.setTextColor(color)
-    }
-
-    private fun setBrandColorOnText(storage: Storage) {
-        val color = ContextCompat.getColor(requireContext(), R.color.main_color)
-        when(storage) {
-            Storage.Fridge -> binding.tvIngreEditFStorageFridge.setTextColor(color)
-            Storage.Freeze -> binding.tvIngreEditFStorageFreeze.setTextColor(color)
-            Storage.Room -> binding.tvIngreEditFStorageRoom.setTextColor(color)
-        }
-    }
-
-    private fun setExpiryDateIcon() {
-        binding.tilIngreEditFExpiryDate.setStartIconOnClickListener {
-            showDatePickerWith { _, year, month, day ->
-                val result = DateConverter.toStringDate(year, month, day)
-                viewModel.dateExpiry.value = result
-                Log.d(TAG, "setExpiryDateIcon: $result")
-            }
-        }
-    }
-
-    private fun setPurchasedDateIcon() {
-        binding.tilIngreEditFPurchasedDate.setStartIconOnClickListener {
-            showDatePickerWith { _, year, month, day ->
-                val result = DateConverter.toStringDate(year, month, day)
-                viewModel.datePurchased.value = result
-                Log.d(TAG, "setPurchasedDateIcon: $result")
             }
         }
     }
@@ -155,38 +144,38 @@ class IngreEditFragment: BaseFragment<FragmentIngreEditBinding>(R.layout.fragmen
         datePickerFragment.show(childFragmentManager, "datePicker")
     }
 
-    private fun showCategoryPicker() {
-        val categorySelectFragment = EditCategorySelectFragment()
-        categorySelectFragment.show(childFragmentManager, "categoryPicker")
-    }
 
-    private fun setDropDownAdapter(list: List<FridgeEntity>) {
-        val stringList = list.map { it.name }
-        val adapter = ArrayAdapter(requireContext(), R.layout.item_dropdown_list, stringList)
-        (binding.tvIngreEditFSelectFridge as? AutoCompleteTextView)?.let { tv ->
-            tv.setText(stringList[0])
-            tv.setAdapter(adapter)
-            // 아이템 클릭 시 mainCategory 업데이트
-            tv.setOnItemClickListener { _, _, i, l ->
-                Log.d(TAG, "setDropdownAdapter: $i, $l")
-                val fridge = list.find { it.name == stringList[i] }
-                fridge?.let { viewModel.setFridge(it) }
-            }
-        }
-    }
 
-    private fun setCategoryClickListener() {
-        binding.tvIngreEditFCategory.setOnClickListener {
-            showCategoryPicker()
-        }
-        binding.ivIngreEditF.setOnClickListener {
-            showCategoryPicker()
-        }
-    }
+//    private fun setDropDownAdapter(list: List<FridgeEntity>) {
+//        val stringList = list.map { it.name }
+//        val adapter = ArrayAdapter(requireContext(), R.layout.item_dropdown_list, stringList)
+//        (binding.tvIngreEditFSelectFridge as? AutoCompleteTextView)?.let { tv ->
+//            tv.setText(stringList[0])
+//            tv.setAdapter(adapter)
+//            // 아이템 클릭 시 mainCategory 업데이트
+//            tv.setOnItemClickListener { _, _, i, l ->
+//                Log.d(TAG, "setDropdownAdapter: $i, $l")
+//                val fridge = list.find { it.name == stringList[i] }
+//                fridge?.let { viewModel.setFridge(it) }
+//            }
+//        }
+//    }
 
-    private fun setToolbarButton() {
+    private fun setToolbar() {
         binding.tbIngreEditF.setNavigationOnClickListener {
             goBack()
+        }
+
+        binding.tbIngreEditF.setOnMenuItemClickListener { menuItem ->
+            when(menuItem.itemId) {
+                R.id.accept_menu_toolbar -> {
+                    viewModel.onUpdateBtnClick()
+                    true
+                }
+                else -> {
+                    false
+                }
+            }
         }
     }
 

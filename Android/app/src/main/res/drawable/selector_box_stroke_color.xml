@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="true" android:color="@color/main_color"/>
+    <item android:state_hovered="true" android:color="@color/gray"/>
+    <item android:state_focused="true" android:color="@color/main_color"/>
+<!--    todo: 텍스트 인풋 아웃라인 색 확인-->
+    <item android:color="@color/gray"/>
+</selector>

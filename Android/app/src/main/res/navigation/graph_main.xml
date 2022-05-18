@@ -79,6 +79,16 @@
         android:name="com.andback.pocketfridge.present.views.main.fridge.IngreEditFragment"
         android:label="IngreEditFragment"
         tools:layout="@layout/fragment_ingre_edit">
+
+        <argument android:name="ingredient"
+            app:argType="com.andback.pocketfridge.domain.model.Ingredient" />
+        <action
+            android:id="@+id/action_ingreEditFragment_to_ingreDetailFragment"
+            app:destination="@id/ingreDetailFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/ingreDetailFragment"
+            app:popUpToInclusive="true" />
+
     </fragment>
     <fragment
         android:id="@+id/myPageFragment"
