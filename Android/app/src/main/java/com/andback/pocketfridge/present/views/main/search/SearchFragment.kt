@@ -93,7 +93,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
 
         binding.tvSearchFSort.text = list[SearchAdapter.SORT_BY_EXP]
 
-        binding.tvSearchFSort.setOnClickListener {
+        binding.llSearchFSort.setOnClickListener {
             val dialogBinding = FragmentSortListBinding.inflate(LayoutInflater.from(requireContext()))
 
             BottomSheetDialog(requireContext()).apply {
