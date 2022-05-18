@@ -157,7 +157,7 @@
 
     <style name="TextInputLayout.Outlined.Custom" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@drawable/selector_box_stroke_color</item>
-        <item name="boxStrokeWidth">2dp</item>
+        <item name="boxStrokeWidth">1.5dp</item>
     </style>
 
     <!-- toolbar style -->
