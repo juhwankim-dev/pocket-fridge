@@ -46,9 +46,12 @@ public class RecipeResponseDto {
     // 좋아요
     private boolean recipeLike;
 
+    //필요한 재료의 수
+    private Long requireCount;
+
 
     @Builder
-    public RecipeResponseDto(Long recipeId, String recipeFoodName, String recipeAllIngredient, String recipeContent, String recipeImage, RecipeType recipeType, int recipeTime, int recipeServing, boolean recipeLike) {
+    public RecipeResponseDto(Long recipeId, String recipeFoodName, String recipeAllIngredient, String recipeContent, String recipeImage, RecipeType recipeType, int recipeTime, int recipeServing, boolean recipeLike, Long requireCount) {
         this.recipeId = recipeId;
         this.recipeFoodName = recipeFoodName;
         this.recipeAllIngredient = recipeAllIngredient;
@@ -58,5 +61,6 @@ public class RecipeResponseDto {
         this.recipeTime = String.format("%d 분", recipeTime);
         this.recipeServing = String.format("%d 인분", recipeServing);
         this.recipeLike = recipeLike;
+        this.requireCount = requireCount;
     }
 }
