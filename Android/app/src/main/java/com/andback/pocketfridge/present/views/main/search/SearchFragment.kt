@@ -30,7 +30,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_search) {
     private val rvAdapter = SearchAdapter()
     private val viewModel: SearchViewModel by viewModels()
-    private val detailViewModel: IngreDetailViewModel by activityViewModels()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,9 +60,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
         })
         rvAdapter.itemClickListener = object : SearchAdapter.ItemClickListener {
             override fun onClick(data: Ingredient, isOwner: Boolean) {
-                detailViewModel.selectIngre(data)
                 findNavController().navigate(
-                    SearchFragmentDirections.actionSearchFragmentToIngreDetailFragment(isOwner)
+                    SearchFragmentDirections.actionSearchFragmentToIngreDetailFragment(isOwner, data)
                 )
             }
         }

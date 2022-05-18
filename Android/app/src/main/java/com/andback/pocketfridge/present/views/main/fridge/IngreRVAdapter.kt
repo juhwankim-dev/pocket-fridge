@@ -2,21 +2,16 @@ package com.andback.pocketfridge.present.views.main.fridge
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.andback.pocketfridge.databinding.ItemIngreListBinding
 import com.andback.pocketfridge.domain.model.Ingredient
 
-class IngreRVAdapter: RecyclerView.Adapter<IngreRVAdapter.ViewHolder>(), Filterable {
+class IngreRVAdapter: RecyclerView.Adapter<IngreRVAdapter.ViewHolder>() {
     private val list = arrayListOf<Ingredient>()
+    private val filteredList = arrayListOf<Ingredient>()
     lateinit var itemClickListener: ItemClickListener
     lateinit var itemLongClickListener: ItemLongClickListener
-    private var filteredList = arrayListOf<Ingredient>()
-    private val SORT_BY_EXP = 0
-    private val REVERSER_SORT_BY_EXP = 1
-    private val SORT_BY_KOR = 2
-    private val REVERSER_SORT_BY_KOR = 3
+
 
     inner class ViewHolder(val binding: ItemIngreListBinding): RecyclerView.ViewHolder(binding.root) {
         init {
@@ -76,39 +71,14 @@ class IngreRVAdapter: RecyclerView.Adapter<IngreRVAdapter.ViewHolder>(), Filtera
         fun onLongClick(data: Ingredient)
     }
 
-    override fun getFilter(): Filter {
-        return object : Filter() {
-            override fun performFiltering(p0: CharSequence?): FilterResults {
-                val category = p0.toString().toInt()
-
-                filteredList = when(category) {
-                    in 1..100 -> {
-                        val newFilteredList = arrayListOf<Ingredient>()
-                        list.filter { it.mainCategory == category }.forEach { newFilteredList.add(it) }
-                        newFilteredList
-                    }
-                    else -> {
-                        list
-                    }
-                }
-                return FilterResults().apply { values = filteredList }
-            }
-
-            override fun publishResults(p0: CharSequence?, results: FilterResults) {
-                filteredList = results.values as ArrayList<Ingredient>
-                notifyDataSetChanged()
-            }
+    fun getFilter(storage: CharSequence, categoryId: Int) {
+        val newFilteredList = if (categoryId in 1..100) {
+            list.filter { it.storage.value == storage.toString() && it.mainCategory == categoryId }
+        } else {
+            list.filter { it.storage.value == storage.toString() }
         }
-    }
-
-    fun sortList(sortType: Int) {
-        when(sortType) {
-            SORT_BY_EXP -> filteredList.sortByDescending { it.leftDay }
-            REVERSER_SORT_BY_EXP -> filteredList.sortBy { it.leftDay }
-            SORT_BY_KOR -> filteredList.sortBy { it.name }
-            REVERSER_SORT_BY_KOR -> filteredList.sortByDescending { it.name }
-        }
-
+        filteredList.clear()
+        filteredList.addAll(newFilteredList)
         notifyDataSetChanged()
     }
 }
