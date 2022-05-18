@@ -7,19 +7,29 @@ object RecipeMapper {
     operator fun invoke(recipeList: List<RecipeEntity>, recommendList: List<Int>): ArrayList<Recipe> {
         var newList = arrayListOf<Recipe>()
 
-        recipeList.forEach { r ->
+        recipeList.sortedBy { it.requireCount }.forEach { r ->
             val isRecommendation = recommendList.any { recommendRecipeId: Int ->
                 recommendRecipeId == r.id
             }
+
+            val time = r.time.split(" ")[0]
+            val difficulty = when(time.toInt()) {
+                in 0..20 -> "쉬움"
+                in 21..40 -> "보통"
+                else -> "어려움"
+            }
+            val serving = r.serving.split(" ")[0] + "인분"
+
             newList.add(
                 Recipe(
                     id = r.id,
                     allIngredients = r.allIngredients,
                     content = r.content,
                     foodName = r.foodName,
-                    serving = r.serving,
+                    serving = serving,
                     url = r.url,
-                    time = r.time,
+                    time = time,
+                    difficulty = difficulty,
                     type = r.type,
                     like = r.like,
                     isRecommendation = isRecommendation

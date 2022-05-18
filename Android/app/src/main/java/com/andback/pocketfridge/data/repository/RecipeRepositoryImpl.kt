@@ -25,9 +25,7 @@ class RecipeRepositoryImpl @Inject constructor(
             single2.subscribeOn(Schedulers.io()).map { it.data },
             BiFunction<List<RecipeEntity>, List<Int>, BaseResponse<List<Recipe>>> { result1, result2 ->
                 BaseResponse(data = RecipeMapper(result1, result2))
-            }).doOnError {
-                throw Exception(it.message)
-        }
+            })
 
         return newResult
     }

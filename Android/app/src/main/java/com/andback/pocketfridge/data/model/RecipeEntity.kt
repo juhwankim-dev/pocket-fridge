@@ -14,5 +14,6 @@ data class RecipeEntity (
     @SerializedName("recipeServing") val serving: String,
     @SerializedName("recipeTime") val time: String,
     @SerializedName("recipeType") val type: String,
-    @SerializedName("recipeLike") var like: Boolean
+    @SerializedName("recipeLike") var like: Boolean,
+    @SerializedName("requireCount") var requireCount: Int
 ): Parcelable

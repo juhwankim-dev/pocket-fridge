@@ -5,6 +5,8 @@ import androidx.databinding.BindingAdapter
 import com.airbnb.lottie.LottieAnimationView
 import com.andback.pocketfridge.R
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 
 object BindingAdapter {
     @JvmStatic
@@ -36,6 +38,15 @@ object BindingAdapter {
     fun bindImageUrl(view: ImageView, src: String){
         Glide.with(view.context)
             .load(src)
+            .into(view)
+    }
+
+    @JvmStatic
+    @BindingAdapter("bindImageUrlWithRoundCorner")
+    fun bindImageUrlWithRoundCorner(view: ImageView, src: String){
+        Glide.with(view.context)
+            .load(src)
+            .transform(CenterCrop(), RoundedCorners(16))
             .into(view)
     }
 }
