@@ -3,16 +3,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/iv_ifridgeF_new_noti"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="10dp"
+            android:elevation="10dp"
+            android:src="@drawable/bg_circle_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/main_color" />
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/tl_fridgeF"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white">
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/tb_fridgeF"
@@ -72,7 +87,10 @@
             android:id="@+id/divider_fridgeF"
             android:layout_width="match_parent"
             android:layout_height="10dp"
-            android:background="@color/gray_light" />
+            android:background="@color/gray_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tl_fridgeF" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_fridgeF"
@@ -80,7 +98,9 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:background="@color/white"
-            android:visibility="visible" />
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider_fridgeF" />
 
         <LinearLayout
             android:id="@+id/ll_fridgeF_emtpy"
@@ -90,7 +110,10 @@
             android:gravity="center"
             android:orientation="vertical"
             android:padding="80dp"
-            android:visibility="gone">
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider_fridgeF">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -106,5 +129,5 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
