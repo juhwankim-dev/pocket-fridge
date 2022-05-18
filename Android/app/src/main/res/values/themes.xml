@@ -22,7 +22,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/page_title_text_size</item>
         <item name="android:textColor">@color/black_high_emphasis</item>
-        <item name="android:fontFamily">@font/noto_sans_regular</item>
+        <item name="android:fontFamily">@font/noto_sans_bold</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 
@@ -187,5 +187,12 @@
     <style name="AppModalStyle"
         parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/bg_rounded_dialog</item>
+    </style>
+
+    <style name="tab_layout_text" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:textSize">@dimen/tab_layout_text_size</item>
+        <item name="android:textColor">@color/black_high_emphasis</item>
+        <item name="android:fontFamily">@font/noto_sans_bold</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
 </resources>

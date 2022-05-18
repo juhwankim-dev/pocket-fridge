@@ -46,11 +46,15 @@
             </com.google.android.material.appbar.MaterialToolbar>
 
             <com.google.android.material.tabs.TabLayout
+                style="@style/list_item_title"
                 android:id="@+id/tabLayout_fridgeF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:tabTextAppearance="@style/tab_layout_text"
+                app:tabIndicatorHeight="3dp"
                 app:tabIndicatorColor="@color/black_high_emphasis"
-                app:tabTextColor="@color/black_high_emphasis" />
+                app:tabSelectedTextColor="@color/black_high_emphasis"
+                app:tabTextColor="@color/black_low_emphasis" />
 
             <HorizontalScrollView
                 android:id="@+id/sv_fridgeF_filter"
@@ -98,7 +102,8 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:background="@color/white"
-            android:visibility="visible"
+            android:paddingTop="@dimen/activity_margin_default"
+            android:paddingHorizontal="@dimen/activity_margin_default"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider_fridgeF" />
 
