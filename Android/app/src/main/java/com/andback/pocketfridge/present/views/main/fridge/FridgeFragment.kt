@@ -32,6 +32,7 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
         setToolbar()
         setTabLayout()
         setRecyclerView()
+        setEvent()
         setObservers()
         setFilter()
     }
@@ -100,6 +101,12 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
         }
     }
 
+    private fun setEvent() {
+        binding.llFridgeFEmtpy.setOnClickListener {
+            findNavController().navigate(R.id.action_fridgeFragment_to_fridgeManageFragment)
+        }
+    }
+
     private fun setObservers() {
         with(viewModel) {
             binding.lifecycleOwner?.let { owner ->
@@ -109,7 +116,21 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
                 }
 
                 selectedFridge.observe(owner) {
-                    binding.tvFridgeFName.text = it.name
+                    if (it.id == -1) {
+                        binding.tvFridgeFName.apply {
+                            text = it.name
+                            isClickable = false
+                        }
+                        binding.rvFridgeF.visibility = View.GONE
+                        binding.llFridgeFEmtpy.visibility = View.VISIBLE
+                    } else {
+                        binding.tvFridgeFName.apply {
+                            text = it.name
+                            isClickable = true
+                        }
+                        binding.rvFridgeF.visibility = View.VISIBLE
+                        binding.llFridgeFEmtpy.visibility = View.GONE
+                    }
                 }
             }
 
