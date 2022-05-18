@@ -2,7 +2,9 @@ package com.andback.pocketfridge.present.views.main.fridge
 
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.core.widget.addTextChangedListener
@@ -25,16 +27,10 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
     private lateinit var rvAdapter: IngreRVAdapter
     private val viewModel: FridgeViewModel by activityViewModels()
     private val detailViewModel: IngreDetailViewModel by activityViewModels()
-    private lateinit var profileImageView: ImageView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        binding.spinnerFridgeF.setSelection(0)
     }
 
     private fun init() {
@@ -43,21 +39,18 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
         setToolbar()
         setRecyclerView()
         setObservers()
-        setSearchBar()
         setChipGroup()
-        setSpinner()
+        setTabLayout()
+    }
+
+    private fun setTabLayout() {
+        val tabLayout = binding.tabLayoutFridgeF
+        tabLayout.addTab(tabLayout.newTab().setText(Storage.Fridge.value))
+        tabLayout.addTab(tabLayout.newTab().setText(Storage.Freeze.value))
+        tabLayout.addTab(tabLayout.newTab().setText(Storage.Room.value))
     }
 
     private fun setToolbar() {
-        val menu = binding.tbFridgeF.menu
-        val menuItem = menu.getItem(1)
-
-        // 프로필 이미지 뷰 초기화, 클릭 리스너 할당
-        profileImageView = menuItem.actionView.findViewById<ImageView?>(R.id.iv_menu_fridge_profile).apply {
-            setOnClickListener {
-                findNavController().navigate(R.id.action_fridgeFragment_to_myPageFragment)
-            }
-        }
 
         // 알림 아이콘 클릭 처리
         binding.tbFridgeF.setOnMenuItemClickListener { menuItem ->
@@ -70,7 +63,8 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
             }
         }
 
-        binding.tvFridgeFName.setOnClickListener {
+        // 냉장고 타이틀 클릭 처리
+        binding.llFridgeF.setOnClickListener {
             FridgeListBottomSheet(
                 viewModel.fridges.value!!,
                 viewModel.selectedFridge.value!!.id
@@ -120,16 +114,12 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
                 ingreList.observe(owner) {
                     rvAdapter.setItems(it)
                 }
-                // toolbar의 imageView에 프로필 이미지 적용
-                user.observe(owner) {
-                    if(::profileImageView.isInitialized) {
-                        Glide.with(profileImageView).load(it.picture).circleCrop().into(profileImageView)
-                    }
-                }
+
                 selectedFridge.observe(owner) {
                     binding.tvFridgeFName.setText(it.name)
                 }
             }
+
             mainCategoryList.observe(viewLifecycleOwner) {
                 it.forEach { category ->
                     val chip = layoutInflater.inflate(R.layout.custom_chip_view, binding.cgFridgeFFilter, false) as Chip
@@ -138,6 +128,7 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
                     binding.cgFridgeFFilter.addView(chip)
                 }
             }
+
             hasNewNotification.observe(viewLifecycleOwner) {
                 if(it == true) {
                     // TODO: 알림 아이콘 빨간점 보이기
@@ -148,34 +139,9 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
         }
     }
 
-    private fun setSearchBar() {
-        binding.tilFridgeF.editText?.addTextChangedListener {
-            rvAdapter.filter.filter(it.toString())
-        }
-    }
-
     private fun setChipGroup() {
         binding.cgFridgeFFilter.setOnCheckedChangeListener { group, checkedId ->
             rvAdapter.filter?.filter("$checkedId")
-        }
-    }
-
-    private fun setSpinner() {
-        val sortAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, resources.getStringArray(R.array.spinner_list))
-        binding.spinnerFridgeF.adapter = sortAdapter
-        binding.spinnerFridgeF.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                rvAdapter.sortList(position)
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                rvAdapter.sortList(0)
-            }
         }
     }
 
