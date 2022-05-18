@@ -69,18 +69,28 @@
                 style="@style/body_text.bold"
                 android:layout_marginEnd="@dimen/activity_margin_narrow"
                 android:textColor="@{ingredient.storage == Storage.Fridge? @color/black: @color/gray}"
-                tools:text="냉장" />
+                android:text="@string/storage_fridge" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/activity_margin_narrow"/>
 
             <TextView
                 style="@style/body_text.bold"
                 android:layout_marginEnd="@dimen/activity_margin_narrow"
                 android:textColor="@{ingredient.storage == Storage.Freeze? @color/black: @color/gray}"
-                tools:text="냉동" />
+                android:text="@string/storage_freeze" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/activity_margin_narrow"/>
 
             <TextView
                 style="@style/body_text.bold"
                 android:textColor="@{ingredient.storage == Storage.Room? @color/black: @color/gray}"
-                tools:text="실온" />
+                android:text="@string/storage_room" />
         </LinearLayout>
 
         <LinearLayout
