@@ -1,11 +1,7 @@
 package com.andback.pocketfridge.present.views.main.fridge
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -26,6 +22,7 @@ class IngreDetailFragment : BaseFragment<FragmentIngreDetailBinding>(R.layout.fr
 
     private fun init() {
         initViewModel()
+        initView()
         setObserver()
         setToolbar()
     }
@@ -61,6 +58,20 @@ class IngreDetailFragment : BaseFragment<FragmentIngreDetailBinding>(R.layout.fr
                 }
             }
         }
+    }
+    
+    private fun initView() {
+        when(args.isOwner) {
+            true -> {
+                binding.tbIngreDetailF.menu.findItem(R.id.delete_menu_fridge).isVisible = true
+                binding.tbIngreDetailF.menu.findItem(R.id.edit_menu_fridge).isVisible = true
+            }
+            else -> {
+                binding.tbIngreDetailF.menu.findItem(R.id.delete_menu_fridge).isVisible = false
+                binding.tbIngreDetailF.menu.findItem(R.id.edit_menu_fridge).isVisible = false
+            }
+        }
+        viewModel.selectIngre(args.ingredient)
     }
 
     private fun setView(ingredient: Ingredient) {
