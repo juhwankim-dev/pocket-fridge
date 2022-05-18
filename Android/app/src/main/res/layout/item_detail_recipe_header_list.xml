@@ -64,7 +64,7 @@
                 style="@style/body_text"
                 android:layout_marginHorizontal="@dimen/activity_margin_narrow"
                 android:textStyle="bold"
-                android:text="@{recipe.time}"
+                android:text="@{recipe.time + `분`}"
                 tools:text="30분"/>
 
             <TextView
