@@ -3,13 +3,11 @@ package com.andback.pocketfridge.present.views.main.search
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,9 +17,6 @@ import com.andback.pocketfridge.databinding.FragmentSearchBinding
 import com.andback.pocketfridge.databinding.FragmentSortListBinding
 import com.andback.pocketfridge.domain.model.Ingredient
 import com.andback.pocketfridge.present.config.BaseFragment
-import com.andback.pocketfridge.present.utils.Storage
-import com.andback.pocketfridge.present.views.main.fridge.IngreDetailFragmentDirections
-import com.andback.pocketfridge.present.views.main.fridge.IngreDetailViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -125,7 +120,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
             if (it != null && it.isNotEmpty()) {
                 binding.etSearchF.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search_24,
                     0,
-                    R.drawable.ic_baseline_cancel_24,
+                    R.drawable.ic_search_et_right_custom,
                     0)
             } else {
                 binding.etSearchF.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search_24,
