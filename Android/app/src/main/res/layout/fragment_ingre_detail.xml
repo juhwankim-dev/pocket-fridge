@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 app:menu="@menu/menu_toolbar_ingre_detail"
                 app:navigationIcon="@drawable/ic_back"
-                app:title="@{ingredient.name}" />
+                app:title="@string/ingre_info" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -108,6 +108,7 @@
             <TextView
                 android:id="@+id/tv_ingre_detailF_ingre_name"
                 style="@style/body_text.bold"
+                android:text="@{ingredient.name}"
                 tools:text="옥수수"/>
 
         </LinearLayout>
