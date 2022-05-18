@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- 24% opacity -->
-    <item android:color="@color/black" android:state_enabled="true" android:state_selected="true"/>
-    <item android:color="@color/black" android:state_enabled="true" android:state_checked="true"/>
-    <!-- 12% of 87% opacity -->
-    <item android:color="@color/gray_light"/>
+    <item android:color="@color/black_chip_activate_bg" android:state_enabled="true" android:state_selected="true"/>
+    <item android:color="@color/black_chip_activate_bg" android:state_enabled="true" android:state_checked="true"/>
+    <item android:color="@color/gray_ingre_circle_bg"/>
 </selector>
