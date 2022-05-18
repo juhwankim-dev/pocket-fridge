@@ -5,6 +5,7 @@
     <dimen name="activity_margin_24">24dp</dimen>
     <dimen name="activity_margin_20">20dp</dimen>
     <dimen name="activity_margin_default">16dp</dimen>
+    <dimen name="activity_margin_12">12dp</dimen>
     <dimen name="activity_margin_narrow">8dp</dimen>
     <dimen name="activity_margin_4">4dp</dimen>
     <dimen name="activity_margin_2">2dp</dimen>
