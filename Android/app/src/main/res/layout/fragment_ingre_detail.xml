@@ -79,6 +79,7 @@
             android:layout_marginBottom="@dimen/activity_margin_narrow"
             app:layout_constraintVertical_chainStyle="packed"
             tools:text="공유 냉장고"
+            android:textSize="16sp"
             android:text="@{fridge.name}"/>
 
         <LinearLayout
@@ -94,27 +95,34 @@
                 style="@style/body_text.bold"
                 android:layout_marginEnd="@dimen/activity_margin_narrow"
                 android:textColor="@{ingredient.storage == Storage.Fridge? @color/black: @color/gray}"
+                android:textSize="16sp"
                 android:text="@string/storage_fridge" />
 
             <com.google.android.material.divider.MaterialDivider
                 android:layout_width="2dp"
                 android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="3dp"
                 android:layout_marginEnd="@dimen/activity_margin_narrow"/>
 
             <TextView
                 style="@style/body_text.bold"
                 android:layout_marginEnd="@dimen/activity_margin_narrow"
                 android:textColor="@{ingredient.storage == Storage.Freeze? @color/black: @color/gray}"
+                android:textSize="16sp"
                 android:text="@string/storage_freeze" />
 
             <com.google.android.material.divider.MaterialDivider
                 android:layout_width="2dp"
                 android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="3dp"
                 android:layout_marginEnd="@dimen/activity_margin_narrow"/>
 
             <TextView
                 style="@style/body_text.bold"
                 android:textColor="@{ingredient.storage == Storage.Room? @color/black: @color/gray}"
+                android:textSize="16sp"
                 android:text="@string/storage_room" />
         </LinearLayout>
 

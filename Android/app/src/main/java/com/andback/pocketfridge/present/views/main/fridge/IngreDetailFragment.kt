@@ -11,6 +11,7 @@ import com.andback.pocketfridge.R
 import com.andback.pocketfridge.databinding.FragmentIngreDetailBinding
 import com.andback.pocketfridge.domain.model.Ingredient
 import com.andback.pocketfridge.present.config.BaseFragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -99,7 +100,7 @@ class IngreDetailFragment : BaseFragment<FragmentIngreDetailBinding>(R.layout.fr
             when (menuItem.itemId) {
                 R.id.delete_menu_fridge -> {
                     if(args.isOwner) {
-                        viewModel.deleteIngre()
+                        showDeleteDialog()
                         true
                     } else {
                         showToastMessage("삭제 권한이 없습니다.")
@@ -126,6 +127,19 @@ class IngreDetailFragment : BaseFragment<FragmentIngreDetailBinding>(R.layout.fr
                 }
             }
         }
+    }
+
+    private fun showDeleteDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(resources.getString(R.string.delete_ingre_title))
+            .setCancelable(true)
+            .setNegativeButton(resources.getString(R.string.cancel_button)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setPositiveButton(resources.getString(R.string.delete_button)) { _, _ ->
+                viewModel.deleteIngre()
+            }
+            .show()
     }
     
     companion object {

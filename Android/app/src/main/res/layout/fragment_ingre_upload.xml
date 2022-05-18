@@ -186,7 +186,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/til_ingre_uploadF_name"
                     android:hint="@string/purchased_date"
-                    app:startIconDrawable="@drawable/ic_calendar_month_24"
+                    app:startIconDrawable="@drawable/ic_calendar"
                     app:endIconMode="clear_text"
                     app:errorEnabled="true">
 
@@ -207,7 +207,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/til_ingre_uploadF_purchased_date"
                     android:hint="@string/expiry_date"
-                    app:startIconDrawable="@drawable/ic_calendar_month_24"
+                    app:startIconDrawable="@drawable/ic_calendar"
                     app:endIconMode="clear_text"
                     app:errorEnabled="true">
 

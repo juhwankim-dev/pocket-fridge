@@ -2,7 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- todo 아이콘 체크 -->
     <item
         android:id="@+id/delete_menu_fridge"
         android:title="@string/delete_button"
