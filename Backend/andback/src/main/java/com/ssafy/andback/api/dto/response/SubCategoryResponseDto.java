@@ -21,6 +21,6 @@ public class SubCategoryResponseDto {
         this.subCategoryId = subCategoryId;
         this.subCategoryName = subCategoryName;
         this.mainCategoryId = mainCategoryId;
-        this.subCategoryId = subCategoryId;
+        this.subCategoryUrl = subCategoryUrl;
     }
 }
