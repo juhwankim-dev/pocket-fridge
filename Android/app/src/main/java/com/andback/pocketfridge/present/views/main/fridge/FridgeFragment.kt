@@ -148,9 +148,9 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
 
             hasNewNotification.observe(viewLifecycleOwner) {
                 if(it == true) {
-                    // TODO: 알림 아이콘 빨간점 보이기
+                    binding.ivIfridgeFNewNoti.visibility = View.VISIBLE
                 } else {
-                    // TODO: 알림 아이콘 빨간점 삭제
+                    binding.ivIfridgeFNewNoti.visibility = View.INVISIBLE
                 }
             }
         }
