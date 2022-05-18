@@ -1,5 +1,6 @@
 package com.andback.pocketfridge.data.mapper
 
+import com.andback.pocketfridge.BuildConfig
 import com.andback.pocketfridge.data.model.RecipeEntity
 import com.andback.pocketfridge.domain.model.Recipe
 
@@ -19,6 +20,7 @@ object RecipeMapper {
                 else -> "어려움"
             }
             val serving = r.serving.split(" ")[0] + "인분"
+            val url = BuildConfig.FIREBASE_STORAGE_RECIPE_THUMBNAIL_BASE_URL + r.url
 
             newList.add(
                 Recipe(
@@ -27,7 +29,7 @@ object RecipeMapper {
                     content = r.content,
                     foodName = r.foodName,
                     serving = serving,
-                    url = r.url,
+                    url = url,
                     time = time,
                     difficulty = difficulty,
                     type = r.type,

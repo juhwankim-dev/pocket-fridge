@@ -9,7 +9,7 @@ data class Recipe(
     val allIngredients: String,
     val content: String,
     val foodName: String,
-    var url: String?,
+    val url: String?,
     val serving: String,
     val time: String,
     val difficulty: String,

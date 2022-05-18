@@ -36,7 +36,7 @@
             bindImageUrlWithRoundCorner="@{recipe.url}"
             app:layout_constraintStart_toEndOf="@+id/tv_recommendI_number"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/bg_food_sample" />
+            tools:srcCompat="@drawable/bg_food_sample" />
 
         <TextView
             android:id="@+id/tv_recommendI_title"

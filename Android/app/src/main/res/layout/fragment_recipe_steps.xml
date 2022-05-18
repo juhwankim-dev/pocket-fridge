@@ -9,7 +9,7 @@
             type="String" />
         <variable
             name="recipeStep"
-            type="com.andback.pocketfridge.data.model.RecipeStepEntity" />
+            type="com.andback.pocketfridge.domain.model.RecipeStep" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

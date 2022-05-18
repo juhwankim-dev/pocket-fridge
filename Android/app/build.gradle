@@ -25,6 +25,8 @@ android {
 
         buildConfigField "String", "BARCODE_SERVICE_KEY", properties['barcode_service_key']
         buildConfigField "String", "GOOGLE_AUTH_SERVER_ID", properties['google_auth_server_id']
+        buildConfigField "String", "FIREBASE_STORAGE_RECIPE_THUMBNAIL_BASE_URL", properties['firebase_storage_recipe_thumbnail_base_url']
+        buildConfigField "String", "FIREBASE_STORAGE_RECIPE_COOK_STEP_BASE_URL", properties['firebase_storage_recipe_cook_step_base_url']
     }
 
     buildTypes {

@@ -2,10 +2,12 @@ package com.andback.pocketfridge.data.repository
 
 import com.andback.pocketfridge.data.mapper.CookingIngreMapper
 import com.andback.pocketfridge.data.mapper.RecipeMapper
+import com.andback.pocketfridge.data.mapper.RecipeStepMapper
 import com.andback.pocketfridge.data.model.*
 import com.andback.pocketfridge.data.repository.Recipe.RecipeRemoteDataSource
 import com.andback.pocketfridge.domain.model.CookingIngre
 import com.andback.pocketfridge.domain.model.Recipe
+import com.andback.pocketfridge.domain.model.RecipeStep
 import com.andback.pocketfridge.domain.repository.RecipeRepository
 import io.reactivex.Single
 import io.reactivex.functions.BiFunction
@@ -30,8 +32,12 @@ class RecipeRepositoryImpl @Inject constructor(
         return newResult
     }
 
-    override fun getRecipeSteps(recipeId: Int): Single<BaseResponse<List<RecipeStepEntity>>> {
-        return recipeRemoteDataSource.getRecipeSteps(recipeId)
+    override fun getRecipeSteps(recipeId: Int): Single<BaseResponse<List<RecipeStep>>> {
+        return recipeRemoteDataSource.getRecipeSteps(recipeId).map { it
+            val newList = RecipeStepMapper(it.data)
+
+            BaseResponse(it.message, it.status, newList)
+        }
     }
 
     override fun getCookingIngres(recipeId: Int): Single<BaseResponse<List<CookingIngre>>> {
