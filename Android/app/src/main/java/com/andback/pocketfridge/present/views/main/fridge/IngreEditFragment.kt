@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.DatePicker
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -32,6 +33,23 @@ class IngreEditFragment: BaseFragment<FragmentIngreEditBinding>(R.layout.fragmen
         setExpiryDateIcon()
         setPurchasedDateIcon()
         setToolbar()
+        setCalendarIconClickListener()
+    }
+
+    private fun setCalendarIconClickListener() {
+        binding.tilIngreEditFPurchasedDate.setEndIconOnClickListener {
+            showDatePickerWith { _, year, month, day ->
+                val result = DateConverter.toStringDate(year, month, day)
+                viewModel.datePurchased.value = result
+            }
+        }
+
+        binding.tilIngreEditFExpiryDate.setEndIconOnClickListener {
+            showDatePickerWith { _, year, month, day ->
+                val result = DateConverter.toStringDate(year, month, day)
+                viewModel.dateExpiry.value = result
+            }
+        }
     }
 
     private fun initViewModel() {
@@ -73,7 +91,6 @@ class IngreEditFragment: BaseFragment<FragmentIngreEditBinding>(R.layout.fragmen
                             findNavController().navigate(IngreEditFragmentDirections.actionIngreEditFragmentToIngreDetailFragment(
                                 true, ingre
                             ))
-//                            detailViewModel.selectIngre(ingre)
                         }
                     }
                 }

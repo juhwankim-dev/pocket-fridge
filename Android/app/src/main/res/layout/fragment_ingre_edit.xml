@@ -156,6 +156,7 @@
             app:endIconMode="custom"
             app:placeholderText="yyyy-mm-dd"
             android:hint="@string/purchased_date"
+            app:errorIconDrawable="@null"
             app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -182,6 +183,7 @@
             app:endIconMode="custom"
             app:placeholderText="yyyy-mm-dd"
             android:hint="@string/expiry_date"
+            app:errorIconDrawable="@null"
             app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
