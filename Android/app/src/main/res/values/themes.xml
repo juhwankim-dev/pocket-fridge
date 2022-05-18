@@ -106,8 +106,7 @@
         <item name="android:fontFamily">@font/noto_sans_regular</item>
         <item name="android:textColor">@color/color_chip_text_color</item>
         <item name="chipBackgroundColor">@color/color_chip_background_color</item>
-        <item name="chipStrokeColor">@color/color_chip_text_color</item>
-        <item name="chipStrokeWidth">1dp</item>
+        <item name="rippleColor">@color/gray</item>
         <item name="chipEndPadding">12dp</item>
         <item name="chipStartPadding">12dp</item>
     </style>
