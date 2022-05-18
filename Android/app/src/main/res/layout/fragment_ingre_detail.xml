@@ -38,15 +38,36 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
+<!--        <ImageView-->
+<!--            android:id="@+id/iv_ingre_detailF"-->
+<!--            android:layout_width="@dimen/ingre_image_size"-->
+<!--            android:layout_height="@dimen/ingre_image_size"-->
+<!--            android:layout_marginStart="@dimen/activity_margin_wide"-->
+<!--            android:layout_marginTop="@dimen/activity_margin_wide"-->
+<!--            android:background="@drawable/bg_circle_gray"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/abl_ingre_detailF" />-->
+
         <ImageView
-            android:id="@+id/iv_ingre_detailF"
+            android:id="@+id/iv_ingre_detailF_bg"
             android:layout_width="@dimen/ingre_image_size"
             android:layout_height="@dimen/ingre_image_size"
             android:layout_marginStart="@dimen/activity_margin_wide"
             android:layout_marginTop="@dimen/activity_margin_wide"
-            android:background="@drawable/bg_circle_gray"
+            android:src="@drawable/bg_circle_gray"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/abl_ingre_detailF" />
+
+        <ImageView
+            android:id="@+id/iv_ingre_detailF"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="@dimen/activity_margin_default"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_ingre_detailF_bg"
+            app:layout_constraintEnd_toEndOf="@+id/iv_ingre_detailF_bg"
+            app:layout_constraintStart_toStartOf="@+id/iv_ingre_detailF_bg"
+            app:layout_constraintTop_toTopOf="@+id/iv_ingre_detailF_bg"
+            app:srcCompat="@drawable/ic_error_category" />
 
         <TextView
             android:id="@+id/tv_ingre_detailF_fridge_name"
