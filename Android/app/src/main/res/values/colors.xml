@@ -28,5 +28,5 @@
     <color name="gray_search_result_bg">#fafafa</color>
     <color name="black_search_result_text">#7a7a7a</color>
     <color name="black_chip_activate_bg">#363535</color>
-    <color name="black_chip_deactivate_bg">#787878</color>
+    <color name="black_chip_deactivate_text">#787878</color>
 </resources>

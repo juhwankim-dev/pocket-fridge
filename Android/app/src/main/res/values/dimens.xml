@@ -20,7 +20,6 @@
     <dimen name="menu_title_18_size">18sp</dimen>
     <dimen name="menu_content_size">14sp</dimen>
     <dimen name="secondary_text_size">14sp</dimen>
-    <dimen name="tab_text_size">14sp</dimen>
     <dimen name="button_text_size_big">18sp</dimen>
     <dimen name="button_text_size">14sp</dimen>
     <dimen name="text_button_text_size">14sp</dimen>
@@ -29,6 +28,7 @@
     <dimen name="chip_text_size">16sp</dimen>
     <dimen name="explain_text_size">12sp</dimen>
     <dimen name="d_day_text_size">12sp</dimen>
+    <dimen name="tab_layout_text_size">16sp</dimen>
 
     <!-- edittext radius -->
     <dimen name="et_radius">28dp</dimen>
