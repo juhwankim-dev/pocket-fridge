@@ -65,6 +65,7 @@
             android:layout_marginBottom="@dimen/activity_margin_narrow"
             app:layout_constraintVertical_chainStyle="packed"
             tools:text="공유 냉장고"
+            android:textSize="16sp"
             android:text="@{vm.selectedFridge.name}"/>
 
         <ImageView
@@ -92,11 +93,14 @@
                 android:layout_marginEnd="@dimen/activity_margin_narrow"
                 android:textColor="@{vm.selectedStorage == Storage.Fridge? @color/black: @color/gray}"
                 android:text="@string/storage_fridge"
+                android:textSize="16sp"
                 android:onClick="@{() -> vm.setFridge()}"/>
 
             <com.google.android.material.divider.MaterialDivider
                 android:layout_width="2dp"
                 android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="3dp"
                 android:layout_marginEnd="@dimen/activity_margin_narrow"/>
 
             <TextView
@@ -105,11 +109,14 @@
                 android:layout_marginEnd="@dimen/activity_margin_narrow"
                 android:textColor="@{vm.selectedStorage == Storage.Freeze? @color/black: @color/gray}"
                 android:text="@string/storage_freeze"
+                android:textSize="16sp"
                 android:onClick="@{() -> vm.setFreeze()}"/>
 
             <com.google.android.material.divider.MaterialDivider
                 android:layout_width="2dp"
                 android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="3dp"
                 android:layout_marginEnd="@dimen/activity_margin_narrow"/>
 
             <TextView
@@ -117,6 +124,7 @@
                 style="@style/body_text.bold"
                 android:textColor="@{vm.selectedStorage == Storage.Room? @color/black: @color/gray}"
                 android:text="@string/storage_room"
+                android:textSize="16sp"
                 android:onClick="@{() -> vm.setRoom()}"/>
         </LinearLayout>
 
@@ -130,6 +138,7 @@
             android:layout_marginHorizontal="@dimen/activity_margin_default"
             android:layout_marginTop="@dimen/activity_margin_wide"
             app:endIconMode="clear_text"
+            app:endIconTint="@color/gray_search_bar_close_bg"
             app:placeholderText="@string/ingre_name"
             app:errorEnabled="true">
 
@@ -143,7 +152,6 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- todo: 달력 아이콘 체크 -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_ingre_editF_purchased_date"
             android:layout_width="match_parent"
@@ -152,7 +160,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/til_ingre_editF_ingre_name"
             android:layout_marginHorizontal="@dimen/activity_margin_default"
-            app:endIconDrawable="@drawable/ic_calendar_month_24"
+            app:endIconDrawable="@drawable/ic_calendar"
+            app:endIconTint="@color/gray_search_bar_close_bg"
             app:endIconMode="custom"
             app:placeholderText="yyyy-mm-dd"
             android:hint="@string/purchased_date"
@@ -170,7 +179,6 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- todo: 달력 아이콘 체크 -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_ingre_editF_expiry_date"
             android:layout_width="match_parent"
@@ -179,8 +187,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/til_ingre_editF_purchased_date"
             android:layout_marginHorizontal="@dimen/activity_margin_default"
-            app:endIconDrawable="@drawable/ic_calendar_month_24"
+            app:endIconDrawable="@drawable/ic_calendar"
             app:endIconMode="custom"
+            app:endIconTint="@color/gray_search_bar_close_bg"
             app:placeholderText="yyyy-mm-dd"
             android:hint="@string/expiry_date"
             app:errorIconDrawable="@null"
