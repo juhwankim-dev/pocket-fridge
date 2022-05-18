@@ -1,6 +1,5 @@
 package com.andback.pocketfridge.present.views.main.search
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
@@ -64,7 +63,6 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(), Filterab
         this.fridges.addAll(fridges)
         list.addAll(ingredients)
         filteredList.addAll(ingredients)
-        Log.d("TEST", "setList: $filteredList")
         sortList(SORT_BY_EXP)
     }
 
@@ -97,7 +95,6 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(), Filterab
             SORT_BY_KOR -> filteredList.sortBy { it.name }
             REVERSER_SORT_BY_KOR -> filteredList.sortByDescending { it.name }
         }
-        Log.d("TEST", "sortList: $sortType $filteredList")
         notifyDataSetChanged()
     }
 
