@@ -14,11 +14,11 @@
             android:id="@+id/action_fridgeFragment_to_ingreDetailFragment"
             app:destination="@id/ingreDetailFragment" />
         <action
-            android:id="@+id/action_fridgeFragment_to_myPageFragment"
-            app:destination="@id/myPageFragment" />
-        <action
             android:id="@+id/action_fridgeFragment_to_notificationFragment"
             app:destination="@id/notificationFragment" />
+        <action
+            android:id="@+id/action_fridgeFragment_to_fridgeManageFragment"
+            app:destination="@id/fridgeManageFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
