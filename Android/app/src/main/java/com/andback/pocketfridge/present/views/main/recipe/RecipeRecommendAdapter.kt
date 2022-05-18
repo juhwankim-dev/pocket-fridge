@@ -13,13 +13,7 @@ class RecipeRecommendAdapter(val itemClickListener: onRecipeClickListener) : Rec
         RecyclerView.ViewHolder(binding.root) {
         fun bindInfo(recipe: Recipe) {
             binding.index = layoutPosition + 1
-
-            // TODO: 1. 서버에 실제 url 주소 들어가면 삭제
-            // TODO: 2. Recipe의 url을 var -> val로 변경
-            val temp = recipe
-            temp.url = "http://mimg.segye.com/content/image/2021/01/07/20210107516500.jpg"
-
-            binding.recipe = temp
+            binding.recipe = recipe
 
             binding.ivRecommendILike.setOnClickListener {
                 if (recipe.like) {
