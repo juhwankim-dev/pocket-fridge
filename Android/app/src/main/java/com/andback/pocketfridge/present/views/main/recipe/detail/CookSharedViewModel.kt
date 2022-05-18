@@ -4,9 +4,9 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.andback.pocketfridge.data.model.RecipeStepEntity
 import com.andback.pocketfridge.domain.model.CookingIngre
 import com.andback.pocketfridge.domain.model.Recipe
+import com.andback.pocketfridge.domain.model.RecipeStep
 import com.andback.pocketfridge.domain.usecase.like.DeleteLikeUseCase
 import com.andback.pocketfridge.domain.usecase.like.UploadLikeUseCase
 import com.andback.pocketfridge.domain.usecase.recipe.GetCookingIngresUseCase
@@ -33,8 +33,8 @@ class CookSharedViewModel @Inject constructor(
     private val _cookingIngres = MutableLiveData<List<CookingIngre>>()
     val cookingIngres: LiveData<List<CookingIngre>> get() = _cookingIngres
 
-    private val _recipeSteps = MutableLiveData<List<RecipeStepEntity>>()
-    val recipeSteps: LiveData<List<RecipeStepEntity>> get() = _recipeSteps
+    private val _recipeSteps = MutableLiveData<List<RecipeStep>>()
+    val recipeSteps: LiveData<List<RecipeStep>> get() = _recipeSteps
 
     private val _isIngresLoaded = MutableLiveData<Boolean>()
     val isIngresLoaded: LiveData<Boolean> get() = _isIngresLoaded
