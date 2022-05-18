@@ -3,29 +3,21 @@ package com.andback.pocketfridge.present.views.main.fridge
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.andback.pocketfridge.R
-import com.andback.pocketfridge.data.model.FridgeEntity
 import com.andback.pocketfridge.databinding.FragmentIngreEditBinding
-import com.andback.pocketfridge.domain.model.Ingredient
 import com.andback.pocketfridge.present.config.BaseFragment
 import com.andback.pocketfridge.present.utils.DateConverter
-import com.andback.pocketfridge.present.utils.Storage
 import com.andback.pocketfridge.present.views.main.DatePickerFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class IngreEditFragment: BaseFragment<FragmentIngreEditBinding>(R.layout.fragment_ingre_edit) {
     private val viewModel: IngreEditViewModel by viewModels()
-    private val detailViewModel: IngreDetailViewModel by activityViewModels()
     private val args: IngreEditFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,8 +31,7 @@ class IngreEditFragment: BaseFragment<FragmentIngreEditBinding>(R.layout.fragmen
         setObserver()
         setExpiryDateIcon()
         setPurchasedDateIcon()
-        setToolbarButton()
-        setCategoryClickListener()
+        setToolbar()
     }
 
     private fun initViewModel() {
@@ -79,27 +70,17 @@ class IngreEditFragment: BaseFragment<FragmentIngreEditBinding>(R.layout.fragmen
                 isUpdateSuccess.observe(owner) {
                     if(it == true) {
                         viewModel.updatedIngredient?.let { ingre ->
-                            detailViewModel.selectIngre(ingre)
+                            findNavController().navigate(IngreEditFragmentDirections.actionIngreEditFragmentToIngreDetailFragment(
+                                true, ingre
+                            ))
+//                            detailViewModel.selectIngre(ingre)
                         }
-                        goBack()
                     }
                 }
 
-//                // 식재료 정보관련 live data
-//                selectedStorage.observe(owner) {
-////                    clearStorageTextView()
-////                    setBrandColorOnText(it)
-//                }
-
-//                selectedSubCategory.observe(owner) {
-//                    it?.let {
-//                        binding.tvIngreEditFCategory.text = it.subCategoryName
-//                    }
-//                }
-
-                selectedMainCategory.observe(owner) {
+                selectedSubCategory.observe(owner) {
                     it?.let {
-                        // TODO: 이미지 반영
+                        // TODO: 카테고리 이미지 변경
                     }
                 }
 
@@ -107,12 +88,6 @@ class IngreEditFragment: BaseFragment<FragmentIngreEditBinding>(R.layout.fragmen
                 fridges.observe(owner) {
 //                    setDropDownAdapter(it)
                 }
-
-//                isInitDone.observe(owner) {
-//                    if(it == 2) {
-//                        viewModel.init(args.ingredient)
-//                    }
-//                }
             }
         }
     }
@@ -142,10 +117,7 @@ class IngreEditFragment: BaseFragment<FragmentIngreEditBinding>(R.layout.fragmen
         datePickerFragment.show(childFragmentManager, "datePicker")
     }
 
-    private fun showCategoryPicker() {
-        val categorySelectFragment = EditCategorySelectFragment()
-        categorySelectFragment.show(childFragmentManager, "categoryPicker")
-    }
+
 
 //    private fun setDropDownAdapter(list: List<FridgeEntity>) {
 //        val stringList = list.map { it.name }
@@ -162,18 +134,21 @@ class IngreEditFragment: BaseFragment<FragmentIngreEditBinding>(R.layout.fragmen
 //        }
 //    }
 
-    private fun setCategoryClickListener() {
-//        binding.tvIngreEditFCategory.setOnClickListener {
-//            showCategoryPicker()
-//        }
-        binding.ivIngreEditF.setOnClickListener {
-            showCategoryPicker()
-        }
-    }
-
-    private fun setToolbarButton() {
+    private fun setToolbar() {
         binding.tbIngreEditF.setNavigationOnClickListener {
             goBack()
+        }
+
+        binding.tbIngreEditF.setOnMenuItemClickListener { menuItem ->
+            when(menuItem.itemId) {
+                R.id.accept_menu_toolbar -> {
+                    viewModel.onUpdateBtnClick()
+                    true
+                }
+                else -> {
+                    false
+                }
+            }
         }
     }
 

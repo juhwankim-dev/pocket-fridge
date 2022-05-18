@@ -78,6 +78,12 @@
 
         <argument android:name="ingredient"
             app:argType="com.andback.pocketfridge.domain.model.Ingredient" />
+        <action
+            android:id="@+id/action_ingreEditFragment_to_ingreDetailFragment"
+            app:destination="@id/ingreDetailFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/ingreDetailFragment"
+            app:popUpToInclusive="true" />
 
     </fragment>
     <fragment
