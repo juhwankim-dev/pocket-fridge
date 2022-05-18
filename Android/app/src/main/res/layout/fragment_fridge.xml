@@ -56,8 +56,7 @@
             app:layout_constraintTop_toBottomOf="@id/tabLayout_fridgeF"
             android:paddingEnd="@dimen/activity_margin_default"
             android:overScrollMode="never"
-            android:scrollbars="none"
-            android:layout_marginVertical="@dimen/activity_margin_narrow">
+            android:scrollbars="none">
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/cg_fridgeF_filter"
