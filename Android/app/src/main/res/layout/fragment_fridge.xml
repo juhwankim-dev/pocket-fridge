@@ -20,44 +20,40 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:menu="@menu/menu_toolbar_fridge">
-                <TextView
-                    android:id="@+id/tv_fridgeF_name"
-                    style="@style/page_title_text"
-                    tools:text="냉장고 이름" />
+
+                <LinearLayout
+                    android:id="@+id/ll_fridgeF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+                    <TextView
+                        android:id="@+id/tv_fridgeF_name"
+                        style="@style/page_title_text"
+                        tools:text="냉장고 이름" />
+                    <ImageView
+                        android:id="@+id/iv_fridgeF_title_arrow"
+                        android:layout_width="@dimen/default_icon_size"
+                        android:layout_height="@dimen/default_icon_size"
+                        android:src="@drawable/ic_arrow_down_24"/>
+                </LinearLayout>
             </com.google.android.material.appbar.MaterialToolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:id="@+id/til_fridgeF"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout_fridgeF"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tl_fridgeF"
-            android:layout_marginHorizontal="@dimen/activity_margin_default"
-            app:boxCornerRadiusBottomEnd="@dimen/et_radius"
-            app:boxCornerRadiusBottomStart="@dimen/et_radius"
-            app:boxCornerRadiusTopEnd="@dimen/et_radius"
-            app:boxCornerRadiusTopStart="@dimen/et_radius"
-            app:endIconDrawable="@drawable/ic_search_24"
-            app:endIconMode="custom"
-            android:layout_marginTop="@dimen/activity_margin_default">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="none"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintTop_toBottomOf="@id/tl_fridgeF"/>
 
         <HorizontalScrollView
             android:id="@+id/sv_fridgeF_filter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/til_fridgeF"
-            app:layout_constraintBottom_toTopOf="@id/ll_fridgeF_storage"
+            app:layout_constraintTop_toBottomOf="@id/tabLayout_fridgeF"
             android:paddingEnd="@dimen/activity_margin_default"
             android:overScrollMode="never"
             android:scrollbars="none"
@@ -79,57 +75,27 @@
                     android:layout_marginStart="@dimen/activity_margin_default"
                     android:text="전체" />
             </com.google.android.material.chip.ChipGroup>
+
         </HorizontalScrollView>
 
-        <LinearLayout
-            android:id="@+id/ll_fridgeF_storage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:orientation="horizontal"
-            android:layout_marginHorizontal="@dimen/activity_margin_default"
+        <View
+            android:id="@+id/divider_fridgeF"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/spinner_fridgeF"
-            app:layout_constraintBottom_toBottomOf="@id/spinner_fridgeF">
-
-            <TextView
-                android:id="@+id/tv_fridgeF_storage_fridge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/activity_margin_narrow"
-                android:text="@string/storage_fridge" />
-
-            <TextView
-                android:id="@+id/tv_fridgeF_storage_freeze"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/activity_margin_narrow"
-                android:text="@string/storage_freeze" />
-
-            <TextView
-                android:id="@+id/tv_fridgeF_storage_room"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/storage_room" />
-        </LinearLayout>
-
-        <Spinner
-            android:id="@+id/spinner_fridgeF"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/rv_fridgeF"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sv_fridgeF_filter"/>
+            app:layout_constraintTop_toBottomOf="@id/sv_fridgeF_filter"
+            app:layout_constraintBottom_toTopOf="@id/rv_fridgeF"
+            android:background="@color/gray_light"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_fridgeF"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ll_fridgeF_storage"
+            app:layout_constraintTop_toBottomOf="@id/sv_fridgeF_filter"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginTop="@dimen/activity_margin_narrow"
-            android:background="@color/gray"/>
+            android:background="@color/white"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
