@@ -15,6 +15,7 @@ import com.andback.pocketfridge.domain.usecase.notification.CheckNewNotiUseCase
 import com.andback.pocketfridge.domain.usecase.user.GetUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
@@ -27,6 +28,8 @@ class FridgeViewModel @Inject constructor(
     private val getCategoryUseCase: GetCategoryUseCase,
     private val checkNewNotiUseCase: CheckNewNotiUseCase
 ): ViewModel() {
+    private val compositeDisposable = CompositeDisposable()
+
     // data
     private val _fridges = MutableLiveData<List<FridgeEntity>>()
     val fridges: LiveData<List<FridgeEntity>> get() = _fridges
@@ -50,61 +53,67 @@ class FridgeViewModel @Inject constructor(
      */
     init {
         getUser()
-        getFridges()
     }
 
     fun getFridges() {
-        getFridgesUseCase()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    // emptyList 처리는 보장 못함
-                    it.data?.let { list ->
-                        _fridges.value = list
-                        if (_selectedFridge.value != null && list.contains(_selectedFridge.value))
-                            setFridgeForChangingIngreList(_selectedFridge.value!!.id)
-                        else
-                            setFridgeForChangingIngreList(list[0].id)
+        compositeDisposable.add(
+            getFridgesUseCase()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        it.data?.let { list ->
+                            _fridges.value = list
+                            if (list.isEmpty())
+                                _selectedFridge.value = FridgeEntity(-1, "냉장고가 존재하지 않습니다.", true)
+                            else if (_selectedFridge.value != null && list.contains(_selectedFridge.value))
+                                setFridgeForChangingIngreList(_selectedFridge.value!!.id)
+                            else
+                                setFridgeForChangingIngreList(list[0].id)
+                        }
+                    },
+                    {
+                        // TODO: 예외 ui 처리
                     }
-                },
-                {
-                    // TODO: 예외 ui 처리
-                }
-            )
+                )
+        )
     }
 
     private fun getUser() {
-        getUserUseCase().subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    if(it.data != null) {
-                        _user.value = it.data!!
-                    }
-                },
-                {
+        compositeDisposable.add(
+            getUserUseCase().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        if(it.data != null) {
+                            _user.value = it.data!!
+                        }
+                    },
+                    {
 
-                }
-            )
+                    }
+                )
+        )
     }
 
     private fun getIngreList(fridgeId: Int) {
         _isLoading.value = true
-        getIngreListUseCase(fridgeId).subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    _isLoading.value = false
-                    it.data?.let { list ->
-                        _ingreList.value = list
+        compositeDisposable.add(
+            getIngreListUseCase(fridgeId).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        _isLoading.value = false
+                        it.data?.let { list ->
+                            _ingreList.value = list
+                        }
+                    },
+                    {
+                        // TODO: 예외 ui 처리
+                        _isLoading.value = false
                     }
-                },
-                {
-                    // TODO: 예외 ui 처리
-                    _isLoading.value = false
-                }
-            )
+                )
+        )
     }
 
     fun updateSelectedFridgeThenGetIngreList(fridgeId: Int) {
@@ -128,18 +137,21 @@ class FridgeViewModel @Inject constructor(
      */
     fun deleteIngreById(id: Int) {
         _isLoading.value = true
-        deleteIngreUseCase(id).subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    _isLoading.value = false
-                    removeIngreFromLiveData(id)
-                },
-                {
-                    _isLoading.value = false
-                    // TODO: 예외 처리
-                }
-            )
+
+        compositeDisposable.add(
+            deleteIngreUseCase(id).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        _isLoading.value = false
+                        removeIngreFromLiveData(id)
+                    },
+                    {
+                        _isLoading.value = false
+                        // TODO: 예외 처리
+                    }
+                )
+        )
     }
 
     /**
@@ -147,19 +159,22 @@ class FridgeViewModel @Inject constructor(
      */
     fun getMainCategory() {
         _isLoading.value = true
-        getCategoryUseCase.getMainCategory()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    _isLoading.value = false
-                    _mainCategoryList.value = it.data!!
-                },
-                {
-                    _isLoading.value = false
-                    // TODO: 예외 처리
-                }
-            )
+
+        compositeDisposable.add(
+            getCategoryUseCase.getMainCategory()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        _isLoading.value = false
+                        _mainCategoryList.value = it.data!!
+                    },
+                    {
+                        _isLoading.value = false
+                        // TODO: 예외 처리
+                    }
+                )
+        )
     }
 
     private fun removeIngreFromLiveData(id: Int) {
@@ -173,15 +188,22 @@ class FridgeViewModel @Inject constructor(
     }
 
     fun newNotificationArrival() {
-        checkNewNotiUseCase().subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    hasNewNotification.value = it.data
-                },
-                {
-                    hasNewNotification.value = false
-                }
-            )
+        compositeDisposable.add(
+            checkNewNotiUseCase().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        hasNewNotification.value = it.data
+                    },
+                    {
+                        hasNewNotification.value = false
+                    }
+                )
+        )
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.dispose()
     }
 }
