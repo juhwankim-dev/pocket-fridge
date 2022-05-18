@@ -67,6 +67,8 @@
         <argument
             android:name="isOwner"
             app:argType="boolean" />
+        <argument android:name="ingredient"
+            app:argType="com.andback.pocketfridge.domain.model.Ingredient" />
     </fragment>
     <fragment
         android:id="@+id/ingreEditFragment"
