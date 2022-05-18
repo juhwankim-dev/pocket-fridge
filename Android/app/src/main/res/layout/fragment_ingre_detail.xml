@@ -30,7 +30,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:navigationIcon="@drawable/ic_back"
-                app:title="@{ingredient.name}" />
+                app:title="@{ingredient.name}"
+                app:menu="@menu/menu_toolbar_ingre_detail"/>
 
         </com.google.android.material.appbar.AppBarLayout>
 
