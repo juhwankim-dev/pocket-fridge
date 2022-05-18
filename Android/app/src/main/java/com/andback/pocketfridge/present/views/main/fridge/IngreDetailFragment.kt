@@ -107,7 +107,13 @@ class IngreDetailFragment : BaseFragment<FragmentIngreDetailBinding>(R.layout.fr
                 }
                 R.id.edit_menu_fridge -> {
                     if(args.isOwner) {
-                        findNavController().navigate(R.id.action_ingreDetailFragment_to_ingreEditFragment, bundleOf("data" to viewModel.selectedIngre.value))
+                        viewModel.selectedIngre.value?.let {
+                            findNavController().navigate(
+                                IngreDetailFragmentDirections.actionIngreDetailFragmentToIngreEditFragment(
+                                    it
+                                )
+                            )
+                        }
                         true
                     } else {
                         showToastMessage("수정 권한이 없습니다.")
