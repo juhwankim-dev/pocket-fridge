@@ -36,10 +36,24 @@
             android:layout_height="52dp"
             android:layout_marginTop="@dimen/activity_margin_wide"
             android:background="@drawable/bg_circle_white"
+            android:foregroundGravity="center"
             app:bindProfileImage="@{vm.personalInfo.picture}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/al_user_editF" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="-16dp"
+            android:layout_marginTop="-16dp"
+            android:background="@drawable/bg_circle_gray"
+            android:backgroundTint="@color/main_color"
+            android:padding="@dimen/activity_margin_4"
+            android:src="@drawable/ic_baseline_edit_24"
+            app:layout_constraintStart_toEndOf="@+id/iv_user_editF_picture"
+            app:layout_constraintTop_toBottomOf="@+id/iv_user_editF_picture"
+            app:tint="@color/white" />
 
         <LinearLayout
             android:id="@+id/linearLayout2"
@@ -120,5 +134,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:lottie_rawRes="@raw/lottie_loading" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

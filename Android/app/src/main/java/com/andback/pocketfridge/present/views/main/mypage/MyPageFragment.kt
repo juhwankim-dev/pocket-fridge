@@ -20,7 +20,6 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         super.onViewCreated(view, savedInstanceState)
         initView()
         initViewModel()
-        setToolbar()
     }
 
     private fun initViewModel() {
@@ -75,12 +74,6 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         }
         binding.tvMyPageFLogout.setOnClickListener {
             viewModel.logout()
-        }
-    }
-
-    private fun setToolbar() {
-        binding.tbMyPageF.setNavigationOnClickListener {
-            requireActivity().onBackPressed()
         }
     }
 
