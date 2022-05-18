@@ -61,25 +61,17 @@ class IngreDetailFragment : BaseFragment<FragmentIngreDetailBinding>(R.layout.fr
     }
     
     private fun initView() {
-        val args: IngreDetailFragmentArgs by navArgs()
         when(args.isOwner) {
             true -> {
-                binding.btnIngreDetailFDelete.visibility = View.VISIBLE
-                binding.btnIngreDetailFEdit.visibility = View.VISIBLE
+                binding.tbIngreDetailF.menu.findItem(R.id.delete_menu_fridge).isVisible = true
+                binding.tbIngreDetailF.menu.findItem(R.id.edit_menu_fridge).isVisible = true
             }
             else -> {
-                binding.btnIngreDetailFDelete.visibility = View.GONE
-                binding.btnIngreDetailFEdit.visibility = View.GONE
+                binding.tbIngreDetailF.menu.findItem(R.id.delete_menu_fridge).isVisible = false
+                binding.tbIngreDetailF.menu.findItem(R.id.edit_menu_fridge).isVisible = false
             }
         }
         viewModel.selectIngre(args.ingredient)
-
-        binding.btnIngreDetailFDelete.setOnClickListener {
-            viewModel.deleteIngre()
-        }
-        binding.btnIngreDetailFEdit.setOnClickListener {
-            findNavController().navigate(R.id.action_ingreDetailFragment_to_ingreEditFragment, bundleOf("data" to viewModel.selectedIngre.value))
-        }
     }
 
     private fun setView(ingredient: Ingredient) {
