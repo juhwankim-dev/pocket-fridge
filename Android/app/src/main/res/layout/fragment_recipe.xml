@@ -18,41 +18,226 @@
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/tb_recipeF"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:elevation="0dp"
-                app:title="@string/recipe" />
+                android:layout_height="wrap_content"/>
 
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:overScrollMode="never"
-                android:background="@color/white"
-                android:scrollbars="none">
-
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/cg_recipeF"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    app:singleLine="true"
-                    app:singleSelection="true"
-                    app:selectionRequired="true"
-                    app:checkedChip="@+id/chip_recipeF_default">
-
-                    <com.google.android.material.chip.Chip
-                        style="@style/Colors_Widget.MaterialComponents.Chip.Choice"
-                        android:id="@+id/chip_recipeF_default"
-                        android:layout_marginStart="@dimen/activity_margin_default"
-                        android:text="전체보기" />
-                </com.google.android.material.chip.ChipGroup>
-            </HorizontalScrollView>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_recipeF"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/al_recipeF" />
+            app:layout_constraintTop_toBottomOf="@+id/al_recipeF"
+            android:fillViewport="true">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/menu_text_18"
+                    android:text="회원님을 위한 레시피 추천"
+                    android:layout_marginStart="@dimen/activity_margin_default"
+                    android:layout_marginTop="@dimen/activity_margin_default"/>
+
+                <TextView
+                    style="@style/explain_text"
+                    android:text="좋아요 기반 선호도 알고리즘 기준"
+                    android:layout_marginTop="@dimen/activity_margin_narrow"
+                    android:layout_marginStart="@dimen/activity_margin_default"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_recipeF_recommend"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_margin_default"
+                    android:layout_marginBottom="@dimen/activity_margin_narrow"
+                    android:overScrollMode="never"/>
+
+                <TextView
+                    style="@style/menu_text_18"
+                    android:text="종류별 레시피"
+                    android:layout_marginStart="@dimen/activity_margin_default"
+                    android:layout_marginTop="@dimen/activity_margin_wide"
+                    android:layout_marginBottom="@dimen/activity_margin_default"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iv_recipeF_korean"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:paddingHorizontal="@dimen/activity_margin_20"
+                        android:src="@drawable/ic_korean_banner"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_recipeF_korean_1"
+                        style="@style/body_text"
+                        android:layout_marginStart="@dimen/activity_margin_wide"
+                        android:text="밥이나 국이 땡길땐?"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toTopOf="@+id/tv_recipeF_korean_2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_chainStyle="packed" />
+
+                    <TextView
+                        android:id="@+id/tv_recipeF_korean_2"
+                        style="@style/menu_text_18"
+                        android:text="한식 모아보기"
+                        android:layout_marginTop="@dimen/activity_margin_4"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/tv_recipeF_korean_1"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_recipeF_korean_1" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_margin_narrow">
+
+                    <ImageView
+                        android:id="@+id/iv_recipeF_japanese"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:paddingHorizontal="@dimen/activity_margin_20"
+                        android:src="@drawable/ic_japanese_banner"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_recipeF_japanese_1"
+                        style="@style/body_text"
+                        android:layout_marginStart="@dimen/activity_margin_wide"
+                        android:text="돈까스나 회가 땡길땐?"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toTopOf="@+id/tv_recipeF_japanese_2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_chainStyle="packed" />
+
+                    <TextView
+                        android:id="@+id/tv_recipeF_japanese_2"
+                        style="@style/menu_text_18"
+                        android:text="일식 모아보기"
+                        android:layout_marginTop="@dimen/activity_margin_4"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/tv_recipeF_japanese_1"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_recipeF_japanese_1" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_margin_narrow">
+
+                    <ImageView
+                        android:id="@+id/iv_recipeF_western"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:paddingHorizontal="@dimen/activity_margin_20"
+                        android:src="@drawable/ic_western_banner"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_recipeF_western_1"
+                        style="@style/body_text"
+                        android:layout_marginStart="@dimen/activity_margin_wide"
+                        android:text="파스타나 피자가 땡길땐?"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toTopOf="@+id/tv_recipeF_western_2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_chainStyle="packed" />
+
+                    <TextView
+                        android:id="@+id/tv_recipeF_western_2"
+                        style="@style/menu_text_18"
+                        android:text="양식 모아보기"
+                        android:layout_marginTop="@dimen/activity_margin_4"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/tv_recipeF_western_1"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_recipeF_western_1" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_margin_narrow">
+
+                    <ImageView
+                        android:id="@+id/iv_recipeF_like"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:paddingHorizontal="@dimen/activity_margin_20"
+                        android:src="@drawable/ic_like_banner"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_recipeF_like_1"
+                        style="@style/body_text"
+                        android:layout_marginStart="@dimen/activity_margin_wide"
+                        android:text="내 최애 음식이 땡길땐?"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toTopOf="@+id/tv_recipeF_like_2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_chainStyle="packed" />
+
+                    <TextView
+                        android:id="@+id/tv_recipeF_like_2"
+                        style="@style/menu_text_18"
+                        android:text="북마크 모아보기"
+                        android:layout_marginTop="@dimen/activity_margin_4"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/tv_recipeF_like_1"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_recipeF_like_1" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_margin_default"
+                    android:layout_marginTop="@dimen/activity_margin_wide">
+
+                    <TextView
+                        style="@style/menu_text_18"
+                        android:text="모든 레시피"
+                        android:layout_weight="1"/>
+
+                    <TextView
+                        style="@style/explain_text"
+                        android:id="@+id/tv_recipeF_view_all"
+                        android:layout_gravity="center_vertical"
+                        android:padding="@dimen/activity_margin_4"
+                        android:layout_marginEnd="@dimen/activity_margin_default"
+                        android:text="전체보기"/>
+                </LinearLayout>
+
+                <TextView
+                    style="@style/explain_text"
+                    android:text="보유 식재료가 많은 순으로 보여집니다"
+                    android:layout_marginTop="@dimen/activity_margin_narrow"
+                    android:layout_marginStart="@dimen/activity_margin_default"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_recipeF_all"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_margin_default"
+                    android:paddingHorizontal="@dimen/activity_margin_default"
+                    android:overScrollMode="never"/>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
