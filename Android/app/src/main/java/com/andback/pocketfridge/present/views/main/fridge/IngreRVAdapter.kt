@@ -56,10 +56,11 @@ class IngreRVAdapter: RecyclerView.Adapter<IngreRVAdapter.ViewHolder>() {
     override fun getItemCount() = filteredList.size
 
     fun setItems(list: List<Ingredient>) {
+        val sortedList = list.sortedBy { it.leftDay }
         this.list.clear()
         this.filteredList.clear()
-        this.list.addAll(list)
-        this.filteredList.addAll(list)
+        this.list.addAll(sortedList)
+        this.filteredList.addAll(sortedList)
         notifyDataSetChanged()
     }
 
