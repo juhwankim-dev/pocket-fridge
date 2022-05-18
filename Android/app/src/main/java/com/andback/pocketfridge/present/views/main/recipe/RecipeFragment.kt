@@ -11,8 +11,8 @@ import com.andback.pocketfridge.databinding.FragmentRecipeBinding
 import com.andback.pocketfridge.domain.model.Recipe
 import com.andback.pocketfridge.present.config.BaseFragment
 import com.andback.pocketfridge.present.views.main.recipe.detail.DetailRecipeActivity
-import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class RecipeFragment : BaseFragment<FragmentRecipeBinding>(R.layout.fragment_recipe), onRecipeClickListener {
@@ -41,6 +41,21 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding>(R.layout.fragment_rec
             recipes.observe(viewLifecycleOwner) {
                 recipeRecommendAdapter.setList(it)
                 recipeAllAdapter.setList(it)
+            }
+
+            isLoading.observe(viewLifecycleOwner) {
+                when(it) {
+                    true -> {
+                        binding.sflRecipeFRecommendShimmer.startShimmer()
+                        binding.sflRecipeFRecommendShimmer.visibility = View.VISIBLE
+                        binding.rvRecipeFRecommend.visibility = View.GONE
+                    }
+                    false -> {
+                        binding.sflRecipeFRecommendShimmer.stopShimmer()
+                        binding.sflRecipeFRecommendShimmer.visibility = View.GONE
+                        binding.rvRecipeFRecommend.visibility = View.VISIBLE
+                    }
+                }
             }
         }
     }

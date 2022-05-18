@@ -52,14 +52,36 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/activity_margin_default"
                     android:layout_marginBottom="@dimen/activity_margin_narrow"
-                    android:overScrollMode="never"/>
+                    android:overScrollMode="never"
+                    tools:itemCount="5"
+                    tools:listitem="@layout/item_recommend_list" />
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/sfl_recipeF_recommend_shimmer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include layout="@layout/item_recommend_shimmer_list"/>
+                        <include layout="@layout/item_recommend_shimmer_list"/>
+                        <include layout="@layout/item_recommend_shimmer_list"/>
+                        <include layout="@layout/item_recommend_shimmer_list"/>
+                        <include layout="@layout/item_recommend_shimmer_list"/>
+
+                    </LinearLayout>
+                </com.facebook.shimmer.ShimmerFrameLayout>
 
                 <TextView
                     style="@style/menu_text_18"
-                    android:text="종류별 레시피"
                     android:layout_marginStart="@dimen/activity_margin_default"
                     android:layout_marginTop="@dimen/activity_margin_wide"
-                    android:layout_marginBottom="@dimen/activity_margin_default"/>
+                    android:layout_marginBottom="@dimen/activity_margin_default"
+                    android:text="종류별 레시피" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
