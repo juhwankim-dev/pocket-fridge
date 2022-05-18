@@ -7,28 +7,45 @@
 
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/activity_margin_default"
         android:orientation="vertical"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-        <ImageButton
-            android:id="@+id/ib_sort_listF_close"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:background="@android:color/transparent"
-            android:padding="@dimen/activity_margin_narrow"
-            app:srcCompat="@drawable/ic_close" />
+        <TextView
+            android:id="@+id/textView2"
+            style="@style/list_item_title"
+            android:text="정렬"
+            android:elevation="1dp"
+            app:layout_constraintBottom_toBottomOf="@+id/ll_sort_listF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ll_sort_listF" />
 
-        <ListView
-            android:id="@+id/lv_ssort_listF"
+        <LinearLayout
+            android:id="@+id/ll_sort_listF"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="0dp" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent">
 
-    </LinearLayout>
+            <ImageButton
+                android:id="@+id/ib_sort_listF_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:background="@android:color/transparent"
+                android:padding="@dimen/activity_margin_default"
+                app:srcCompat="@drawable/ic_close" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_sort_listF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/activity_margin_default"
+            app:layout_constraintTop_toBottomOf="@+id/ll_sort_listF" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

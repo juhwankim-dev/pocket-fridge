@@ -19,4 +19,14 @@
     <color name="black_opaque_screen">#66000000</color>
     <color name="gray_divider">#E2E2E2</color>
     <color name="gray_light">#F6F6F6</color>
+
+    <!-- 특정 뷰를 위한 색상 -->
+    <color name="gray_search_bar_bg">#f1f1f1</color>
+    <color name="gray_d_day_deactivate_bg">#d1cfd0</color>
+    <color name="gray_ingre_circle_bg">#f6f6f6</color>
+    <color name="gray_search_bar_close_bg">#d8d8d8</color>
+    <color name="gray_search_result_bg">#fafafa</color>
+    <color name="black_search_result_text">#7a7a7a</color>
+    <color name="black_chip_activate_bg">#363535</color>
+    <color name="black_chip_deactivate_bg">#787878</color>
 </resources>
