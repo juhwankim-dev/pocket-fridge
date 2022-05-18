@@ -29,145 +29,138 @@
                 android:id="@+id/tb_ingre_detailF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:menu="@menu/menu_toolbar_ingre_detail"
                 app:navigationIcon="@drawable/ic_back"
-                app:title="@{ingredient.name}"
-                app:menu="@menu/menu_toolbar_ingre_detail"/>
+                app:title="@{ingredient.name}" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <com.google.android.material.card.MaterialCardView
+        <ImageView
+            android:id="@+id/iv_ingre_detailF"
+            android:layout_width="@dimen/ingre_image_size"
+            android:layout_height="@dimen/ingre_image_size"
+            android:layout_marginStart="@dimen/activity_margin_wide"
+            android:layout_marginTop="@dimen/activity_margin_wide"
+            android:background="@drawable/bg_circle_gray"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/abl_ingre_detailF" />
+
+        <TextView
+            android:id="@+id/tv_ingre_detailF_fridge_name"
+            style="@style/body_text.bold"
+            android:layout_marginStart="@dimen/activity_margin_wide"
+            app:layout_constraintBottom_toTopOf="@+id/ll_ingre_detailF_storage"
+            app:layout_constraintStart_toEndOf="@id/iv_ingre_detailF"
+            app:layout_constraintTop_toTopOf="@id/iv_ingre_detailF"
+            android:layout_marginBottom="@dimen/activity_margin_narrow"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="공유 냉장고" />
+
+        <LinearLayout
+            android:id="@+id/ll_ingre_detailF_storage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@id/iv_ingre_detailF"
+            app:layout_constraintStart_toStartOf="@id/tv_ingre_detailF_fridge_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_ingre_detailF_fridge_name">
+
+            <TextView
+                style="@style/body_text.bold"
+                android:layout_marginEnd="@dimen/activity_margin_narrow"
+                android:textColor="@{ingredient.storage == Storage.Fridge? @color/main_color: @color/black_high_emphasis}"
+                tools:text="냉장" />
+
+            <TextView
+                style="@style/body_text.bold"
+                android:layout_marginEnd="@dimen/activity_margin_narrow"
+                android:textColor="@{ingredient.storage == Storage.Freeze? @color/main_color: @color/black_high_emphasis}"
+                tools:text="냉동" />
+
+            <TextView
+                style="@style/body_text.bold"
+                android:textColor="@{ingredient.storage == Storage.Room? @color/main_color: @color/black_high_emphasis}"
+                tools:text="실온" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_ingre_detailF_ingre_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/abl_ingre_detailF"
-            android:layout_marginHorizontal="@dimen/activity_margin_24"
-            android:layout_marginTop="@dimen/activity_margin_default"
-            app:strokeWidth="1dp"
-            app:strokeColor="@color/gray_non_clickable_button"
-            app:cardElevation="0dp">
+            app:layout_constraintTop_toBottomOf="@id/iv_ingre_detailF"
+            android:layout_marginHorizontal="@dimen/activity_margin_default"
+            android:layout_marginTop="@dimen/activity_margin_wide"
+            android:padding="@dimen/activity_margin_default"
+            android:background="@drawable/bg_ellipse_filled_gray_4"
+            android:orientation="horizontal">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/activity_margin_default">
+            <TextView
+                android:id="@+id/tv_ingre_detailF_ingre_name"
+                style="@style/body_text.bold"
+                tools:text="옥수수"/>
 
-                <LinearLayout
-                    android:id="@+id/ll_ingre_detailF_storage"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:orientation="horizontal"
-                    android:gravity="end">
+        </LinearLayout>
 
-                    <TextView
-                        style="@style/body_text"
-                        android:text="@string/storage_fridge"
-                        android:layout_marginEnd="@dimen/activity_margin_narrow"
-                        android:textColor="@{ingredient.storage == Storage.Fridge? @color/main_color: @color/black_high_emphasis}"/>
-
-                    <TextView
-                        style="@style/body_text"
-                        android:text="@string/storage_freeze"
-                        android:layout_marginEnd="@dimen/activity_margin_narrow"
-                        android:textColor="@{ingredient.storage == Storage.Freeze? @color/main_color: @color/black_high_emphasis}"/>
-
-                    <TextView
-                        style="@style/body_text"
-                        android:text="@string/storage_room"
-                        android:textColor="@{ingredient.storage == Storage.Room? @color/main_color: @color/black_high_emphasis}"/>
-
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/iv_ingre_detailF"
-                    android:layout_width="72dp"
-                    android:layout_height="72dp"
-                    app:layout_constraintTop_toBottomOf="@id/ll_ingre_detailF_storage"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:background="@drawable/bg_circle_white"
-                    tools:backgroundTint="@color/gray"/>
-
-                <TextView
-                    android:id="@+id/tv_ingre_detailF_category"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/iv_ingre_detailF"
-                    app:layout_constraintBottom_toBottomOf="@id/iv_ingre_detailF"
-                    style="@style/body_text"
-                    android:textStyle="bold"
-                    tools:text="사과"/>
-
-                <TextView
-                    app:layout_constraintTop_toBottomOf="@id/tv_ingre_detailF_category"
-                    app:layout_constraintEnd_toStartOf="@id/tv_ingre_detailF_left_day"
-                    android:layout_marginEnd="@dimen/activity_margin_narrow"
-                    style="@style/body_text"
-                    android:textStyle="bold"
-                    android:text="@string/left_day_label"/>
-
-                <TextView
-                    android:id="@+id/tv_ingre_detailF_left_day"
-                    app:layout_constraintTop_toBottomOf="@id/tv_ingre_detailF_category"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    style="@style/body_text"
-                    android:textStyle="bold"
-                    android:text="@{leftDay}"
-                    android:textColor="@{(0 > ingredient.leftDay)? @color/main_color : @color/black}"
-                    tools:text="D-3" />
-
-                <TextView
-                    style="@style/body_text"
-                    android:id="@+id/tv_ingre_detailF_purchased_date"
-                    app:layout_constraintTop_toBottomOf="@id/iv_ingre_detailF"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="@dimen/activity_margin_wide"
-                    android:text="@{ingredient.purchasedDate.replace('-','.')}"
-                    tools:text="2022.05.01"/>
-
-                <TextView
-                    style="@style/body_text"
-                    app:layout_constraintTop_toTopOf="@id/tv_ingre_detailF_purchased_date"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:text="@string/purchased_date"/>
-
-                <TextView
-                    style="@style/body_text"
-                    android:id="@+id/tv_ingre_detailF_expiry_date"
-                    app:layout_constraintTop_toBottomOf="@id/tv_ingre_detailF_purchased_date"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="@dimen/activity_margin_narrow"
-                    android:text="@{ingredient.expiryDate.replace('-','.')}"
-                    tools:text="2022.05.02"/>
-
-                <TextView
-                    style="@style/body_text"
-                    app:layout_constraintTop_toTopOf="@id/tv_ingre_detailF_expiry_date"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:text="@string/expiry_date"/>
-
-           </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_ingre_detailF_delete"
-            style="@style/button_text"
+        <LinearLayout
+            android:id="@+id/ll_ingre_detailF_ingre_purchased_date"
             android:layout_width="match_parent"
-            android:layout_marginHorizontal="@dimen/activity_margin_24"
-            android:layout_marginBottom="@dimen/activity_margin_default"
-            android:background="@drawable/bg_ellipse_outline_main_color_32"
-            android:text="@string/delete_button"
-            app:layout_constraintBottom_toTopOf="@id/btn_ingre_detailF_edit" />
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_ingre_detailF_ingre_name"
+            android:layout_marginHorizontal="@dimen/activity_margin_default"
+            android:layout_marginTop="@dimen/activity_margin_narrow"
+            android:padding="@dimen/activity_margin_default"
+            android:background="@drawable/bg_ellipse_filled_gray_4"
+            android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_ingre_detailF_edit"
-            style="@style/button_text"
+            <TextView
+                android:id="@+id/tv_ingre_detailF_purchased_date"
+                android:text="@{ingredient.purchasedDate.replace('-','.')}"
+                style="@style/body_text.bold"
+                tools:text="2022.01.01"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+
+            <TextView
+                style="@style/body_text.bold"
+                android:textColor="@color/gray"
+                android:text="@string/purchased_date"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_ingre_detailF_ingre_expiry_date"
             android:layout_width="match_parent"
-            android:layout_margin="@dimen/activity_margin_24"
-            android:background="@drawable/bg_ellipse_filled_main_color_32"
-            android:text="@string/edit_button"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_ingre_detailF_ingre_purchased_date"
+            android:layout_marginHorizontal="@dimen/activity_margin_default"
+            android:layout_marginTop="@dimen/activity_margin_narrow"
+            android:padding="@dimen/activity_margin_default"
+            android:background="@drawable/bg_ellipse_filled_gray_4"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_ingre_detailF_expiry_date"
+                android:text="@{ingredient.expiryDate.replace('-','.')}"
+                style="@style/body_text.bold"
+                tools:text="2022.01.01"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+
+            <TextView
+                style="@style/body_text.bold"
+                android:textColor="@color/gray"
+                android:text="@string/expiry_date"/>
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
