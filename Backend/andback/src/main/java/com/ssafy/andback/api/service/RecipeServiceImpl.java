@@ -47,6 +47,7 @@ public class RecipeServiceImpl implements RecipeService {
 
         List<Recipe> recipeList = recipeRepository.findAll();
         List<RecipeLike> recipeLikeList = recipeLikeRepository.findAllByUser(user);
+        Map<Long, Long> requireCountDtoMap = recipeRepository.findAllRefrigeratorIngredientCount(user);
         List<RecipeResponseDto> result = new ArrayList<>();
 
         Set<Long> set = new HashSet<>();
@@ -68,6 +69,7 @@ public class RecipeServiceImpl implements RecipeService {
                         .recipeFoodName(temp.getRecipeFoodName())
                         .recipeTime(temp.getRecipeTime())
                         .recipeLike(true)
+                        .requireCount(requireCountDtoMap.get(temp.getRecipeId()))
                         .build());
             } else {
                 result.add(RecipeResponseDto.builder()
@@ -80,6 +82,7 @@ public class RecipeServiceImpl implements RecipeService {
                         .recipeFoodName(temp.getRecipeFoodName())
                         .recipeTime(temp.getRecipeTime())
                         .recipeLike(false)
+                        .requireCount(requireCountDtoMap.get(temp.getRecipeId()))
                         .build());
             }
         }
