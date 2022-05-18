@@ -68,18 +68,18 @@
             <TextView
                 style="@style/body_text.bold"
                 android:layout_marginEnd="@dimen/activity_margin_narrow"
-                android:textColor="@{ingredient.storage == Storage.Fridge? @color/main_color: @color/black_high_emphasis}"
+                android:textColor="@{ingredient.storage == Storage.Fridge? @color/black: @color/gray}"
                 tools:text="냉장" />
 
             <TextView
                 style="@style/body_text.bold"
                 android:layout_marginEnd="@dimen/activity_margin_narrow"
-                android:textColor="@{ingredient.storage == Storage.Freeze? @color/main_color: @color/black_high_emphasis}"
+                android:textColor="@{ingredient.storage == Storage.Freeze? @color/black: @color/gray}"
                 tools:text="냉동" />
 
             <TextView
                 style="@style/body_text.bold"
-                android:textColor="@{ingredient.storage == Storage.Room? @color/main_color: @color/black_high_emphasis}"
+                android:textColor="@{ingredient.storage == Storage.Room? @color/black: @color/gray}"
                 tools:text="실온" />
         </LinearLayout>
 
