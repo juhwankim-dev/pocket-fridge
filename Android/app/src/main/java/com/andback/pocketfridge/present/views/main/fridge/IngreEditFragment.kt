@@ -28,23 +28,14 @@ class IngreEditFragment: BaseFragment<FragmentIngreEditBinding>(R.layout.fragmen
     private val detailViewModel: IngreDetailViewModel by activityViewModels()
     private val args: IngreEditFragmentArgs by navArgs()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val superCall = super.onCreateView(inflater, container, savedInstanceState)
-        binding.vm = viewModel
-        initViewModel()
-        return superCall
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
     }
 
     private fun init() {
+        binding.vm = viewModel
+        initViewModel()
         setObserver()
         setExpiryDateIcon()
         setPurchasedDateIcon()
