@@ -26,7 +26,6 @@ class IngreDetailFragment : BaseFragment<FragmentIngreDetailBinding>(R.layout.fr
 
     private fun init() {
         initViewModel()
-//        initView()
         setObserver()
         setToolbar()
     }
@@ -63,15 +62,6 @@ class IngreDetailFragment : BaseFragment<FragmentIngreDetailBinding>(R.layout.fr
             }
         }
     }
-    
-//    private fun initView() {
-//        binding.btnIngreDetailFDelete.setOnClickListener {
-//            viewModel.deleteIngre()
-//        }
-//        binding.btnIngreDetailFEdit.setOnClickListener {
-//            findNavController().navigate(R.id.action_ingreDetailFragment_to_ingreEditFragment, bundleOf("data" to viewModel.selectedIngre.value))
-//        }
-//    }
 
     private fun setView(ingredient: Ingredient) {
         binding.ingredient = ingredient
@@ -86,18 +76,6 @@ class IngreDetailFragment : BaseFragment<FragmentIngreDetailBinding>(R.layout.fr
                 "D+${ingredient.leftDay}"
             }
         }
-
-//        val args: IngreDetailFragmentArgs by navArgs()
-//        when(args.isOwner) {
-//            true -> {
-//                binding.btnIngreDetailFDelete.visibility = View.VISIBLE
-//                binding.btnIngreDetailFEdit.visibility = View.VISIBLE
-//            }
-//            else -> {
-//                binding.btnIngreDetailFDelete.visibility = View.GONE
-//                binding.btnIngreDetailFEdit.visibility = View.GONE
-//            }
-//        }
     }
 
     private fun setToolbar() {
