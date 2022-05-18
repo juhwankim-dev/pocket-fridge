@@ -35,7 +35,6 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(), Filterab
                     "D${data.leftDay}"
                 }
             }
-            // TODO : 카테고리 이미지 적용
         }
     }
 

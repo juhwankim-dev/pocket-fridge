@@ -42,7 +42,8 @@
             app:layout_constraintEnd_toEndOf="@+id/iv_search_resultF_bg"
             app:layout_constraintStart_toStartOf="@+id/iv_search_resultF_bg"
             app:layout_constraintTop_toTopOf="@+id/iv_search_resultF_bg"
-            app:srcCompat="@drawable/ic_error_category" />
+            bindCategoryImage="@{ingredient.subCategory}"
+            tools:src="@drawable/ic_error_category" />
 
         <TextView
             style="@style/button_text"
