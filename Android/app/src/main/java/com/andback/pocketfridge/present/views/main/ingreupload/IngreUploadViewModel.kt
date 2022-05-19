@@ -230,5 +230,6 @@ class IngreUploadViewModel @Inject constructor(
     fun clearData() {
         clearError()
         setDefaultData()
+        _selectedSubCategory.value = null
     }
 }
