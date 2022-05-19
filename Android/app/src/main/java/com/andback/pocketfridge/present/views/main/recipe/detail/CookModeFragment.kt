@@ -2,9 +2,14 @@ package com.andback.pocketfridge.present.views.main.recipe.detail
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.pm.ActivityInfo
+import android.content.Context
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
@@ -15,6 +20,8 @@ import com.andback.pocketfridge.present.config.BaseFragment
 import com.andback.pocketfridge.present.utils.STTUtil
 import com.andback.pocketfridge.present.utils.TTSUtil
 import com.gun0912.tedpermission.rx2.TedPermission
+import kotlinx.coroutines.*
+import java.lang.Runnable
 import kotlin.properties.Delegates
 
 class CookModeFragment : BaseFragment<FragmentCookModeBinding>(R.layout.fragment_cook_mode) {
@@ -25,13 +32,41 @@ class CookModeFragment : BaseFragment<FragmentCookModeBinding>(R.layout.fragment
     val isListening = MutableLiveData<Boolean>()
     val assistant = Assistant()
 
+    // 조도 센서
+    private lateinit var sensorManager: SensorManager
+    private var lightSensor : Sensor? = null
+    private var isSensorAvailable = true
+    private val listener = LightSensorListener()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         checkPermission()
         initView()
         initEvent()
+        initSensor()
         binding.fragment = this
+    }
+
+    private fun initSensor() {
+        sensorManager = requireActivity().getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
+
+        if (lightSensor == null){
+            isSensorAvailable = false
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if(isSensorAvailable == true)
+            sensorManager.registerListener(listener, lightSensor, SensorManager.SENSOR_DELAY_UI)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if(isSensorAvailable == true)
+            sensorManager.unregisterListener(listener)
     }
 
     @SuppressLint("CheckResult")
@@ -158,5 +193,76 @@ class CookModeFragment : BaseFragment<FragmentCookModeBinding>(R.layout.fragment
         tts.textToSpeech.shutdown()
         stt.stopListening()
         super.onDestroyView()
+    }
+
+    inner class LightSensorListener: SensorEventListener {
+        private var cnt = 0
+        private val DELTA_THRESHOLD = 60F
+        private var oldValue = 0F
+        private var job: Job? = null
+
+        // 어두워지는 경우
+        private fun isOverThreshold(new: Float, old: Float): Boolean {
+            return old - new > DELTA_THRESHOLD
+        }
+
+        override fun onSensorChanged(event: SensorEvent?) {
+            if (event?.sensor == lightSensor){
+                Log.d(TAG, "onSensorChanged: ${event?.values?.get(0)}")
+                val current = event?.values?.get(0)
+                current?.let {
+                    if(isOverThreshold(it, oldValue)) {
+                        cnt++
+                        Log.d(TAG, "onSensorChanged: $cnt")
+                        if(job == null || job!!.isActive == false) {
+                            startCoroutine()
+                        }
+                    }
+                    oldValue = it
+                }
+            }
+        }
+
+        private fun startCoroutine() {
+            job?.cancel()
+            job = CoroutineScope(Dispatchers.Default).launch {
+                Log.d(TAG, "startCoroutine: start")
+                delay(1500L)
+                if(cnt == 1) {
+                    //다음으로 이동
+                    Log.d(TAG, "startCoroutine: 다음으로")
+                    binding.vpCookModeF.apply {
+                        if(currentItem < viewModel.recipeSteps.value!!.size - 1) {
+                            tts.speak(resources.getString(R.string.ipa_next))
+                            currentItem += 1
+                        } else {
+                            tts.speak(resources.getString(R.string.ipa_last))
+                        }
+
+                    }
+                } else if(cnt > 1) {
+                    // 이전으로 이동
+                    Log.d(TAG, "startCoroutine: 이전으로")
+                    binding.vpCookModeF.apply {
+                        if(currentItem > 0) {
+                            tts.speak(resources.getString(R.string.ipa_before))
+                            currentItem -= 1
+                        } else {
+                            tts.speak(resources.getString(R.string.ipa_first))
+                        }
+                    }
+                }
+                cnt = 0
+                Log.d(TAG, "startCoroutine: end")
+            }
+        }
+
+        override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+
+        }
+    }
+
+    companion object {
+        private const val TAG = "CookModeFragment_debuk"
     }
 }
