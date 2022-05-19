@@ -18,6 +18,8 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import retrofit2.HttpException
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 private const val TAG = "IngreUploadViewModel_debuk"
@@ -93,8 +95,25 @@ class IngreUploadViewModel @Inject constructor(
 
     // endregion
 
+    private val _isUploadSuccess = MutableLiveData(false)
+    val isUploadSuccess: LiveData<Boolean> get() = _isUploadSuccess
+
     init {
-        getCategoryUseCase.getAllCategories()
+        getCategories()
+    }
+
+    //IngreUpload에서 시작할 때 호출
+    fun init() {
+        getFridges()
+        setPurchaseDateToday()
+    }
+
+    private fun setPurchaseDateToday() {
+        datePurchased.value = SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().time)
+    }
+
+    private fun getCategories() {
+        val observable = getCategoryUseCase.getAllCategories()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -126,7 +145,7 @@ class IngreUploadViewModel @Inject constructor(
                     // TODO: onSubscribe 처리
                 }
             )
-        getFridges()
+        compositeDisposable.add(observable)
     }
 
     fun onUploadBtnClick() {
@@ -136,7 +155,7 @@ class IngreUploadViewModel @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                        // TODO: 식재료 등록 성공      
+                        _isUploadSuccess.value = true
                     },
                     { throwable ->
                         handleException(throwable)
@@ -217,6 +236,7 @@ class IngreUploadViewModel @Inject constructor(
         _selectedFridge.value = getDefaultFridge()
         _selectedMainCategory.value = getDefaultMainCategory()
         _selectedSubCategory.value = getDefaultSubCategory()
+        _isUploadSuccess.value = false
     }
 
     /**
@@ -298,8 +318,13 @@ class IngreUploadViewModel @Inject constructor(
         compositeDisposable.clear()
     }
 
+    // IngreUploadFragment 뷰 지울 때 호출
     fun clearData() {
         clearError()
         setDefaultData()
+    }
+
+    fun selectAllSubCategory() {
+        subCategories.value?.let { _selectedSubCategories.value = it }
     }
 }

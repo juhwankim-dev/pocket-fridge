@@ -16,6 +16,8 @@ import com.andback.pocketfridge.present.config.BaseFragment
 import com.andback.pocketfridge.present.utils.DateConverter
 import com.andback.pocketfridge.present.utils.Storage
 import com.andback.pocketfridge.present.views.main.DatePickerFragment
+import com.andback.pocketfridge.present.views.main.FridgeListAdapter
+import com.andback.pocketfridge.present.views.main.fridge.FridgeListBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,6 +25,8 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
     companion object {
         private const val TAG = "IngreUploadFragment_debuk"
     }
+
+    // 식재료 선택 다이얼로그와 정보 공유
     private val viewModel: IngreUploadViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -33,11 +37,45 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
     private fun init() {
         binding.vm = viewModel
         setObserver()
-        setExpiryDateIcon()
-        setPurchasedDateIcon()
-        setToolbarButton()
-        setCategoryClickListener()
         setDataFromBarcode()
+        initView()
+        initViewModel()
+    }
+
+    private fun initViewModel() {
+        viewModel.init()
+    }
+
+    private fun initView() {
+        setCalendarIconClickListener()
+        setCategoryClickListener()
+        setToolbarButton()
+        setFridgeClickListener()
+    }
+
+    private fun setCalendarIconClickListener() {
+        binding.tilIngreUploadFExpiryDate.setEndIconOnClickListener {
+            showDatePickerWith { _, year, month, day ->
+                val result = DateConverter.toStringDate(year, month, day)
+                viewModel.dateExpiry.value = result
+            }
+        }
+
+        binding.tilIngreUploadFPurchasedDate.setEndIconOnClickListener {
+            showDatePickerWith { _, year, month, day ->
+                val result = DateConverter.toStringDate(year, month, day)
+                viewModel.datePurchased.value = result
+            }
+        }
+    }
+
+    private fun setFridgeClickListener() {
+        binding.tvIngreUploadFFridgeName.setOnClickListener {
+            showFridgeDialog()
+        }
+        binding.ivIngreUploadFFridge.setOnClickListener {
+            showFridgeDialog()
+        }
     }
 
     override fun onStop() {
@@ -51,7 +89,7 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
 
             // 에러 관련 live data
                 isNameError.observe(owner) {
-                    binding.tilIngreUploadFName.error = if(it) getString(R.string.error_msg_ingre_name) else null 
+                    binding.tilIngreUploadFIngreName.error = if(it) getString(R.string.error_msg_ingre_name) else null
                 }
                 
                 isDateExpiryError.observe(owner) {
@@ -70,68 +108,14 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
                     // TODO: 네트워크 이용 불가 ui 처리
                 }
 
-            // 식재료 정보관련 live data
-                selectedStorage.observe(owner) {
-                    clearStorageTextView()
-                    setBrandColorOnText(it)
-                }
+
+                // 식재료 정보관련 live data
 
                 selectedSubCategory.observe(owner) {
                     it?.let {
-                        binding.tvIngreUploadFCategory.text = it.subCategoryName    
+                        // TODO: 서브 카테고리 이미지 반영
                     }
                 }
-                
-                selectedMainCategory.observe(owner) {
-                    it?.let {
-                        // TODO: 이미지 반영 
-                    }
-                }
-
-//                // 서브카테고리 리스트가 있으면 첫 값을 기본으로 세팅
-//                subCategories.observe(owner) {
-//                    ingreCategory.value = it[0].subCategoryName
-//                }
-            // 냉장고 리스트 세팅
-                fridges.observe(owner) {
-                    setDropDownAdapter(it)
-                }
-            }
-        }
-    }
-
-    private fun clearStorageTextView() {
-        val color = ContextCompat.getColor(requireContext(), R.color.gray)
-        binding.tvIngreUploadFStorageFridge.setTextColor(color)
-        binding.tvIngreUploadFStorageFreeze.setTextColor(color)
-        binding.tvIngreUploadFStorageRoom.setTextColor(color)
-    }
-
-    private fun setBrandColorOnText(storage: Storage) {
-        val color = ContextCompat.getColor(requireContext(), R.color.main_color)
-        when(storage) {
-            Storage.Fridge -> binding.tvIngreUploadFStorageFridge.setTextColor(color)
-            Storage.Freeze -> binding.tvIngreUploadFStorageFreeze.setTextColor(color)
-            Storage.Room -> binding.tvIngreUploadFStorageRoom.setTextColor(color)
-        }
-    }
-
-    private fun setExpiryDateIcon() {
-        binding.tilIngreUploadFExpiryDate.setStartIconOnClickListener {
-            showDatePickerWith { _, year, month, day ->
-                val result = DateConverter.toStringDate(year, month, day)
-                viewModel.dateExpiry.value = result
-                Log.d(TAG, "setExpiryDateIcon: $result")
-            }
-        }
-    }
-
-    private fun setPurchasedDateIcon() {
-        binding.tilIngreUploadFPurchasedDate.setStartIconOnClickListener {
-            showDatePickerWith { _, year, month, day ->
-                val result = DateConverter.toStringDate(year, month, day)
-                viewModel.datePurchased.value = result
-                Log.d(TAG, "setPurchasedDateIcon: $result")
             }
         }
     }
@@ -144,21 +128,6 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
     private fun showCategoryPicker() {
         val categorySelectFragment = CategorySelectFragment()
         categorySelectFragment.show(childFragmentManager, "categoryPicker")
-    }
-
-    private fun setDropDownAdapter(list: List<FridgeEntity>) {
-        val stringList = list.map { it.name }
-        val adapter = ArrayAdapter(requireContext(), R.layout.item_dropdown_list, stringList)
-        (binding.tvIngreUploadFSelectFridge as? AutoCompleteTextView)?.let { tv ->
-            tv.setText(stringList[0])
-            tv.setAdapter(adapter)
-            // 아이템 클릭 시 냉장고 업데이트
-            tv.setOnItemClickListener { _, _, i, l ->
-                Log.d(TAG, "setDropdownAdapter: $i, $l")
-                val fridge = list.find { it.name == stringList[i] }
-                fridge?.let { viewModel.setFridge(it) }
-            }
-        }
     }
 
     private fun setToolbarButton() {
@@ -177,8 +146,22 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
         }
     }
 
+    private fun showFridgeDialog() {
+        FridgeListBottomSheet(
+            viewModel.fridges.value!!,
+            viewModel.selectedFridge.value!!.id
+        ).apply {
+            fridgeAdapter.itemClickListener = object : FridgeListAdapter.ItemClickListener {
+                override fun onClick(data: FridgeEntity) {
+                    viewModel.setFridge(data)
+                    dismiss()
+                }
+            }
+        }.show(requireActivity().supportFragmentManager, FridgeListBottomSheet.TAG)
+    }
+
     private fun setCategoryClickListener() {
-        binding.tvIngreUploadFCategory.setOnClickListener {
+        binding.ivIngreUploadFCategory.setOnClickListener {
             showCategoryPicker()
         }
         binding.ivIngreUploadF.setOnClickListener {
