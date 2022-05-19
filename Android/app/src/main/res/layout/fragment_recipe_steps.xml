@@ -21,8 +21,9 @@
             android:id="@+id/iv_recipe_stepsF_img"
             android:layout_width="240dp"
             android:layout_height="240dp"
-            android:layout_marginStart="60dp"
+            android:layout_marginStart="40dp"
             android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
             bindImageUrl="@{recipeStep.url}"
             tools:src="@drawable/bg_food_sample"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -50,35 +51,16 @@
         <TextView
             android:id="@+id/tv_recipe_stepsF_explanation"
             style="@style/body_text"
+            android:layout_width="0dp"
             android:layout_marginStart="@dimen/activity_margin_default"
-            android:paddingHorizontal="@dimen/activity_margin_narrow"
-            android:paddingVertical="4dp"
+            android:paddingStart="@dimen/activity_margin_narrow"
             android:textStyle="bold"
             android:text="@{recipeStep.explanation}"
             tools:text="어묵은 길게 썰고 대파는 어슷하게 썰어주세요."
+            app:layout_constraintWidth_percent="0.4"
             app:layout_constraintBottom_toBottomOf="@+id/iv_recipe_stepsF_img"
             app:layout_constraintStart_toEndOf="@+id/iv_recipe_stepsF_img"
             app:layout_constraintTop_toBottomOf="@+id/tv_recipe_stepsF_step" />
-
-        <ImageView
-            android:id="@+id/iv_recipe_stepsF_circle"
-            android:layout_width="52dp"
-            android:layout_height="52dp"
-            android:layout_margin="@dimen/activity_margin_wide"
-            android:background="@drawable/bg_circle_white"
-            android:elevation="4dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:background="@drawable/ic_mic"
-            android:elevation="4dp"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_recipe_stepsF_circle"
-            app:layout_constraintEnd_toEndOf="@+id/iv_recipe_stepsF_circle"
-            app:layout_constraintStart_toStartOf="@+id/iv_recipe_stepsF_circle"
-            app:layout_constraintTop_toTopOf="@+id/iv_recipe_stepsF_circle" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

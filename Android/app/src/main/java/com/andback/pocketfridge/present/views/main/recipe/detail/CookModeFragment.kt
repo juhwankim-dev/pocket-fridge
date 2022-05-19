@@ -57,7 +57,9 @@ class CookModeFragment : BaseFragment<FragmentCookModeBinding>(R.layout.fragment
         binding.vpCookModeF.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         adapter = CookModePagerAdapter(requireActivity())
 
-        for(i in 0 until viewModel.recipeSteps.value!!.size) {
+        val steps = viewModel.recipeSteps.value!!.size
+        binding.pbCookModeF.max = steps
+        for(i in 0 until steps) {
             val bundle = Bundle()
             bundle.putInt("step", i)
 
@@ -75,6 +77,7 @@ class CookModeFragment : BaseFragment<FragmentCookModeBinding>(R.layout.fragment
         binding.vpCookModeF.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback(){
             override fun onPageSelected(position: Int) {
                 binding.title = "${viewModel.selectedRecipe.foodName} (${position + 1}/${viewModel.recipeSteps.value!!.size})"
+                binding.pbCookModeF.progress = position + 1
             }
         })
         binding.ivCookModeFBack.setOnClickListener {

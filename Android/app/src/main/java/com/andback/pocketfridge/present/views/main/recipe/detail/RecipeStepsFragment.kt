@@ -40,9 +40,9 @@ class RecipeStepsFragment : Fragment() {
         // 마이크 버튼을 클릭하면 음성 비서가 응답
         // 원래는 음성비서를 부르면 -> command에 "xx아"가 들어가고 -> 응답을 함
         // 버튼을 누르면 -> command에 "xx아"를 직접 넣어주어서 -> 응답을 하게 만듦
-        binding.ivRecipeStepsFCircle.setOnClickListener {
+       // binding.ivRecipeStepsFCircle.setOnClickListener {
             // todo 버튼 눌렀을 때 음성비서 작동하게 하는건 다음에 수정. 규모가 큰 수정이 될듯.
             //assistant.command = resources.getStringArray(R.array.ipa_name_list)[0]
-        }
+        //}
     }
 }
