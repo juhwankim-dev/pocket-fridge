@@ -38,9 +38,10 @@
     <string name="error_msg_ingre_date_expiry">유통기한은 구매일보다 미래의 날짜로 입력해 주세요</string>
     <string name="error_msg_ingre_date_purchased">구매일은 오늘 포함 과거의 날짜로 입력해 주세요</string>
 
-    <string name="delete_button">삭제하기</string>
+    <string name="cancel_button">취소</string>
+    <string name="delete_button">삭제</string>
     <string name="edit_button">수정하기</string>
-    <string name="delete_ingre_title">"식재료를 삭제하시겠습니까?"</string>
+    <string name="delete_ingre_title">식재료를 삭제하시겠습니까?\n\n</string>
     <string name="ingre_delete_error">식재료 삭제에 실패했습니다.</string>
     <string name="ingre_delete_success">식재료를 삭제했습니다.</string>
     <string name="ingre_edit_error">식재료 수정에 실패했습니다.</string>
@@ -74,25 +75,25 @@
     <string name="delete_user_guide5">회원 탈퇴가 정상적으로 신청되었습니다.\n포켓프리지를 이용해주셔서 감사합니다.</string>
 
     <!-- Error Messages -->
-    <string name="name_empty_error">"이름은 필수 입력 값입니다."</string>
-    <string name="name_pattern_error">"이름은 특수문자를 제외한 2~20자리여야 합니다."</string>
-    <string name="nickname_empty_error">"닉네임은 필수 입력 값입니다."</string>
-    <string name="nickname_pattern_error">"닉네임은 특수문자를 제외한 2~10자리여야 합니다."</string>
-    <string name="email_empty_error">"이메일은 필수 입력 값입니다."</string>
-    <string name="email_pattern_error">"이메일 형식이 올바르지 않습니다."</string>
-    <string name="pw_empty_error">"비밀번호는 필수 입력 값입니다."</string>
-    <string name="pw_pattern_error">"비밀번호는 영문자를 포함한 5~15자리여야 합니다."</string>
-    <string name="pw_match_error">"비밀번호가 일치하지 않습니다."</string>
-    <string name="pw_wrong_error">"비밀번호를 잘못 입력하였습니다."</string>
-    <string name="email_overlap_error">"중복된 이메일이 존재합니다."</string>
-    <string name="nickname_overlap_error">"중복된 닉네임이 존재합니다."</string>
-    <string name="email_auth_len_error">"인증번호는 10자리 입니다."</string>
-    <string name="email_auth_match_error">"인증번호를 확인해주세요."</string>
-    <string name="user_edit_empty_error">"모든 정보를 입력해주세요."</string>
+    <string name="name_empty_error">이름은 필수 입력 값입니다.</string>
+    <string name="name_pattern_error">이름은 특수문자를 제외한 2~20자리여야 합니다.</string>
+    <string name="nickname_empty_error">닉네임은 필수 입력 값입니다.</string>
+    <string name="nickname_pattern_error">닉네임은 특수문자를 제외한 2~10자리여야 합니다.</string>
+    <string name="email_empty_error">이메일은 필수 입력 값입니다.</string>
+    <string name="email_pattern_error">이메일 형식이 올바르지 않습니다.</string>
+    <string name="pw_empty_error">비밀번호는 필수 입력 값입니다.</string>
+    <string name="pw_pattern_error">비밀번호는 영문자를 포함한 5~15자리여야 합니다.</string>
+    <string name="pw_match_error">비밀번호가 일치하지 않습니다.</string>
+    <string name="pw_wrong_error">비밀번호를 잘못 입력하였습니다.</string>
+    <string name="email_overlap_error">중복된 이메일이 존재합니다.</string>
+    <string name="nickname_overlap_error">중복된 닉네임이 존재합니다.</string>
+    <string name="email_auth_len_error">인증번호는 10자리 입니다.</string>
+    <string name="email_auth_match_error">인증번호를 확인해주세요.</string>
+    <string name="user_edit_empty_error">모든 정보를 입력해주세요.</string>
     <string name="no_error">""</string>
 
     <!-- Success Messages -->
-    <string name="email_auth_success">"이메일 인증이 완료되었습니다."</string>
+    <string name="email_auth_success">이메일 인증이 완료되었습니다.</string>
 
 
     <string name="help_msg_barcode_scan">화면 중앙에 바코드를 스캔해주세요</string>

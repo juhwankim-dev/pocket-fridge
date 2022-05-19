@@ -48,6 +48,21 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding>(R.layout.fragment_rec
                 recipeRecommendAdapter.setList(it)
                 recipeAllAdapter.setList(it)
             }
+
+            isLoading.observe(viewLifecycleOwner) {
+                when(it) {
+                    true -> {
+                        binding.sflRecipeFRecommendShimmer.startShimmer()
+                        binding.sflRecipeFRecommendShimmer.visibility = View.VISIBLE
+                        binding.rvRecipeFRecommend.visibility = View.GONE
+                    }
+                    false -> {
+                        binding.sflRecipeFRecommendShimmer.stopShimmer()
+                        binding.sflRecipeFRecommendShimmer.visibility = View.GONE
+                        binding.rvRecipeFRecommend.visibility = View.VISIBLE
+                    }
+                }
+            }
         }
     }
 

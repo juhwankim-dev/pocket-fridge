@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/activity_margin_narrow"
+        android:paddingHorizontal="@dimen/activity_margin_20">
+
+        <TextView
+            android:id="@+id/tv_recommend_shimmerI_number"
+            android:layout_width="10dp"
+            android:layout_height="25dp"
+            android:background="@color/gray_non_clickable_button"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_recommend_shimmerI_thumbnail"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_recommend_shimmerI_thumbnail" />
+
+        <ImageView
+            android:id="@+id/tv_recommend_shimmerI_thumbnail"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="@dimen/activity_margin_20"
+            android:adjustViewBounds="true"
+            app:layout_constraintStart_toEndOf="@+id/tv_recommend_shimmerI_number"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/gray_non_clickable_button"/>
+
+        <TextView
+            android:id="@+id/tv_recommend_shimmerI_title"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:background="@color/gray_non_clickable_button"
+            app:layout_constraintWidth_percent="0.4"
+            android:layout_marginStart="@dimen/activity_margin_default"
+            android:ellipsize="end"
+            android:maxLines="2"
+            app:layout_constraintBottom_toTopOf="@+id/tv_recommend_shimmerI_info"
+            app:layout_constraintStart_toEndOf="@+id/tv_recommend_shimmerI_thumbnail"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/tv_recommend_shimmerI_info"
+            android:layout_width="70dp"
+            android:layout_height="20dp"
+            android:background="@color/gray_non_clickable_button"
+            android:layout_marginTop="@dimen/activity_margin_2"
+            app:layout_constraintBottom_toTopOf="@+id/tv_recommend_shimmerI_serving"
+            app:layout_constraintStart_toStartOf="@+id/tv_recommend_shimmerI_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_recommend_shimmerI_title" />
+
+        <TextView
+            android:id="@+id/tv_recommend_shimmerI_serving"
+            android:layout_width="40dp"
+            android:layout_height="20dp"
+            android:background="@color/gray_non_clickable_button"
+            android:layout_marginTop="@dimen/activity_margin_2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tv_recommend_shimmerI_info"
+            app:layout_constraintTop_toBottomOf="@+id/tv_recommend_shimmerI_info" />
+
+        <ImageView
+            android:id="@+id/iv_recommendI_like"
+            android:layout_width="@dimen/small_icon_size"
+            android:layout_height="@dimen/small_icon_size"
+            android:adjustViewBounds="true"
+            app:tint="@color/gray"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_recommend_shimmerI_thumbnail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_recommend_shimmerI_thumbnail"
+            app:srcCompat="@drawable/ic_heart_outline" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -148,9 +148,9 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
 
             hasNewNotification.observe(viewLifecycleOwner) {
                 if(it == true) {
-                    // TODO: 알림 아이콘 빨간점 보이기
+                    binding.ivIfridgeFNewNoti.visibility = View.VISIBLE
                 } else {
-                    // TODO: 알림 아이콘 빨간점 삭제
+                    binding.ivIfridgeFNewNoti.visibility = View.INVISIBLE
                 }
             }
         }
@@ -181,9 +181,11 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
     private fun showDeleteDialog(ingre: Ingredient) {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(resources.getString(R.string.delete_ingre_title))
-            .setMessage("${ingre.name}")
             .setCancelable(true)
-            .setPositiveButton(resources.getString(R.string.delete_button)) { dialog, which ->
+            .setNegativeButton(resources.getString(R.string.cancel_button)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setPositiveButton(resources.getString(R.string.delete_button)) { _, _ ->
                 viewModel.deleteIngreById(ingre.id)
             }
             .show()

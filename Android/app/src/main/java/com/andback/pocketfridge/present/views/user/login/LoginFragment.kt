@@ -95,14 +95,14 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
     private fun initEvent() {
         binding.etLoginFEmail.addTextChangedListener { newText ->
             SignUpChecker.validateEmail(newText.toString()).apply {
-                binding.tilLoginFEmail.error = resources.getString(stringId)
+//                binding.tilLoginFEmail.error = resources.getString(stringId)
                 isValidName = isValid
             }
         }
 
         binding.etLoginFPw.addTextChangedListener { newText ->
             SignUpChecker.validatePw(newText.toString()).apply {
-                binding.tilLoginFPw.error = resources.getString(stringId)
+//                binding.tilLoginFPw.error = resources.getString(stringId)
                 isValidPw = isValid
             }
         }
