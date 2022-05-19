@@ -1,6 +1,6 @@
 # 포켓프리지
 
-![포켓프리지](C:\Git\S06P31D206\docs\image\pocketfridge)
+![포켓프리지](./docs/image/pocketfridge.png)
 
 `냉장고 관리 & 레시피 추천 APP` 
 

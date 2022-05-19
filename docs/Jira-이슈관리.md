@@ -24,13 +24,13 @@
 
 
 
-![image-20220519110132979](C:\Git\S06P31D206\docs\image\jira.png)
+![image-20220519110132979](./image/jira.png)
 
 - Jira 이슈관리를 통해 겹치지 않는 분업이 가능했습니다.
 
 
 
-![image-20220519110325374](C:\Git\S06P31D206\docs\image\jira_sprint_report)
+![image-20220519110325374](./image/jira_sprint_report.png)
 
 한 주의 시작인 월요일에 일주일의 이슈를 등록했습니다.
 
