@@ -26,7 +26,6 @@ private const val TAG = "IngreUploadViewModel_debuk"
 @HiltViewModel
 class IngreUploadViewModel @Inject constructor(
     private val uploadIngreUseCase: UploadIngreUseCase,
-    private val getCategoryUseCase: GetCategoryUseCase,
     private val getFridgesUseCase: GetFridgesUseCase
 ): ViewModel() {
     private val compositeDisposable = CompositeDisposable()
@@ -40,23 +39,11 @@ class IngreUploadViewModel @Inject constructor(
     val selectedFridge: LiveData<FridgeEntity> get() = _selectedFridge
     private val _selectedStorage = MutableLiveData<Storage>()
     val selectedStorage: LiveData<Storage> get() = _selectedStorage
-    private val _selectedMainCategory = MutableLiveData<MainCategoryEntity>()
-    val selectedMainCategory: LiveData<MainCategoryEntity> get() = _selectedMainCategory
     private val _selectedSubCategory = MutableLiveData<SubCategoryEntity>()
     val selectedSubCategory: LiveData<SubCategoryEntity> get() = _selectedSubCategory
-    private val _selectedSubCategories = MutableLiveData<List<SubCategoryEntity>>()
-    val selectedSubCategories: LiveData<List<SubCategoryEntity>> get() = _selectedSubCategories
     val name = MutableLiveData<String>()
     val datePurchased = MutableLiveData<String>()
     val dateExpiry = MutableLiveData<String>()
-    // endregion
-
-    // region 카테고리 리스트 라이브 데이터
-    private val _mainCategories = MutableLiveData<List<MainCategoryEntity>>()
-    val mainCategories: LiveData<List<MainCategoryEntity>> get() = _mainCategories
-
-    private val _subCategories = MutableLiveData<List<SubCategoryEntity>>()
-    val subCategories: LiveData<List<SubCategoryEntity>> get() = _subCategories
     // endregion
 
     // region 냉장고 리스트 라이브 데이터
@@ -99,53 +86,12 @@ class IngreUploadViewModel @Inject constructor(
     val isUploadSuccess: LiveData<Boolean> get() = _isUploadSuccess
 
     init {
-        getCategories()
-    }
-
-    //IngreUpload에서 시작할 때 호출
-    fun init() {
         getFridges()
         setPurchaseDateToday()
     }
 
     private fun setPurchaseDateToday() {
         datePurchased.value = SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().time)
-    }
-
-    private fun getCategories() {
-        val observable = getCategoryUseCase.getAllCategories()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    if(!it.data.isNullOrEmpty()) {
-                        when {
-                            it.data[0] is MainCategoryEntity -> {
-                                _mainCategories.value = it.data as List<MainCategoryEntity>
-                                setDefaultData()
-                            }
-                            it.data[0] is SubCategoryEntity -> {
-                                _subCategories.value = it.data as List<SubCategoryEntity>
-                                setDefaultData()
-                            }
-                            else -> {
-                                // TODO: error 처리
-                            }
-                        }
-                    }
-                },
-                {
-                    // TODO: 카테고리 에러 처리
-                    Log.d(TAG, "error: ${it.javaClass.canonicalName}")
-                },
-                {
-                    // TODO: complete 처리
-                },
-                {
-                    // TODO: onSubscribe 처리
-                }
-            )
-        compositeDisposable.add(observable)
     }
 
     fun onUploadBtnClick() {
@@ -194,7 +140,7 @@ class IngreUploadViewModel @Inject constructor(
         }
     }
 
-    private fun clearError() {
+    fun clearError() {
         _isNameError.value = false
         _isQuantityError.value = false
         _isDatePurchasedError.value = false
@@ -233,49 +179,11 @@ class IngreUploadViewModel @Inject constructor(
         dateExpiry.value = ""
         _selectedStorage.value = Storage.Fridge
         _selectedFridge.value = getDefaultFridge()
-        _selectedMainCategory.value = getDefaultMainCategory()
-        _selectedSubCategory.value = getDefaultSubCategory()
         _isUploadSuccess.value = false
-    }
-
-    /**
-     * 메인 카테고리의 첫 번째 값이 디폴트
-     */
-    private fun getDefaultMainCategory(): MainCategoryEntity? {
-        return if(!mainCategories.value.isNullOrEmpty()) {
-            mainCategories.value!![0]
-        } else {
-            null
-        }
-    }
-
-    /**
-     * 디폴트 메인 카테고리의 서브 카테고리의 첫 번째 값이 디폴트
-     */
-    private fun getDefaultSubCategory(): SubCategoryEntity? {
-        return if(!subCategories.value.isNullOrEmpty() && selectedMainCategory.value != null) {
-            _selectedSubCategories.value = subCategories.value!!.filter { it.mainCategoryId == selectedMainCategory.value!!.mainCategoryId }
-            _selectedSubCategories.value!![0]
-        } else {
-            null
-        }
-    }
-
-    fun updateSelectedSubCategories() {
-        val result = subCategories.value?.filter {
-            it.mainCategoryId == selectedMainCategory.value?.mainCategoryId
-        }
-        result?.let {
-            _selectedSubCategories.value = it
-        }
     }
 
     fun selectSubCategory(value: SubCategoryEntity) {
         _selectedSubCategory.value = value
-    }
-
-    fun selectMainCategory(value: MainCategoryEntity) {
-        _selectedMainCategory.value = value
     }
 
     /**
@@ -283,6 +191,7 @@ class IngreUploadViewModel @Inject constructor(
      */
     private fun getDefaultFridge(): FridgeEntity? {
         return if(!fridges.value.isNullOrEmpty()) {
+            Log.d(TAG, "getDefaultFridge: ${fridges.value!![0]}")
             fridges.value!![0]
         } else {
             null
@@ -299,8 +208,8 @@ class IngreUploadViewModel @Inject constructor(
                         {
                             it.data?.let { list ->
                                 _fridges.value = list.filter { fridge -> fridge.isOwner }
+                                _selectedFridge.value = getDefaultFridge()
                             }
-                            setDefaultData()
                             _isLoading.value = false
                         },
                         {
@@ -315,15 +224,11 @@ class IngreUploadViewModel @Inject constructor(
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.clear()
+        Log.d(TAG, "onCleared: ")
     }
 
-    // IngreUploadFragment 뷰 지울 때 호출
     fun clearData() {
         clearError()
         setDefaultData()
-    }
-
-    fun selectAllSubCategory() {
-        subCategories.value?.let { _selectedSubCategories.value = it }
     }
 }
