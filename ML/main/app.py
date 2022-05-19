@@ -86,8 +86,14 @@ def recommend(user_id):
     # 레시피 좋아요 DataFrame
     df_likes = pd.DataFrame(likes)
 
-    # 좋아요가 비어있으면, 랜덤 추천
-    if df_likes.empty or len(here_user_likes) == 0:
+    # 현재 유저가 좋아요 누른 목록밖에 없을때 랜덤 추천
+    check = False
+    if len(here_user_likes) == 1:
+        if (df_likes["user_id"] == user_id).any():
+            check = True
+
+    # 좋아요가 비어있으면 랜덤 추천
+    if df_likes.empty or len(here_user_likes) == 0 or check:
         df_dict = df_recipes.to_dict()  # DataFrame을 Dictionary로 변환
         dic_val = df_dict['recipe_id'].values()  # value 값만 리스트로 저장 후 API 응답
         dic_list = list(dic_val)
