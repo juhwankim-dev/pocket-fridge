@@ -233,25 +233,19 @@ class CookModeFragment : BaseFragment<FragmentCookModeBinding>(R.layout.fragment
                     Log.d(TAG, "startCoroutine: 다음으로")
                     binding.vpCookModeF.apply {
                         if(currentItem < viewModel.recipeSteps.value!!.size - 1) {
-                            tts.speak(resources.getString(R.string.ipa_next))
                             currentItem += 1
-                        } else {
-                            tts.speak(resources.getString(R.string.ipa_last))
                         }
-
                     }
                 } else if(cnt > 1) {
                     // 이전으로 이동
                     Log.d(TAG, "startCoroutine: 이전으로")
                     binding.vpCookModeF.apply {
                         if(currentItem > 0) {
-                            tts.speak(resources.getString(R.string.ipa_before))
                             currentItem -= 1
-                        } else {
-                            tts.speak(resources.getString(R.string.ipa_first))
                         }
                     }
                 }
+
                 cnt = 0
                 Log.d(TAG, "startCoroutine: end")
             }
