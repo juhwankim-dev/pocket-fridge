@@ -67,12 +67,13 @@
             android:visibility="gone">
 
             <ImageView
-                android:layout_width="52dp"
-                android:layout_height="52dp"
-                app:srcCompat="@drawable/ic_fridge_outline_on_24" />
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                app:srcCompat="@drawable/ic_error_category" />
 
             <TextView
-                style="@style/page_title_text"
+                style="@style/menu_text_18"
+                android:layout_marginTop="@dimen/activity_margin_default"
                 android:text="@string/empty_fridge" />
         </LinearLayout>
 
