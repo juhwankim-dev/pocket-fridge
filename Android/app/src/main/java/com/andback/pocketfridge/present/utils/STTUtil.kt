@@ -92,6 +92,7 @@ class STTUtil(val context: Context, val packageName: String, val assistant: Cook
 
             // 사용자의 명령어를 관찰하고 있는 Observable인 command에 값을 할당
             // LiveData로 치면 setValue
+            Log.d(TAG, "onResults: ${resultStr}")
             assistant.command = resultStr
         }
 
@@ -111,5 +112,9 @@ class STTUtil(val context: Context, val packageName: String, val assistant: Cook
             speechRecognizer!!.cancel()
             speechRecognizer = null
         }
+    }
+
+    companion object {
+        private const val TAG = "STTUtil_debuk"
     }
 }
