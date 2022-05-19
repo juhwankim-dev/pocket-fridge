@@ -53,7 +53,7 @@ class LoginViewModel @Inject constructor(
                             saveJWT(it.data.token, it.data.loginType)
                         }
                         _isLogin.value = true
-                        _toastMsg.value = it.message
+//                        _toastMsg.value = it.message
                         _isLoading.value = false
                     },
                     {

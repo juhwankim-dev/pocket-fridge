@@ -20,7 +20,7 @@ class IngreExpiryNotiManagerImpl @Inject constructor(
         flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
     }
     val notifyPendingIntent = PendingIntent.getActivity(
-        context, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT
+        context, 0, notifyIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
     )
 
     override fun sendNoti(title: String, body: String) {
