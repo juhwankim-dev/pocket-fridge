@@ -2,6 +2,8 @@ package com.andback.pocketfridge.present.views.main.fridge
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.core.view.get
 import androidx.core.view.size
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -29,6 +31,7 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
     private fun init() {
         viewModel.getFridges()
         viewModel.getMainCategory()
+        viewModel.newNotificationArrival()
         setToolbar()
         setTabLayout()
         setRecyclerView()
@@ -148,9 +151,11 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
 
             hasNewNotification.observe(viewLifecycleOwner) {
                 if(it == true) {
-                    binding.ivIfridgeFNewNoti.visibility = View.VISIBLE
+//                    binding.ivIfridgeFNewNoti.visibility = View.VISIBLE
+                    binding.tbFridgeF.menu.get(0).icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_notification_main_color_dot)
                 } else {
-                    binding.ivIfridgeFNewNoti.visibility = View.INVISIBLE
+                    binding.tbFridgeF.menu.get(0).icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_notification)
+//                    binding.ivIfridgeFNewNoti.visibility = View.INVISIBLE
                 }
             }
         }
