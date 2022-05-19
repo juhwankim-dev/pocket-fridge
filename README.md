@@ -25,7 +25,7 @@
   - [산출물](#산출물)
   - [결과물](#결과물)
 
-- [📺 프로젝트 UCC](https://www.youtube.com/watch?v=x-uoph2GMg8)
+- [📺 프로젝트 UCC](https://www.youtube.com/watch?v=1MjfYxVGJi8)
   <br><br>
 
 ## 서비스 소개
