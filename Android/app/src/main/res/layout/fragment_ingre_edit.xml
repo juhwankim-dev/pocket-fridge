@@ -53,6 +53,7 @@
             app:layout_constraintEnd_toEndOf="@+id/iv_ingre_editF_bg"
             app:layout_constraintStart_toStartOf="@+id/iv_ingre_editF_bg"
             app:layout_constraintTop_toTopOf="@+id/iv_ingre_editF_bg"
+            bindCategoryImage="@{vm.selectedSubCategory.subCategoryId}"
             app:srcCompat="@drawable/ic_error_category" />
 
         <TextView

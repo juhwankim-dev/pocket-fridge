@@ -49,7 +49,22 @@
             android:name="productName"
             app:argType="string"
             app:nullable="true"
-            android:defaultValue="" />
+            android:defaultValue="@null" />
+
+        <argument
+            android:name="subCategory"
+            app:argType="com.andback.pocketfridge.data.model.SubCategoryEntity"
+            app:nullable="true"
+            android:defaultValue="@null" />
+
+        <argument
+            android:name="isFirst"
+            app:argType="boolean"
+            android:defaultValue="true" />
+
+        <action
+            android:id="@+id/action_ingreUploadFragment_to_categorySelectFragment"
+            app:destination="@id/categorySelectFragment" />
     </fragment>
     <fragment
         android:id="@+id/recipeFragment"
@@ -73,6 +88,8 @@
             app:argType="boolean" />
         <argument android:name="ingredient"
             app:argType="com.andback.pocketfridge.domain.model.Ingredient" />
+        <argument android:name="fridge"
+            app:argType="com.andback.pocketfridge.data.model.FridgeEntity"/>
     </fragment>
     <fragment
         android:id="@+id/ingreEditFragment"
@@ -152,4 +169,16 @@
         android:name="com.andback.pocketfridge.present.views.main.recipe.filtered.FilteredRecipeFragment"
         android:label="FilteredRecipeFragment"
         tools:layout="@layout/fragment_filtered_recipe"/>
+    <fragment
+        android:id="@+id/categorySelectFragment"
+        android:name="com.andback.pocketfridge.present.views.main.ingreupload.CategorySelectFragment"
+        android:label="CategorySelectFragment"
+        tools:layout="@layout/fragment_category_select">
+        <action
+            android:id="@+id/action_categorySelectFragment_to_ingreUploadFragment"
+            app:destination="@id/ingreUploadFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/ingreUploadFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

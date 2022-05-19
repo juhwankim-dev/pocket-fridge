@@ -45,6 +45,7 @@
     <string name="ingre_delete_error">식재료 삭제에 실패했습니다.</string>
     <string name="ingre_delete_success">식재료를 삭제했습니다.</string>
     <string name="ingre_edit_error">식재료 수정에 실패했습니다.</string>
+    <string name="ingre_upload_success">식재료 등록에 성공했습니다.\n등록을 이어서 진행해 주세요.</string>
 
 
     <string name="sign_up">회원가입</string>

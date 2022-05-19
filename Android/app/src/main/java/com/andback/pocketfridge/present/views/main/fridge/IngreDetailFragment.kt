@@ -44,9 +44,6 @@ class IngreDetailFragment : BaseFragment<FragmentIngreDetailBinding>(R.layout.fr
             selectedIngre.observe(viewLifecycleOwner) {
                 setView(it)
             }
-            subCategory.observe(viewLifecycleOwner) {
-                // TODO: 식재료의 서브 카테고리에 따라 이미지 변경
-            }
             isDeleteSuccess.observe(viewLifecycleOwner) {
                 if(it == true) {
                     showToastMessage(resources.getString(R.string.ingre_delete_success))
@@ -73,6 +70,7 @@ class IngreDetailFragment : BaseFragment<FragmentIngreDetailBinding>(R.layout.fr
                 binding.tbIngreDetailF.menu.findItem(R.id.edit_menu_fridge).isVisible = false
             }
         }
+        binding.fridge = args.fridge
         viewModel.selectIngre(args.ingredient)
     }
 

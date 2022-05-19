@@ -15,7 +15,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(), Filterab
     private val filteredList = arrayListOf<Ingredient>()
 
     interface ItemClickListener {
-        fun onClick(data: Ingredient, isOwner: Boolean)
+        fun onClick(data: Ingredient, isOwner: Boolean, fridge: FridgeEntity)
     }
     lateinit var itemClickListener: ItemClickListener
 
@@ -48,7 +48,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>(), Filterab
             val fridge = fridges.find { it.id == filteredList[position].fridgeId }!!
             bind(filteredList[position], fridge.name)
             binding.root.setOnClickListener {
-                itemClickListener.onClick(filteredList[position], fridge.isOwner)
+                itemClickListener.onClick(filteredList[position], fridge.isOwner, fridge)
             }
         }
     }
