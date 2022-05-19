@@ -34,9 +34,9 @@ sudo systemctl status mariadb
 sudo systemctl stop mariadb
 ```
 
-![image_3](../S06P31D206/exec/images/image_3.png)
+![image_3](../exec/images/image_3.png)
 
-![image_4](C:/Git/S06P31D206/exec/images/image_4.png)
+![image_4](../exec/images/image_4.png)
 
 ![image_5](../exec/images/image_5.png)
 
