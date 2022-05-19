@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                app:checkedChip="@id/chip_recipeF_default"
+                app:checkedChip="@id/chip_category_selectF_default"
                 app:selectionRequired="true"
                 app:singleLine="true"
                 app:singleSelection="true">
@@ -84,6 +84,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/sv_category_selectF_filter"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:paddingHorizontal="@dimen/activity_margin_default"
             android:overScrollMode="never" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

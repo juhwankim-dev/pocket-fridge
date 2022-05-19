@@ -56,8 +56,7 @@ class CategorySelectViewModel @Inject constructor(
                                 // TODO: error 처리
                             }
                         }
-                        getDefaultMainCategory()
-                        getDefaultSubCategory()
+                        selectAllSubCategory()
                     }
                 },
                 {

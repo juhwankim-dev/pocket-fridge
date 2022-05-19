@@ -15,6 +15,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.data.model.MainCategoryEntity
@@ -132,12 +133,11 @@ class CategorySelectFragment : BaseFragment<FragmentCategorySelectBinding>(R.lay
 
     private fun setRecyclerViewAdapter() {
         binding.rvCategorySelectFSubCategory.apply {
-            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = GridLayoutManager(requireActivity(), 3)
             rvAdapter.itemClickListener = object : SubCategoryRVAdapter.ItemClickListener {
                 override fun onClick(subCategoryEntity: SubCategoryEntity) {
                     Log.d(TAG, "onClick: ${subCategoryEntity.subCategoryId} ${subCategoryEntity.subCategoryName}")
 
-                    // TODO: 이전 화면으로 이동
                     findNavController().navigate(CategorySelectFragmentDirections.actionCategorySelectFragmentToIngreUploadFragment(null, subCategoryEntity, false))
                 }
             }
