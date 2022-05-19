@@ -67,6 +67,7 @@
             app:layout_constraintEnd_toEndOf="@+id/iv_ingre_detailF_bg"
             app:layout_constraintStart_toStartOf="@+id/iv_ingre_detailF_bg"
             app:layout_constraintTop_toTopOf="@+id/iv_ingre_detailF_bg"
+            bindCategoryImage="@{ingredient.id}"
             app:srcCompat="@drawable/ic_error_category" />
 
         <TextView
