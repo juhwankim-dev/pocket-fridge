@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="com.andback.pocketfridge.present.views.main.ingreupload.IngreUploadViewModel" />
+            type="com.andback.pocketfridge.present.views.main.ingreupload.CategorySelectViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,16 +27,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title="카테고리 선택"
-                app:menu="@menu/menu_toolbar_close"/>
+                app:navigationIcon="@drawable/ic_back"/>
 
         </com.google.android.material.appbar.AppBarLayout>
+
+        <EditText
+            style="@style/body_text"
+            android:id="@+id/et_category_selectF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/abl_category_selectF"
+            android:background="@drawable/bg_ellipse_filled_gray_4"
+            android:drawableStart="@drawable/ic_search_24"
+            android:drawableEnd="@drawable/ic_search_et_right_custom"
+            android:hint="검색어를 입력하세요"
+            android:layout_marginHorizontal="@dimen/activity_margin_default"
+            android:layout_marginVertical="@dimen/activity_margin_narrow"
+            android:padding="@dimen/activity_margin_narrow" />
 
         <HorizontalScrollView
             android:id="@+id/sv_category_selectF_filter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/abl_category_selectF"
+            app:layout_constraintTop_toBottomOf="@id/et_category_selectF"
             android:overScrollMode="never"
             android:paddingTop="@dimen/activity_margin_narrow"
             android:paddingEnd="@dimen/activity_margin_default"
@@ -44,46 +59,23 @@
             android:scrollbars="none">
 
             <com.google.android.material.chip.ChipGroup
-                android:id="@+id/cg_fridgeF_filter"
+                android:id="@+id/cg_category_selectF_filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                app:checkedChip="@id/chip_recipeF_default"
+                app:checkedChip="@id/chip_category_selectF_default"
                 app:selectionRequired="true"
                 app:singleLine="true"
                 app:singleSelection="true">
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_recipeF_default"
+                    android:id="@+id/chip_category_selectF_default"
                     style="@style/Colors_Widget.MaterialComponents.Chip.Choice"
                     android:layout_marginStart="@dimen/activity_margin_default"
                     android:text="전체" />
             </com.google.android.material.chip.ChipGroup>
 
         </HorizontalScrollView>
-
-
-
-<!--        <com.google.android.material.textfield.TextInputLayout-->
-<!--            android:id="@+id/til_category_selectF_main_category"-->
-<!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            app:boxCornerRadiusBottomEnd="@dimen/et_radius"-->
-<!--            app:boxCornerRadiusBottomStart="@dimen/et_radius"-->
-<!--            app:boxCornerRadiusTopEnd="@dimen/et_radius"-->
-<!--            app:boxCornerRadiusTopStart="@dimen/et_radius">-->
-
-<!--            <AutoCompleteTextView-->
-<!--                android:id="@+id/tv_category_selectF_main_category"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:hint="대분류"-->
-<!--                android:inputType="none"/>-->
-
-<!--        </com.google.android.material.textfield.TextInputLayout>-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_category_selectF_sub_category"
@@ -92,6 +84,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/sv_category_selectF_filter"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:paddingHorizontal="@dimen/activity_margin_default"
             android:overScrollMode="never" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

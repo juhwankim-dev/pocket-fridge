@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.andback.pocketfridge.R
 import com.andback.pocketfridge.data.model.FridgeEntity
@@ -26,8 +28,8 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
         private const val TAG = "IngreUploadFragment_debuk"
     }
 
-    // 식재료 선택 다이얼로그와 정보 공유
     private val viewModel: IngreUploadViewModel by activityViewModels()
+    private val args: IngreUploadFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,15 +37,13 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
     }
 
     private fun init() {
+        if(args.isFirst) {
+            viewModel.clearData()
+        }
         binding.vm = viewModel
+        viewModel.clearError()
         setObserver()
-        setDataFromBarcode()
         initView()
-        initViewModel()
-    }
-
-    private fun initViewModel() {
-        viewModel.init()
     }
 
     private fun initView() {
@@ -51,6 +51,12 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
         setCategoryClickListener()
         setToolbarButton()
         setFridgeClickListener()
+        args.productName?.let {
+            viewModel.name.value = it
+        }
+        args.subCategory?.let {
+            viewModel.selectSubCategory(it)
+        }
     }
 
     private fun setCalendarIconClickListener() {
@@ -77,38 +83,49 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
             showFridgeDialog()
         }
     }
-
-    override fun onStop() {
-        super.onStop()
-        viewModel.clearData()
-    }
     
     private fun setObserver() {
         with(viewModel) {
-            binding.lifecycleOwner?.let { owner ->
-
             // 에러 관련 live data
-                isNameError.observe(owner) {
-                    binding.tilIngreUploadFIngreName.error = if(it) getString(R.string.error_msg_ingre_name) else null
-                }
-                
-                isDateExpiryError.observe(owner) {
-                    binding.tilIngreUploadFExpiryDate.error = if(it) getString(R.string.error_msg_ingre_date_expiry) else null
-                }
-                
-                isDatePurchasedError.observe(owner) {
-                    binding.tilIngreUploadFPurchasedDate.error = if(it) getString(R.string.error_msg_ingre_date_purchased) else null
-                }
-                
-                isServerError.observe(owner) {
-                    // TODO: 서버 통신 실패 ui 처리
-                }
-                
-                isNetworkError.observe(owner) {
-                    // TODO: 네트워크 이용 불가 ui 처리
+            isNameError.observe(viewLifecycleOwner) {
+                binding.tilIngreUploadFIngreName.error = if(it) getString(R.string.error_msg_ingre_name) else null
+            }
+
+            isDateExpiryError.observe(viewLifecycleOwner) {
+                binding.tilIngreUploadFExpiryDate.error = if(it) getString(R.string.error_msg_ingre_date_expiry) else null
+            }
+
+            isDatePurchasedError.observe(viewLifecycleOwner) {
+                binding.tilIngreUploadFPurchasedDate.error = if(it) getString(R.string.error_msg_ingre_date_purchased) else null
+            }
+
+            isServerError.observe(viewLifecycleOwner) {
+                // TODO: 서버 통신 실패 ui 처리
+            }
+
+            isNetworkError.observe(viewLifecycleOwner) {
+                // TODO: 네트워크 이용 불가 ui 처리
+            }
+
+            isCategoryError.observe(viewLifecycleOwner) {
+                if(it) showToastMessage("사진을 클릭하여 카테고리를 선택해 주세요")
+            }
+            
+            selectedSubCategory.observe(viewLifecycleOwner) {
+                Log.d(TAG, "setObserver: ${it}")
+            }
+
+            isUploadSuccess.observe(viewLifecycleOwner) {
+                if(it == true) {
+                    showUploadSuccess()
                 }
             }
         }
+    }
+
+    private fun showUploadSuccess() {
+        showToastMessage(resources.getString(R.string.ingre_upload_success))
+        viewModel.clearData()
     }
 
     private fun showDatePickerWith(listener: DatePickerDialog.OnDateSetListener) {
@@ -117,8 +134,7 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
     }
 
     private fun showCategoryPicker() {
-        val categorySelectFragment = CategorySelectFragment()
-        categorySelectFragment.show(childFragmentManager, "categoryPicker")
+        findNavController().navigate(R.id.action_ingreUploadFragment_to_categorySelectFragment)
     }
 
     private fun setToolbarButton() {
@@ -157,13 +173,6 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
         }
         binding.ivIngreUploadF.setOnClickListener {
             showCategoryPicker()
-        }
-    }
-
-    private fun setDataFromBarcode() {
-        val args: IngreUploadFragmentArgs by navArgs()
-        if (args.productName.isNullOrBlank() == false) {
-            viewModel.name.value = args.productName
         }
     }
 }

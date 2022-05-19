@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andback.pocketfridge.R
+import com.andback.pocketfridge.data.model.FridgeEntity
 import com.andback.pocketfridge.databinding.FragmentSearchBinding
 import com.andback.pocketfridge.databinding.FragmentSortListBinding
 import com.andback.pocketfridge.domain.model.Ingredient
@@ -54,9 +55,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
             }
         })
         rvAdapter.itemClickListener = object : SearchAdapter.ItemClickListener {
-            override fun onClick(data: Ingredient, isOwner: Boolean) {
+            override fun onClick(data: Ingredient, isOwner: Boolean, fridge: FridgeEntity) {
                 findNavController().navigate(
-                    SearchFragmentDirections.actionSearchFragmentToIngreDetailFragment(isOwner, data)
+                    SearchFragmentDirections.actionSearchFragmentToIngreDetailFragment(isOwner, data, fridge)
                 )
             }
         }

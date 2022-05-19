@@ -83,8 +83,10 @@ class FridgeFragment : BaseFragment<FragmentFridgeBinding>(R.layout.fragment_fri
                 override fun onClick(data: Ingredient) {
                     findNavController().navigate(
                         FridgeFragmentDirections.actionFridgeFragmentToIngreDetailFragment(
+                            // TODO: 냉장고 객체 하나로 통일
                             viewModel.selectedFridge.value!!.isOwner,
-                            data
+                            data,
+                            viewModel.selectedFridge.value!!
                         )
                     )
                 }
