@@ -18,7 +18,8 @@
             android:src="@drawable/bg_circle_gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/main_color" />
+            app:tint="@color/main_color"
+            android:visibility="gone"/>
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/tl_fridgeF"
