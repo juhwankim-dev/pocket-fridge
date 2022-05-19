@@ -60,6 +60,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding>(R.layout.fragment_rec
                     false -> {
                         binding.sflRecipeFRecommendShimmer.stopShimmer()
                         crossFade(binding.rvRecipeFRecommend, binding.sflRecipeFRecommendShimmer)
+                        binding.rvRecipeFRecommend.startLayoutAnimation()
                     }
                 }
             }

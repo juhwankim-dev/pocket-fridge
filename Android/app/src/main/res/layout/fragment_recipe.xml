@@ -53,6 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/activity_margin_default"
                     android:layout_marginBottom="@dimen/activity_margin_narrow"
+                    android:layoutAnimation="@anim/item_layout_animation"
                     android:overScrollMode="never"
                     tools:itemCount="5"
                     tools:listitem="@layout/item_recommend_list" />
