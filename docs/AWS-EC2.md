@@ -10,7 +10,7 @@
 sudo apt-get update
 ```
 
-![image_1](C:/Git/S06P31D206/exec/images/image_1.png)
+![image_1](../exec/images/image_1.png)
 
 ### 2. MariaDB 설치
 
@@ -19,7 +19,7 @@ sudo apt-get update
 sudo apt-get install mariadb-server -y
 ```
 
-![image_2](C:/Git/S06P31D206/exec/images/image_2.png)
+![image_2](../exec/images/image_2.png)
 
 ### 3.  MariaDB 실행
 
@@ -34,11 +34,11 @@ sudo systemctl status mariadb
 sudo systemctl stop mariadb
 ```
 
-![image_3](C:/Git/S06P31D206/exec/images/image_3.png)
+![image_3](../exec/images/image_3.png)
 
-![image_4](C:/Git/S06P31D206/exec/images/image_4.png)
+![image_4](../exec/images/image_4.png)
 
-![image_5](C:/Git/S06P31D206/exec/images/image_5.png)
+![image_5](../exec/images/image_5.png)
 
 ### 4. root 비밀번호 설정
 
@@ -49,7 +49,7 @@ sudo mysql -u root -p
 # MariaDB 설치 후 root 비밀번호를 설정한 적이 없으므로 비밀번호를 물어보는 질문에는 그냥 Enter
 ```
 
-![image_6](C:/Git/S06P31D206/exec/images/image_6.png)
+![image_6](../exec/images/image_6.png)
 
 ```bash
 # 데이터베이스 목록 확인
@@ -59,16 +59,16 @@ show databases;
 use mysql;
 ```
 
-![image_7](C:/Git/S06P31D206/exec/images/image_7.png)
+![image_7](../exec/images/image_7.png)
 
-![image_8](C:/Git/S06P31D206/exec/images/image_8.png)
+![image_8](../exec/images/image_8.png)
 
 ```bash
 # 비밀번호 정보 확인
 select host, user, password from user;
 ```
 
-![image_9](C:/Git/S06P31D206/exec/images/image_9.png)
+![image_9](../exec/images/image_9.png)
 
 ```bash
 # root의 비밀번호를 Ssafy6!으로 업데이트
@@ -78,7 +78,7 @@ update user set password=password('Ssafy6!') where user='root';
 flush privileges;
 ```
 
-![image_10](C:/Git/S06P31D206/exec/images/image_10.png)
+![image_10](../exec/images/image_10.png)
 
 ### 5.  Pocket Fridge 데이터베이스 생성
 
@@ -87,7 +87,7 @@ flush privileges;
 create database pocket_fridge;
 ```
 
-![image_11](C:/Git/S06P31D206/exec/images/image_11.png)
+![image_11](../exec/images/image_11.png)
 
 ### 6. MariaDB 외부 접속 설정
 
@@ -98,16 +98,16 @@ sudo vim /etc/mysql/mariadb.conf.d/50-server.cnf
 # bind-address 를 주석 처리
 ```
 
-![image_12](C:/Git/S06P31D206/exec/images/image_12.png)
+![image_12](../exec/images/image_12.png)
 
-![image_13](C:/Git/S06P31D206/exec/images/image_13.png)
+![image_13](../exec/images/image_13.png)
 
 ```bash
 # MariaDB 재시작
 sudo systemctl restart mariadb
 ```
 
-![image_14](C:/Git/S06P31D206/exec/images/image_14.png)
+![image_14](../exec/images/image_14.png)
 
 ```bash
 # MariaDB 접속
@@ -126,13 +126,13 @@ grant all privileges on *.* to 'andback'@'%' identified by 'Ssafy6!';
 flush privileges;
 ```
 
-![image_15](C:/Git/S06P31D206/exec/images/image_15.png)
+![image_15](../exec/images/image_15.png)
 
-![image_16](C:/Git/S06P31D206/exec/images/image_16.png)
+![image_16](../exec/images/image_16.png)
 
 ### 7. 외부 접속 확인
 
-![image_17](C:/Git/S06P31D206/exec/images/image_17.png)
+![image_17](../exec/images/image_17.png)
 
 
 
@@ -144,7 +144,7 @@ flush privileges;
 sudo apt-get update
 ```
 
-![image_18](C:/Git/S06P31D206/exec/images/image_18.png)
+![image_18](../exec/images/image_18.png)
 
 ### 2.  Docker 설치
 
@@ -165,11 +165,11 @@ sudo usermod -aG docker ubuntu
 docker ps
 ```
 
-![image_19](C:/Git/S06P31D206/exec/images/image_19.png)
+![image_19](../exec/images/image_19.png)
 
-![image_20](C:/Git/S06P31D206/exec/images/image_20.png)
+![image_20](../exec/images/image_20.png)
 
-![image_21](C:/Git/S06P31D206/exec/images/image_21.png)
+![image_21](../exec/images/image_21.png)
 
 - 위와 같이 Permission denied가 발생한다면 Docker 데몬 소켓파일(docker.sock)의 권한 변경이 필요
 
@@ -181,7 +181,7 @@ docker ps
   docker ps
   ```
 
-  ![image_22](C:/Git/S06P31D206/exec/images/image_22.png)
+  ![image_22](../exec/images/image_22.png)
 
 
 
@@ -194,7 +194,7 @@ docker ps
 docker pull jenkins/jenkins:lts
 ```
 
-![image_23](C:/Git/S06P31D206/exec/images/image_23.png)
+![image_23](../exec/images/image_23.png)
 
 ### 2. Jenkins 컨테이너 실행
 
@@ -203,7 +203,7 @@ docker pull jenkins/jenkins:lts
 docker run -itd --name jenkins-andback -p 8081:8080 jenkins/jenkins:lts
 ```
 
-![image_24](C:/Git/S06P31D206/exec/images/image_24.png)
+![image_24](../exec/images/image_24.png)
 
 ### 3. 초기 비밀번호 확인
 
@@ -216,25 +216,25 @@ docker exec jenkins-andback cat /var/jenkins_home/secrets/initialAdminPassword
 # 나온 비밀번호를 입력해주면 성공!
 ```
 
-![image_25](C:/Git/S06P31D206/exec/images/image_25.png)
+![image_25](../exec/images/image_25.png)
 
-![image_26](C:/Git/S06P31D206/exec/images/image_26.png)
+![image_26](../exec/images/image_26.png)
 
 ### 4. Jenkins 초기 설정
 
-![image_27](C:/Git/S06P31D206/exec/images/image_27.png)
+![image_27](../exec/images/image_27.png)
 
 - Install suggested plugins 선택
 
-![image_28](C:/Git/S06P31D206/exec/images/image_28.png)
+![image_28](../exec/images/image_28.png)
 
 - 정보 입력 후 Next
 
-![image_29](C:/Git/S06P31D206/exec/images/image_29.png)
+![image_29](../exec/images/image_29.png)
 
 - Jenkins 도메인 주소 확인 후 Next
 
-![image_30](C:/Git/S06P31D206/exec/images/image_30.png)
+![image_30](../exec/images/image_30.png)
 
 - 이 화면으로 넘어가면 초기 설정 완료!
 
@@ -244,9 +244,9 @@ docker exec jenkins-andback cat /var/jenkins_home/secrets/initialAdminPassword
 
 ### 1. Item 생성
 
-![image_31](C:/Git/S06P31D206/exec/images/image_31.png)
+![image_31](../exec/images/image_31.png)
 
-![image_32](C:/Git/S06P31D206/exec/images/image_32.png)
+![image_32](../exec/images/image_32.png)
 
 - Item 이름 입력
 - Freestyle 선택 후 OK
@@ -255,17 +255,17 @@ docker exec jenkins-andback cat /var/jenkins_home/secrets/initialAdminPassword
 
 1. SSH Plugin 설치(Jekins 관리 → 플러그인 관리 → 설치 가능)
 
-   ![image_33](C:/Git/S06P31D206/exec/images/image_33.png)
+   ![image_33](../exec/images/image_33.png)
 
 2. Key 파일 지정(Jenkins 관리 → 시스템 설정 → Publish over SSH 설정)
 
    - Key 입력 칸에 EC2 Pem 파일, 즉 K6D206T.Pem 파일 내용을 복사 / 붙여넣기 해준다.
 
-     ![image_34](C:/Git/S06P31D206/exec/images/image_34.png)
+     ![image_34](../exec/images/image_34.png)
 
 3. SSH Server 추가 버튼 클릭 후 설정
 
-   ![image_35](C:/Git/S06P31D206/exec/images/image_35.png)
+   ![image_35](../exec/images/image_35.png)
 
    - Name : 원하는 이름으로 설정
    - Hostname : 도메인([k6d206.p.ssafy.io](http://k6d206.p.ssafy.io))
@@ -276,11 +276,11 @@ docker exec jenkins-andback cat /var/jenkins_home/secrets/initialAdminPassword
 
 1. Gitlab 플러그인 설치(Jenkins 관리 → 플러그인 관리 → 설치 가능)
 
-   ![image_36](C:/Git/S06P31D206/exec/images/image_36.png)
+   ![image_36](../exec/images/image_36.png)
 
 2. Gitlab 설정(Jenkins 관리 → 시스템 설정 → Gitlab 설정)
 
-   ![image_37](C:/Git/S06P31D206/exec/images/image_37.png)
+   ![image_37](../exec/images/image_37.png)
 
    - Connection name : 원하는 이름으로 설정
 
@@ -290,7 +290,7 @@ docker exec jenkins-andback cat /var/jenkins_home/secrets/initialAdminPassword
 
      1. Gitlab → User Settings → Access Tokens
 
-     ![image_38](C:/Git/S06P31D206/exec/images/image_38.png)
+     ![image_38](../exec/images/image_38.png)
 
      - Name : 원하는 이름으로 설정
      - Expires at : 필요한 기간만큼 설정
@@ -298,7 +298,7 @@ docker exec jenkins-andback cat /var/jenkins_home/secrets/initialAdminPassword
 
      1. Credentials 설정
 
-        ![image_39](C:/Git/S06P31D206/exec/images/image_39.png)
+        ![image_39](../exec/images/image_39.png)
 
         - API Token : 방금 발급받은 API Token 값
         - ID : 원하는 이름으로 설정
@@ -306,7 +306,7 @@ docker exec jenkins-andback cat /var/jenkins_home/secrets/initialAdminPassword
 
    1. 연결 확인
 
-   ![image_40](C:/Git/S06P31D206/exec/images/image_40.png)
+   ![image_40](../exec/images/image_40.png)
 
    - Test Connection 클릭 후 Success 확인!!
 
@@ -314,13 +314,13 @@ docker exec jenkins-andback cat /var/jenkins_home/secrets/initialAdminPassword
 
    - 만든 프로젝트 → 구성 → 소스 코드 관리
 
-     ![image_41](C:/Git/S06P31D206/exec/images/image_41.png)
+     ![image_41](../exec/images/image_41.png)
 
      - Repository URL : Gitlab Repository URL 주소
 
      - Credentials
 
-       ![image_42](C:/Git/S06P31D206/exec/images/image_42.png)
+       ![image_42](../exec/images/image_42.png)
 
        - Username : Gitlab 아이디
        - Password : Gitlab 패스워드
@@ -331,15 +331,15 @@ docker exec jenkins-andback cat /var/jenkins_home/secrets/initialAdminPassword
 
    - 빌드 유발
 
-     ![image_43](C:/Git/S06P31D206/exec/images/image_43.png)
+     ![image_43](../exec/images/image_43.png)
 
      - Build when a change ... 체크
 
-     ![image_44](C:/Git/S06P31D206/exec/images/image_44.png)
+     ![image_44](../exec/images/image_44.png)
 
      - 빌드 유발 하단의 고급 버튼 클릭
 
-     ![image_45](C:/Git/S06P31D206/exec/images/image_45.png)
+     ![image_45](../exec/images/image_45.png)
 
      - Gitlab Webhook 설정을 위해 Generate 버튼으로 Secret token 발급
 
@@ -347,7 +347,7 @@ docker exec jenkins-andback cat /var/jenkins_home/secrets/initialAdminPassword
 
      - Gitlab → setting → Webhooks
 
-       ![image_46](C:/Git/S06P31D206/exec/images/image_46.png)
+       ![image_46](../exec/images/image_46.png)
 
        - URL : Jenkins Item URL 주소
        - Secret Token : Jenkins에서 발급한 Token
@@ -356,7 +356,7 @@ docker exec jenkins-andback cat /var/jenkins_home/secrets/initialAdminPassword
 
    - Build
 
-     ![image_47](C:/Git/S06P31D206/exec/images/image_47.png)
+     ![image_47](../exec/images/image_47.png)
 
      - Add build step → Execute shell 선택
      - 백엔드 프로젝트 빌드를 위해 아래의 명령어 입력
@@ -367,9 +367,9 @@ docker exec jenkins-andback cat /var/jenkins_home/secrets/initialAdminPassword
 
    - 빌드 후 조치
 
-     ![image_48](C:/Git/S06P31D206/exec/images/image_48.png)
+     ![image_48](../exec/images/image_48.png)
 
-     ![image_49](C:/Git/S06P31D206/exec/images/image_49.png)
+     ![image_49](../exec/images/image_49.png)
 
      - Name : 미리 설정해 둔 SSH
      - Source files : 배포할 파일 설정
@@ -383,7 +383,7 @@ docker exec jenkins-andback cat /var/jenkins_home/secrets/initialAdminPassword
 
      - init_spring_server.sh
 
-       ![image_50](C:/Git/S06P31D206/exec/images/image_50.png)
+       ![image_50](../exec/images/image_50.png)
 
        ```shell
        echo "> 현재 구동중인 Pocket Fridge Spring pid 확인"
@@ -402,7 +402,7 @@ docker exec jenkins-andback cat /var/jenkins_home/secrets/initialAdminPassword
 
      - init_flask_server.sh
 
-       ![image_51](C:/Git/S06P31D206/exec/images/image_51.png)
+       ![image_51](../exec/images/image_51.png)
 
        ```shell
        echo "> 현재 구동중인 Pocket Fridge Flask pid 확인"
@@ -456,7 +456,7 @@ nohup python3 app.py &
 
 - S06P31D206 -> Backend -> andback -> main -> resources -> application-local.yml
 
-![image_52](C:/Git/S06P31D206/exec/images/image_52.png)
+![image_52](../exec/images/image_52.png)
 
 
 

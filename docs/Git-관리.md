@@ -8,14 +8,14 @@
 
 
 
-![img](C:\Git\S06P31D206\docs\image\githook)
+![img](./image/githook.png)
 
 - `S06P31D206/.git/hooks` 위치로 이동
 - 다운로드 파일 붙여넣기
 - 이름 `prepare-commit-msg` 로 수정하기
 - 적용 완료
 
-![image-20220519111006186](C:\Git\S06P31D206\docs\image\githook2)
+![image-20220519111006186](./image/githook2.png)
 
 </br>
 
@@ -62,7 +62,7 @@
 ################
 ```
 
-![img](C:\Git\S06P31D206\docs\image\gitcommittemplate1)
+![img](./image/gitcommittemplate1.png)
 
 #### 템플릿 설정하기
 
@@ -74,7 +74,7 @@
 
   > git config --global commit.template `.git-template.txt`
 
-![image-20220519111315419](C:\Git\S06P31D206\docs\image\gitcommittemplate2)
+![image-20220519111315419](./image/gitcommittemplate2.png)
 
 - `git add`
 
@@ -84,7 +84,7 @@
 
   > git commit
 
-![image-20220519111346126](C:\Git\S06P31D206\docs\image\gitcommittemplate3)
+![image-20220519111346126](./image/gitcommittemplate3.png)
 
 commit 메세지가 정상적으로 올라갔는지 보기
 
@@ -100,15 +100,15 @@ commit 메세지가 정상적으로 올라갔는지 보기
 
 
 
-![image-20220519111746289](C:\Git\S06P31D206\docs\image\gitdevelop)
+![image-20220519111746289](./image/gitdevelop.png)
 
 >  이모지를 이용해서 어떤 점이 변경되었는지 쉽게 볼 수 있도록 했습니다.
 
-![image-20220519111716797](C:\Git\S06P31D206\docs\image\gitmerge)
+![image-20220519111716797](./image/gitmerge.png)
 
 > label을 이용해서 무엇에 대한 변경인지 쉽게 볼 수 있도록 했습니다.
 
-![image-20220519111957621](C:\Git\S06P31D206\docs\image\gitgraph)
+![image-20220519111957621](./image/gitgraph.png)
 
 </br>
 
@@ -119,4 +119,4 @@ commit 메세지가 정상적으로 올라갔는지 보기
 > Merge 하기 전, Merge Request가 오면 댓글과 좋아요를 통해 서로 격려하면서 즐겁게 개발했습니다. 
 > 또한, 코드 리뷰도 진행했습니다.
 
-![image-20220519111629850](C:\Git\S06P31D206\docs\image\gitcodereview)
+![image-20220519111629850](./image/gitcodereview.png)
