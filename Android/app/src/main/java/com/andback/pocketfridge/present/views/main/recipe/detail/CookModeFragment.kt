@@ -107,10 +107,26 @@ class CookModeFragment : BaseFragment<FragmentCookModeBinding>(R.layout.fragment
 
             // if(현재 "다음"을 말했고 && 이전에 비서를 불렀었다면) speak(대답)
             else if (newValue == "다음" && isCallMsg(oldValue)) {
-                tts.speak(resources.getString(R.string.ipa_next))
                 binding.vpCookModeF.apply {
-                    if(currentItem < viewModel.recipeSteps.value!!.size)
-                    currentItem += 1
+                    if(currentItem < viewModel.recipeSteps.value!!.size - 1) {
+                        tts.speak(resources.getString(R.string.ipa_next))
+                        currentItem += 1
+                    } else {
+                        tts.speak(resources.getString(R.string.ipa_last))
+                    }
+
+                }
+            }
+
+            // if(현재 "이전"을 말했고 && 이전에 비서를 불렀었다면) speak(대답)
+            else if (newValue == "이전" && isCallMsg(oldValue)) {
+                binding.vpCookModeF.apply {
+                    if(currentItem > 0) {
+                        tts.speak(resources.getString(R.string.ipa_before))
+                        currentItem -= 1
+                    } else {
+                        tts.speak(resources.getString(R.string.ipa_first))
+                    }
                 }
             }
 
