@@ -73,6 +73,8 @@
             app:argType="boolean" />
         <argument android:name="ingredient"
             app:argType="com.andback.pocketfridge.domain.model.Ingredient" />
+        <argument android:name="fridge"
+            app:argType="com.andback.pocketfridge.data.model.FridgeEntity"/>
     </fragment>
     <fragment
         android:id="@+id/ingreEditFragment"

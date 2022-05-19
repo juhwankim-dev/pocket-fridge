@@ -119,7 +119,7 @@ class IngreEditFragment: BaseFragment<FragmentIngreEditBinding>(R.layout.fragmen
                     if(it == true) {
                         viewModel.updatedIngredient?.let { ingre ->
                             findNavController().navigate(IngreEditFragmentDirections.actionIngreEditFragmentToIngreDetailFragment(
-                                true, ingre
+                                true, ingre, viewModel.selectedFridge.value!!
                             ))
                         }
                     }

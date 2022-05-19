@@ -85,30 +85,38 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
     
     private fun setObserver() {
         with(viewModel) {
-            binding.lifecycleOwner?.let { owner ->
-
             // 에러 관련 live data
-                isNameError.observe(owner) {
-                    binding.tilIngreUploadFIngreName.error = if(it) getString(R.string.error_msg_ingre_name) else null
-                }
-                
-                isDateExpiryError.observe(owner) {
-                    binding.tilIngreUploadFExpiryDate.error = if(it) getString(R.string.error_msg_ingre_date_expiry) else null
-                }
-                
-                isDatePurchasedError.observe(owner) {
-                    binding.tilIngreUploadFPurchasedDate.error = if(it) getString(R.string.error_msg_ingre_date_purchased) else null
-                }
-                
-                isServerError.observe(owner) {
-                    // TODO: 서버 통신 실패 ui 처리
-                }
-                
-                isNetworkError.observe(owner) {
-                    // TODO: 네트워크 이용 불가 ui 처리
+            isNameError.observe(viewLifecycleOwner) {
+                binding.tilIngreUploadFIngreName.error = if(it) getString(R.string.error_msg_ingre_name) else null
+            }
+
+            isDateExpiryError.observe(viewLifecycleOwner) {
+                binding.tilIngreUploadFExpiryDate.error = if(it) getString(R.string.error_msg_ingre_date_expiry) else null
+            }
+
+            isDatePurchasedError.observe(viewLifecycleOwner) {
+                binding.tilIngreUploadFPurchasedDate.error = if(it) getString(R.string.error_msg_ingre_date_purchased) else null
+            }
+
+            isServerError.observe(viewLifecycleOwner) {
+                // TODO: 서버 통신 실패 ui 처리
+            }
+
+            isNetworkError.observe(viewLifecycleOwner) {
+                // TODO: 네트워크 이용 불가 ui 처리
+            }
+
+            isUploadSuccess.observe(viewLifecycleOwner) {
+                if(it == true) {
+                    showUploadSuccess()
                 }
             }
         }
+    }
+
+    private fun showUploadSuccess() {
+        showToastMessage(resources.getString(R.string.ingre_upload_success))
+        viewModel.clearData()
     }
 
     private fun showDatePickerWith(listener: DatePickerDialog.OnDateSetListener) {
