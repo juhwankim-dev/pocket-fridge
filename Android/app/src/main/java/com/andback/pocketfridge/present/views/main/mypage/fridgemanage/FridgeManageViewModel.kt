@@ -90,7 +90,7 @@ class FridgeManageViewModel @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                        _tstMsg.value = it.message
+//                        _tstMsg.value = it.message
                         getFridges()
                     },
                     {
@@ -108,7 +108,8 @@ class FridgeManageViewModel @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                        _tstMsg.value = it.message
+                        // TODO: 스트링 리소스
+                        _tstMsg.value = "냉장고 이름을 바꿨습니다."
                         getFridges()
                     },
                     {
@@ -126,7 +127,8 @@ class FridgeManageViewModel @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                        _tstMsg.value = it.message
+                        // TODO: 스트링 리소스
+                        _tstMsg.value = "냉장고를 삭제했습니다."
                         getFridges()
                     },
                     {
@@ -146,7 +148,7 @@ class FridgeManageViewModel @Inject constructor(
 //                    _isShared.value = false
                 },
                 {
-                    // TODO: R.string.share_error
+                    // TODO: 스트링 리소스
                 }
             )
 
