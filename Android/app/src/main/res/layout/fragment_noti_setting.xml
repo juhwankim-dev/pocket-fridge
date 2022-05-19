@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="vm"
+            type="com.andback.pocketfridge.present.views.main.mypage.NotiSettingViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,9 +28,10 @@
             android:id="@+id/et_noti_settingF_expiry_offset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_margin_24"
+            android:layout_marginTop="20dp"
             android:hint="1"
             android:inputType="number"
+            android:text="@={vm.liveOffset}"
             app:layout_constraintEnd_toStartOf="@id/tv_noti_settingF"
             app:layout_constraintTop_toBottomOf="@id/timepicker_noti_settingF" />
 
