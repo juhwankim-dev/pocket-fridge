@@ -11,6 +11,7 @@ import com.andback.pocketfridge.R
 import com.andback.pocketfridge.databinding.FragmentRecipeBinding
 import com.andback.pocketfridge.domain.model.Recipe
 import com.andback.pocketfridge.present.config.BaseFragment
+import com.andback.pocketfridge.present.utils.Animation.crossFade
 import com.andback.pocketfridge.present.views.main.recipe.detail.DetailRecipeActivity
 import com.andback.pocketfridge.present.views.main.recipe.filtered.FilteredRecipeAdapter.Companion.ALL
 import com.andback.pocketfridge.present.views.main.recipe.filtered.FilteredRecipeAdapter.Companion.JAPANESE
@@ -58,8 +59,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding>(R.layout.fragment_rec
                     }
                     false -> {
                         binding.sflRecipeFRecommendShimmer.stopShimmer()
-                        binding.sflRecipeFRecommendShimmer.visibility = View.GONE
-                        binding.rvRecipeFRecommend.visibility = View.VISIBLE
+                        crossFade(binding.rvRecipeFRecommend, binding.sflRecipeFRecommendShimmer)
                     }
                 }
             }

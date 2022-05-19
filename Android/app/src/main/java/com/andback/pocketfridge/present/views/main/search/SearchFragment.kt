@@ -17,7 +17,7 @@ import com.andback.pocketfridge.databinding.FragmentSearchBinding
 import com.andback.pocketfridge.databinding.FragmentSortListBinding
 import com.andback.pocketfridge.domain.model.Ingredient
 import com.andback.pocketfridge.present.config.BaseFragment
-import com.andback.pocketfridge.present.views.main.recipe.RecipeItemDecoration
+import com.andback.pocketfridge.present.utils.Animation.crossFade
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -78,8 +78,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(R.layout.fragment_sea
                         }
                         false -> {
                             binding.sflSearchF.stopShimmer()
-                            binding.sflSearchF.visibility = View.GONE
-                            binding.rvSearchF.visibility = View.VISIBLE
+                            crossFade(binding.rvSearchF, binding.sflSearchF)
                         }
                     }
                 }

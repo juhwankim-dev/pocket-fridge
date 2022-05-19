@@ -43,8 +43,8 @@ class RecipeViewModel @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                        _isLoading.value = false
                         _recipes.value = it.data!!
+                        _isLoading.value = false
                     },
                     {
                         _isLoading.value = false
