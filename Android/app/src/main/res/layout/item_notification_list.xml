@@ -15,12 +15,11 @@
         android:padding="@dimen/activity_margin_default">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:maxWidth="240dp"
             tools:text="!!!님이 !!!!!냉장고 공유에 초대했습니다."
             android:text="@{notification.notificationMessage}"/>
 
