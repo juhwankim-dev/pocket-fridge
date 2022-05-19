@@ -230,7 +230,6 @@ class IngreUploadViewModel @Inject constructor(
 
     private fun setDefaultData() {
         name.value = ""
-        datePurchased.value = ""
         dateExpiry.value = ""
         _selectedStorage.value = Storage.Fridge
         _selectedFridge.value = getDefaultFridge()

@@ -107,15 +107,6 @@ class IngreUploadFragment : BaseFragment<FragmentIngreUploadBinding>(R.layout.fr
                 isNetworkError.observe(owner) {
                     // TODO: 네트워크 이용 불가 ui 처리
                 }
-
-
-                // 식재료 정보관련 live data
-
-                selectedSubCategory.observe(owner) {
-                    it?.let {
-                        // TODO: 서브 카테고리 이미지 반영
-                    }
-                }
             }
         }
     }

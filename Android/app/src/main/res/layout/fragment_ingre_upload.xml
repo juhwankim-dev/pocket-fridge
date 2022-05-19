@@ -174,7 +174,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="@{InputType.TYPE_NULL}"
-                android:text="@={vm.datePurchased}"
+                android:text="@{vm.datePurchased}"
                 tools:text="2020.01.01"/>
 
         </com.google.android.material.textfield.TextInputLayout>
