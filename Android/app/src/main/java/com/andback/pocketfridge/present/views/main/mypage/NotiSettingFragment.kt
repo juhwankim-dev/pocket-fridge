@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.text.isDigitsOnly
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
@@ -31,25 +32,21 @@ class NotiSettingFragment : BaseFragment<FragmentNotiSettingBinding>(R.layout.fr
     }
 
     private fun init() {
+        binding.vm = viewModel
         initView()
         setObserver()
     }
 
     private fun setObserver() {
-        binding.lifecycleOwner?.let { owner ->
-            with(viewModel) {
-                savedHour.observe(owner) {
-                    binding.timepickerNotiSettingF.hour = it
-                }
-                savedMinute.observe(owner) {
-                    binding.timepickerNotiSettingF.minute = it
-                }
-                savedAccepted.observe(owner) {
-                    binding.switchNotiSettingF.isChecked = it
-                }
-                savedOffset.observe(owner) {
-                    binding.etNotiSettingFExpiryOffset.setText(it.toString())
-                }
+        with(viewModel) {
+            savedHour.observe(viewLifecycleOwner) {
+                binding.timepickerNotiSettingF.hour = it
+            }
+            savedMinute.observe(viewLifecycleOwner) {
+                binding.timepickerNotiSettingF.minute = it
+            }
+            savedAccepted.observe(viewLifecycleOwner) {
+                binding.switchNotiSettingF.isChecked = it
             }
         }
     }
@@ -62,9 +59,6 @@ class NotiSettingFragment : BaseFragment<FragmentNotiSettingBinding>(R.layout.fr
         }
         binding.switchNotiSettingF.setOnCheckedChangeListener { _, boolean ->
             viewModel.updateAccepted(boolean)
-        }
-        binding.etNotiSettingFExpiryOffset.addTextChangedListener { text ->
-            viewModel.updateOffset(text.toString().toInt())
         }
         binding.btnNotiSettingFSave.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {

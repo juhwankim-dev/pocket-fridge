@@ -1,5 +1,6 @@
 package com.andback.pocketfridge.present.views.main.mypage
 
+import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -26,8 +27,8 @@ class NotiSettingViewModel @Inject constructor(
     val savedMinute: LiveData<Int> = _savedMinute
     private val _savedAccepted = MutableLiveData<Boolean>()
     val savedAccepted: LiveData<Boolean> = _savedAccepted
-    private val _savedOffset = MutableLiveData<Int>()
-    val savedOffset: LiveData<Int> = _savedOffset
+
+    val liveOffset = MutableLiveData<String>()
 
     init {
         viewModelScope.launch {
@@ -56,7 +57,7 @@ class NotiSettingViewModel @Inject constructor(
         }
 
         if(accepted != null) _savedAccepted.postValue(accepted.toBoolean())
-        if(offset != null) _savedOffset.postValue(offset.toInt())
+        if(offset != null) liveOffset.postValue(offset!!)
     }
 
     fun updateHour(hour: Int) {
@@ -71,20 +72,15 @@ class NotiSettingViewModel @Inject constructor(
         _savedAccepted.value = accepted
     }
 
-    fun updateOffset(offset: Int) {
-        if(offset == _savedOffset.value) return
-        _savedOffset.value = offset
-    }
-
     suspend fun save() {
         val hour = savedHour.value
         val min = savedMinute.value
         val accepted = savedAccepted.value
-        val offset = savedOffset.value
+        val offset = liveOffset.value
 
         if(hour != null) writeDataStoreUseCase.execute(EXPIRY_NOTI_HOUR, hour.toString())
         if(min != null) writeDataStoreUseCase.execute(EXPIRY_NOTI_MINUTE, min.toString())
         if(accepted != null) writeDataStoreUseCase.execute(EXPIRY_NOTI_ACCEPTED, accepted.toString())
-        if(offset != null) writeDataStoreUseCase.execute(EXPIRY_DATE_PREFERENCE, offset.toString())
+        if(offset != null && offset.isNotBlank() && offset.isDigitsOnly()) writeDataStoreUseCase.execute(EXPIRY_DATE_PREFERENCE, offset.toString())
     }
 }
