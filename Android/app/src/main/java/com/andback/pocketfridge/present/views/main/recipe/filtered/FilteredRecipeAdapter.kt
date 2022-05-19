@@ -50,9 +50,10 @@ class FilteredRecipeAdapter(val itemClickListener: onRecipeClickListener) : Recy
             KOREAN -> list.filter { it.type == KOREAN }.forEach { recipeList.add(it) }
             JAPANESE -> list.filter { it.type == JAPANESE }.forEach { recipeList.add(it) }
             WESTERN -> list.filter { it.type == WESTERN }.forEach { recipeList.add(it) }
-            LIKE -> list.filter { it.isRecommendation }.forEach { recipeList.add(it) }
+            LIKE -> list.filter { it.like }.forEach { recipeList.add(it) }
             else -> recipeList.addAll(list)
         }
+
         notifyDataSetChanged()
     }
 
