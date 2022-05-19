@@ -69,11 +69,11 @@
             android:layout_width="@dimen/small_icon_size"
             android:layout_height="@dimen/small_icon_size"
             android:adjustViewBounds="true"
-            android:src="@{recipe.like ? @drawable/ic_heart_filled : @drawable/ic_heart_outline}"
+            android:src="@{recipe.like ? @drawable/ic_heart_filled : @drawable/ic_heart_outline_white}"
             app:layout_constraintBottom_toBottomOf="@+id/view_recipe_allI_circle"
             app:layout_constraintEnd_toEndOf="@+id/view_recipe_allI_circle"
             app:layout_constraintStart_toStartOf="@+id/view_recipe_allI_circle"
             app:layout_constraintTop_toTopOf="@id/view_recipe_allI_circle"
-            app:srcCompat="@drawable/ic_heart_outline" />
+            app:srcCompat="@drawable/ic_heart_outline_white" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
