@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import androidx.core.view.size
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,10 +16,13 @@ import com.andback.pocketfridge.data.model.MainCategoryEntity
 import com.andback.pocketfridge.data.model.SubCategoryEntity
 import com.andback.pocketfridge.databinding.FragmentCategorySelectBinding
 import com.andback.pocketfridge.present.views.main.SubCategoryRVAdapter
+import com.google.android.material.chip.Chip
 
 class CategorySelectFragment : DialogFragment() {
     private lateinit var binding: FragmentCategorySelectBinding
     private val rvAdapter = SubCategoryRVAdapter()
+
+    private var isInit = false
 
     private val viewModel: IngreUploadViewModel by activityViewModels()
 
@@ -48,6 +52,19 @@ class CategorySelectFragment : DialogFragment() {
         binding.vm = viewModel
         setRecyclerViewAdapter()
         setObserver()
+        setToolbar()
+    }
+
+    private fun setToolbar() {
+        binding.tbCategorySelectF.setOnMenuItemClickListener { menuItem ->
+            when(menuItem.itemId) {
+                R.id.close_menu -> {
+                    dismiss()
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     private fun setObserver() {
@@ -58,32 +75,41 @@ class CategorySelectFragment : DialogFragment() {
                     updateSelectedSubCategories()
                 }
 
-                // 메인 카테고리 리스트로 어댑터 세팅
+                // 메인 카테고리 리스트로 칩그룹 세팅
+                // 메인 카테고리가 UI로 변경하는 경우는 없음
                 mainCategories.observe(owner) {
-                    setDropdownAdapter(it)
+
+                    if (binding.cgFridgeFFilter.size > 1)
+                        binding.cgFridgeFFilter.removeViews(1, binding.cgFridgeFFilter.size-1)
+
+                    it.forEach { category ->
+                        val chip = layoutInflater.inflate(R.layout.custom_chip_view, binding.cgFridgeFFilter, false) as Chip
+                        chip.id = category.mainCategoryId
+                        chip.text = category.mainCategoryName
+                        binding.cgFridgeFFilter.addView(chip)
+                    }
+
+                    setChipGroupChangeListener(it)
                 }
 
                 // 서브 카테고리 리스트로 리사이클러뷰 변경
+                // 처음 칩이 전체여서
                 selectedSubCategories.observe(owner) {
-                    updateSubCategories(it)
+                    if(isInit == false) {
+                        viewModel.selectAllSubCategory()
+                        isInit = true
+                    } else {
+                        updateSubCategories(it)
+                    }
                 }
             }
         }
     }
 
-    private fun setDropdownAdapter(list: List<MainCategoryEntity>) {
-        val stringList = list.map { it.mainCategoryName }
-        Log.d(TAG, "setDropdownAdapter: ${stringList.size}")
-        val adapter = ArrayAdapter(requireContext(), R.layout.item_dropdown_list, stringList)
-        (binding.tvCategorySelectFMainCategory as? AutoCompleteTextView)?.let { tv ->
-            tv.setText(stringList[0])
-            tv.setAdapter(adapter)
-            // 아이템 클릭 시 mainCategory 업데이트
-            tv.setOnItemClickListener { _, _, i, l ->
-                Log.d(TAG, "setDropdownAdapter: $i, $l")
-                val mainCategory = list.find { it.mainCategoryName == stringList[i] }
-                mainCategory?.let { viewModel.selectMainCategory(it) }
-            }
+    private fun setChipGroupChangeListener(list: List<MainCategoryEntity>) {
+        binding.cgFridgeFFilter.setOnCheckedChangeListener { group, checkedId ->
+            val result = list.find { it.mainCategoryId == checkedId }
+            result?.let { viewModel.selectMainCategory(it) }?: run { viewModel.selectAllSubCategory() }
         }
     }
 
@@ -93,6 +119,7 @@ class CategorySelectFragment : DialogFragment() {
             rvAdapter.itemClickListener = object : SubCategoryRVAdapter.ItemClickListener {
                 override fun onClick(subCategoryEntity: SubCategoryEntity) {
                     viewModel.selectSubCategory(subCategoryEntity)
+                    Log.d(TAG, "onClick: ${subCategoryEntity.subCategoryId} ${subCategoryEntity.subCategoryName}")
                     dismiss()
                 }
             }
