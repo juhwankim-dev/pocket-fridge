@@ -15,7 +15,6 @@ class SubCategoryRVAdapter: RecyclerView.Adapter<SubCategoryRVAdapter.ViewHolder
     inner class ViewHolder(val binding: ItemSubCategoryListBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(subCategory: SubCategoryEntity) {
             binding.subCategory = subCategory
-            Log.d(TAG, "bind: ${subCategory.subCategoryName}")
         }
     }
 
