@@ -64,11 +64,11 @@
             android:layout_width="@dimen/default_icon_size"
             android:layout_height="@dimen/default_icon_size"
             android:adjustViewBounds="true"
-            app:tint="@color/gray"
+            android:src="@{recipe.like ? @drawable/ic_heart_filled : @drawable/ic_heart_outline}"
             app:layout_constraintBottom_toBottomOf="@+id/tv_recipe_filteredI_thumbnail"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_recipe_filteredI_thumbnail"
-            app:srcCompat="@drawable/ic_heart_outline" />
+            app:srcCompat="@drawable/ic_heart_outline"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
