@@ -14,14 +14,6 @@ class RecipeRecommendAdapter(val itemClickListener: onRecipeClickListener) : Rec
         fun bindInfo(recipe: Recipe) {
             binding.index = layoutPosition + 1
             binding.recipe = recipe
-
-            binding.ivRecommendILike.setOnClickListener {
-                if (recipe.like) {
-                    itemClickListener.onDeleteLikeClick(recipe.id)
-                } else {
-                    itemClickListener.onAddLikeClick(recipe.id)
-                }
-            }
         }
     }
 
@@ -46,6 +38,9 @@ class RecipeRecommendAdapter(val itemClickListener: onRecipeClickListener) : Rec
     fun setList(list: List<Recipe>) {
         recipeList.clear()
         list.filter { it.isRecommendation }.forEach { recipeList.add(it) }
+        if (recipeList.isEmpty())
+            recipeList.addAll(list.asSequence().shuffled().take(5).toList())
+
         notifyDataSetChanged()
     }
 }
