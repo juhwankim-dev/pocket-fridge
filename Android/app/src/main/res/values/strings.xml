@@ -1,0 +1,164 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">pocket fridge</string>
+
+    <string name="cancel">취소</string>
+    <string name="accept">확인</string>
+    <string name="save">저장</string>
+
+    <string name="permission_error">권한 처리 중 문제가 발생하였습니다.</string>
+    <string name="network_error">네트워크 상태를 확인해 주세요.</string>
+    <string name="common_error">처리 중 문제가 발생하였습니다.</string>
+
+    <string name="not_change">변경사항이 없습니다.</string>
+    <string name="go_make_fridge">냉장고 만들러 가기</string>
+
+
+    <string name="fridge">냉장고</string>
+    <string name="add">추가</string>
+    <string name="recipe">레시피</string>
+
+    <string name="select_text_barcode">바코드 스캔</string>
+    <string name="select_text_input">직접 등록</string>
+
+
+    <string name="filter">필터</string>
+
+    <string name="ingre_upload">식재료 등록</string>
+    <string name="ingre_edit">식재료 수정</string>
+    <string name="merchandise">상품</string>
+    <string name="storage_fridge">냉장</string>
+    <string name="storage_freeze">냉동</string>
+    <string name="storage_room">실온</string>
+    <string name="name">상품명</string>
+    <string name="purchased_date">구매일</string>
+    <string name="expiry_date">유통기한</string>
+    <string name="left_day_label">잔여기한:</string>
+
+    <string name="error_msg_ingre_name">올바른 상품명을 입력해 주세요</string>
+    <string name="error_msg_ingre_date_expiry">유통기한은 구매일보다 미래의 날짜로 입력해 주세요</string>
+    <string name="error_msg_ingre_date_purchased">구매일은 오늘 포함 과거의 날짜로 입력해 주세요</string>
+
+    <string name="cancel_button">취소</string>
+    <string name="delete_button">삭제</string>
+    <string name="edit_button">수정하기</string>
+    <string name="delete_ingre_title">식재료를 삭제하시겠습니까?\n\n</string>
+    <string name="ingre_delete_error">식재료 삭제에 실패했습니다.</string>
+    <string name="ingre_delete_success">식재료를 삭제했습니다.</string>
+    <string name="ingre_edit_error">식재료 수정에 실패했습니다.</string>
+    <string name="ingre_upload_success">식재료 등록에 성공했습니다.\n등록을 이어서 진행해 주세요.</string>
+
+
+    <string name="sign_up">회원가입</string>
+    <string name="login">로그인</string>
+    <string name="sns_login">SNS 로그인</string>
+    <string name="find_pw">비밀번호 찾기</string>
+    <string name="notification">알림</string>
+    <string name="profile">프로필</string>
+    <string name="mypage">마이페이지</string>
+    <string name="edit_user">정보 수정</string>
+    <string name="delete_user">회원탈퇴</string>
+    <string name="search">검색</string>
+
+    <string name="google_login">Google 계정으로 로그인</string>
+    <string name="login_fail">로그인에 실패했습니다.</string>
+
+    <string name="email">이메일</string>
+    <string name="next">다음</string>
+    <string name="userName">이름</string>
+
+    <string name="email_auth_guide">입력하신 이메일 주소로 인증번호가 발송되었습니다.\n인증번호를 확인해 주세요.</string>
+    <string name="find_pw_guide">회원가입 시 등록한 이메일을 입력해주세요.\n입력하신 이메일로 임시 비밀번호를 발급해드립니다.</string>
+    <string name="confirm_pw_guide">개인 정보를 안전하게 보호하기 위해\n비밀번호를 다시 한 번 입력해 주세요.</string>
+    <string name="delete_user_guide1">님\n정말 탈퇴하시겠어요?</string>
+    <string name="delete_user_guide2">지금 탈퇴하시면 냉장고를 공유 받으신 분이 냉장고를 더 이상 이용하실 수 없게 돼요!</string>
+    <string name="delete_user_guide3">지금 탈퇴하시면 등록하신 냉장고와 식재료 정보도 함께 사라져요. 추후에 동일 계정으로 재가입하셔도 냉장고와 식재료 내역은 복구되지 않아요!</string>
+    <string name="delete_user_guide4">회원 탈퇴 유의사항을 확인하였으며 동의합니다.</string>
+    <string name="delete_user_guide5">회원 탈퇴가 정상적으로 신청되었습니다.\n포켓프리지를 이용해주셔서 감사합니다.</string>
+
+    <!-- Error Messages -->
+    <string name="name_empty_error">이름은 필수 입력 값입니다.</string>
+    <string name="name_pattern_error">이름은 특수문자를 제외한 2~20자리여야 합니다.</string>
+    <string name="nickname_empty_error">닉네임은 필수 입력 값입니다.</string>
+    <string name="nickname_pattern_error">닉네임은 특수문자를 제외한 2~10자리여야 합니다.</string>
+    <string name="email_empty_error">이메일은 필수 입력 값입니다.</string>
+    <string name="email_pattern_error">이메일 형식이 올바르지 않습니다.</string>
+    <string name="pw_empty_error">비밀번호는 필수 입력 값입니다.</string>
+    <string name="pw_pattern_error">비밀번호는 영문자를 포함한 5~15자리여야 합니다.</string>
+    <string name="pw_match_error">비밀번호가 일치하지 않습니다.</string>
+    <string name="pw_wrong_error">비밀번호를 잘못 입력하였습니다.</string>
+    <string name="email_overlap_error">중복된 이메일이 존재합니다.</string>
+    <string name="nickname_overlap_error">중복된 닉네임이 존재합니다.</string>
+    <string name="email_auth_len_error">인증번호는 10자리 입니다.</string>
+    <string name="email_auth_match_error">인증번호를 확인해주세요.</string>
+    <string name="user_edit_empty_error">모든 정보를 입력해주세요.</string>
+    <string name="no_error">""</string>
+
+    <!-- Success Messages -->
+    <string name="email_auth_success">이메일 인증이 완료되었습니다.</string>
+
+
+    <string name="help_msg_barcode_scan">화면 중앙에 바코드를 스캔해주세요</string>
+    <string name="self_input">직접 입력</string>
+    <string name="self_input_title">바코드번호 입력</string>
+
+    <string name="barcode_scan_fail">바코드로 정보를 가져올 수 없습니다</string>
+
+
+    <string name="user_info">회원정보</string>
+    <string name="fridge_manage">냉장고관리</string>
+    <string name="setting_alarm">알람설정</string>
+    <string name="logout">로그아웃</string>
+    <string name="withdrawal">회원탈퇴</string>
+
+    <string name="empty_fridge">냉장고가 존재하지 않습니다.</string>
+    <string name="add_fridge">냉장고 만들기</string>
+    <string name="share_fridge">냉장고 공유</string>
+    <string name="delete_fridge">냉장고 삭제</string>
+    <string name="edit_fridge_name">냉장고 이름 변경</string>
+    <string name="show_fridge_member">냉장고 공유원들 보기</string>
+
+    <string name="delete_fridge_dialog_title_owner">냉장고: [%1$s]를 삭제하시겠습니까?</string>
+    <string name="delete_fridge_dialog_title">냉장고: [%1$s] 공유 받기를 중지하시겠습니까?</string>
+    <string name="delete_fridge_member_title">%1$s 님을 내보내시겠습니까?</string>
+
+
+    <string name="noti_setting_offset">일 전</string>
+    <string name="noti_setting_offset_label">유통기한 임박 알림 일</string>
+    <string name="noti_setting_activation_label">유통기한 임박 알림 받기</string>
+
+    <string name="search_count">%1$d개의 검색결과</string>
+
+
+    <string name="ipa_ready">네 말씀해주세요</string>
+    <string name="ipa_next">다음 페이지로 이동합니다</string>
+    <string name="ipa_before">이전 페이지로 이동합니다</string>
+    <string name="ipa_first">첫번째 페이지 입니다</string>
+    <string name="ipa_last">마지막 페이지 입니다</string>
+    <string name="share_error">냉장고 공유에 문제가 생겼습니다.</string>
+    <string name="fridge_share_success">냉장고 공유에 성공했습니다.</string>
+    <string name="ingre_info">식재료 정보</string>
+    <string name="ingre_name">식재료 이름</string>
+    <string-array name="ipa_name_list">
+        <item>리지아</item>
+        <item>미지야</item>
+        <item>미지아</item>
+        <item>리지야</item>
+        <item>이지야</item>
+        <item>이지아</item>
+        <item>리자</item>
+        <item>미자</item>
+    </string-array>
+    <string-array name="spinner_list">
+        <item>기한임박순</item>
+        <item>기한여유순</item>
+        <item>가나다순</item>
+        <item>가나다역순</item>
+    </string-array>
+    <string-array name="recipe_filter_list">
+        <item>즐겨찾기</item>
+        <item>추천메뉴</item>
+        <item>한식</item>
+        <item>양식</item>
+        <item>일식</item>
+    </string-array>
+</resources>

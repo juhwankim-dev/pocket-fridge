@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/fridgeFragment"
+        android:title="@string/fridge"
+        android:icon="@drawable/ic_fridge"/>
+    <item
+        android:id="@+id/searchFragment"
+        android:title="@string/search"
+        android:icon="@drawable/ic_search"/>
+    <item
+        android:id="@+id/selectRegiIngre"
+        android:title=""/>
+    <item
+        android:id="@+id/recipeFragment"
+        android:title="@string/recipe"
+        android:icon="@drawable/ic_recipe"/>
+    <item
+        android:id="@+id/myPageFragment"
+        android:title="@string/mypage"
+        android:icon="@drawable/ic_mypage"/>
+</menu>

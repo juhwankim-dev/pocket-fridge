@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="step"
+            type="String" />
+        <variable
+            name="recipeStep"
+            type="com.andback.pocketfridge.domain.model.RecipeStep" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".present.views.main.recipe.detail.RecipeStepsFragment">
+
+        <ImageView
+            android:id="@+id/iv_recipe_stepsF_img"
+            android:layout_width="240dp"
+            android:layout_height="240dp"
+            android:layout_marginStart="40dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            bindImageUrl="@{recipeStep.url}"
+            tools:src="@drawable/bg_food_sample"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_recipe_stepsF_step"
+            style="@style/body_text"
+            android:layout_marginStart="@dimen/activity_margin_default"
+            android:layout_marginBottom="@dimen/activity_margin_default"
+            android:background="@drawable/bg_ellipse_filled_main_color_32"
+            android:paddingHorizontal="@dimen/activity_margin_narrow"
+            android:paddingVertical="4dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="@{step}"
+            tools:text="Step 01"
+            app:layout_constraintBottom_toTopOf="@+id/tv_recipe_stepsF_explanation"
+            app:layout_constraintStart_toEndOf="@+id/iv_recipe_stepsF_img"
+
+            app:layout_constraintTop_toTopOf="@+id/iv_recipe_stepsF_img"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/tv_recipe_stepsF_explanation"
+            style="@style/body_text"
+            android:layout_width="0dp"
+            android:layout_marginStart="@dimen/activity_margin_default"
+            android:paddingStart="@dimen/activity_margin_narrow"
+            android:textStyle="bold"
+            android:text="@{recipeStep.explanation}"
+            tools:text="어묵은 길게 썰고 대파는 어슷하게 썰어주세요."
+            app:layout_constraintWidth_percent="0.4"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_recipe_stepsF_img"
+            app:layout_constraintStart_toEndOf="@+id/iv_recipe_stepsF_img"
+            app:layout_constraintTop_toBottomOf="@+id/tv_recipe_stepsF_step" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="fragment"
+            type="com.andback.pocketfridge.present.views.main.recipe.detail.CookModeFragment" />
+        <variable
+            name="title"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".present.views.main.recipe.detail.CookModeFragment">
+
+        <ImageView
+            android:id="@+id/iv_cook_modeF_back"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:padding="@dimen/activity_margin_default"
+            android:src="@drawable/ic_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_cook_modeF_title"
+            style="@style/list_item_text"
+            android:text="@{title}"
+            android:textColor="@color/black_medium_emphasis"
+            tools:text="추억의 분식집 맛 그대로 매콤달콤 떡볶이 레시피 (1/7)"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_cook_modeF_back"
+            app:layout_constraintStart_toEndOf="@+id/iv_cook_modeF_back"
+            app:layout_constraintTop_toTopOf="@+id/iv_cook_modeF_back" />
+
+        <ProgressBar
+            android:id="@+id/pb_cook_modeF"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:progressTint="@color/main_color"
+            app:layout_constraintTop_toBottomOf="@+id/iv_cook_modeF_back" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp_cook_modeF"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pb_cook_modeF" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black_opaque_screen"
+            android:elevation="6dp"
+            android:visibility="@{fragment.isListening() ? View.VISIBLE : View.GONE}"
+            tools:visibility="gone" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            setLottiePlay="@{fragment.isListening()}"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:elevation="8dp"
+            android:visibility="@{fragment.isListening() ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/lottie_waveform"
+            tools:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/iv_recipe_stepsF_circle"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_margin="@dimen/activity_margin_wide"
+            android:background="@drawable/bg_circle_white"
+            android:elevation="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/ic_mic"
+            android:elevation="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_recipe_stepsF_circle"
+            app:layout_constraintEnd_toEndOf="@+id/iv_recipe_stepsF_circle"
+            app:layout_constraintStart_toStartOf="@+id/iv_recipe_stepsF_circle"
+            app:layout_constraintTop_toTopOf="@+id/iv_recipe_stepsF_circle" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

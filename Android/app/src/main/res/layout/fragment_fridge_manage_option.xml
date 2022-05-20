@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/activity_margin_default"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/ib_fridge_manage_optionF_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:background="@android:color/transparent"
+            android:padding="@dimen/activity_margin_narrow"
+            android:src="@drawable/ic_close" />
+
+        <LinearLayout
+            android:id="@+id/ll_fridge_manage_optionF_show_member"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/activity_margin_default">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="?attr/actionModeShareDrawable" />
+
+            <TextView
+                style="@style/body_text"
+                android:layout_marginLeft="@dimen/activity_margin_default"
+                android:layout_weight="1"
+                android:text="@string/share_fridge" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_fridge_manage_optionF_edit_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/activity_margin_default">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_edit_24"
+                app:tint="?attr/colorControlNormal"/>
+
+            <TextView
+                style="@style/body_text"
+                android:layout_marginLeft="@dimen/activity_margin_default"
+                android:layout_weight="1"
+                android:text="@string/edit_fridge_name" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_fridge_manage_optionF_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/activity_margin_wide"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/activity_margin_default">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_delete_24" />
+
+            <TextView
+                style="@style/body_text"
+                android:layout_marginLeft="@dimen/activity_margin_default"
+                android:layout_weight="1"
+                android:text="@string/delete_fridge" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_share_memberI_profile"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="@dimen/activity_margin_narrow"
+            android:layout_marginTop="@dimen/activity_margin_narrow"
+            android:layout_marginBottom="@dimen/activity_margin_narrow"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_profile_default" />
+
+        <ImageView
+            android:id="@+id/iv_share_memberI_owner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/iv_share_memberI_profile"
+            app:layout_constraintEnd_toEndOf="@+id/iv_share_memberI_profile"
+            app:layout_constraintStart_toStartOf="@+id/iv_share_memberI_profile"
+            app:layout_constraintTop_toTopOf="@+id/iv_share_memberI_profile"
+            app:srcCompat="@drawable/ic_crown" />
+
+        <TextView
+            android:id="@+id/tv_share_memberI_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_margin_default"
+            app:layout_constraintBottom_toTopOf="@+id/tv_share_memberI_email"
+            app:layout_constraintStart_toEndOf="@+id/iv_share_memberI_profile"
+            app:layout_constraintTop_toTopOf="@+id/iv_share_memberI_profile"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="@string/userName" />
+
+        <TextView
+            android:id="@+id/tv_share_memberI_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_margin_narrow"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_share_memberI_profile"
+            app:layout_constraintStart_toStartOf="@+id/tv_share_memberI_nickname"
+            app:layout_constraintTop_toBottomOf="@+id/tv_share_memberI_nickname"
+            tools:text="@string/email" />
+
+        <ImageButton
+            android:id="@+id/ib_share_memberI_out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/activity_margin_narrow"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_close"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="ingredient"
+            type="com.andback.pocketfridge.domain.model.Ingredient" />
+        <variable
+            name="leftday"
+            type="String" />
+        <variable
+            name="fridge"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_search_resultF_bg"
+            android:layout_width="88dp"
+            android:layout_height="88dp"
+            android:src="@drawable/bg_circle_gray"
+            android:layout_margin="@dimen/activity_margin_default"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_search_resultI_category"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="@dimen/activity_margin_20"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_search_resultF_bg"
+            app:layout_constraintEnd_toEndOf="@+id/iv_search_resultF_bg"
+            app:layout_constraintStart_toStartOf="@+id/iv_search_resultF_bg"
+            app:layout_constraintTop_toTopOf="@+id/iv_search_resultF_bg"
+            bindCategoryImage="@{ingredient.subCategory}"
+            tools:src="@drawable/ic_error_category" />
+
+        <TextView
+            android:id="@+id/tv_search_resultI_d_day"
+            style="@style/d_day_text"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_ellipse_filled_4"
+            android:backgroundTint="@{(0 > ingredient.leftDay)? @color/main_color : @color/gray_d_day_deactivate_bg}"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="12dp"
+            android:paddingHorizontal="10dp"
+            android:paddingBottom="@dimen/activity_margin_2"
+            android:text="@{leftday}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="D-3" />
+
+        <TextView
+            android:id="@+id/tv_search_resultI_name"
+            style="@style/list_item_title"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{ingredient.name}"
+            android:layout_marginStart="@dimen/activity_margin_default"
+            app:layout_constraintBottom_toTopOf="@+id/tv_search_resultI_fridge"
+            app:layout_constraintStart_toEndOf="@+id/iv_search_resultF_bg"
+            app:layout_constraintTop_toTopOf="@+id/iv_search_resultF_bg"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="제품명" />
+
+        <TextView
+            android:id="@+id/tv_search_resultI_fridge"
+            style="@style/list_item_text"
+            android:textColor="@android:color/darker_gray"
+            tools:text="냉장고 · 냉동"
+            android:text="@{fridge + ` · ` + ingredient.storage.value}"
+            android:layout_marginTop="@dimen/activity_margin_2"
+            app:layout_constraintBottom_toTopOf="@+id/tv_search_resultI_expiry"
+            app:layout_constraintStart_toStartOf="@+id/tv_search_resultI_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_search_resultI_name" />
+
+        <TextView
+            android:id="@+id/tv_search_resultI_expiry"
+            style="@style/list_item_text"
+            android:textColor="@android:color/darker_gray"
+            tools:text="2022.05.17"
+            android:text="@{ingredient.expiryDate}"
+            android:layout_marginTop="@dimen/activity_margin_2"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_search_resultF_bg"
+            app:layout_constraintStart_toStartOf="@+id/tv_search_resultI_fridge"
+            app:layout_constraintTop_toBottomOf="@+id/tv_search_resultI_fridge" />
+
+        <TextView
+            android:id="@+id/tv_search_result_shimmerI_storage"
+            style="@style/list_item_text"
+            android:textColor="@android:color/darker_gray"
+            android:layout_marginStart="@dimen/activity_margin_2"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_search_resultI_fridge"
+            app:layout_constraintStart_toEndOf="@+id/tv_search_resultI_fridge"
+            app:layout_constraintTop_toTopOf="@+id/tv_search_resultI_fridge" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

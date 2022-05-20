@@ -1,0 +1,7 @@
+flask
+flask-restx
+pymysql
+numpy
+pandas
+sklearn
+random

@@ -1,0 +1,14 @@
+cloud:
+  aws:
+    urlPrefix: # 사용할 AWS의 url 주소. 폴더명 전까지의 주소 (ex. https://버킷명.s3.ap-northeast-2.amazonaws.com/)
+    path: # S3 저장할 기본 폴더. (버킷의 image 폴더 아래 세부폴더로 나눠지는 경우, 'image'로 설정해두고 공통으로 사용 가능)
+    s3:
+      bucket: # AWS S3의 버킷명
+    region:
+      static: # ap-northeast-2
+    stack:
+      auto: false
+    credentials:
+      accessKey: # AWS의 접근 키값
+      secretKey: # AWS의 secret 키값
+      instanceProfile: true

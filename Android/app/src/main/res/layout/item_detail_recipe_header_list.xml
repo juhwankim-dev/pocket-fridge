@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="recipe"
+            type="com.andback.pocketfridge.domain.model.Recipe" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/activity_margin_default">
+
+        <TextView
+            android:id="@+id/tv_recipe_detail_headerI_name"
+            style="@style/page_title_text"
+            android:textStyle="bold"
+            android:layout_margin="@dimen/activity_margin_default"
+            android:text="@{recipe.foodName}"
+            tools:text="추억의 분식집 맛 그대로\n매콤달콤 떡볶이 레시피"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_detail_recipe_headerI_heart"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginEnd="@dimen/activity_margin_default"
+            android:padding="@dimen/activity_margin_default"
+            android:src="@{recipe.like ? @drawable/ic_heart_filled : @drawable/ic_heart_outline}"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_recipe_detail_headerI_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_recipe_detail_headerI_name" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_detail_recipe_heartI_heart"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_recipe_detail_headerI_name"
+            app:layout_constraintEnd_toEndOf="@+id/iv_detail_recipe_headerI_heart"
+            app:layout_constraintStart_toStartOf="@+id/iv_detail_recipe_headerI_heart"
+            app:layout_constraintTop_toTopOf="@+id/tv_recipe_detail_headerI_name"
+            app:lottie_rawRes="@raw/lottie_heart" />
+
+        <LinearLayout
+            android:id="@+id/ll_recipe_detail_headerI"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_margin_default"
+            app:layout_constraintTop_toBottomOf="@+id/tv_recipe_detail_headerI_name">
+
+            <TextView
+                style="@style/body_text"
+                android:text="시간"
+                android:textColor="@color/black_low_emphasis"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_recipe_detail_headerI_time"
+                style="@style/body_text"
+                android:layout_marginHorizontal="@dimen/activity_margin_narrow"
+                android:textStyle="bold"
+                android:text="@{recipe.time + `분`}"
+                tools:text="30분"/>
+
+            <TextView
+                style="@style/body_text"
+                android:text="난이도"
+                android:textColor="@color/black_low_emphasis"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_recipe_detail_headerI_difficulty"
+                style="@style/body_text"
+                android:layout_marginStart="@dimen/activity_margin_narrow"
+                android:text="쉬움"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.andback.pocketfridge.present.views.main.mypage.MyPageViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".present.views.main.mypage.MyPageFragment">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/al_my_pageF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/tb_my_pageF"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="@string/mypage" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <ImageView
+            android:id="@+id/iv_my_pageF_picture"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="@dimen/activity_margin_wide"
+            app:bindProfileImage="@{vm.personalInfo.picture}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/al_my_pageF" />
+
+        <TextView
+            style="@style/body_text"
+            android:id="@+id/tv_my_pageF_nickname"
+            android:layout_marginTop="@dimen/activity_margin_default"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_my_pageF_picture"
+            android:text="@{vm.personalInfo.nickname}"
+            tools:text="닉네임" />
+
+        <LinearLayout
+            android:id="@+id/ll_my_pageF_user_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:padding="@dimen/activity_margin_default"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_my_pageF_nickname">
+
+            <TextView
+                style="@style/body_text"
+                android:layout_weight="1"
+                android:text="@string/user_info" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_next" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_my_pageF_fridge_management"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/activity_margin_default"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_my_pageF_user_edit">
+
+            <TextView
+                style="@style/body_text"
+                android:layout_weight="1"
+                android:text="@string/fridge_manage" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_next" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_my_pageF_alarm_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/activity_margin_default"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_my_pageF_fridge_management">
+
+            <TextView
+                style="@style/body_text"
+                android:layout_weight="1"
+                android:text="@string/setting_alarm" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_next" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_my_pageF_logout"
+            style="@style/body_text"
+            android:layout_width="match_parent"
+            android:padding="@dimen/activity_margin_default"
+            android:text="@string/logout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_my_pageF_alarm_setting" />
+
+        <TextView
+            android:id="@+id/tv_my_pageF_user_delete"
+            style="@style/body_text"
+            android:layout_width="match_parent"
+            android:padding="@dimen/activity_margin_default"
+            android:text="@string/withdrawal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_my_pageF_logout" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

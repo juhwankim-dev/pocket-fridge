@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/graph_main"
+    app:startDestination="@id/fridgeFragment">
+
+    <fragment
+        android:id="@+id/fridgeFragment"
+        android:name="com.andback.pocketfridge.present.views.main.fridge.FridgeFragment"
+        android:label="FridgeFragment"
+        tools:layout="@layout/fragment_fridge">
+        <action
+            android:id="@+id/action_fridgeFragment_to_ingreDetailFragment"
+            app:destination="@id/ingreDetailFragment" />
+        <action
+            android:id="@+id/action_fridgeFragment_to_notificationFragment"
+            app:destination="@id/notificationFragment" />
+        <action
+            android:id="@+id/action_fridgeFragment_to_fridgeManageFragment"
+            app:destination="@id/fridgeManageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.andback.pocketfridge.present.views.main.search.SearchFragment"
+        android:label="SearchFragment"
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_searchFragment_to_ingreDetailFragment"
+            app:destination="@id/ingreDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/barcodeScanFragment"
+        android:name="com.andback.pocketfridge.present.views.main.barcode.BarcodeScanFragment"
+        android:label="BarcodeScanFragment"
+        tools:layout="@layout/fragment_barcode_scan">
+        <action
+            android:id="@+id/action_barcodeScanFragment_to_ingreUploadFragment"
+            app:destination="@id/ingreUploadFragment"
+            app:popUpTo="@id/barcodeScanFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/ingreUploadFragment"
+        android:name="com.andback.pocketfridge.present.views.main.ingreupload.IngreUploadFragment"
+        android:label="IngreUploadFragment"
+        tools:layout="@layout/fragment_ingre_upload">
+        <argument
+            android:name="productName"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+
+        <argument
+            android:name="subCategory"
+            app:argType="com.andback.pocketfridge.data.model.SubCategoryEntity"
+            app:nullable="true"
+            android:defaultValue="@null" />
+
+        <argument
+            android:name="isFirst"
+            app:argType="boolean"
+            android:defaultValue="true" />
+
+        <action
+            android:id="@+id/action_ingreUploadFragment_to_categorySelectFragment"
+            app:destination="@id/categorySelectFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeFragment"
+        android:name="com.andback.pocketfridge.present.views.main.recipe.RecipeFragment"
+        android:label="RecipeFragment"
+        tools:layout="@layout/fragment_recipe">
+        <action
+            android:id="@+id/action_recipeFragment_to_filteredRecipeFragment"
+            app:destination="@+id/filteredRecipeFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/ingreDetailFragment"
+        android:name="com.andback.pocketfridge.present.views.main.fridge.IngreDetailFragment"
+        android:label="IngreDetailFragment"
+        tools:layout="@layout/fragment_ingre_detail">
+        <action
+            android:id="@+id/action_ingreDetailFragment_to_ingreEditFragment"
+            app:destination="@id/ingreEditFragment" />
+        <argument
+            android:name="isOwner"
+            app:argType="boolean" />
+        <argument android:name="ingredient"
+            app:argType="com.andback.pocketfridge.domain.model.Ingredient" />
+        <argument android:name="fridge"
+            app:argType="com.andback.pocketfridge.data.model.FridgeEntity"/>
+    </fragment>
+    <fragment
+        android:id="@+id/ingreEditFragment"
+        android:name="com.andback.pocketfridge.present.views.main.fridge.IngreEditFragment"
+        android:label="IngreEditFragment"
+        tools:layout="@layout/fragment_ingre_edit">
+
+        <argument android:name="ingredient"
+            app:argType="com.andback.pocketfridge.domain.model.Ingredient" />
+        <action
+            android:id="@+id/action_ingreEditFragment_to_ingreDetailFragment"
+            app:destination="@id/ingreDetailFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/ingreDetailFragment"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/myPageFragment"
+        android:name="com.andback.pocketfridge.present.views.main.mypage.MyPageFragment"
+        android:label="MyPageFragment"
+        tools:layout="@layout/fragment_my_page">
+        <action
+            android:id="@+id/action_myPageFragment_to_fridgeManageFragment"
+            app:destination="@id/fridgeManageFragment" />
+        <action
+            android:id="@+id/action_myPageFragment_to_notiSettingFragment"
+            app:destination="@id/notiSettingFragment" />
+        <action
+            android:id="@+id/action_myPageFragment_to_userEditFragment"
+            app:destination="@id/userEditFragment" />
+        <action
+            android:id="@+id/action_myPageFragment_to_confirmPWFragment"
+            app:destination="@id/confirmPWFragment" />
+        <action
+            android:id="@+id/action_myPageFragment_to_userDeleteFragment"
+            app:destination="@id/userDeleteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fridgeManageFragment"
+        android:name="com.andback.pocketfridge.present.views.main.mypage.fridgemanage.FridgeManageFragment"
+        android:label="FridgeManageFragment"
+        tools:layout="@layout/fragment_fridge_manage"/>
+    <fragment
+        android:id="@+id/notiSettingFragment"
+        android:name="com.andback.pocketfridge.present.views.main.mypage.NotiSettingFragment"
+        android:label="NotiSettingFragment"
+        tools:layout="@layout/fragment_noti_setting"/>
+    <fragment
+        android:id="@+id/userEditFragment"
+        android:name="com.andback.pocketfridge.present.views.main.mypage.useredit.UserEditFragment"
+        android:label="UserEditFragment"
+        tools:layout="@layout/fragment_user_edit">
+    </fragment>
+    <fragment
+        android:id="@+id/confirmPWFragment"
+        android:name="com.andback.pocketfridge.present.views.main.mypage.useredit.ConfirmPWFragment"
+        android:label="ConfirmPWFragment"
+        tools:layout="@layout/fragment_confirm_p_w">
+        <action
+            android:id="@+id/action_confirmPWFragment_to_userEditFragment"
+            app:destination="@id/userEditFragment"
+            app:popUpTo="@id/myPageFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.andback.pocketfridge.present.views.main.notification.NotificationFragment"
+        android:label="NotificationFragment"
+        tools:layout="@layout/fragment_notification"/>
+    <fragment
+        android:id="@+id/userDeleteFragment"
+        android:name="com.andback.pocketfridge.present.views.main.mypage.userdelete.UserDeleteFragment"
+        android:label="UserDeleteFragment"
+        tools:layout="@layout/fragment_user_delete"/>
+    <fragment
+        android:id="@+id/filteredRecipeFragment"
+        android:name="com.andback.pocketfridge.present.views.main.recipe.filtered.FilteredRecipeFragment"
+        android:label="FilteredRecipeFragment"
+        tools:layout="@layout/fragment_filtered_recipe"/>
+    <fragment
+        android:id="@+id/categorySelectFragment"
+        android:name="com.andback.pocketfridge.present.views.main.ingreupload.CategorySelectFragment"
+        android:label="CategorySelectFragment"
+        tools:layout="@layout/fragment_category_select">
+        <action
+            android:id="@+id/action_categorySelectFragment_to_ingreUploadFragment"
+            app:destination="@id/ingreUploadFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/ingreUploadFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>

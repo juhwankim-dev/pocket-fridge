@@ -1,0 +1,95 @@
+
+buildscript {
+	ext {
+		queryDslVersion = "5.0.0"
+	}
+}
+
+plugins {
+	id 'org.springframework.boot' version '2.6.6'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	//querydsl 추가
+	id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10'
+	id 'java'
+}
+
+group = 'com.ssafy'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+    compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
+
+	//유효성 검사를 위해 validation 의존성 추가
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	//Swagger 3.0 설정
+	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+
+	//Gson 추가
+	implementation 'com.google.code.gson:gson:2.9.0'
+
+	//Configuring the Annotation Processor 사용하기 위해
+	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+	//mariadb 설정
+	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+
+	//querydsl 추가
+	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
+
+	//jwt (0.9.1 가장 안정된 최신 버전)
+	implementation "io.jsonwebtoken:jjwt:0.9.1"
+
+	//firebase 의존성 추가
+	implementation group: 'com.google.firebase', name: 'firebase-admin', version: '8.1.0'
+
+	//okhttp 의존성 추가
+	implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.2.2'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+
+//querydsl 추가 시작
+def querydslDir = "$buildDir/generated/querydsl"
+
+querydsl {
+	jpa = true
+	querydslSourcesDir = querydslDir
+}
+sourceSets {
+	main.java.srcDir querydslDir
+}
+compileQuerydsl{
+	options.annotationProcessorPath = configurations.querydsl
+}
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+	querydsl.extendsFrom compileClasspath
+}
+//querydsl 추가 끝

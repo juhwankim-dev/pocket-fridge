@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/tb_searchF"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    style="@style/body_text"
+                    android:id="@+id/et_searchF"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/activity_margin_default"
+                    android:background="@drawable/bg_ellipse_filled_gray_4"
+                    android:drawableLeft="@drawable/ic_search_24"
+                    android:drawableRight="@drawable/ic_search_et_right_custom"
+                    android:hint="검색어를 입력하세요"
+                    android:padding="@dimen/activity_margin_narrow" />
+            </com.google.android.material.appbar.MaterialToolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/gray_search_result_bg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/activity_margin_default">
+
+            <TextView
+                android:id="@+id/tv_ingre_searchF_count"
+                style="@style/list_item_text"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:textColor="@color/black_search_result_text"
+                android:textSize="12sp"
+                tools:text="@string/search_count" />
+
+            <LinearLayout
+                android:id="@+id/ll_searchF_sort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_searchF_sort"
+                    style="@style/list_item_text"
+                    android:textColor="@color/black_search_result_text"
+                    android:textSize="12sp"
+                    android:layout_gravity="center"
+                    tools:text="정렬순" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_arrow_down_24"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_searchF"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/activity_margin_default"
+            android:paddingRight="@dimen/activity_margin_default"
+            tools:listitem="@layout/item_search_result"/>
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/sfl_searchF"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <include layout="@layout/item_search_result_shimmer" />
+                <include layout="@layout/item_search_result_shimmer" />
+                <include layout="@layout/item_search_result_shimmer" />
+                <include layout="@layout/item_search_result_shimmer" />
+                <include layout="@layout/item_search_result_shimmer" />
+                <include layout="@layout/item_search_result_shimmer" />
+                <include layout="@layout/item_search_result_shimmer" />
+                <include layout="@layout/item_search_result_shimmer" />
+                <include layout="@layout/item_search_result_shimmer" />
+                <include layout="@layout/item_search_result_shimmer" />
+
+            </LinearLayout>
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+    </LinearLayout>
+</layout>

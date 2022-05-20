@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- 추가 색상 -->
+    <color name="black_high_emphasis">#D9000000</color>
+    <color name="black_medium_emphasis">#99000000</color>
+    <color name="black_low_emphasis">#66000000</color>
+    <color name="main_color">#ff7b30</color>
+    <color name="red_error_message">#b00020</color>
+    <color name="gray_non_clickable_button">#cfcfd9</color>
+    <color name="gray">#C4C4C4</color>
+    <color name="black_opaque_screen">#66000000</color>
+    <color name="gray_divider">#E2E2E2</color>
+    <color name="gray_light">#F6F6F6</color>
+
+    <!-- 특정 뷰를 위한 색상 -->
+    <color name="gray_search_bar_bg">#f1f1f1</color>
+    <color name="gray_d_day_deactivate_bg">#d1cfd0</color>
+    <color name="gray_ingre_circle_bg">#f6f6f6</color>
+    <color name="gray_search_bar_close_bg">#d8d8d8</color>
+    <color name="gray_search_result_bg">#fafafa</color>
+    <color name="black_search_result_text">#7a7a7a</color>
+    <color name="black_chip_activate_bg">#363535</color>
+    <color name="black_chip_deactivate_text">#787878</color>
+</resources>

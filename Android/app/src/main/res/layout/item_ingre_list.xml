@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="ingredient"
+            type="com.andback.pocketfridge.domain.model.Ingredient" />
+        <variable
+            name="leftday"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/activity_margin_wide">
+
+        <ImageView
+            android:id="@+id/iv_ingreI_bg"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_margin="@dimen/activity_margin_default"
+            android:src="@drawable/bg_circle_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_ingreI"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="@dimen/activity_margin_20"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_ingreI_bg"
+            app:layout_constraintEnd_toEndOf="@+id/iv_ingreI_bg"
+            app:layout_constraintStart_toStartOf="@+id/iv_ingreI_bg"
+            app:layout_constraintTop_toTopOf="@+id/iv_ingreI_bg"
+            bindCategoryImage="@{ingredient.subCategory}"
+            tools:src="@drawable/ic_error_category" />
+
+        <TextView
+            android:id="@+id/tv_ingreI_d_day"
+            style="@style/d_day_text"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_ellipse_filled_4"
+            android:backgroundTint="@{(0 > ingredient.leftDay)? @color/main_color : @color/gray_d_day_deactivate_bg}"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="@dimen/activity_margin_default"
+            android:paddingHorizontal="10dp"
+            android:paddingBottom="@dimen/activity_margin_2"
+            android:text="@{leftday}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="D-3" />
+
+        <TextView
+            style="@style/list_item_text"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.6"
+            android:layout_marginTop="@dimen/activity_margin_narrow"
+            android:layout_marginBottom="@dimen/activity_margin_wide"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="@{ingredient.name}"
+            android:gravity="center"
+            android:textColor="@color/black_medium_emphasis"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_ingreI_bg"
+            tools:text="상추" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

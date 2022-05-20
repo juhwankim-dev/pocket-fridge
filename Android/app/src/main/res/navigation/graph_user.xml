@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/graph_user"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.andback.pocketfridge.present.views.user.login.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_emailAuthFragment"
+            app:destination="@id/emailAuthFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_findPWFragment"
+            app:destination="@id/findPWFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/emailAuthFragment"
+        android:name="com.andback.pocketfridge.present.views.user.signup.EmailAuthFragment"
+        android:label="EmailAuthFragment"
+        tools:layout="@layout/fragment_email_auth">
+        <action
+            android:id="@+id/action_emailAuthFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.andback.pocketfridge.present.views.user.signup.SignUpFragment"
+        android:label="SignUpFragment"
+        tools:layout="@layout/fragment_sign_up"/>
+    <fragment
+        android:id="@+id/findPWFragment"
+        android:name="com.andback.pocketfridge.present.views.user.findpw.FindPWFragment"
+        android:label="FindPWFragment"
+        tools:layout="@layout/fragment_find_p_w"/>
+</navigation>

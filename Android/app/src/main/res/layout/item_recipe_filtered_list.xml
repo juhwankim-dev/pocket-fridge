@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="recipe"
+            type="com.andback.pocketfridge.domain.model.Recipe" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_margin_default">
+
+        <ImageView
+            android:id="@+id/tv_recipe_filteredI_thumbnail"
+            bindImageUrlWithRoundCorner="@{recipe.url}"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:adjustViewBounds="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/bg_food_sample" />
+
+        <TextView
+            android:id="@+id/tv_recipe_filteredI_title"
+            style="@style/list_item_title"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.4"
+            android:layout_marginStart="@dimen/activity_margin_default"
+            android:text="@{recipe.foodName}"
+            android:ellipsize="end"
+            android:maxLines="2"
+            app:layout_constraintBottom_toTopOf="@+id/tv_recipe_filteredI_info"
+            app:layout_constraintStart_toEndOf="@+id/tv_recipe_filteredI_thumbnail"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="아침에 먹으면 더욱 좋은 모닝계란빵" />
+
+        <TextView
+            android:id="@+id/tv_recipe_filteredI_info"
+            style="@style/list_item_text"
+            android:layout_marginTop="@dimen/activity_margin_2"
+            app:layout_constraintBottom_toTopOf="@+id/tv_recipe_filteredI_serving"
+            app:layout_constraintStart_toStartOf="@+id/tv_recipe_filteredI_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_recipe_filteredI_title"
+            android:text="@{recipe.timeAndDifficulty}"
+            tools:text="10분 · 쉬움" />
+
+        <TextView
+            android:id="@+id/tv_recipe_filteredI_serving"
+            style="@style/list_item_text"
+            android:layout_marginTop="@dimen/activity_margin_2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tv_recipe_filteredI_info"
+            app:layout_constraintTop_toBottomOf="@+id/tv_recipe_filteredI_info"
+            android:text="@{recipe.serving}"
+            tools:text="1인분" />
+
+        <ImageView
+            android:id="@+id/iv_recipe_filteredI_like"
+            android:layout_width="@dimen/default_icon_size"
+            android:layout_height="@dimen/default_icon_size"
+            android:adjustViewBounds="true"
+            android:src="@{recipe.like ? @drawable/ic_heart_filled : @drawable/ic_heart_outline}"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_recipe_filteredI_thumbnail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_recipe_filteredI_thumbnail"
+            app:srcCompat="@drawable/ic_heart_outline"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

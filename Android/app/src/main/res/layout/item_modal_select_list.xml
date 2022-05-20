@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="spinnerText"
+            type="String" />
+        <variable
+            name="isChecked"
+            type="Boolean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/activity_margin_12">
+
+        <TextView
+            style="@style/list_item_text"
+            tools:text="기한임박순"
+            android:text="@{spinnerText}"
+            android:paddingStart="@dimen/activity_margin_narrow"
+            app:layout_constraintBottom_toBottomOf="@+id/rb_modal_selectI"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/rb_modal_selectI" />
+
+        <RadioButton
+            android:id="@+id/rb_modal_selectI"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/main_color"
+            android:checked="@{isChecked}"
+            android:clickable="false"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:paddingEnd="@dimen/activity_margin_narrow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
