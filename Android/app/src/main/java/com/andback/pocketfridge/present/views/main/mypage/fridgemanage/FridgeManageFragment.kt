@@ -204,34 +204,24 @@ class FridgeManageFragment : BaseFragment<FragmentFridgeManageBinding>(R.layout.
                             dialogBinding.etShareFridgeFEmail.text.toString().trim()
                         )
                     }
+                }
 
-                    dialogBinding.rvShareFridgeF.apply {
-                        layoutManager = LinearLayoutManager(
-                            requireContext(),
-                            LinearLayoutManager.VERTICAL,
-                            false
-                        )
-                        adapter = memberAdapter
-                    }
+                dialogBinding.rvShareFridgeF.apply {
+                    layoutManager = LinearLayoutManager(
+                        requireContext(),
+                        LinearLayoutManager.VERTICAL,
+                        false
+                    )
+                    adapter = memberAdapter
+                }
 
-
-                    dialogBinding.rvShareFridgeF.apply {
-                        layoutManager = LinearLayoutManager(
-                            requireContext(),
-                            LinearLayoutManager.VERTICAL,
-                            false
-                        )
-                        adapter = memberAdapter
-                    }
-
-                    memberAdapter.apply {
-                        itemClickListener = object : ShareMemberAdapter.ItemClickListener {
-                            override fun onClick(data: ShareUserEntity) {
-                                alertDialog.dismiss()
-                                showDeleteMemberDialog(fridge.id, data)
-                            }
-
+                memberAdapter.apply {
+                    itemClickListener = object : ShareMemberAdapter.ItemClickListener {
+                        override fun onClick(data: ShareUserEntity) {
+                            alertDialog.dismiss()
+                            showDeleteMemberDialog(fridge.id, data)
                         }
+
                     }
                 }
             }
