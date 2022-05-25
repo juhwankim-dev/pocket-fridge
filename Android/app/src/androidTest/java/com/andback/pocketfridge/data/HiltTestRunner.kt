@@ -1,4 +1,4 @@
-package com.andback.pocketfridge
+package com.andback.pocketfridge.data
 
 import android.app.Application
 import android.content.Context
