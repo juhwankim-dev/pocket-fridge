@@ -22,20 +22,20 @@ class IngreCheckerTest {
 
     @Before
     fun setUp() {
-        normalIngre = Ingredient(1, 1, 1, "2022-05-01", "2022-05-10", "가지", 1, Storage.Fridge, 9)
-        minusOneFridgeId = Ingredient(1, 1, 1, "2022-05-01", "2022-05-10", "가지", -1, Storage.Fridge, 9)
-        blankName = Ingredient(1, 1, 1, "2022-05-01", "2022-05-10", "", 1, Storage.Fridge, 9)
-        zeroQuantity = Ingredient(1, 1, 0, "2022-05-01", "2022-05-10", "가지", 1, Storage.Fridge, 9)
-        minusCategory = Ingredient(1, -1, 1, "2022-05-01", "2022-05-10", "가지", 1, Storage.Fridge, 9)
+        normalIngre = Ingredient(1, 1, 1, 1, "2022-05-01", "2022-05-10", "가지", 1, Storage.Fridge, 9)
+        minusOneFridgeId = Ingredient(1, 1, 1, 1,"2022-05-01", "2022-05-10", "가지", -1, Storage.Fridge, 9)
+        blankName = Ingredient(1, 1, 1,1, "2022-05-01", "2022-05-10", "", 1, Storage.Fridge, 9)
+        zeroQuantity = Ingredient(1, 1, 0, 0, "2022-05-01", "2022-05-10", "가지", 1, Storage.Fridge, 9)
+        minusCategory = Ingredient(1, -1, 1, 1, "2022-05-01", "2022-05-10", "가지", 1, Storage.Fridge, 9)
         nonFormatDateString = "20220501"
         normalDateString = "2022-05-01"
         val cal = Calendar.getInstance().also {
             it.set(2022, 0, 1, 0, 0, 0)
         }
         now = cal.time
-        futurePurchased = Ingredient(1, -1, 1, "2022-05-01", "2022-05-10", "가지", 1, Storage.Fridge, 9)
-        pastPurchased = Ingredient(1, -1, 1, "2022-01-01", "2022-05-10", "가지", 1, Storage.Fridge, 9)
-        wrongExpiryDate = Ingredient(1, -1, 1, "2022-05-11", "2022-05-10", "가지", 1, Storage.Fridge, 9)
+        futurePurchased = Ingredient(1, -1, 1, 1, "2022-05-01", "2022-05-10", "가지", 1, Storage.Fridge, 9)
+        pastPurchased = Ingredient(1, -1, 1, 1, "2022-01-01", "2022-05-10", "가지", 1, Storage.Fridge, 9)
+        wrongExpiryDate = Ingredient(1, -1, 1, 1,  "2022-05-11", "2022-05-10", "가지", 1, Storage.Fridge, 9)
     }
 
     @Test
