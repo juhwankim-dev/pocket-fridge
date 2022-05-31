@@ -7,6 +7,8 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
+import com.andback.pocketfridge.BuildConfig.BARCODE_URL
+import com.andback.pocketfridge.BuildConfig.BASE_URL
 import com.andback.pocketfridge.domain.usecase.datastore.ReadDataStoreUseCase
 import com.andback.pocketfridge.present.utils.XAccessTokenInterceptor
 import com.google.firebase.storage.FirebaseStorage
@@ -22,8 +24,6 @@ import javax.inject.Inject
 
 @HiltAndroidApp
 class ApplicationClass : Application(), Configuration.Provider {
-    private val baseUrl = "http://k6d206.p.ssafy.io:8080/"
-    private val barcodeUrl = "https://openapi.foodsafetykorea.go.kr/api/"
     private val TIME_OUT = 5000L
     @Inject
     lateinit var interceptor: XAccessTokenInterceptor
@@ -53,14 +53,14 @@ class ApplicationClass : Application(), Configuration.Provider {
             .build()
 
         retrofit = Retrofit.Builder()
-            .baseUrl(baseUrl)
+            .baseUrl(BASE_URL)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
 
         barcodeRetrofit = Retrofit.Builder()
-            .baseUrl(barcodeUrl)
+            .baseUrl(BARCODE_URL)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)

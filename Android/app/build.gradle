@@ -28,6 +28,8 @@ android {
         buildConfigField "String", "FIREBASE_STORAGE_RECIPE_THUMBNAIL_BASE_URL", properties['firebase_storage_recipe_thumbnail_base_url']
         buildConfigField "String", "FIREBASE_STORAGE_RECIPE_COOK_STEP_BASE_URL", properties['firebase_storage_recipe_cook_step_base_url']
         buildConfigField "String", "FIREBASE_CATEGORY_IMG_BASE_URL", properties['firebase_category_img_base_url']
+        buildConfigField "String", "BASE_URL", properties['base_url']
+        buildConfigField "String", "BARCODE_URL", properties['barcode_url']
     }
 
     buildTypes {
